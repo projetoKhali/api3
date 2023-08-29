@@ -12,7 +12,7 @@ Must be a web application consisting of a Spring REST API in the backend and any
 
 # Structure
 
-This repository contains both the [Back-End](./api/) and the [Front-End](./web/) of the challenged proposed by the FATEC alongside the contracted company.
+This repository contains both the [Back-End](./api/) and the [Front-End](./web/) of the challenge proposed by the FATEC alongside the contracted company.
 
 ## Back-End `./api/`
 ### Technologies:
