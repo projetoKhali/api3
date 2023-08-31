@@ -4,7 +4,7 @@ Third semester project of the [Khali](https://github.com/projetoKhali) group at 
 
 # Objective
 
-To provide a platform where employers can appoint their overtime and on-notice hours, managers can approve or reject the appointments of their teams, and administrators can access all the information related to the payment of the employers as well as the management of user authentication and permissions in the system.
+To provide a platform where employees can appoint their overtime and on-notice hours, managers can approve or reject the appointments of their teams, and administrators can access all the information related to the payment of the employers as well as the management of user authentication and permissions in the system.
 
 # Tech Requirements
 
