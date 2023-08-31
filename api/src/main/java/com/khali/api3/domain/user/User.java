@@ -20,10 +20,17 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(unique=true)
     private String registration;
     private String name;
+
+    @Enumerated(EnumType.STRING)
     private UserType userType;
+
+    @Column(unique=true)
     private String email;
+
+    @Column(unique=true)
     private String password;
 
 }
