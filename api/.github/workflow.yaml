@@ -1,0 +1,22 @@
+name: Deploy Maven Project
+
+on: push
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2  # Esta etapa verifica o código do repositório
+      
+    - name: Setup Java
+      uses: actions/setup-java@v2
+      with:
+        java-version: '17'  # Especifique a versão do Java que você deseja usar
+
+    - name: Build and package with Maven
+      run: mvn install  # Substitua por seus comandos Maven reais
+      
+
+# Outras etapas e configurações podem ser adicionadas conforme necessário
