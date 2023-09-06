@@ -25,7 +25,7 @@ public class PayRateRule {
     private Long id;
 
     @Column(unique=true)
-    private int code;
+    private Long code;
 
     private double hourDuration;
     private double payRate;
