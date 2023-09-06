@@ -1,5 +1,8 @@
 package com.khali.api3.domain.appointment;
 
+import com.khali.api3.domain.user.User;
+import com.khali.api3.domain.client.Client;
+
 import java.sql.Timestamp;
 
 import jakarta.persistence.*;
@@ -24,7 +27,7 @@ public class Appointment {
 
     @ManyToOne
     @JoinColumn(name="user_id")
-    private int userId;
+    private User userId;
 
     @Enumerated(EnumType.STRING)
     private AppointmentType type;
@@ -32,13 +35,13 @@ public class Appointment {
     private Timestamp startDate;
     private Timestamp endDate;
 
-    @ManyToOne
-    @JoinColumn(name="rc_id")
-    private int resultCenterId;
+    // @ManyToOne
+    // @JoinColumn(name="rc_id")
+    // private ResultCenter resultCenterId;
 
     @ManyToOne
     @JoinColumn(name="client_id")
-    private int clientId;
+    private Client clientId;
 
     private String project;
     private String justification;
