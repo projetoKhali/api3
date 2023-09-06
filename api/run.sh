@@ -2,7 +2,7 @@
 
 mvn clean install -e -X
 
-if [ $? -ne 0 ]; then 
+if [ $? -ne 0 ]; then
     echo "Error compiling project"
     exit 1
 fi
