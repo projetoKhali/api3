@@ -1,9 +1,6 @@
-package com.khali.api3.domain.user;
+package com.khali.api3.domain.resultCenter;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -14,30 +11,21 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity(name="users")
-@Table(name="users")
+@Entity(name="resultcenter")
+@Table(name="resultcenters")
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @EqualsAndHashCode
-public class User {
+public class ResultCenter {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(unique=true)
-    private String registration;
+    
     private String name;
-
-    @Enumerated(EnumType.STRING)
-
-    private UserType userType;
-
-    @Column(unique=true)
-    private String email;
-
-    private String password;
-    private boolean active;
-
+    private String code;
+    private String cronym;
+    private int gestorId;
 }
