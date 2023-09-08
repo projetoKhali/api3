@@ -1,7 +1,13 @@
+import { Outlet } from 'react-router-dom';
+import SideMenu from '../components/SideMenu';
+
 export default function Layout(){
     return (
         <>
-            <h1>Inicio</h1>
+            <SideMenu />
+            <div className="content-area" >
+                <Outlet />
+            </div>
         </>
     )
 }
