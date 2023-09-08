@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react';
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import './App.css';
 import Client from './pages/Client';
@@ -7,16 +6,10 @@ import Layout from './pages/Layout';
 
 
 function App() {
-    const [menuItems, setMenuItems] = useState([]);
-
-    // useEffect({
-    //     setMenuItems()
-    // }, []);
-
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/" element={<Layout items={menuItems} />}>
+                <Route path="/" element={<Layout/>}>
                     <Route index element={<Home />} />
                     <Route path="client" element={<Client />} />
                 </Route>
