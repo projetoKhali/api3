@@ -8,17 +8,19 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
-@Entity(name="user_cr")
-@Table(name="user_cr")
+@Entity(name="member")
+@Table(name="member")
 @AllArgsConstructor
 @Getter
 @Setter
 public class Member {
 
+    @Id
     @ManyToOne
     @JoinColumn(name="user_id", referencedColumnName = "id")
     private User user;
     
+    @Id
     @ManyToOne
     @JoinColumn(name="cr_id", referencedColumnName = "id")
     private ResultCenter resultCenter;
