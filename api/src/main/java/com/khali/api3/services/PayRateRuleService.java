@@ -1,7 +1,6 @@
 package com.khali.api3.services;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,9 +20,9 @@ public class PayRateRuleService {
     public List<PayRateRule> getPayRateRule(){
         return payRateRuleRepository.findAll();
     }
-    public Optional<PayRateRule> getPayRateRuleByID(Long id){
+    public PayRateRule getPayRateRuleByID(Long id){
         //System.out.println(payRateRuleRepository.findById(payRateRule.getId()));
-        return payRateRuleRepository.findById(id);
+        return payRateRuleRepository.findById(id).orElse(null);
     }
 
 }

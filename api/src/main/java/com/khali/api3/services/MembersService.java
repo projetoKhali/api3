@@ -21,4 +21,7 @@ public class MembersService {
         return membersRepository.save(member);
     }
     
+    public Member getMemberById(Long id){
+        return membersRepository.findById(id).orElse(null);
+    }
 }
