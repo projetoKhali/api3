@@ -15,9 +15,9 @@ public class AppointmentService {
     @Autowired
     private AppointmentRepository appointmentRepository;
 
-    public Appointment saveAppointment(Appointment appointment) {
-        return appointmentRepository.save(appointment);
-    }
+    // public Appointment saveAppointment(Appointment appointment) {
+    //     return appointmentRepository.save(appointment);
+    // }
     
     public List<Appointment> getAppointment(){
         return appointmentRepository.findAll();
