@@ -13,20 +13,17 @@ import com.khali.api3.repositories.PayRateRuleRepository;
 public class PayRateRuleService {
     
     @Autowired
-    private PayRateRuleRepository PayRateRuleRepository;
+    private PayRateRuleRepository payRateRuleRepository;
 
     public PayRateRule savePayRateRule(PayRateRule payRateRule) {
-        return PayRateRuleRepository.save(payRateRule);
+        return payRateRuleRepository.save(payRateRule);
     }
-    public List<PayRateRule> getPayRateRule(PayRateRule payRateRule){
-        return PayRateRuleRepository.findAll();
+    public List<PayRateRule> getPayRateRule(){
+        return payRateRuleRepository.findAll();
     }
-    public PayRateRule insertPayRateRule(PayRateRule payRateRule){
-        return PayRateRuleRepository.save(payRateRule);
-    }
-    public Optional<PayRateRule> getPayRateRuleByID(PayRateRule payRateRule){
-        System.out.println(PayRateRuleRepository.findById(payRateRule.getId()));
-        return PayRateRuleRepository.findById(payRateRule.getId());
+    public Optional<PayRateRule> getPayRateRuleByID(Long id){
+        //System.out.println(payRateRuleRepository.findById(payRateRule.getId()));
+        return payRateRuleRepository.findById(id);
     }
 
 }
