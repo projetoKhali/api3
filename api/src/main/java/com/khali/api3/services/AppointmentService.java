@@ -1,5 +1,6 @@
 package com.khali.api3.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.khali.api3.domain.appointment.Appointment;
+import com.khali.api3.domain.appointment.AppointmentStatus;
 import com.khali.api3.repositories.AppointmentRepository;
 
 @Service
@@ -84,5 +86,25 @@ public class AppointmentService {
             throw new NoSuchElementException("Appointment not found with ID: " + id);
         }
     }
+
+    public void approveSelectedAppointments(List<Appointment> appointments){
+        List<Appointment> updatedAppointments = new ArrayList<>();
+        for(Appointment appointment : appointments){
+            appointment.setStatus(AppointmentStatus.Approved);
+        }
+
+        appointmentRepository.saveAll(updatedAppointments);
+
+    }
+
+    public void rejectSelectedAppointments(List<Appointment> appointments){
+        List<Appointment> updatedAppointments = new ArrayList<>();
+        for(Appointment appointment : appointments){
+            appointment.setStatus(AppointmentStatus.Rejected);
+        }
+
+        appointmentRepository.saveAll(updatedAppointments);
+    }
+
     
 }
