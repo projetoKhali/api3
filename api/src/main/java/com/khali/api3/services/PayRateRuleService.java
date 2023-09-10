@@ -61,7 +61,7 @@ public class PayRateRuleService {
 
             return payRateRuleRepository.save(payRateRuleExists);
         } else {
-            throw new NoSuchElementException("PayRateRule não encontrada com o ID: " + id);
+            throw new NoSuchElementException("PayRateRule not found with ID: " + id);
         }
     }
 
