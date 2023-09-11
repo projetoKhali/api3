@@ -29,6 +29,7 @@ public class AppointmentService {
         return appointmentRepository.findById(id).orElse(null);
     }
 
+
     public Appointment updateAppointment(Long id, Appointment newAppointment){
         Appointment appointmentExists = appointmentRepository.findById(id).orElse(null);
         
@@ -87,24 +88,15 @@ public class AppointmentService {
         }
     }
 
-    public void approveSelectedAppointments(List<Appointment> appointments){
+    public void alterStatusAppointments(List<Appointment> appointments, boolean isApproveButtonPressed) {
+        AppointmentStatus status = isApproveButtonPressed ? AppointmentStatus.Approved : AppointmentStatus.Rejected;
         List<Appointment> updatedAppointments = new ArrayList<>();
         for(Appointment appointment : appointments){
-            appointment.setStatus(AppointmentStatus.Approved);
+            appointment.setStatus(status);
         }
 
         appointmentRepository.saveAll(updatedAppointments);
 
     }
-
-    public void rejectSelectedAppointments(List<Appointment> appointments){
-        List<Appointment> updatedAppointments = new ArrayList<>();
-        for(Appointment appointment : appointments){
-            appointment.setStatus(AppointmentStatus.Rejected);
-        }
-
-        appointmentRepository.saveAll(updatedAppointments);
-    }
-
     
 }
