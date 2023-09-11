@@ -1,9 +1,8 @@
 package com.khali.api3.domain.member;
 
-import com.khali.api3.domain.resultCenter.ResultCenter;
-import com.khali.api3.domain.user.User;
-
-import jakarta.persistence.*;
+import jakarta.persistence.EmbeddedId;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
