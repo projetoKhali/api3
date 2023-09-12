@@ -1,55 +1,56 @@
 create view vw_users as select
     users.id serial,
     users.registration,
-    users."name",
+    users.name,
     users.user_type,
     users.email,
-    users."password",
+    users.password,
     users.active,
     users.insert_date,
-    users.expire_date
-from users
-where users.active = true;
+    users.expire_date;
+
     
 create view vw_appointments as select
     appointments.id,
-    appointments."start_date",
+    appointments.start_date,
     appointments.end_date,
-    users."name" as user_name,
-    clients."name" as client_name,
-    result_centers."name" as center_name,
+    users.name as user_name,
+    clients.name as client_name,
+    result_centers.name as center_name,
     appointments.project,
     appointments.appointment_type,
     appointments.justification,
-    appointments."status",
+    appointments.status,
     appointments.insert_date,
     appointments.apt_updt_id,
-    appointments.feedback
+    appointments.feedback,
+    appointments.cod_pay_rate_rules,
 from appointments
 join users on appointments.usr_id = users.id
 join clients on appointments.clt_id = clients.id
 join result_centers on appointments.rc_id = result_centers.id;
 
 create view vw_members as select
-    users."name" as user_name,
-    result_centers."name" as center_name
+    users.name as user_name,
+    result_centers.name as center_name
 from members
 join users on members.usr_id = users.id
 join result_centers on members.rc_id = result_centers.id;
 
 create view vw_result_centers as select
     result_centers.id ,
-    result_centers."name" as center_name,
+    result_centers.name as center_name,
     result_centers.code,
     result_centers.acronym,
-    users."name" user_name,
-    result_centers.insert_date
+    users.name user_name,
+    result_centers.insert_date,
+    result_centers.cod_pay_rate_rules,
 from result_centers
 join users on result_centers.gst_id = users.id;
 
 create view vw_clients as select
     clients.id,
-    clients."name" as client_name,
+    clients.name as client_name,
     clients.cnpj
 from clients;
 
