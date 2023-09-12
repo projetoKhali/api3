@@ -49,14 +49,11 @@ alter table users alter column insert_date set default(CURRENT_TIMESTAMP);
 create table if not exists result_centers(
     id serial primary key,
     name varchar(255),
-    cod_pay_rate_rules integer,
     acronym varchar(255),
     gst_id int,
     insert_date timestamp CURRENT_TIMESTAMP,
     CONSTRAINT gst_id_fk FOREIGN KEY
     (gst_id) REFERENCES users (id)
-    CONSTRAINT cod_pay_rate_rules_fk foreign key(cod_pay_rate_rules)
-    REFERENCES pay_rate_rules(cod)
 );
 
 create table if not exists members(
@@ -84,7 +81,6 @@ create table if not exists appointments(
     insert_date timestamp default now(),
     apt_updt_id int,
     feedback varchar(255),
-    cod_pay_rate_rules integer,
     CONSTRAINT usr_id_fk foreign key
     (usr_id) references users(id),
     CONSTRAINT clt_id_fk foreign key
@@ -92,9 +88,7 @@ create table if not exists appointments(
     CONSTRAINT rc_id_fk foreign key
     (rc_id) references result_centers(id),
     CONSTRAINT apt_updt_fk foreign key
-    (apt_updt_id) references appointments,
-    CONSTRAINT cod_pay_rate_rules_fk foreign key
-    (cod_pay_rate_rules) REFERENCES pay_rate_rules(cod)
+    (apt_updt_id) references appointments
 );
 alter table appointments alter column insert_date set default(CURRENT_TIMESTAMP);
 drop view vw_appointments;
