@@ -1,4 +1,5 @@
 package com.khali.api3.domain.user;
+import java.sql.Timestamp;
 
 import jakarta.persistence.*;
 
@@ -30,7 +31,10 @@ public class User {
     @Column(unique=true)
     private String email;
 
-    @Column(unique=true)
     private String password;
+    private boolean active;
+    private Timestamp insertDate;
+    private Timestamp expiredDate;
+    
 
 }

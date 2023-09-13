@@ -1,13 +1,13 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import { Outlet } from 'react-router-dom';
-import SideMenu from '../components/SideMenu';
-import { SideMenuItem } from '../components/SideMenu';
+import SideMenu, { SideMenuItem } from '../components/SideMenu';
 import { GetSideMenuItems, UserType } from '../services/Access';
 
 export default function Layout(){
     const [menuItems, setMenuItems] = useState<SideMenuItem[]>([]);
-
+    const [userName, setUserName] = useState<string>("Paulina Cruz Granthon");
+    
     useEffect(() => {
         setMenuItems(
             // GetSideMenuItems(UserType.Employee)
@@ -18,7 +18,7 @@ export default function Layout(){
 
     return (
         <>
-            <SideMenu items={menuItems} />
+            <SideMenu items={menuItems} userName={userName}/>
             <div className="content-area" >
                 <Outlet />
             </div>
