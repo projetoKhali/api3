@@ -43,7 +43,7 @@ export default function SideMenu ({items, userName}: SideMenuProps) {
     const [showFullUserName, setShowFullUserName] = useState(false);
 
     useEffect(() => {
-      const maxUserNameLength = 20;
+      const maxUserNameLength = 15;
       if (userName.length > maxUserNameLength) {
         const shortenedName = userName.substring(0, maxUserNameLength - 3) + '...';
         setShortenedUserName(shortenedName);
