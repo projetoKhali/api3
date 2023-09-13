@@ -6,7 +6,7 @@ import { GetSideMenuItems, UserType } from '../services/Access';
 
 export default function Layout(){
     const [menuItems, setMenuItems] = useState<SideMenuItem[]>([]);
-    const [userName, setUserName] = useState<string>("User");
+    const [userName, setUserName] = useState<string>("Paulina Cruz Granthon");
     
     useEffect(() => {
         setMenuItems(
