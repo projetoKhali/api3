@@ -6,7 +6,6 @@
     background-color: #CACACA;
     margin-bottom: 15px;
 
-
 }
 li {
     padding-left: 0 !important;
@@ -30,10 +29,11 @@ li {
     width: 250px;
     border-radius: 10px;
     height: 55px;
+    margin-bottom: 35px;
 }
 
 #user {
-    padding-top: 6px;
+    padding-top: 30px;
     text-shadow: 0px 4px 4px #00000040;
     font-weight: bold !important;
     font-family: 'Inter', sans-serif;
