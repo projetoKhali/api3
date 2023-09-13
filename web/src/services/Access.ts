@@ -1,5 +1,4 @@
-import { SideMenuItem } from "../components/SideMenu"
-
+import { SideMenuItem } from "../components/SideMenu";
 export enum UserType {
     Employee,
     Manager,
@@ -33,6 +32,7 @@ export function GetSideMenuItems (userType: UserType) {
     }
     else if (userType === UserType.Admin) {
         return [
+
             {
                 label: "Usuários",
                 url: "#",
