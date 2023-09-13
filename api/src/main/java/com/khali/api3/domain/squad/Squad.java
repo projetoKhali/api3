@@ -26,7 +26,7 @@ public class Squad {
     @Column(unique=true)
     private String acronym;
 
-    private int managerId;
+    private Long managerId;
 
     private String managerName;
 
