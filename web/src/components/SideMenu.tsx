@@ -4,8 +4,8 @@ import type { MenuProps } from 'antd';
 import { Button, Menu } from 'antd';
 
 import {
-  MenuFoldOutlined,
-  MenuUnfoldOutlined,
+    MenuFoldOutlined,
+    MenuUnfoldOutlined,
 } from '@ant-design/icons';
 
 type MenuItem = Required<MenuProps>['items'][number];
@@ -23,10 +23,6 @@ function createItem (
     type,
   } as MenuItem;
 }
-//
-// const items: MenuItem[] = [
-//   getItem('Option 1', '1'),
-// ];
 
 export interface SideMenuItem {
     label: string,
@@ -38,7 +34,7 @@ export interface SideMenuProps {
 }
 
 export default function SideMenu ({items}: SideMenuProps) {
-    const [collapsed, setCollapsed] = useState(false);
+    const [collapsed, setCollapsed] = useState(true);
 
     const menuItems = items.map((item) => {
         return createItem(
@@ -57,14 +53,15 @@ export default function SideMenu ({items}: SideMenuProps) {
                 <Button type="primary" onClick={toggleCollapsed} style={{ marginBottom: 16 }}>
                     {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
                 </Button>
-                <Menu
-                    defaultSelectedKeys={['1']}
-                    defaultOpenKeys={[]}
-                    mode="inline"
-                    theme="dark"
-                    inlineCollapsed={collapsed}
-                    items={menuItems}
-                />
+                {collapsed ? null : (
+                    <Menu
+                        defaultSelectedKeys={['1']}
+                        mode="inline"
+                        theme="dark"
+                        inlineCollapsed={collapsed}
+                        items={menuItems}
+                    />
+                )}
             </div>
         </div>
     );
