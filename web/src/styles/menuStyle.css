@@ -33,6 +33,7 @@ li {
 }
 
 #user {
+    color: black;
     padding-top: 30px;
     text-shadow: 0px 4px 4px #00000040;
     font-weight: bold !important;
