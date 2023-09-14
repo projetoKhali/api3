@@ -12,6 +12,6 @@ import com.khali.api3.domain.user.User;
 
 @RepositoryRestResource
 public interface MembersRepository extends JpaRepository<Member, MemberPrimaryData>{
-    public List<Member> findByUser(User user);
-    public List<Member> findByResultCenter(ResultCenter resultCenter);
+    // public List<Member> findByUser(User user);
+    // public List<Member> findByResultCenter(ResultCenter resultCenter);
 }

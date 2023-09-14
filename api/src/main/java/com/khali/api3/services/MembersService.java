@@ -19,13 +19,13 @@ public class MembersService {
         return membersRepository.findAll();
     }
 
-    public List<Member> getMembersByUser(User user){
-        return membersRepository.findByUser(user);
-    }
-    
-    public List<Member> getMembersByResultCenter(ResultCenter resultCenter){
-        return membersRepository.findByResultCenter(resultCenter);
-    }
+    // public List<Member> getMembersByUser(User user){
+    //     return membersRepository.findByUser(user);
+    // }
+    // 
+    // public List<Member> getMembersByResultCenter(ResultCenter resultCenter){
+    //     return membersRepository.findByResultCenter(resultCenter);
+    // }
 
     public Member insertMember(Member member){
         return membersRepository.save(member);
