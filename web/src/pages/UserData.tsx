@@ -64,21 +64,7 @@ export default function UserData(){
           dataIndex: 'userType',
           key: 'userType',
         },
-        {
-          title: 'Ativo?',
-          dataIndex: 'active',
-          key: 'active',
-        },
-        {
-          title: 'Data de inserção',
-          dataIndex: 'insertDate',
-          key: 'insertDate',
-        },
-        {
-          title: 'Data de desligamento',
-          dataIndex: 'expireDate',
-          key: 'expireDate',
-        },
+
         {
           
           dataIndex: 'tags',
