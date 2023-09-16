@@ -2,9 +2,69 @@ import { Table } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import { PostUserData, postUser } from '../services/UserService';
 import '../styles/userTData.css';
-  
-export default function UserData(){
+
+
+interface UserData {
+  key: string;
+  name: string;
+  registration: string;
+  userType: string;
+  email: string;
+  tags: React.ReactNode;
+  password: string;
+  active: Boolean;
+  insertDate: Date;
+  expireDate: Date;
+}
+
+function UserForm(){
+    const [postUserName,setPostUserName] = useState<String>('');
+    const [postUserMatricula,setPostUserMatricula] = useState<String>('');
+    const [postUserEmail,setPostUserEmail] = useState<String>('');
+    const [postUserFuncao,setPostUserFuncao] = useState<String>('');
+
+
+    function handleNomeChange(event: any){
+      setPostUserName(event.target.value)
+    }
+
+    function handleMatriculaChange(event: any){
+      setPostUserMatricula(event.target.value)
+    }
+
+    function handleEmailChange(event: any){
+      setPostUserEmail(event.target.value)
+    }
+
+    function handleFuncaoChange(event: any){
+      setPostUserFuncao(event.target.value)
+    }
+
+    function handleSubmit(event: any) {
+      event.preventDefault();
+      postUser({
+        name: postUserName,
+        registration: postUserMatricula,
+        email: postUserEmail,
+        userType: postUserFuncao
+      } as PostUserData);
+
+    }
+
+    return (
+      <form onSubmit={handleSubmit}>
+          <input type="text" placeholder="Nome" onChange={handleNomeChange}/>
+          <input type="text" placeholder="Matrícula" onChange={handleMatriculaChange}/>
+          <input type="text" placeholder="E-mail" onChange={handleEmailChange}/>
+          <input type="text" placeholder="Função" onChange={handleFuncaoChange}/>
+          <button type="submit">Cadastrar</button>
+      </form>
+    )
+}
+
+export default function Users(){
     const [data, setData] = useState([]);
     const apiUrl = 'http://localhost:8080/users';
     useEffect(() =>{axios.get(apiUrl)
@@ -29,21 +89,8 @@ export default function UserData(){
       console.error('Erro:', error);
     })},[]);
     
-    interface DataType {
-        key: string;
-        name: string;
-        registration: string;
-        userType: string;
-        email: string;
-        tags: React.ReactNode;
-        password: string;
-        active: Boolean;
-        insertDate: Date;
-        expireDate: Date;
-      }
-
-    
-    const columns: ColumnsType<DataType> = [
+ 
+    const columns: ColumnsType<UserData> = [
         {
           title: 'Nome',
           dataIndex: 'name',
@@ -64,9 +111,7 @@ export default function UserData(){
           dataIndex: 'userType',
           key: 'userType',
         },
-
         {
-          
           dataIndex: 'tags',
           key: 'tags',
           render: (_,{tags}) => (data?
@@ -81,7 +126,7 @@ export default function UserData(){
     ];
     return (
         <div>
-            
+            <UserForm/>
             <Table dataSource={data} columns={columns} />
         </div>
     );
