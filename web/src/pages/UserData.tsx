@@ -2,6 +2,7 @@ import { Table } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import '../styles/userTData.css';
   
 export default function UserData(){
     const [data, setData] = useState([]);
@@ -44,20 +45,14 @@ export default function UserData(){
     
     const columns: ColumnsType<DataType> = [
         {
-          title: 'Name',
+          title: 'Nome',
           dataIndex: 'name',
           key: 'name',
-          render: (text) => <a>{text}</a>,
         },
         {
-          title: 'Registration',
+          title: 'Matrícula',
           dataIndex: 'registration',
           key: 'registration',
-        },
-        {
-          title: 'User type',
-          dataIndex: 'userType',
-          key: 'userType',
         },
         {
           title: 'Email',
@@ -65,22 +60,27 @@ export default function UserData(){
           key: 'email',
         },
         {
-          title: 'Active',
+          title: 'Função',
+          dataIndex: 'userType',
+          key: 'userType',
+        },
+        {
+          title: 'Ativo?',
           dataIndex: 'active',
           key: 'active',
         },
         {
-          title: 'Insert Date',
+          title: 'Data de inserção',
           dataIndex: 'insertDate',
           key: 'insertDate',
         },
         {
-          title: 'Expire Date',
+          title: 'Data de desligamento',
           dataIndex: 'expireDate',
           key: 'expireDate',
         },
         {
-          title: '',
+          
           dataIndex: 'tags',
           key: 'tags',
           render: (_,{tags}) => (data?
@@ -95,7 +95,7 @@ export default function UserData(){
     ];
     return (
         <div>
-            <h1>User Appointment</h1>
+            
             <Table dataSource={data} columns={columns} />
         </div>
     );
