@@ -19,7 +19,7 @@ import com.khali.api3.domain.user.User;
 import jakarta.persistence.EntityNotFoundException;
 
 @RestController
-@RequestMapping
+@RequestMapping("/users")
 public class UserController {
     private final UserRepository userRepository;
 
