@@ -3,7 +3,7 @@ import './App.css';
 import Client from './pages/Client';
 import Home from "./pages/Home";
 import Layout from './pages/Layout';
-import UserData from "./pages/UserData";
+import Users from "./pages/Users";
 
 
 function App() {
@@ -13,7 +13,7 @@ function App() {
                 <Route path="/" element={<Layout/>}>
                     <Route index element={<Home />} />
                     <Route path="client" element={<Client />} />
-                    <Route path="userData" element={<UserData/>} />
+                    <Route path="users" element={<Users/>} />
                 </Route>
             </Routes>
         </BrowserRouter>
