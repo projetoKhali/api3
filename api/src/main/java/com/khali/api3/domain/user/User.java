@@ -32,9 +32,8 @@ public class User {
     private String email;
 
     private String password;
-    private boolean active;
+    private Boolean active;
+
     private Timestamp insertDate;
     private Timestamp expiredDate;
-    
-
 }
