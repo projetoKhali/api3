@@ -9,7 +9,6 @@
   flex-direction: row;
   font-family: 'Inter', sans-serif;
   font-weight: bold;
-
 }
 
 .content-area {
@@ -18,4 +17,6 @@
   margin: 1em;
 }
 
-
+.sidemenu {
+   
+}
