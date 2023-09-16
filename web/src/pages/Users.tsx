@@ -1,30 +1,15 @@
 import { Table } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
-import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { PostUserData, postUser } from '../services/UserService';
+import { getUsers, PostUserData, postUser } from '../services/UserService';
 import '../styles/userTData.css';
+import UserData from '../shared/UserData';
 
-
-interface UserData {
-  key: string;
-  name: string;
-  registration: string;
-  userType: string;
-  email: string;
-  tags: React.ReactNode;
-  password: string;
-  active: Boolean;
-  insertDate: Date;
-  expireDate: Date;
-}
-
-function UserForm(){
-    const [postUserName,setPostUserName] = useState<String>('');
-    const [postUserMatricula,setPostUserMatricula] = useState<String>('');
-    const [postUserEmail,setPostUserEmail] = useState<String>('');
-    const [postUserFuncao,setPostUserFuncao] = useState<String>('');
-
+function UserForm({ callback }){
+    const [postUserName,setPostUserName] = useState<string>('');
+    const [postUserMatricula,setPostUserMatricula] = useState<string>('');
+    const [postUserEmail,setPostUserEmail] = useState<string>('');
+    const [postUserFuncao,setPostUserFuncao] = useState<string>('');
 
     function handleNomeChange(event: any){
       setPostUserName(event.target.value)
@@ -49,8 +34,8 @@ function UserForm(){
         registration: postUserMatricula,
         email: postUserEmail,
         userType: postUserFuncao
-      } as PostUserData);
-
+      } as PostUserData)
+      .then(() => callback());
     }
 
     return (
@@ -65,30 +50,16 @@ function UserForm(){
 }
 
 export default function Users(){
-    const [data, setData] = useState([]);
-    const apiUrl = 'http://localhost:8080/users';
-    useEffect(() =>{axios.get(apiUrl)
-    .then(response => {
-        const newdata = response.data.map((item: any) => ({
-        key: item.id.toString(), 
-        name: item.name? item.name : "N/A",
-        registration: item.registration? item.registration : "N/A",
-        userType: item.userType? item.userType : "N/A",
-        email: item.email? item.email : "N/A",
-        password: item.password? item.password : "N/A",
-        active: item.active? item.active : "N/A",
-        insertDate: item.insertDate? item.insertDate : "N/A",
-        expireDate: item.expireDate? item.expireDate : "N/A",
-        tags: <button>Ver</button> 
-        
-      }));
-      setData(newdata)
-      console.log(data);
-    })
-    .catch(error => {
-      console.error('Erro:', error);
-    })},[]);
-    
+    const [data, setData] = useState<UserData[]>([]);
+    const requestUsers = () => {
+        getUsers().then(usersResponse =>
+            setData(usersResponse)
+        );
+    }
+    useEffect(() => {
+        requestUsers()
+        console.log('users retornados do request:', data);
+    }, []);
  
     const columns: ColumnsType<UserData> = [
         {
@@ -114,20 +85,17 @@ export default function Users(){
         {
           dataIndex: 'tags',
           key: 'tags',
-          render: (_,{tags}) => (data?
-                <>
-                   {tags}
-                </>
-           : <> </>
-           )
-         
-
+          render: (_,data) => (data? <button>Ver</button> : null)
         },
     ];
     return (
         <div>
-            <UserForm/>
-            <Table dataSource={data} columns={columns} />
+            <UserForm callback={requestUsers}/>
+            {data ? (
+                <Table dataSource={data} columns={columns} />
+            ) : (
+                null
+            )}
         </div>
     );
     
