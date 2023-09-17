@@ -20,6 +20,7 @@ services:
     build:
       context: ./api/
       dockerfile: Dockerfile
+    restart: always
     depends_on:
       - khali_api3_db
     links:
