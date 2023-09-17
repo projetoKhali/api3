@@ -39,11 +39,13 @@ public class UserController {
             .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + id));
     }
 
+@Transactional
     @PostMapping
     public User createUser(@RequestBody User user) {
         return userRepository.save(user);
     }
 
+@Transactional
     @PutMapping("/{id}")
     public User updateUser(@PathVariable Long id, @RequestBody User userDetails) {
         User user = userRepository.findById(id)
