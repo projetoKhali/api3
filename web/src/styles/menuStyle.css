@@ -3,7 +3,7 @@
 .ant-menu-item.ant-menu-item-only-child {
     font-family: 'Inter', sans-serif;
     padding-left: 0;
-    background-color: #CACACA;
+    background-color: #D9D9D9;
     margin-bottom: 15px;
 
 }
@@ -35,7 +35,6 @@ li {
 #user {
     color: black;
     padding-top: 30px;
-    text-shadow: 0px 4px 4px #00000040;
     font-weight: bold !important;
     font-family: 'Inter', sans-serif;
 

@@ -17,7 +17,7 @@ import com.khali.api3.services.UserService;
 public class Api3Application {
 
 	public static void main(String[] args) {
-		// SpringApplication.run(Api3Application.class, args);
+		SpringApplication.run(Api3Application.class, args);
 		ConfigurableApplicationContext context = SpringApplication.run(Api3Application.class, args);
 
         ClientService clientService = context.getBean(ClientService.class);
