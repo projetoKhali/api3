@@ -7,7 +7,7 @@ export interface PostResultCenterData {
     name: string,
     code: string,
     acronym: string,
-    insertData: string
+    insertDate: string
 }
 
 export async function getResultCenters (): Promise<ResultCenterData[]> {

@@ -6,7 +6,7 @@ import '../shared/ResultCenterData';
 import ResultCenterData from '../shared/ResultCenterData';
 import '../styles/userTData.css';
 
-function UserForm({ callback }){
+function UserForm({ callback }: { callback: () => void }){
     const [postResultCenterName,setPostResultCenterName] = useState<string>('');
     const [postResultCenterCode,setPostResultCenterCode] = useState<string>('');
     const [postResultCenterAcronym,setPostResultCenterAcronym] = useState<string>('');
@@ -34,7 +34,7 @@ function UserForm({ callback }){
         name: postResultCenterName,
         code: postResultCenterCode,
         acronym: postResultCenterAcronym,
-        insertData: postResultCenterInsertDate
+        insertDate: postResultCenterInsertDate,
       } as PostResultCenterData)
       .then(() => callback());
     }
@@ -70,18 +70,18 @@ export default function Users(){
         },
         {
           title: 'Código',
-          dataIndex: 'Código',
-          key: 'Código',
+          dataIndex: 'code',
+          key: 'code',
         },
         {
           title: 'Sigla',
-          dataIndex: 'Sigla',
-          key: 'Sigla',
+          dataIndex: 'acronym',
+          key: 'acronym',
         },
         {
-          title: 'E-mail',
-          dataIndex: 'userType',
-          key: 'userType',
+          title: 'Data de cadastro',
+          dataIndex: 'insertDate',
+          key: 'insertDate',
         },
         {
           dataIndex: 'tags',
@@ -91,7 +91,7 @@ export default function Users(){
     ];
     return (
         <div>
-            <UserForm callback={requestUsers}/>
+            <UserForm callback={requestResultCenters}/>
             {data ? (
                 <Table dataSource={data} columns={columns} />
             ) : (

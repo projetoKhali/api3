@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.khali.api3.repositories.UserRepository;
 import com.khali.api3.domain.user.User;
+import com.khali.api3.repositories.UserRepository;
 
 import jakarta.persistence.EntityNotFoundException;
 

@@ -1,11 +1,11 @@
 import { Table } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import { useEffect, useState } from 'react';
-import { getUsers, PostUserData, postUser } from '../services/UserService';
-import '../styles/userTData.css';
+import { PostUserData, getUsers, postUser } from '../services/UserService';
 import UserData from '../shared/UserData';
+import '../styles/userTData.css';
 
-function UserForm({ callback }){
+function UserForm({ callback }: { callback: () => void }){
     const [postUserName,setPostUserName] = useState<string>('');
     const [postUserMatricula,setPostUserMatricula] = useState<string>('');
     const [postUserEmail,setPostUserEmail] = useState<string>('');
