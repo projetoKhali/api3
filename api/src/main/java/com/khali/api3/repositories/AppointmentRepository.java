@@ -4,6 +4,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 import com.khali.api3.domain.appointment.Appointment;
+import java.util.List;
+import java.util.Optional;
+
+import com.khali.api3.domain.resultCenter.ResultCenter;
+
 
 
 // manipulação das tabelas
@@ -15,7 +20,8 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long>{
         save(apt);
     }
 
-    
-    
+    public List<Appointment> findByResultCenter(ResultCenter resultCenter);
+    public List<Appointment> findAll();
+    public Optional<Appointment> findById(Long id);
 }
 
