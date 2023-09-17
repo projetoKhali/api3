@@ -1,9 +1,6 @@
 FROM node:alpine
-
-WORKDIR /usr/src/web
-
+WORKDIR /srv/web
 COPY package*.json .
-
-
-
-
+RUN npm i
+COPY . .
+CMD ["npm", "run", "dev"]
