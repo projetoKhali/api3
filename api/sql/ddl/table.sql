@@ -43,7 +43,6 @@ create table if not exists users(
     insert_date timestamp default now(),
     expire_date timestamp
 );
-alter table users alter column insert_date set default(CURRENT_TIMESTAMP);
 
 
 create table if not exists result_centers(
@@ -90,7 +89,6 @@ create table if not exists appointments(
     CONSTRAINT apt_updt_fk foreign key
     (apt_updt_id) references appointments
 );
-alter table appointments alter column insert_date set default(CURRENT_TIMESTAMP);
 drop view vw_appointments;
 alter table appointments alter start_date type date;
 alter table appointments alter end_date type date;
