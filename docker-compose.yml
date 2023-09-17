@@ -1,14 +1,60 @@
 version: "3.4"
 services:
-  web:
-    image: node:alpine
-    container_name: web
-    entrypoint: /bin/sh
+
+  # PostgreSQL database
+  khali_api3_db:
+    container_name: khali_api3_db
+    image: postgres:14.1-alpine
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
     ports:
-      - 8000:8000
+      - 9000:5432
+    volumes:
+      - db:/var/lib/postgresql:data
+
+  # Spring-Boot REST API
+  khali_api3_api:
+    container_name: khali_api3_api
+    build:
+      context: ./api/
+      dockerfile: Dockerfile
+    depends_on:
+      - khali_api3_db
+    links:
+      - khali_api3_db 
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://khali_api3_db:5432/postgres
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+    ports:
+      - 8000:8080
+    volumes:
+      - type: bind
+        source: ./api/
+        target: /srv/api
+    tty: true
+
+  # TypescriptReact Front End
+  khali_api3_web:
+    container_name: khali_api3_web
+    build:
+      context: ./web/
+      dockerfile: Dockerfile
+    depends_on:
+      - khali_api3_api
+    links:
+      - khali_api3_api
+    ports:
+      - 7000:7000
     working_dir: /srv/web
     volumes:
       - type: bind
         source: ./web/
         target: /srv/web
     tty: true
+
+volumes:
+  db:
+    driver: local
