@@ -1,0 +1,14 @@
+version: "3.4"
+services:
+  web:
+    image: node:alpine
+    container_name: web
+    entrypoint: /bin/sh
+    ports:
+      - 8000:8000
+    working_dir: /srv/web
+    volumes:
+      - type: bind
+        source: ./web/
+        target: /srv/web
+    tty: true
