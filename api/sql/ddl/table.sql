@@ -1,4 +1,3 @@
-
 CREATE TYPE Apt_type AS ENUM (
     'Overtime',
     'OnNotice'
