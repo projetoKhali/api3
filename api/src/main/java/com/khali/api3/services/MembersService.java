@@ -8,12 +8,9 @@ import org.springframework.stereotype.Service;
 
 import com.khali.api3.domain.client.Client;
 import com.khali.api3.domain.member.Member;
-<<<<<<< HEAD
 import com.khali.api3.domain.member.MemberPrimaryData;
 import com.khali.api3.domain.resultCenter.ResultCenter;
 import com.khali.api3.domain.user.User;
-=======
->>>>>>> origin/telas
 import com.khali.api3.repositories.MembersRepository;
 
 @Service
@@ -25,7 +22,6 @@ public class MembersService {
         return membersRepository.findAll();
     }
 
-<<<<<<< HEAD
     public Member saveMember (Member member) {
         return membersRepository.save(member);
     }
@@ -56,17 +52,6 @@ public class MembersService {
         MemberPrimaryData memberPK = new MemberPrimaryData(user, resultCenter);
         Member member = new Member(memberPK);
         System.out.println(user.getId()+" | "+resultCenter.getId());
-=======
-    // public List<Member> getMembersByUser(User user){
-    //     return membersRepository.findByUser(user);
-    // }
-    
-    // public List<Member> getMembersByResultCenter(ResultCenter resultCenter){
-    //     return membersRepository.findByResultCenter(resultCenter);
-    // }
-
-    public Member insertMember(Member member){
->>>>>>> origin/telas
         return membersRepository.save(member);
     }
 }
