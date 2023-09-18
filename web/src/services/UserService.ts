@@ -33,7 +33,13 @@ export async function postUser(user: PostUserData){
         },
         body: JSON.stringify(user)
     }).then(response=> response.json())
-    .then((data)=> console.log(data))
+    .then((data)=> {
+        console.log(data);
+        fetch(`${API_URL}/permissions/${data.id}`, {
+            method: 'GET',
+            headers: { 'Content-Type': 'applicataion/json' }
+        })
+    })
     .catch(error => console.error(error));
     
 }
