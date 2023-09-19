@@ -1,8 +1,9 @@
 import { Table } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import { useEffect, useState } from 'react';
-import { PostUserData, getUsers, postUser } from '../services/UserService';
-import UserData from '../shared/UserData';
+import { getUsers, postUser } from '../services/UserService';
+import User from '../models/User';
+import { PostUserSchema } from '../schemas/User';
 import '../styles/userTData.css';
 
 function UserForm({ callback }: { callback: () => void }){
@@ -11,30 +12,30 @@ function UserForm({ callback }: { callback: () => void }){
     const [postUserEmail,setPostUserEmail] = useState<string>('');
     const [postUserFuncao,setPostUserFuncao] = useState<string>('');
 
-    function handleNomeChange(event: any){
+    function handleNomeChange(event: React.ChangeEvent<HTMLInputElement>){
       setPostUserName(event.target.value)
     }
 
-    function handleMatriculaChange(event: any){
+    function handleMatriculaChange(event: React.ChangeEvent<HTMLInputElement>){
       setPostUserMatricula(event.target.value)
     }
 
-    function handleEmailChange(event: any){
+    function handleEmailChange(event: React.ChangeEvent<HTMLInputElement>){
       setPostUserEmail(event.target.value)
     }
 
-    function handleFuncaoChange(event: any){
+    function handleFuncaoChange(event: React.ChangeEvent<HTMLInputElement>){
       setPostUserFuncao(event.target.value)
     }
 
-    function handleSubmit(event: any) {
+    function handleSubmit(event: React.ChangeEvent<HTMLFormElement>) {
       event.preventDefault();
       postUser({
         name: postUserName,
         registration: postUserMatricula,
         email: postUserEmail,
         userType: postUserFuncao
-      } as PostUserData)
+      } as PostUserSchema)
       .then(() => callback());
     }
 
@@ -50,18 +51,19 @@ function UserForm({ callback }: { callback: () => void }){
 }
 
 export default function Users(){
-    const [data, setData] = useState<UserData[]>([]);
+    const [data, setData] = useState<User[]>([]);
     const requestUsers = () => {
-        getUsers().then(usersResponse =>
-            setData(usersResponse)
-        );
+        getUsers()
+        .then(usersResponse => {
+            setData(usersResponse);
+            console.log('users retornados do request:', usersResponse);
+        });
     }
     useEffect(() => {
         requestUsers()
-        console.log('users retornados do request:', data);
     }, []);
- 
-    const columns: ColumnsType<UserData> = [
+
+    const columns: ColumnsType<User> = [
         {
           title: 'Nome',
           dataIndex: 'name',
@@ -98,6 +100,4 @@ export default function Users(){
             )}
         </div>
     );
-    
-
 }

@@ -2,8 +2,7 @@ import { Table } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import { useEffect, useState } from 'react';
 import { PostResultCenterData, getResultCenters, postResultCenter } from '../services/ResultCenter';
-import '../shared/ResultCenterData';
-import ResultCenterData from '../shared/ResultCenterData';
+import ResultCenterData from '../models/ResultCenterData';
 import '../styles/userTData.css';
 
 function UserForm({ callback }: { callback: () => void }){
