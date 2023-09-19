@@ -35,10 +35,11 @@ export async function postUser(user: PostUserData){
     }).then(response=> response.json())
     .then((data)=> {
         console.log(data);
-        fetch(`${API_URL}/permissions/${data.id}`, {
+        fetch(`${API_URL}/${data.id}/permissions`, {
             method: 'GET',
             headers: { 'Content-Type': 'applicataion/json' }
-        })
+        }).then(data => console.log(data.json()))
+        .then(data => console.log(data))
     })
     .catch(error => console.error(error));
     
