@@ -2,28 +2,19 @@ package com.khali.api3;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.ConfigurableApplicationContext;
-
-import com.khali.api3.domain.client.Client;
-import com.khali.api3.domain.resultCenter.ResultCenter;
-import com.khali.api3.domain.user.User;
-import com.khali.api3.services.ClientService;
-import com.khali.api3.services.MembersService;
-import com.khali.api3.services.ResultCenterService;
-import com.khali.api3.services.UserService;
 
 
 @SpringBootApplication
 public class Api3Application {
 
 	public static void main(String[] args) {
-		// SpringApplication.run(Api3Application.class, args);
-		ConfigurableApplicationContext context = SpringApplication.run(Api3Application.class, args);
+		SpringApplication.run(Api3Application.class, args);
+		// ConfigurableApplicationContext context = SpringApplication.run(Api3Application.class, args);
 
-        ClientService clientService = context.getBean(ClientService.class);
-		UserService userService = context.getBean(UserService.class);
-		ResultCenterService rcService = context.getBean(ResultCenterService.class);
-		MembersService membersService = context.getBean(MembersService.class);
+        // ClientService clientService = context.getBean(ClientService.class);
+		// UserService userService = context.getBean(UserService.class);
+		// ResultCenterService rcService = context.getBean(ResultCenterService.class);
+		// MembersService membersService = context.getBean(MembersService.class);
 
 		// Client cliente = new Client();
         // cliente.setCnpj("44.434.444/041-48");
@@ -41,17 +32,17 @@ public class Api3Application {
 		// rcService.saveResultCenter(resultCenter);
 		// clientService.saveClient(cliente);
 		// clientService.deleteClientByCnpj("44.444.444/002-45");
-		User user2 = userService.findUserByRegistration("13");
-		ResultCenter rc2 = rcService.findResultCenterByCode("14");
+		// User user2 = userService.findUserByRegistration("13");
+		// ResultCenter rc2 = rcService.findResultCenterByCode("14");
 
 		// System.out.println("user2: " + user2.getId() + " | " + rc2.getId());
 		
-		membersService.insertMember(user2, rc2);
+		// membersService.insertMember(user2, rc2);
 		
 
 
 		
-		context.close();
+		// context.close();
 
 		
 	}
