@@ -3,7 +3,7 @@ import './App.css';
 import Client from './pages/Client';
 import Home from "./pages/Home";
 import Layout from './pages/Layout';
-import ResultCenter from './pages/ResultCenter';
+import ResultCenter from './pages/ResultCenters';
 import Users from "./pages/Users";
 
 
