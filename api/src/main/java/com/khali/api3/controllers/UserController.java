@@ -56,7 +56,7 @@ public class UserController {
             .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + id));
     }
 
-    @GetMapping("permissions/{id}")
+    @GetMapping("/{id}/permissions")
     public List<Permission> getUserPermissions(@PathVariable Long id) {
         List<Permission> permissions = new ArrayList<Permission>();
         User user = userRepository.findById(id)
@@ -66,8 +66,8 @@ public class UserController {
             permissions.add(Permission.Register);
             permissions.add(Permission.Report);
         }
-        if (new MembersService().getMembersByUser(user).size() > 0) permissions.add(Permission.Appoint);
-        if (new ResultCenterService().findByGestorID(id).size() > 0) permissions.add(Permission.Validate);
+        if (membersService.getMembersByUser(user).size() > 0) permissions.add(Permission.Appoint);
+        if (resultCenterService.findByGestorID(id).size() > 0) permissions.add(Permission.Validate);
         return permissions;
     }
 
