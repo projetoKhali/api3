@@ -13,7 +13,7 @@ export interface PostUserData {
 export async function getUsers (): Promise<UserData[]> {
     const response = await axios.get(API_URL, {});
     return await response.data.map((item: any) => ({
-        key: item.id.toString(), 
+        key: item.id.toString(),
         name: item.name? item.name : "N/A",
         registration: item.registration? item.registration : "N/A",
         userType: item.userType? item.userType : "N/A",
@@ -32,15 +32,7 @@ export async function postUser(user: PostUserData){
             "Content-Type": 'application/json'
         },
         body: JSON.stringify(user)
-    }).then(response=> response.json())
-    .then((data)=> {
-        console.log(data);
-        fetch(`${API_URL}/${data.id}/permissions`, {
-            method: 'GET',
-            headers: { 'Content-Type': 'applicataion/json' }
-        }).then(data => console.log(data.json()))
-        .then(data => console.log(data))
     })
+    .then(response => response.json())
     .catch(error => console.error(error));
-    
 }
