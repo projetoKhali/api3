@@ -31,9 +31,18 @@ public class UserController {
     @Autowired
     private final UserRepository userRepository;
 
+    @Autowired private final MembersService membersService;
+    @Autowired private final ResultCenterService resultCenterService;
+
     @Autowired
-    public UserController(UserRepository userRepository) {
+    public UserController(
+        UserRepository userRepository,
+        MembersService membersService,
+        ResultCenterService resultCenterService
+    ) {
         this.userRepository = userRepository;
+        this.membersService = membersService;
+        this.resultCenterService = resultCenterService;
     }
 
     @GetMapping
