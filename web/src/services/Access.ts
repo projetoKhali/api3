@@ -49,13 +49,19 @@ const PermissionSideMenuItemMap: Record<string, SideMenuItem[]> = {
 }
 
 export async function getUserSideMenuItems (id: number): Promise<SideMenuItem[]> {
-    const response = await axios.get(`${API_URL}/users/${id}/permissions/`, {});
-    const items: SideMenuItem[] = [];
-    response.data.forEach((permission: string) => {
-        const sideMenuItemsOfPermission: SideMenuItem[] | undefined = PermissionSideMenuItemMap[permission];
-        if (sideMenuItemsOfPermission) {
-            items.push(...sideMenuItemsOfPermission);
-        }
-    });
-    return items;
+    return await axios.get(`${API_URL}/users/${id}/permissions`, {})
+    .then(permissionsResponse => {
+        console.log(permissionsResponse);
+        const items: SideMenuItem[] = [];
+        permissionsResponse.data.forEach((permission: string) => {
+            console.log("permission:", permission);
+            const sideMenuItemsOfPermission: SideMenuItem[] | undefined = PermissionSideMenuItemMap[permission];
+            console.log("sideMenuItemsOfPermission:", sideMenuItemsOfPermission);
+            if (sideMenuItemsOfPermission) {
+                items.push(...sideMenuItemsOfPermission);
+            }
+        });
+        console.log("items:", items);
+        return items;
+    })
 }
