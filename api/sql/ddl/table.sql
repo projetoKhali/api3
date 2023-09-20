@@ -1,3 +1,4 @@
+
 CREATE TYPE Apt_type AS ENUM (
     'Overtime',
     'OnNotice'
@@ -17,7 +18,7 @@ CREATE TYPE Apt_status AS ENUM (
 
 create table if not exists pay_rate_rules(
     id serial primary key,
-    code int UNIQUE,
+    code int unique,
     hour_duration numeric,
     pay_rate numeric,
     appointment_type Apt_type,
@@ -27,14 +28,14 @@ create table if not exists pay_rate_rules(
 
 create table if not exists clients(
     id serial primary key,
-    name varchar(255),
-    cnpj varchar(255) UNIQUE
+    "name" varchar(255),
+    cnpj varchar(255) unique
 );
 
 create table if not exists users(
     id serial primary key,
     registration varchar(255),
-    name varchar(255),
+    "name" varchar(255),
     user_type User_type,
     email varchar(255) unique,
     "password" varchar(255),
@@ -43,13 +44,13 @@ create table if not exists users(
     expire_date timestamp
 );
 
-
 create table if not exists result_centers(
     id serial primary key,
-    name varchar(255),
+    "name" varchar(255),
+    code int,
     acronym varchar(255),
     gst_id int,
-    insert_date timestamp CURRENT_TIMESTAMP,
+    insert_date timestamp default now(),
     CONSTRAINT gst_id_fk FOREIGN KEY
     (gst_id) REFERENCES users (id)
 );
@@ -62,7 +63,7 @@ create table if not exists members(
     CONSTRAINT usr_id_fk FOREIGN key
     (usr_id) REFERENCES users (id),
     CONSTRAINT rc_id_fk FOREIGN key
-    (rc_id) REFERENCES resultcenters (id)
+    (rc_id) REFERENCES result_centers (id)
 );
 
 create table if not exists appointments(
@@ -79,6 +80,7 @@ create table if not exists appointments(
     insert_date timestamp default now(),
     apt_updt_id int,
     feedback varchar(255),
+    
     CONSTRAINT usr_id_fk foreign key
     (usr_id) references users(id),
     CONSTRAINT clt_id_fk foreign key
@@ -88,11 +90,3 @@ create table if not exists appointments(
     CONSTRAINT apt_updt_fk foreign key
     (apt_updt_id) references appointments
 );
-drop view vw_appointments;
-alter table appointments alter start_date type date;
-alter table appointments alter end_date type date;
-
-
-
-
-
