@@ -58,19 +58,23 @@ public class UserController {
 
     @GetMapping("/{id}/permissions")
     public List<Permission> getUserPermissions(@PathVariable Long id) {
-        List<Permission> permissions = new ArrayList<Permission>();
-        System.out.println("user not found");
-        User user = userRepository.findById(id)
-            .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + id));
-        System.out.println("user found");
-        if (user.getUserType().equals(UserType.Admin)) {
-            permissions.add(Permission.FullAccess);
-            permissions.add(Permission.Register);
-            permissions.add(Permission.Report);
+        try {
+            List<Permission> permissions = new ArrayList<Permission>();
+            User user = userRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + id));
+            if (user.getUserType().equals(UserType.Admin)) {
+                permissions.add(Permission.FullAccess);
+                permissions.add(Permission.Register);
+                permissions.add(Permission.Report);
+            }
+            if (membersService.getMembersByUser(user).size() > 0) permissions.add(Permission.Appoint);
+            if (resultCenterService.findByGestorID(id).size() > 0) permissions.add(Permission.Validate);
+            for (Permission permission : permissions) System.out.println(permission);
+            return permissions;
+        } catch (Error e) {
+            e.printStackTrace();
+            return new ArrayList<Permission>();
         }
-        if (membersService.getMembersByUser(user).size() > 0) permissions.add(Permission.Appoint);
-        if (resultCenterService.findByGestorID(id).size() > 0) permissions.add(Permission.Validate);
-        return permissions;
     }
 
     @PostMapping
