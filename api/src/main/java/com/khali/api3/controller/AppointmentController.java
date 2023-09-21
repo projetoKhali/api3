@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.khali.api3.domain.appointment.Appointment;
+import com.khali.api3.domain.user.User;
 import com.khali.api3.repositories.AppointmentRepository;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -31,6 +32,11 @@ public class AppointmentController {
     @GetMapping
     public List<Appointment> getAllAppointments() {
         return appointmentRepository.findAll();
+    }
+
+    @GetMapping
+    public List<Appointment> getAppointmentsByUser(User user) {
+        return appointmentRepository.findAppointmentByUser(user.getId());
     }
 
     @GetMapping("/{id}")
