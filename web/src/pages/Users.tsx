@@ -6,7 +6,6 @@ import UserData from '../shared/UserData';
 import '../styles/userTData.css';
 
 function UserForm({ callback }: { callback: () => void }){
-    const [postUserName,setPostUserName] = useState<string>('');
     const [postUserMatricula,setPostUserMatricula] = useState<string>('');
     const [postUserEmail,setPostUserEmail] = useState<string>('');
     const [postUserFuncao,setPostUserFuncao] = useState<string>('');

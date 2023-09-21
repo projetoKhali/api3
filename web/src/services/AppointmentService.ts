@@ -3,11 +3,11 @@ import AppointmentData from '../shared/AppointmentData';
 
 const API_URL = 'http://127.0.0.1:8080/Appointments';
 
-export interface PostApponintmentData {
-    user: string;
+export interface PostAppointmentData {
     type: string;
     startDate: string;
     endDate: string;
+    resultCenter: string;
 }
 
 export async function getAppointments () : Promise<AppointmentData[]> {
@@ -28,17 +28,18 @@ export async function getAppointments () : Promise<AppointmentData[]> {
         updateAppointment: item.updateAppointment? item.updateAppointment : "N/A",
     })) as AppointmentData[];
 
-    export async function postAppointment(appointment: PostApponintmentData) {
-        return await fetch(API_URL, {
-            method: 'POST',
-        headers: {
-            "Content-Type": 'application/json'
-        },
-        body: JSON.stringify(appointment)
-    }).then(response=> response.json())
-    .then((data) => console.log(data))
-    .catch(error => console.log(error));
-        
-    }
+    
+}
+
+export async function postAppointment(appointment: PostAppointmentData) {
+    return await fetch(API_URL, {
+        method: 'POST',
+    headers: {
+        "Content-Type": 'application/json'
+    },
+    body: JSON.stringify(appointment)
+}).then(response=> response.json())
+.then((data) => console.log(data))
+.catch(error => console.log(error));
     
 }
