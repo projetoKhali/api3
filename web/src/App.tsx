@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import Layout from './pages/Layout';
 import ResultCenter from './pages/ResultCenter';
 import Users from "./pages/Users";
+import Appointments from "./pages/Appointments";
 
 
 function App() {
@@ -13,8 +14,9 @@ function App() {
             <Routes>
                 <Route path="/" element={<Layout/>}>
                     <Route index element={<Home />} />
-                    <Route path="client" element={<Client />} />
+                    <Route path="appointments" element={<Appointments/>} />
                     <Route path="users" element={<Users/>} />
+                    <Route path="client" element={<Client />} />
                     <Route path="ResultCenter" element={<ResultCenter/>} />
                 </Route>
             </Routes>
