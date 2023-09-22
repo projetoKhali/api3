@@ -1,104 +1,80 @@
 import { Table } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import { useEffect, useState } from 'react';
-import { PostAppointmentData, getAppointments, postAppointment } from '../services/AppointmentService';
-import AppointmentData from '../shared/AppointmentData';
-import '../styles/userTData.css';
+import AppointmentForm from '../components/AppointmentForm';
+import { Appointment } from '../schemas/Appointment';
+import { getAppointments } from '../services/AppointmentService';
 
-function AppointmentForm({ callback }: { callback: () => void }){
-    const [postAppointmentType,setPostAppointmentType] = useState<string>('');
-    const [postAppointmentStartDate,setPostAppointmentStartDate] = useState<string>('');
-    const [postAppointmentEndDate,setPostAppointmentEndDate] = useState<string>('');
-    const [postAppointmentResultCenter,setPostAppointmentResultCenter] = useState<string>('');
+export default function Appointments () {
+    const [appointments, setAppointments] = useState<Appointment[]>([]);
 
-    function handleTypeChange(event: any){
-        setPostAppointmentType(event.target.value)
-    }
-
-    function handleStartDateChange(event: any){
-        setPostAppointmentStartDate(event.target.value)
-    }
-
-    function handleEndDateChange(event: any){
-        setPostAppointmentEndDate(event.target.value)
-    }
-
-    function handleResultCenterChange(event: any){
-        setPostAppointmentResultCenter(event.target.value)
-    }
-
-    function handleSubmit(event: any) {
-    event.preventDefault();
-    postAppointment({
-        type: postAppointmentType,
-        startDate: postAppointmentStartDate,
-        endDate: postAppointmentEndDate,
-        resultCenter: postAppointmentResultCenter
-    } as PostAppointmentData)
-    .then(() => callback());
-    }
-
-    return (
-    <form onSubmit={handleSubmit}>
-        <input type="text" placeholder="Tipo" onChange={handleTypeChange}/>
-        <input type="text" placeholder="Data inicio" onChange={handleStartDateChange}/>
-        <input type="text" placeholder="Data fim" onChange={handleEndDateChange}/>
-        <input type="text" placeholder="Centro de resultado" onChange={handleResultCenterChange}/>
-        <button type="submit">Cadastrar</button>
-    </form>
-    )
-}
-
-export default function Users(){
-    const [data, setData] = useState<AppointmentData[]>([]);
     const requestAppointments = () => {
-        getAppointments().then(ApponitmentResponse =>
-            setData(ApponitmentResponse)
+        getAppointments().then(appointmentsResponse =>
+            setAppointments(appointmentsResponse)
         );
-    }
+    };
+
     useEffect(() => {
         requestAppointments()
-        console.log('users retornados do request:', data);
     }, []);
 
-    const columns: ColumnsType<AppointmentData> = [
+    const columns: ColumnsType<Appointment> = [
         {
-        title: 'Tipo',
-        dataIndex: 'type',
-        key: 'name',
+            title: 'Solicitante',
+            dataIndex: 'requester',
+            key: 'requester',
         },
         {
-        title: 'Data inicio',
-        dataIndex: 'startDate',
-        key: 'startDate',
+            title: 'Tipo',
+            dataIndex: 'type',
+            key: 'type',
         },
         {
-        title: 'Data fim',
-        dataIndex: 'endDate',
-        key: 'endDate',
+            title: 'Início',
+            dataIndex: 'startDate',
+            key: 'startDate',
         },
         {
-        title: 'Centro de resultado',
-        dataIndex: 'resultCenter',
-        key: 'resultCenter',
+            title: 'Fim',
+            dataIndex: 'endDate',
+            key: 'endDate',
         },
         {
-        title: 'Feedback',
-        dataIndex: 'tags',
-        key: 'tags',
-        render: (_,data) => (data? <button>Ver</button> : null)
+            title: 'CR',
+            dataIndex: 'resultCenter',
+            key: 'resultCenter',
         },
-    ];
+        {
+            title: 'Cliente',
+            dataIndex: 'client',
+            key: 'client',
+        },
+        {
+            title: 'Projeto',
+            dataIndex: 'project',
+            key: 'project',
+        },
+        {
+            title: 'Justificativa',
+            dataIndex: 'justification',
+            key: 'justification',
+        },
+        {
+            title: 'Status',
+            dataIndex: 'status',
+            key: 'status',
+        },
+    ]
+
     return (
         <div>
-            <AppointmentForm callback={requestAppointments}/>
-            {data ? (
-                <Table dataSource={data} columns={columns} />
+            <AppointmentForm callback={requestAppointments} />
+            {appointments? (
+                <Table dataSource={appointments} columns={columns} />
             ) : (
                 null
             )}
+
         </div>
     );
-    
-
 }

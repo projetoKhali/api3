@@ -14,10 +14,10 @@ function App() {
             <Routes>
                 <Route path="/" element={<Layout/>}>
                     <Route index element={<Home />} />
-                    <Route path="client" element={<Client />} />
-                    <Route path="users" element={<Users/>} />
-                    <Route path="resultCenters" element={<ResultCenter/>} />
                     <Route path="appointments" element={<Appointments/>} />
+                    <Route path="users" element={<Users/>} />
+                    <Route path="client" element={<Client />} />
+                    <Route path="ResultCenter" element={<ResultCenter/>} />
                 </Route>
             </Routes>
         </BrowserRouter>
