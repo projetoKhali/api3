@@ -10,6 +10,7 @@ public class Api3Application {
 	public static void main(String[] args) {
 		SpringApplication.run(Api3Application.class, args);
 		// ConfigurableApplicationContext context = SpringApplication.run(Api3Application.class, args);
+		// ConfigurableApplicationContext context = SpringApplication.run(Api3Application.class, args);
 
 		// // Obtenha uma instância do serviço ClientService
         // ClientService clientService = context.getBean(ClientService.class);
