@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { getAppointments, postAppointment } from '../services/AppointmentService';
 import { PostAppointment } from '../schemas/Appointment';
+import { postAppointment } from '../services/AppointmentService';
 
 export default function AppointmentForm ({ callback }: { callback: () => void }) {
     const [postAppointmentRequester, setPostAppointmentRequester] = useState<string>('');
