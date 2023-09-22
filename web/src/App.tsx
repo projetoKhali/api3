@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import './App.css';
+import Appointments from "./pages/Appointments";
 import Client from './pages/Client';
 import Home from "./pages/Home";
 import Layout from './pages/Layout';
@@ -15,7 +16,8 @@ function App() {
                     <Route index element={<Home />} />
                     <Route path="client" element={<Client />} />
                     <Route path="users" element={<Users/>} />
-                    <Route path="ResultCenter" element={<ResultCenter/>} />
+                    <Route path="resultCenters" element={<ResultCenter/>} />
+                    <Route path="appointments" element={<Appointments/>} />
                 </Route>
             </Routes>
         </BrowserRouter>

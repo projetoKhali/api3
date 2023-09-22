@@ -3,7 +3,7 @@ import type { ColumnsType } from 'antd/es/table';
 import { useEffect, useState } from 'react';
 import { PostAppointmentData, getAppointments, postAppointment } from '../services/AppointmentService';
 import AppointmentData from '../shared/AppointmentData';
-import '../styles/AppointmentTData.css';
+import '../styles/userTData.css';
 
 function AppointmentForm({ callback }: { callback: () => void }){
     const [postAppointmentType,setPostAppointmentType] = useState<string>('');
@@ -83,7 +83,7 @@ export default function Users(){
         key: 'resultCenter',
         },
         {
-        title: 'Centro de resultado',
+        title: 'Feedback',
         dataIndex: 'tags',
         key: 'tags',
         render: (_,data) => (data? <button>Ver</button> : null)
