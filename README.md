@@ -1,6 +1,6 @@
 # API3 - Ferramenta para controle de Horas extras e sobreaviso
 
-<img align="right" width="256"  src="Docs\Banners\Component 3.png"/>
+<img align="right" width="256"  src="Docs\Banners\Api.png"/>
 
 Sistema que faça o controle da jornada de trabalho do colaborador, identifique e classifique horas
 extras, controle das horas extras e sobreavisos.
@@ -13,10 +13,10 @@ Manter histórico dos Desligados, (não pode ter o usuário excluído, após des
 <br>
 
 # The team
-[jhonathanLop](https://github.com/jhonatanLop) - Product Owner.  
-[incivius](https://github.com/incivius) - Scrum Master.  
+[jhonathanLop](https://github.com/jhonatanLop) - Product Owner.
+[incivius](https://github.com/incivius) - Scrum Master.
 [MikaelaBgtt](https://github.com/MikaelaBgtt) - Developer
-[paulo-granthon](https://github.com/paulo-granthon) - Developer 
+[paulo-granthon](https://github.com/paulo-granthon) - Developer
 [taniacruzz](https://github.com/taniacruzz) - Developer
 
 <br>
