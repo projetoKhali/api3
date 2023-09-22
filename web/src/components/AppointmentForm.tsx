@@ -24,6 +24,15 @@ export default function AppointmentForm ({ callback }: { callback: () => void })
     function handleStatusChange(event: any){ setPostAppointmentStatus(event.target.value); }
 
     function handleSubmit(event: any) {
+      if (!postAppointmentRequester) return;
+      if (!postAppointmentType) return;
+      if (!postAppointmentStartDate) return;
+      if (!postAppointmentEndDate) return;
+      if (!postAppointmentResultCenter) return;
+      if (!postAppointmentClient) return;
+      if (!postAppointmentProject) return;
+      if (!postAppointmentJustification) return;
+      if (!postAppointmentStatus) return;
       event.preventDefault();
       postAppointment({
         requester: postAppointmentRequester,
