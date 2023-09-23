@@ -57,7 +57,7 @@ public class AppointmentController {
 
         // Update the appointment object with the details from the request body
         appointment.setUser(appointmentDetails.getUser());
-        appointment.setType(appointmentDetails.getType());
+        appointment.setAppointmentType(appointmentDetails.getAppointmentType());
         appointment.setStartDate(appointmentDetails.getStartDate());
         appointment.setEndDate(appointmentDetails.getEndDate());
         appointment.setInsertDate(appointmentDetails.getInsertDate());

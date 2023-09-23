@@ -41,7 +41,7 @@ public class Appointment {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "appointment_type")
-    private AppointmentType type;
+    private AppointmentType appointmentType;
 
     private Timestamp startDate;
     private Timestamp endDate;
@@ -64,6 +64,6 @@ public class Appointment {
     private String feedback;
 
     @OneToOne
-    @JoinColumn(name="apt_updt_id", referencedColumnName = "apt_updt_id")
+    @JoinColumn(name="apt_updt_id", referencedColumnName = "id")
     private Appointment apt_updt;
 }

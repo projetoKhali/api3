@@ -74,8 +74,8 @@ public class AppointmentService {
                 appointmentExists.setStatus(newAppointment.getStatus());
             }
 
-            if (newAppointment.getType() != null) {
-                appointmentExists.setType(newAppointment.getType());
+            if (newAppointment.getAppointmentType() != null) {
+                appointmentExists.setAppointmentType(newAppointment.getAppointmentType());
             }
 
             if (newAppointment.getUser() != null) {
