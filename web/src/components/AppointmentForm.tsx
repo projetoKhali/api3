@@ -2,7 +2,12 @@ import { useState } from 'react';
 import { postAppointment } from '../services/AppointmentService';
 import { PostAppointment } from '../schemas/Appointment';
 
-export default function AppointmentForm ({ callback }: { callback: () => void }) {
+interface AppointmentFormProps {
+    successCallback: () => void;
+    errorCallback: () => void;
+}
+
+export default function AppointmentForm ({ successCallback, errorCallback }: AppointmentFormProps) {
     const [postAppointmentRequester, setPostAppointmentRequester] = useState<string>('');
     const [postAppointmentType, setPostAppointmentType] = useState<string>('');
     const [postAppointmentStartDate, setPostAppointmentStartDate] = useState<string>('');
@@ -33,7 +38,8 @@ export default function AppointmentForm ({ callback }: { callback: () => void })
         || !postAppointmentProject
         || !postAppointmentJustification
         || !postAppointmentStatus
-      ) return;
+      ) return errorCallback();
+
       event.preventDefault();
       postAppointment({
         requester: postAppointmentRequester,
@@ -46,7 +52,7 @@ export default function AppointmentForm ({ callback }: { callback: () => void })
         justification: postAppointmentJustification,
         status: postAppointmentStatus,
       } as PostAppointment)
-      .then(() => callback());
+      .then(() => successCallback());
     }
 
     return (
