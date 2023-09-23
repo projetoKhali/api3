@@ -68,7 +68,10 @@ export default function Appointments () {
 
     return (
         <div>
-            <AppointmentForm callback={requestAppointments} />
+            <AppointmentForm
+                successCallback={requestAppointments}
+                errorCallback={() => {}}
+            />
             {appointments? (
                 <Table dataSource={appointments} columns={columns} />
             ) : (
