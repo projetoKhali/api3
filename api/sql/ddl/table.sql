@@ -86,7 +86,5 @@ create table if not exists appointments(
     CONSTRAINT clt_id_fk foreign key
     (clt_id) references clients(id),
     CONSTRAINT rc_id_fk foreign key
-    (rc_id) references result_centers(id),
-    CONSTRAINT apt_updt_fk foreign key
-    (apt_updt_id) references appointments
+    (rc_id) references result_centers(id)
 );
