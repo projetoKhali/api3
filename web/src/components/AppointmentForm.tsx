@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { getAppointments, postAppointment } from '../services/AppointmentService';
+import { postAppointment } from '../services/AppointmentService';
 import { PostAppointment } from '../schemas/Appointment';
 
 export default function AppointmentForm ({ callback }: { callback: () => void }) {
@@ -13,26 +13,27 @@ export default function AppointmentForm ({ callback }: { callback: () => void })
     const [postAppointmentJustification, setPostAppointmentJustification] = useState<string>('');
     const [postAppointmentStatus, setPostAppointmentStatus] = useState<string>('');
 
-    function handleRequesterChange(event: any){ setPostAppointmentRequester(event.target.value); }
-    function handleTypeChange(event: any){ setPostAppointmentType(event.target.value); }
-    function handleStartDateChange(event: any){ setPostAppointmentStartDate(event.target.value); }
-    function handleEndDateChange(event: any){ setPostAppointmentEndDate(event.target.value); }
-    function handleResultCenterChange(event: any){ setPostAppointmentResultCenter(event.target.value); }
-    function handleClientChange(event: any){ setPostAppointmentClient(event.target.value); }
-    function handleProjectChange(event: any){ setPostAppointmentProject(event.target.value); }
-    function handleJustificationChange(event: any){ setPostAppointmentJustification(event.target.value); }
-    function handleStatusChange(event: any){ setPostAppointmentStatus(event.target.value); }
+    function handleRequesterChange(event: React.ChangeEvent<HTMLInputElement>){ setPostAppointmentRequester(event.target.value); }
+    function handleTypeChange(event: React.ChangeEvent<HTMLInputElement>){ setPostAppointmentType(event.target.value); }
+    function handleStartDateChange(event: React.ChangeEvent<HTMLInputElement>){ setPostAppointmentStartDate(event.target.value); }
+    function handleEndDateChange(event: React.ChangeEvent<HTMLInputElement>){ setPostAppointmentEndDate(event.target.value); }
+    function handleResultCenterChange(event: React.ChangeEvent<HTMLInputElement>){ setPostAppointmentResultCenter(event.target.value); }
+    function handleClientChange(event: React.ChangeEvent<HTMLInputElement>){ setPostAppointmentClient(event.target.value); }
+    function handleProjectChange(event: React.ChangeEvent<HTMLInputElement>){ setPostAppointmentProject(event.target.value); }
+    function handleJustificationChange(event: React.ChangeEvent<HTMLInputElement>){ setPostAppointmentJustification(event.target.value); }
+    function handleStatusChange(event: React.ChangeEvent<HTMLInputElement>){ setPostAppointmentStatus(event.target.value); }
 
-    function handleSubmit(event: any) {
-      if (!postAppointmentRequester) return;
-      if (!postAppointmentType) return;
-      if (!postAppointmentStartDate) return;
-      if (!postAppointmentEndDate) return;
-      if (!postAppointmentResultCenter) return;
-      if (!postAppointmentClient) return;
-      if (!postAppointmentProject) return;
-      if (!postAppointmentJustification) return;
-      if (!postAppointmentStatus) return;
+    function handleSubmit(event: React.ChangeEvent<HTMLFormElement>) {
+      if (!postAppointmentRequester
+        || !postAppointmentType
+        || !postAppointmentStartDate
+        || !postAppointmentEndDate
+        || !postAppointmentResultCenter
+        || !postAppointmentClient
+        || !postAppointmentProject
+        || !postAppointmentJustification
+        || !postAppointmentStatus
+      ) return;
       event.preventDefault();
       postAppointment({
         requester: postAppointmentRequester,
