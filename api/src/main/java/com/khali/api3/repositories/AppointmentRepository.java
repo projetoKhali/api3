@@ -20,8 +20,10 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long>{
     }
 
     // utiliza anotações JPA para saber qual tabela e atributo fazer a pesquisa
-    @Query("SELECT a FROM Appointment a WHERE a.user = :userId")
+    @Query(value = "SELECT * FROM bd.appointments WHERE user = :usr_id;", nativeQuery = true)
     List<Appointment> findAppointmentByUser(@Param("usr_id") Long userId);
     
+    // utiliza anotações JPA para saber qual tabela e atributo fazer a pesquisa
+    @Query(value = "SELECT id FROM db.appointments;", nativeQuery = true)
+    List<Appointment> findAllAppointments();
 }
-

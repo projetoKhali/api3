@@ -6,6 +6,7 @@ import com.khali.api3.domain.client.Client;
 import com.khali.api3.domain.resultCenter.ResultCenter;
 import com.khali.api3.domain.user.User;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -39,6 +40,7 @@ public class Appointment {
     private User user;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "appointment_type")
     private AppointmentType type;
 
     private Timestamp startDate;
@@ -50,7 +52,7 @@ public class Appointment {
     private ResultCenter resultCenter;
 
     @ManyToOne
-    @JoinColumn(name="client_id", referencedColumnName = "id")
+    @JoinColumn(name="clt_id", referencedColumnName = "id")
     private Client client;
 
     private String project;
@@ -62,6 +64,6 @@ public class Appointment {
     private String feedback;
 
     @OneToOne
-    @JoinColumn(name="apt_updt_id", referencedColumnName = "id")
+    @JoinColumn(name="apt_updt_id", referencedColumnName = "apt_updt_id")
     private Appointment apt_updt;
 }

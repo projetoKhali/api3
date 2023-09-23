@@ -29,9 +29,9 @@ public class AppointmentController {
         this.appointmentRepository = appointmentRepository;
     }
 
-    @GetMapping
+    @GetMapping("/admin/{id}")
     public List<Appointment> getAllAppointments() {
-        return appointmentRepository.findAll();
+        return appointmentRepository.findAllAppointments();
     }
 
     @GetMapping
