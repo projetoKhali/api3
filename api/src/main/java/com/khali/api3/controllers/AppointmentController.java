@@ -22,19 +22,20 @@ import jakarta.persistence.EntityNotFoundException;
 @RestController
 @RequestMapping("/appointments")
 public class AppointmentController {
-    private final AppointmentRepository appointmentRepository;
 
     @Autowired
+    private final AppointmentRepository appointmentRepository;
+
     public AppointmentController(AppointmentRepository appointmentRepository) {
         this.appointmentRepository = appointmentRepository;
     }
 
-    @GetMapping
+    @GetMapping("/admin/{id}")
     public List<Appointment> getAllAppointments() {
         return appointmentRepository.findAll();
     }
 
-    @GetMapping
+    @GetMapping("/user/{id}")
     public List<Appointment> getAppointmentsByUser(User user) {
         return appointmentRepository.findAppointmentByUser(user.getId());
     }
@@ -57,7 +58,7 @@ public class AppointmentController {
 
         // Update the appointment object with the details from the request body
         appointment.setUser(appointmentDetails.getUser());
-        appointment.setType(appointmentDetails.getType());
+        appointment.setAppointmentType(appointmentDetails.getAppointmentType());
         appointment.setStartDate(appointmentDetails.getStartDate());
         appointment.setEndDate(appointmentDetails.getEndDate());
         appointment.setInsertDate(appointmentDetails.getInsertDate());
@@ -76,5 +77,10 @@ public class AppointmentController {
     public ResponseEntity<?> deleteAppointment(@PathVariable Long id) {
         appointmentRepository.deleteById(id);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/manager/{id}")
+    public List<Appointment> getManagerAppointments(User user){
+        return appointmentRepository.findByManager(user.getId());
     }
 }
