@@ -13,7 +13,7 @@ export interface PostUserData {
 export async function getUsers (): Promise<UserData[]> {
     const response = await axios.get(API_URL, {});
     return await response.data.map((item: any) => ({
-        key: item.id.toString(), 
+        key: item.id.toString(),
         name: item.name? item.name : "N/A",
         registration: item.registration? item.registration : "N/A",
         userType: item.userType? item.userType : "N/A",

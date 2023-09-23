@@ -23,8 +23,8 @@ import jakarta.persistence.EntityNotFoundException;
 public class UserController {
     private final UserRepository userRepository;
 
-    @Autowired
-    public UserController(UserRepository userRepository) {
+
+    public UserController(@Autowired UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 

@@ -3,9 +3,5 @@ export default interface ResultCenterData {
   name: string;
   code: string;
   acronym: string;
-  gestor: {
-    name: string;
-    referencedColumnName:string;
-  }
-  insertDate: string;
+  gestor: string;
 }

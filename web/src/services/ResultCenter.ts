@@ -1,13 +1,15 @@
 import axios from 'axios';
 import ResultCenterData from '../shared/ResultCenterData';
 
-const API_URL = 'http://127.0.0.1:8080/resultcenters';
+const API_URL = 'http://127.0.0.1:8080/resultCenters';
 
 export interface PostResultCenterData {
     name: string,
     code: string,
     acronym: string,
-    insertDate: string
+    gestor: {
+        id : string
+    }
 }
 
 export async function getResultCenters (): Promise<ResultCenterData[]> {
@@ -17,10 +19,7 @@ export async function getResultCenters (): Promise<ResultCenterData[]> {
         name: item.name? item.name : "N/A",
         code: item.code? item.code : "N/A",
         acronym: item.acronym? item.acronym : "N/A",
-        email: {
-            name: item.name? item.name : "N/A",
-            referencedColumnName: item.referencedColumnName ? item.referencedColumnName : "N/A",
-        },
+        gestor: item.gestor? item.gestor.name : "N/A",
         insertDate: item.insertDate? item.insertDate : "N/A",
     })) as ResultCenterData[];
 }

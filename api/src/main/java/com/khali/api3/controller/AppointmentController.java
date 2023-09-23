@@ -22,10 +22,10 @@ import jakarta.persistence.EntityNotFoundException;
 @RestController
 @RequestMapping("/appointments")
 public class AppointmentController {
-    private final AppointmentRepository appointmentRepository;
 
-    @Autowired
-    public AppointmentController(AppointmentRepository appointmentRepository) {
+    private final AppointmentRepository appointmentRepository;
+    
+    public AppointmentController(@Autowired AppointmentRepository appointmentRepository) {
         this.appointmentRepository = appointmentRepository;
     }
 
@@ -34,7 +34,7 @@ public class AppointmentController {
         return appointmentRepository.findAll();
     }
 
-    @GetMapping
+    @GetMapping("/from_user/{id}")
     public List<Appointment> getAppointmentsByUser(User user) {
         return appointmentRepository.findAppointmentByUser(user.getId());
     }
