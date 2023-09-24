@@ -1,5 +1,5 @@
 import axios from 'axios';
-import ResultCenterData from '../shared/ResultCenterData';
+import ResultCenterData from '../models/ResultCenterData';
 
 const API_URL = 'http://127.0.0.1:8080/resultCenters';
 
