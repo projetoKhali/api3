@@ -90,7 +90,6 @@ public class AppointmentController {
         return appointmentRepository.findByManager(user.getId());
     }
 
-    @GetMapping("/manager/date/{id}")
     public List<Appointment> getAppointmentByDate(List<Appointment> appointmentsList, LocalDate dataInit, LocalDate dataFim){
         return appointmentService.findAppointmentByDate(appointmentsList, dataInit, dataFim);
     }
