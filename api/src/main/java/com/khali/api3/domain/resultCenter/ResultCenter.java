@@ -25,7 +25,16 @@ public class ResultCenter {
     private Long id;
     
     private String name;
+
+    @Column(unique=true)
     private String code;
-    private String cronym;
-    private int gestorId;
+    
+    @Column(unique=true)
+    private String acronym;
+
+    @ManyToOne
+    @JoinColumn(name="gestor_id", referencedColumnName = "id")
+    private User gestor;
+
+    private Timestamp insertDate;
 }

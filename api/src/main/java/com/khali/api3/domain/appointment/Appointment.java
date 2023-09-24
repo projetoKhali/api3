@@ -1,6 +1,11 @@
 package com.khali.api3.domain.appointment;
 
+import com.khali.api3.domain.user.User;
+import com.khali.api3.domain.client.Client;
+import com.khali.api3.domain.resultCenter.ResultCenter;
+
 import java.sql.Timestamp;
+import java.util.Date;
 
 import com.khali.api3.domain.client.Client;
 import com.khali.api3.domain.resultCenter.ResultCenter;
@@ -33,8 +38,8 @@ public class Appointment {
     private Long apt_id;
 
     @ManyToOne
-    @JoinColumn(name="user_id")
-    private Long id;
+    @JoinColumn(name="user_id", referencedColumnName = "id")
+    private User user;
 
     @Enumerated(EnumType.STRING)
     @JoinColumn(name="appointment_type")
@@ -42,6 +47,7 @@ public class Appointment {
 
     private Timestamp startDate;
     private Timestamp endDate;
+    private Timestamp insertDate;
 
     @ManyToOne
     @JoinColumn(name="rc_id")
@@ -58,4 +64,8 @@ public class Appointment {
     private AppointmentStatus status;
 
     private String feedback;
+
+    @OneToOne
+    @JoinColumn(name="apt_updt_id", referencedColumnName = "id")
+    private Appointment apt_updt;
 }
