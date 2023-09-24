@@ -23,8 +23,7 @@ import jakarta.persistence.EntityNotFoundException;
 public class ResultCenterController {
     private final ResultCenterRepository resultCenterRepository;
 
-    @Autowired
-    public ResultCenterController(ResultCenterRepository resultCenterRepository) {
+    public ResultCenterController(@Autowired ResultCenterRepository resultCenterRepository) {
         this.resultCenterRepository = resultCenterRepository;
     }
 

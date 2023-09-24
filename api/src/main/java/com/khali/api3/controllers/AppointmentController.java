@@ -31,8 +31,10 @@ public class AppointmentController {
     private final AppointmentRepository appointmentRepository;
     private final AppointmentService appointmentService;
 
-    public AppointmentController(AppointmentRepository appointmentRepository,
-                                 AppointmentService appointmentService) {
+    public AppointmentController(
+        AppointmentRepository appointmentRepository,
+        AppointmentService appointmentService
+    ) {
         this.appointmentRepository = appointmentRepository;
         this.appointmentService = appointmentService;
     }
@@ -42,48 +44,15 @@ public class AppointmentController {
         return appointmentRepository.findAll();
     }
 
-    @GetMapping("/user/{id}")
-    public List<Appointment> getAppointmentsByUser(User user) {
-        return appointmentRepository.findAppointmentByUser(user.getId());
-    }
-
     @GetMapping("/{id}")
     public Appointment getAppointmentById(@PathVariable Long id) {
         return appointmentRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Appointment not found with id: " + id));
     }
 
-    @PostMapping
-    public Appointment createAppointment(@RequestBody Appointment appointment) {
-        return appointmentRepository.save(appointment);
-    }
-
-    @PutMapping("/{id}")
-    public Appointment updateAppointment(@PathVariable Long id, @RequestBody Appointment appointmentDetails) {
-        Appointment appointment = appointmentRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Appointment not found with id: " + id));
-
-        // Update the appointment object with the details from the request body
-        appointment.setUser(appointmentDetails.getUser());
-        appointment.setAppointmentType(appointmentDetails.getAppointmentType());
-        appointment.setStartDate(appointmentDetails.getStartDate());
-        appointment.setEndDate(appointmentDetails.getEndDate());
-        appointment.setInsertDate(appointmentDetails.getInsertDate());
-        appointment.setResultCenter(appointmentDetails.getResultCenter());
-        appointment.setClient(appointmentDetails.getClient());
-        appointment.setProject(appointmentDetails.getProject());
-        appointment.setJustification(appointmentDetails.getJustification());
-        appointment.setStatus(appointmentDetails.getStatus());
-        appointment.setFeedback(appointmentDetails.getFeedback());
-        appointment.setApt_updt(appointmentDetails.getApt_updt());
-
-        return appointmentRepository.save(appointment);
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteAppointment(@PathVariable Long id) {
-        appointmentRepository.deleteById(id);
-        return ResponseEntity.ok().build();
+    @GetMapping("/user/{id}")
+    public List<Appointment> getAppointmentsByUser(User user) {
+        return appointmentRepository.findAppointmentByUser(user.getId());
     }
 
     @GetMapping("/manager/{id}")
@@ -106,5 +75,32 @@ public class AppointmentController {
     
     public List<Appointment> getAppointmentByDateHour(List<Appointment> appointmentsList, LocalDateTime dataInit, LocalDateTime dataFim){
         return appointmentService.findAppointmentByDateHour(appointmentsList, dataInit, dataFim);
+    }
+
+    @PostMapping
+    public Appointment createAppointment(@RequestBody Appointment appointment) {
+        return appointmentRepository.save(appointment);
+    }
+
+    @PutMapping("/{id}")
+    public Appointment updateAppointment(@PathVariable Long id, @RequestBody Appointment appointmentDetails) {
+        Appointment appointment = appointmentRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Appointment not found with id: " + id));
+
+        // Update the appointment object with the details from the request body
+        appointment.setUser(appointmentDetails.getUser());
+        appointment.setType(appointmentDetails.getType());
+        appointment.setStartDate(appointmentDetails.getStartDate());
+        appointment.setEndDate(appointmentDetails.getEndDate());
+        appointment.setInsertDate(appointmentDetails.getInsertDate());
+        appointment.setResultCenter(appointmentDetails.getResultCenter());
+        appointment.setClient(appointmentDetails.getClient());
+        appointment.setProject(appointmentDetails.getProject());
+        appointment.setJustification(appointmentDetails.getJustification());
+        appointment.setStatus(appointmentDetails.getStatus());
+        appointment.setFeedback(appointmentDetails.getFeedback());
+        appointment.setApt_updt(appointmentDetails.getApt_updt());
+
+        return appointmentRepository.save(appointment);
     }
 }

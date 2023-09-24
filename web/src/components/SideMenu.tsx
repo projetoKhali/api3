@@ -6,17 +6,17 @@ import { Button, Menu, Tooltip } from 'antd';
 import '../styles/menuStyle.css';
 
 import {
-  MenuFoldOutlined,
-  MenuUnfoldOutlined
+    MenuFoldOutlined,
+    MenuUnfoldOutlined
 } from '@ant-design/icons';
 
 type MenuItem = Required<MenuProps>['items'][number];
 
 function createItem (
-  label: React.ReactNode,
-  key: React.Key,
-  children?: MenuItem[],
-  type?: 'group',
+    label: React.ReactNode,
+    key: React.Key,
+    children?: MenuItem[],
+    type?: 'group',
 ): MenuItem {
   return {
     key,
@@ -36,39 +36,36 @@ export interface SideMenuProps {
     userName: string
 }
 
-
 export default function SideMenu ({items, userName}: SideMenuProps) {
     const [collapsed, setCollapsed] = useState(true);
     const [shortenedUserName, setShortenedUserName] = useState(userName);
     const [showFullUserName, setShowFullUserName] = useState(false);
 
     useEffect(() => {
-      const maxUserNameLength = 15;
-      if (userName.length > maxUserNameLength) {
-        const shortenedName = userName.substring(0, maxUserNameLength - 3) + '...';
-        setShortenedUserName(shortenedName);
-      } else {
-        setShortenedUserName(userName);
-      }
+        const maxUserNameLength = 15;
+        if (userName.length > maxUserNameLength) {
+            const shortenedName = userName.substring(0, maxUserNameLength - 3) + '...';
+            setShortenedUserName(shortenedName);
+        } else {
+            setShortenedUserName(userName);
+        }
     }, [userName]);
 
     const menuItems = [
         ...items.map((item) => {
-          return createItem(item.label, item.label);
+            return createItem(item.label, item.label);
         }),
-      ];
+    ];
 
-
-
-      const handleMouseEnter = () => {
+    const handleMouseEnter = () => {
         if (userName.length > 10) {
-          setShowFullUserName(true);
+            setShowFullUserName(true);
         }
-      };
-    
-      const handleMouseLeave = () => {
+    };
+
+    const handleMouseLeave = () => {
         setShowFullUserName(false);
-      };
+    };
 
     const toggleCollapsed = () => {
         setCollapsed(!collapsed);
@@ -76,24 +73,21 @@ export default function SideMenu ({items, userName}: SideMenuProps) {
 
     return (
         <div className="sidemenu">
-            <div className="user-info">
-
-            </div>
             <div style={{ width: 256 }}>
                 <Button style={{ marginBottom: 16, outline: 'none'}} type="primary" onClick={toggleCollapsed}>
                     {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
                 </Button>
                 {collapsed ? null : (
-                   <div className={`userName ${showFullUserName ? 'userNameHovered' : ''}`}>
+                    <div className={`userName ${showFullUserName ? 'userNameHovered' : ''}`}>
                     <Tooltip title={userName} placement="right">
-                      <span
-                        onMouseEnter={handleMouseEnter}
-                        onMouseLeave={handleMouseLeave}
-                        id="user"
-                        style={{ fontWeight: 'bold' }}
-                      >
-                      {shortenedUserName}
-                       </span>
+                        <span
+                            onMouseEnter={handleMouseEnter}
+                            onMouseLeave={handleMouseLeave}
+                            id="user"
+                            style={{ fontWeight: 'bold' }}
+                        >
+                            {shortenedUserName}
+                        </span>
                     </Tooltip>
                     </div>
                 )}
@@ -108,8 +102,7 @@ export default function SideMenu ({items, userName}: SideMenuProps) {
                             width: '250px', height: '90vh',
                             backgroundColor: '#D9D9D9',
                             borderRadius: '10px',
-                            
-                    }}
+                        }}
                     >
                     </Menu>
                     

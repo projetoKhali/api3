@@ -38,11 +38,9 @@ public class User {
     private String email;
 
     private String password;
-    private boolean active;
+    private Boolean active;
     @Column(name = "insert_date")
     private Timestamp insertDate;
     @Column(name = "expire_date")
     private Timestamp expiredDate;
-    
-
 }
