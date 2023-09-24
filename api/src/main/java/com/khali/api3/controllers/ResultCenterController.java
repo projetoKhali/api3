@@ -1,4 +1,4 @@
-package com.khali.api3.controller;
+package com.khali.api3.controllers;
 
 import java.util.List;
 

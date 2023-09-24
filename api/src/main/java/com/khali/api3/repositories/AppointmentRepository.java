@@ -8,6 +8,11 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 import com.khali.api3.domain.appointment.Appointment;
+import java.util.List;
+import java.util.Optional;
+
+import com.khali.api3.domain.resultCenter.ResultCenter;
+
 
 
 // manipulação das tabelas

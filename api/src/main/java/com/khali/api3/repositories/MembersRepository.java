@@ -1,5 +1,7 @@
 package com.khali.api3.repositories;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
@@ -10,4 +12,6 @@ import com.khali.api3.domain.member.MemberPrimaryData;
 public interface MembersRepository extends JpaRepository<Member, MemberPrimaryData>{
     //public List<Member> findByUser(User user);
     //public List<Member> findByResultCenter(ResultCenter resultCenter);
+    
+    
 }
