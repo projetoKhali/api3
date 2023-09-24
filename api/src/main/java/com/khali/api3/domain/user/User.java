@@ -35,6 +35,4 @@ public class User {
     private Boolean active;
     private Timestamp insertDate;
     private Timestamp expiredDate;
-    
-
 }

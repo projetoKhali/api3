@@ -35,7 +35,7 @@ public class Appointment {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name="user_id", referencedColumnName = "id")
+    @JoinColumn(name="usr_id", referencedColumnName = "id")
     private User user;
 
     @Enumerated(EnumType.STRING)

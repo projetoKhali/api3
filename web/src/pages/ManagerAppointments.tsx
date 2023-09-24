@@ -1,7 +1,6 @@
 import { Table } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import { useEffect, useState } from 'react';
-import AppointmentForm from '../components/AppointmentForm';
 import { Appointment } from '../schemas/Appointment';
 import { getAppointments } from '../services/AppointmentService';
 
@@ -15,7 +14,8 @@ export default function Appointments () {
     };
 
     useEffect(() => {
-        requestAppointments()
+        // Chama a função para buscar os compromissos quando o componente for montado
+        requestAppointments();
     }, []);
 
     const columns: ColumnsType<Appointment> = [
@@ -68,16 +68,7 @@ export default function Appointments () {
 
     return (
         <div>
-            <AppointmentForm
-                successCallback={requestAppointments}
-                errorCallback={() => {}}
-            />
-            {appointments? (
-                <Table dataSource={appointments} columns={columns} />
-            ) : (
-                null
-            )}
-
-        </div>
+        <Table dataSource={appointments} columns={columns} />
+    </div>
     );
 }

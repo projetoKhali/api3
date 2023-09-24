@@ -4,7 +4,8 @@ import Appointments from "./pages/Appointments";
 import Clients from './pages/Clients';
 import Home from "./pages/Home";
 import Layout from './pages/Layout';
-import ResultCenter from './pages/ResultCenters';
+import ResultCenters from './pages/ResultCenters';
+import Users from "./pages/Users";
 
 
 function App() {
@@ -13,9 +14,10 @@ function App() {
             <Routes>
                 <Route path="/" element={<Layout/>}>
                     <Route index element={<Home />} />
-                    <Route path="clients" element={<Clients />} />
-                    <Route path="resultCenters" element={<ResultCenter/>} />
                     <Route path="appointments" element={<Appointments/>} />
+                    <Route path="users" element={<Users/>} />
+                    <Route path="clients" element={<Clients />} />
+                    <Route path="resultCenters" element={<ResultCenters/>} />
                 </Route>
             </Routes>
         </BrowserRouter>
