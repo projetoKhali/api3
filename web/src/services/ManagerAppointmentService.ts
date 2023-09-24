@@ -1,10 +1,10 @@
 import axios from 'axios';
 import { Appointment } from '../schemas/Appointment';
 
-const API_URL = 'http://127.0.0.1:8080/Appointments';
+const API_URL = 'http://127.0.0.1:8080/Appointments/manager/';
 
-export async function getAppointments () : Promise<Appointment[]> {
-    const response = await axios.get(API_URL, {});
+export async function getAppointments (id: number) : Promise<Appointment[]> {
+    const response = await axios.get(`${API_URL}${id}`);
     return await response.data.map((item: any) => ({
         key: item.id.toString(),
         user: item.user? item.user : "N/A",
