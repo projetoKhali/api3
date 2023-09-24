@@ -35,8 +35,4 @@ public class PayRateRule {
 
     private LocalTime startTime;
     private LocalTime endTime;
-
-    @Enumerated(EnumType.STRING)
-    private Week daysOfWeek;
-    
 }
