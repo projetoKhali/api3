@@ -5,7 +5,7 @@ import { GetUserSchema, PostUserSchema } from '../schemas/User'
 const API_URL = 'http://127.0.0.1:8080/users';
 
 export async function getUsers (): Promise<User[]> {
-    const response = await axios.get(API_URL, {});
+    const response = await axios.get(`${API_URL}`, {});
     return await response.data.map((item: GetUserSchema) => ({
         key: item.id.toString(),
         name: item.name? item.name : "N/A",
