@@ -22,61 +22,61 @@ create table if not exists pay_rate_rules(
     hour_duration numeric,
     pay_rate numeric,
     appointment_type Apt_type,
-    start_time time,
-    end_time time
+    start_time time check (start_time < end_time),
+    end_time time check (end_date > start_time)
 );
 
 create table if not exists clients(
-    id serial primary key,
+    clt_id serial primary key,
     "name" varchar(255),
     cnpj varchar(255) unique
 );
 
 create table if not exists users(
-    id serial primary key,
-    registration varchar(255),
+    usr_id serial primary key,
+    registration varchar(255) unique not null,
     "name" varchar(255),
-    user_type User_type,
-    email varchar(255) unique,
-    "password" varchar(255),
+    user_type User_type DEFAULT 'Employer',
+    email varchar(255) unique not null,
+    "password" varchar(255) not null,
     active bool default true,
     insert_date timestamp default now(),
     expire_date timestamp
 );
 
 create table if not exists result_centers(
-    id serial primary key,
+    rc_id serial primary key,
     "name" varchar(255),
-    code int,
+    code int unique not null,
     acronym varchar(255),
-    gst_id int,
+    gst_id int not null,
     insert_date timestamp default now(),
-    CONSTRAINT gst_id_fk FOREIGN KEY
+    CONSTRAINT gst_id_fk foreign KEY
     (gst_id) REFERENCES users (id)
 );
 
 create table if not exists members(
     usr_id int,
     rc_id int,
-    CONSTRAINT members_pk PRIMARY KEY
+    CONSTRAINT members_pk primary key
     (usr_id,rc_id),
-    CONSTRAINT usr_id_fk FOREIGN key
+    CONSTRAINT usr_id_fk foreign key
     (usr_id) REFERENCES users (id),
-    CONSTRAINT rc_id_fk FOREIGN key
+    CONSTRAINT rc_id_fk foreign key
     (rc_id) REFERENCES result_centers (id)
 );
 
 create table if not exists appointments(
-    id serial primary key,
-    start_date timestamp,
-    end_date timestamp,
+    apt_id serial primary key,
+    start_date timestamp check (start_date < end_date),
+    end_date timestamp check (end_date < start_date),
     usr_id int,
     clt_id int,
     rc_id int,
     project varchar(255),
-    appointment_type Apt_type,
+    appointment_type Apt_type default 'Overtime',
     justification varchar(255),
-    status Apt_status DEFAULT 'Pending',
+    status Apt_status default 'Pending',
     insert_date timestamp default now(),
     apt_updt_id int,
     feedback varchar(255),
