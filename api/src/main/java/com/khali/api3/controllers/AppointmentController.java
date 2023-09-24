@@ -30,7 +30,7 @@ public class AppointmentController {
         this.appointmentRepository = appointmentRepository;
     }
 
-    @GetMapping("/admin/")
+    @GetMapping
     public List<Appointment> getAllAppointments() {
         return appointmentRepository.findAll();
     }
