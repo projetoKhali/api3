@@ -5,15 +5,15 @@ const API_URL = 'http://127.0.0.1:8080';
 
 const PermissionSideMenuItemMap: Record<string, SideMenuItem[]> = {
     "": [
-        {
-            label: "Dashboard",
-            url: "#",
-        },
+        // {
+        //     label: "Dashboard",
+        //     url: "#",
+        // },
     ],
     "Appoint": [
         {
             label: "Apontamentos",
-            url: "#",
+            url: "/appointments",
         },
     ],
     "Validate": [
@@ -25,26 +25,32 @@ const PermissionSideMenuItemMap: Record<string, SideMenuItem[]> = {
     "Register": [
         {
             label: "Usuários",
-            url: "/users/",
+            url: "/users",
         },
         {
             label: "Centros de Resultado",
-            url: "/resultcenters/"
+            url: "/resultcenters"
         },
         {
             label: "Clientes",
-            url: "#"
+            url: "/clients"
         },
-        {
-            label: "Projetos",
-            url: "#"
-        },
+        // {
+        //     label: "Projetos",
+        //     url: "#"
+        // },
     ],
     "Report": [
-        {
-            label: "Relatório",
-            url: "#"
-        },
+        // {
+        //     label: "Relatório",
+        //     url: "#"
+        // },
+    ],
+    "FullAccess": [
+        // {
+        //     label: "Apontaments ADM",
+        //     url: "#"
+        // }
     ]
 }
 
