@@ -2,6 +2,7 @@ package com.khali.api3.controllers;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -94,6 +95,15 @@ public class AppointmentController {
         return appointmentService.findAppointmentByDate(appointmentsList, dataInit, dataFim);
     }
 
+    @GetMapping("/manager/time/{id}")
+    public List<Appointment> getAppointmentByHour(User user){
+        LocalTime dataInit = LocalTime.of(9, 30, 00);
+        LocalTime dataFim = LocalTime.of(12, 00, 00);
+        List<Appointment> appointmentsList = appointmentRepository.findByManager(user.getId());
+
+        return appointmentService.findAppointmentByHour(appointmentsList, dataInit, dataFim);
+    }
+    
     public List<Appointment> getAppointmentByDateHour(List<Appointment> appointmentsList, LocalDateTime dataInit, LocalDateTime dataFim){
         return appointmentService.findAppointmentByDateHour(appointmentsList, dataInit, dataFim);
     }

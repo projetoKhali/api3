@@ -2,6 +2,7 @@ package com.khali.api3.services;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -69,6 +70,22 @@ public class AppointmentService {
         for (Appointment appointment : apontamentos) {
             LocalDateTime dateInit = appointment.getStartDate().toLocalDateTime();
             LocalDateTime dateEnd = appointment.getStartDate().toLocalDateTime();
+            if ((dateInit.equals(init) || dateInit.isAfter(init)) &&
+                (dateEnd.equals(end) || dateEnd.isBefore(end)))
+            {
+                appointmentsList.add(appointment);
+            }
+        }
+        return appointmentsList;
+    }
+    
+    // filtra apontamentos de uma lista por hora
+    public List<Appointment> findAppointmentByHour(List<Appointment> apontamentos, LocalTime init, LocalTime end) {
+        List<Appointment> appointmentsList = new ArrayList<>();
+        
+        for (Appointment appointment : apontamentos) {
+            LocalTime dateInit = appointment.getStartDate().toLocalDateTime().toLocalTime();
+            LocalTime dateEnd = appointment.getStartDate().toLocalDateTime().toLocalTime();
             if ((dateInit.equals(init) || dateInit.isAfter(init)) &&
                 (dateEnd.equals(end) || dateEnd.isBefore(end)))
             {
