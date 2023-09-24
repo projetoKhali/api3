@@ -2,6 +2,9 @@ import { useState } from 'react';
 import { postAppointment } from '../services/AppointmentService';
 import { PostAppointment } from '../schemas/Appointment';
 
+import getClients from '../services/ClientService';
+import getResultCentersOfUser from '../services/ResultCenterService';
+
 interface AppointmentFormProps {
     successCallback: () => void;
     errorCallback: () => void;
