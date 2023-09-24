@@ -40,7 +40,7 @@ public class ResultCenter {
     private String acronym;
 
     @ManyToOne
-    @JoinColumn(name="gestor_id", referencedColumnName = "id")
+    @JoinColumn(name="gst_id", referencedColumnName = "id")
     private User gestor;
 
     private Timestamp insertDate;

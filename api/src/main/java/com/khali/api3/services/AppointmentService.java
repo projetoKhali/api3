@@ -1,5 +1,8 @@
 package com.khali.api3.services;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -30,7 +33,7 @@ public class AppointmentService {
             return appointmentRepository.findById(id).get();
         }
         else{throw new EntityNotFoundException("Apontamento não encontrado com o id: " + id);}
-    }  
+    }
 
     public List<Appointment> findAppointmentsByGestor(Long id){
         List<ResultCenter> resultCenters = resultCenterService.findByGestorID(id);
@@ -38,9 +41,59 @@ public class AppointmentService {
         for(ResultCenter resultCenter: resultCenters){
             appointments.addAll(appointmentRepository.findByResultCenter(resultCenter));
         }
-        return appointments;    
+        return appointments;
     }
 
+    // filtra apontamentos de uma lista por data
+    public List<Appointment> findAppointmentByDate(List<Appointment> apontamentos, LocalDate init, LocalDate end) {
+        List<Appointment> appointmentsList = new ArrayList<>();
+        
+        LocalDateTime dataInicio = init.atStartOfDay();
+        LocalDateTime dataFim = end.atStartOfDay();
+        
+        for (Appointment appointment : apontamentos) {
+            LocalDateTime dateInit = appointment.getStartDate().toLocalDateTime();
+            LocalDateTime dateEnd = appointment.getStartDate().toLocalDateTime();
+            if ((dateInit.equals(dataInicio) || dateInit.isAfter(dataInicio)) &&
+                (dateEnd.equals(dateEnd) || dateEnd.isBefore(dataFim)))
+            {
+                appointmentsList.add(appointment);
+            }
+        }
+        return appointmentsList;
+    }
+
+    // filtra apontamentos de uma lista por data e hora
+    public List<Appointment> findAppointmentByDateHour(List<Appointment> apontamentos, LocalDateTime init, LocalDateTime end) {
+        List<Appointment> appointmentsList = new ArrayList<>();
+        
+        for (Appointment appointment : apontamentos) {
+            LocalDateTime dateInit = appointment.getStartDate().toLocalDateTime();
+            LocalDateTime dateEnd = appointment.getStartDate().toLocalDateTime();
+            if ((dateInit.equals(init) || dateInit.isAfter(init)) &&
+                (dateEnd.equals(end) || dateEnd.isBefore(end)))
+            {
+                appointmentsList.add(appointment);
+            }
+        }
+        return appointmentsList;
+    }
+    
+    // filtra apontamentos de uma lista por hora
+    public List<Appointment> findAppointmentByHour(List<Appointment> apontamentos, LocalTime init, LocalTime end) {
+        List<Appointment> appointmentsList = new ArrayList<>();
+        
+        for (Appointment appointment : apontamentos) {
+            LocalTime dateInit = appointment.getStartDate().toLocalDateTime().toLocalTime();
+            LocalTime dateEnd = appointment.getStartDate().toLocalDateTime().toLocalTime();
+            if ((dateInit.equals(init) || dateInit.isAfter(init)) &&
+                (dateEnd.equals(end) || dateEnd.isBefore(end)))
+            {
+                appointmentsList.add(appointment);
+            }
+        }
+        return appointmentsList;
+    }
 
     public Appointment updateAppointment(Long id, Appointment newAppointment){
         Appointment appointmentExists = appointmentRepository.findById(id).orElse(null);
@@ -86,8 +139,8 @@ public class AppointmentService {
                 appointmentExists.setStatus(newAppointment.getStatus());
             }
 
-            if (newAppointment.getType() != null) {
-                appointmentExists.setType(newAppointment.getType());
+            if (newAppointment.getAppointmentType() != null) {
+                appointmentExists.setAppointmentType(newAppointment.getAppointmentType());
             }
 
             if (newAppointment.getUser() != null) {
