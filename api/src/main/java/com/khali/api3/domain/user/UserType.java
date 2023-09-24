@@ -1,7 +1,7 @@
 package com.khali.api3.domain.user;
 
 public enum UserType {
-    Employer(0),
+    Employee(0),
     Manager(1),
     Admin(2);
 
