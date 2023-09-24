@@ -19,7 +19,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity(name="resultcenter")
-@Table(name="resultcenters")
+@Table(name="result_centers")
 
 @AllArgsConstructor
 @NoArgsConstructor
