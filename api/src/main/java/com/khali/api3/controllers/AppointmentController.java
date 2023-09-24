@@ -62,7 +62,6 @@ public class AppointmentController {
         return appointmentService.findAppointmentByDate(appointmentsList, dataInit, dataFim);
     }
 
-    @GetMapping("/manager/time/{id}")
     public List<Appointment> getAppointmentByHour(List<Appointment> appointmentsList, LocalTime dataInit, LocalTime dataFim){
         return appointmentService.findAppointmentByHour(appointmentsList, dataInit, dataFim);
     }
