@@ -1,14 +1,10 @@
 package com.khali.api3.domain.appointment;
 
-import com.khali.api3.domain.user.User;
-import com.khali.api3.domain.client.Client;
-import com.khali.api3.domain.resultCenter.ResultCenter;
-
 import java.sql.Timestamp;
-import java.util.Date;
 
 import com.khali.api3.domain.client.Client;
 import com.khali.api3.domain.resultCenter.ResultCenter;
+import com.khali.api3.domain.user.User;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -18,6 +14,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -38,7 +35,7 @@ public class Appointment {
     private Long apt_id;
 
     @ManyToOne
-    @JoinColumn(name="user_id", referencedColumnName = "id")
+    @JoinColumn(name="usr_id", referencedColumnName = "id")
     private User user;
 
     @Enumerated(EnumType.STRING)

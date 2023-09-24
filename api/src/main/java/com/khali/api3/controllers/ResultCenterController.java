@@ -1,4 +1,4 @@
-package com.khali.api3.controller;
+package com.khali.api3.controllers;
 
 import java.util.List;
 
@@ -23,8 +23,7 @@ import jakarta.persistence.EntityNotFoundException;
 public class ResultCenterController {
     private final ResultCenterRepository resultCenterRepository;
 
-    @Autowired
-    public ResultCenterController(ResultCenterRepository resultCenterRepository) {
+    public ResultCenterController(@Autowired ResultCenterRepository resultCenterRepository) {
         this.resultCenterRepository = resultCenterRepository;
     }
 
