@@ -9,7 +9,7 @@ function UserForm({ callback }: { callback: () => void }){
     const [postResultCenterName,setPostResultCenterName] = useState<string>('');
     const [postResultCenterCode,setPostResultCenterCode] = useState<string>('');
     const [postResultCenterAcronym,setPostResultCenterAcronym] = useState<string>('');
-    const [postResultCenterInsertDate,setPostUserFuncaoInsertDate] = useState<string>('');
+    const [postResultCenterGestor,setPostUserGestor] = useState<string>('');
 
     function handleNomeChange(event: any){
       setPostResultCenterName(event.target.value)
@@ -23,8 +23,8 @@ function UserForm({ callback }: { callback: () => void }){
       setPostResultCenterAcronym(event.target.value)
     }
 
-    function handleInsertDateChange(event: any){
-      setPostUserFuncaoInsertDate(event.target.value)
+    function handleGestorChange(event: any){
+      setPostUserGestor(event.target.value)
     }
 
     function handleSubmit(event: any) {
@@ -33,7 +33,9 @@ function UserForm({ callback }: { callback: () => void }){
         name: postResultCenterName,
         code: postResultCenterCode,
         acronym: postResultCenterAcronym,
-        insertDate: postResultCenterInsertDate,
+        gestor: {
+          id: postResultCenterGestor
+        }
       } as PostResultCenterData)
       .then(() => callback());
     }
@@ -43,7 +45,7 @@ function UserForm({ callback }: { callback: () => void }){
           <input type="text" placeholder="Nome" onChange={handleNomeChange}/>
           <input type="text" placeholder="Código" onChange={handleCodeChange}/>
           <input type="text" placeholder="Sigla" onChange={handleAcronymChange}/>
-          <input type="text" placeholder="Data de cadastro" onChange={handleInsertDateChange}/>
+          <input type="text" placeholder="Gestor" onChange={handleGestorChange}/>
           <button type="submit">Cadastrar</button>
       </form>
     )
@@ -78,9 +80,9 @@ export default function Users(){
           key: 'acronym',
         },
         {
-          title: 'Data de cadastro',
-          dataIndex: 'insertDate',
-          key: 'insertDate',
+          title: 'Gestor',
+          dataIndex: 'gestor',
+          key: 'gestor',
         },
         {
           dataIndex: 'tags',
