@@ -1,5 +1,8 @@
-package com.khali.api3.controller;
+package com.khali.api3.controllers;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,17 +19,22 @@ import org.springframework.web.bind.annotation.RestController;
 import com.khali.api3.domain.appointment.Appointment;
 import com.khali.api3.domain.user.User;
 import com.khali.api3.repositories.AppointmentRepository;
+import com.khali.api3.services.AppointmentService;
 
 import jakarta.persistence.EntityNotFoundException;
 
 @RestController
 @RequestMapping("/appointments")
 public class AppointmentController {
-    private final AppointmentRepository appointmentRepository;
 
     @Autowired
-    public AppointmentController(AppointmentRepository appointmentRepository) {
+    private final AppointmentRepository appointmentRepository;
+    private final AppointmentService appointmentService;
+
+    public AppointmentController(AppointmentRepository appointmentRepository,
+                                 AppointmentService appointmentService) {
         this.appointmentRepository = appointmentRepository;
+        this.appointmentService = appointmentService;
     }
 
     @GetMapping
@@ -34,7 +42,7 @@ public class AppointmentController {
         return appointmentRepository.findAll();
     }
 
-    @GetMapping
+    @GetMapping("/user/{id}")
     public List<Appointment> getAppointmentsByUser(User user) {
         return appointmentRepository.findAppointmentByUser(user.getId());
     }
@@ -57,7 +65,7 @@ public class AppointmentController {
 
         // Update the appointment object with the details from the request body
         appointment.setUser(appointmentDetails.getUser());
-        appointment.setType(appointmentDetails.getType());
+        appointment.setAppointmentType(appointmentDetails.getAppointmentType());
         appointment.setStartDate(appointmentDetails.getStartDate());
         appointment.setEndDate(appointmentDetails.getEndDate());
         appointment.setInsertDate(appointmentDetails.getInsertDate());
@@ -76,5 +84,27 @@ public class AppointmentController {
     public ResponseEntity<?> deleteAppointment(@PathVariable Long id) {
         appointmentRepository.deleteById(id);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/manager/{id}")
+    public List<Appointment> getManagerAppointments(User user){
+        return appointmentRepository.findByManager(user.getId());
+    }
+
+    public List<Appointment> getAppointmentByDate(List<Appointment> appointmentsList, LocalDate dataInit, LocalDate dataFim){
+        return appointmentService.findAppointmentByDate(appointmentsList, dataInit, dataFim);
+    }
+
+    @GetMapping("/manager/time/{id}")
+    public List<Appointment> getAppointmentByHour(User user){
+        LocalTime dataInit = LocalTime.of(9, 30, 00);
+        LocalTime dataFim = LocalTime.of(12, 00, 00);
+        List<Appointment> appointmentsList = appointmentRepository.findByManager(user.getId());
+
+        return appointmentService.findAppointmentByHour(appointmentsList, dataInit, dataFim);
+    }
+    
+    public List<Appointment> getAppointmentByDateHour(List<Appointment> appointmentsList, LocalDateTime dataInit, LocalDateTime dataFim){
+        return appointmentService.findAppointmentByDateHour(appointmentsList, dataInit, dataFim);
     }
 }
