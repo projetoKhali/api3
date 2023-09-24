@@ -90,11 +90,7 @@ public class AppointmentController {
     }
 
     @GetMapping("/manager/date/{id}")
-    public List<Appointment> getIntervalAppointment(User user){
-        List<Appointment> list = appointmentRepository.findByManager(user.getId());
-
-        LocalDate dataInit = LocalDate.of(2023, 9, 23);
-        LocalDate dataFim = LocalDate.of(2023, 9, 24);
-        return appointmentService.findAppointmentByDate(list, dataInit, dataFim);
+    public List<Appointment> getIntervalAppointment(List<Appointment> appointmentsList, LocalDate dataInit, LocalDate dataFim){
+        return appointmentService.findAppointmentByDate(appointmentsList, dataInit, dataFim);
     }
 }
