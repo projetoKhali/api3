@@ -43,6 +43,7 @@ public class AppointmentService {
         return appointments;
     }
 
+    // filtra apontamentos de uma lista por data
     public List<Appointment> findAppointmentByDate(List<Appointment> apontamentos, LocalDate init, LocalDate end) {
         List<Appointment> appointmentsList = new ArrayList<>();
         
@@ -55,8 +56,22 @@ public class AppointmentService {
             if ((dateInit.equals(dataInicio) || dateInit.isAfter(dataInicio)) &&
                 (dateEnd.equals(dateEnd) || dateEnd.isBefore(dataFim)))
             {
-            // if (dateInit.compareTo(dataFim) <= 0 && dateEnd.compareTo(dataInicio) >= 0) {
-                System.out.println(appointment.getId());
+                appointmentsList.add(appointment);
+            }
+        }
+        return appointmentsList;
+    }
+
+    // filtra apontamentos de uma lista por data e hora
+    public List<Appointment> findAppointmentByDateHour(List<Appointment> apontamentos, LocalDateTime init, LocalDateTime end) {
+        List<Appointment> appointmentsList = new ArrayList<>();
+        
+        for (Appointment appointment : apontamentos) {
+            LocalDateTime dateInit = appointment.getStartDate().toLocalDateTime();
+            LocalDateTime dateEnd = appointment.getStartDate().toLocalDateTime();
+            if ((dateInit.equals(init) || dateInit.isAfter(init)) &&
+                (dateEnd.equals(end) || dateEnd.isBefore(end)))
+            {
                 appointmentsList.add(appointment);
             }
         }
