@@ -1,5 +1,6 @@
 package com.khali.api3.controllers;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.khali.api3.domain.appointment.Appointment;
 import com.khali.api3.domain.user.User;
 import com.khali.api3.repositories.AppointmentRepository;
+import com.khali.api3.services.AppointmentService;
 
 import jakarta.persistence.EntityNotFoundException;
 
@@ -25,9 +27,12 @@ public class AppointmentController {
 
     @Autowired
     private final AppointmentRepository appointmentRepository;
+    private final AppointmentService appointmentService;
 
-    public AppointmentController(AppointmentRepository appointmentRepository) {
+    public AppointmentController(AppointmentRepository appointmentRepository,
+                                 AppointmentService appointmentService) {
         this.appointmentRepository = appointmentRepository;
+        this.appointmentService = appointmentService;
     }
 
     @GetMapping
@@ -82,5 +87,14 @@ public class AppointmentController {
     @GetMapping("/manager/{id}")
     public List<Appointment> getManagerAppointments(User user){
         return appointmentRepository.findByManager(user.getId());
+    }
+
+    @GetMapping("/manager/date/{id}")
+    public List<Appointment> getIntervalAppointment(User user){
+        List<Appointment> list = appointmentRepository.findByManager(user.getId());
+
+        LocalDate dataInit = LocalDate.of(2023, 9, 23);
+        LocalDate dataFim = LocalDate.of(2023, 9, 24);
+        return appointmentService.findAppointmentByDate(list, dataInit, dataFim);
     }
 }

@@ -1,5 +1,7 @@
 package com.khali.api3.services;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -30,7 +32,7 @@ public class AppointmentService {
             return appointmentRepository.findById(id).get();
         }
         else{throw new EntityNotFoundException("Apontamento não encontrado com o id: " + id);}
-    }  
+    }
 
     public List<Appointment> findAppointmentsByGestor(Long id){
         List<ResultCenter> resultCenters = resultCenterService.findByGestorID(id);
@@ -38,9 +40,28 @@ public class AppointmentService {
         for(ResultCenter resultCenter: resultCenters){
             appointments.addAll(appointmentRepository.findByResultCenter(resultCenter));
         }
-        return appointments;    
+        return appointments;
     }
 
+    public List<Appointment> findAppointmentByDate(List<Appointment> apontamentos, LocalDate init, LocalDate end) {
+        List<Appointment> appointmentsList = new ArrayList<>();
+        
+        LocalDateTime dataInicio = init.atStartOfDay();
+        LocalDateTime dataFim = end.atStartOfDay();
+        
+        for (Appointment appointment : apontamentos) {
+            LocalDateTime dateInit = appointment.getStartDate().toLocalDateTime();
+            LocalDateTime dateEnd = appointment.getStartDate().toLocalDateTime();
+            if ((dateInit.equals(dataInicio) || dateInit.isAfter(dataInicio)) &&
+                (dateEnd.equals(dateEnd) || dateEnd.isBefore(dataFim)))
+            {
+            // if (dateInit.compareTo(dataFim) <= 0 && dateEnd.compareTo(dataInicio) >= 0) {
+                System.out.println(appointment.getId());
+                appointmentsList.add(appointment);
+            }
+        }
+        return appointmentsList;
+    }
 
     public Appointment updateAppointment(Long id, Appointment newAppointment){
         Appointment appointmentExists = appointmentRepository.findById(id).orElse(null);
