@@ -33,7 +33,6 @@ public class User {
 
     private String password;
     private Boolean active;
-
     private Timestamp insertDate;
     private Timestamp expiredDate;
 }
