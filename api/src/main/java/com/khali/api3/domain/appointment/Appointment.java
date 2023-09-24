@@ -7,12 +7,22 @@ import com.khali.api3.domain.resultCenter.ResultCenter;
 import java.sql.Timestamp;
 import java.util.Date;
 
-import jakarta.persistence.*;
+import com.khali.api3.domain.client.Client;
+import com.khali.api3.domain.resultCenter.ResultCenter;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity(name="appointments")
@@ -25,13 +35,14 @@ import lombok.Setter;
 public class Appointment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long apt_id;
 
     @ManyToOne
     @JoinColumn(name="user_id", referencedColumnName = "id")
     private User user;
 
     @Enumerated(EnumType.STRING)
+    @JoinColumn(name="appointment_type")
     private AppointmentType type;
 
     private Timestamp startDate;
@@ -39,12 +50,12 @@ public class Appointment {
     private Timestamp insertDate;
 
     @ManyToOne
-    @JoinColumn(name="rc_id", referencedColumnName = "id")
-    private ResultCenter resultCenter;
+    @JoinColumn(name="rc_id")
+    private ResultCenter resultCenterId;
 
     @ManyToOne
-    @JoinColumn(name="client_id", referencedColumnName = "id")
-    private Client client;
+    @JoinColumn(name="client_id")
+    private Client clt_id;
 
     private String project;
     private String justification;
