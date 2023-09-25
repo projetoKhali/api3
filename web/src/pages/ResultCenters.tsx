@@ -1,7 +1,7 @@
 import { Table } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import { useEffect, useState } from 'react';
-import { getResultCenters } from '../services/ResultCenter';
+import { getResultCenters } from '../services/ResultCenterService';
 import ResultCenterData from '../models/ResultCenterData';
 import '../styles/userTData.css';
 import ResultCenterForm from '../components/ResultCenterForm';
@@ -16,7 +16,7 @@ export default function ResultCenters(){
     useEffect(() => {
         requestResultCenters()
     }, []);
- 
+
     const columns: ColumnsType<ResultCenterData> = [
         {
           title: 'Nome',
@@ -54,6 +54,4 @@ export default function ResultCenters(){
             )}
         </div>
     );
-    
-
 }
