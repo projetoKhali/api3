@@ -6,6 +6,7 @@ import com.khali.api3.domain.client.Client;
 import com.khali.api3.domain.resultCenter.ResultCenter;
 import com.khali.api3.domain.user.User;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -32,25 +33,26 @@ import lombok.Setter;
 public class Appointment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long apt_id;
 
     @ManyToOne
     @JoinColumn(name="usr_id", referencedColumnName = "id")
     private User user;
 
     @Enumerated(EnumType.STRING)
-    private AppointmentType type;
+    @Column(name = "appointment_type")
+    private AppointmentType appointmentType;
 
     private Timestamp startDate;
     private Timestamp endDate;
     private Timestamp insertDate;
 
     @ManyToOne
-    @JoinColumn(name="rc_id", referencedColumnName = "id")
-    private ResultCenter resultCenter;
+    @JoinColumn(name="rc_id")
+    private ResultCenter resultCenterId;
 
     @ManyToOne
-    @JoinColumn(name="client_id", referencedColumnName = "id")
+    @JoinColumn(name="clt_id", referencedColumnName = "id")
     private Client client;
 
     private String project;

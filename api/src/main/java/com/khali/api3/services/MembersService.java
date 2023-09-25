@@ -1,4 +1,4 @@
-package com.khali.api3.services;
+wpackage com.khali.api3.services;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,7 +6,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.khali.api3.domain.client.Client;
 import com.khali.api3.domain.member.Member;
 import com.khali.api3.domain.member.MemberPrimaryData;
 import com.khali.api3.domain.resultCenter.ResultCenter;
@@ -34,7 +33,7 @@ public class MembersService {
                 userMembers.add(member);
             }
         }
-        return userMembers;        
+        return userMembers;
 
     }
     public List<Member> getMembersByRC(ResultCenter resultCenter){
@@ -45,7 +44,7 @@ public class MembersService {
                 userMembers.add(member);
             }
         }
-        return userMembers;        
+        return userMembers;
     }
 
     public Member insertMember(User user, ResultCenter resultCenter){
