@@ -11,7 +11,6 @@ export interface Appointment {
 }
 
 export interface PostAppointment {
-    requester: string,
     type: string,
     startDate: string,
     endDate: string,
