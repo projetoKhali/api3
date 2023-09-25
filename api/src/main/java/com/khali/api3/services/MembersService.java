@@ -1,4 +1,4 @@
-wpackage com.khali.api3.services;
+package com.khali.api3.services;
 
 import java.util.ArrayList;
 import java.util.List;

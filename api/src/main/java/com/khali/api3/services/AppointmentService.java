@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 
 import com.khali.api3.domain.appointment.Appointment;
 import com.khali.api3.domain.appointment.AppointmentStatus;
-import com.khali.api3.domain.resultCenter.ResultCenter;
 import com.khali.api3.repositories.AppointmentRepository;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -40,15 +39,6 @@ public class AppointmentService {
             return appointmentRepository.findById(id).get();
         }
         else{throw new EntityNotFoundException("Apontamento não encontrado com o id: " + id);}
-    }
-
-    public List<Appointment> findAppointmentsByGestor(Long id){
-        List<ResultCenter> resultCenters = resultCenterService.findByGestorID(id);
-        List<Appointment> appointments = new ArrayList<>();
-        for(ResultCenter resultCenter: resultCenters){
-            appointments.addAll(appointmentRepository.findByResultCenter(resultCenter));
-        }
-        return appointments;
     }
 
     // filtra apontamentos de uma lista por data
