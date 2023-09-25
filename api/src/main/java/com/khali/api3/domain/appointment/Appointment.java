@@ -49,7 +49,7 @@ public class Appointment {
 
     @ManyToOne
     @JoinColumn(name="rc_id")
-    private ResultCenter resultCenterId;
+    private ResultCenter resultCenter;
 
     @ManyToOne
     @JoinColumn(name="clt_id", referencedColumnName = "id")

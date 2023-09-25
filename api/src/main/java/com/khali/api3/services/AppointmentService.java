@@ -41,24 +41,6 @@ public class AppointmentService {
         else{throw new EntityNotFoundException("Apontamento não encontrado com o id: " + id);}
     }
 
-    public List<Appointment> findAppointmentsByGestor(Long id){
-        List<ResultCenter> resultCenters = resultCenterService.findByGestorID(id);
-        List<Appointment> appointments = new ArrayList<>();
-        for(ResultCenter resultCenter: resultCenters){
-            appointments.addAll(appointmentRepository.findByResultCenter(resultCenter));
-        }
-        return appointments;
-    }
-
-    public List<Appointment> findAppointmentsByGestor(Long id){
-        List<ResultCenter> resultCenters = resultCenterService.findByGestorID(id);
-        List<Appointment> appointments = new ArrayList<>();
-        for(ResultCenter resultCenter: resultCenters){
-            appointments.addAll(appointmentRepository.findByResultCenter(resultCenter));
-        }
-        return appointments;
-    }
-
     // filtra apontamentos de uma lista por data
     public List<Appointment> findAppointmentByDate(List<Appointment> apontamentos, LocalDate init, LocalDate end) {
         List<Appointment> appointmentsList = new ArrayList<>();
