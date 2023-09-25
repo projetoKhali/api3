@@ -1,6 +1,6 @@
 import axios from 'axios';
 import User from '../models/User';
-import { GetUserSchema, PostUserSchema } from '../schemas/User'
+import { GetUserSchema, PostUserSchema } from '../schemas/User';
 
 const API_URL = 'http://127.0.0.1:8080/users';
 
@@ -18,6 +18,12 @@ export async function getUsers (): Promise<User[]> {
         expireDate: item.expireDate? item.expireDate : "N/A",
     })) as User[];
 }
+
+// export async function getUsersId(): Promise<string> {
+//         const response = await axios.get(`${API_URL}/name`);
+//         const userId = response.data.id;
+//         return String<userId>;
+// }
 
 export async function postUser(user: PostUserSchema){
     return await fetch(API_URL, {

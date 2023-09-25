@@ -1,8 +1,7 @@
 package com.khali.api3.controllers;
 
-import java.util.List;
 import java.util.ArrayList;
-import java.util.Optional;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,9 +14,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.khali.api3.domain.permission.Permission;
 import com.khali.api3.domain.user.User;
 import com.khali.api3.domain.user.UserType;
-import com.khali.api3.domain.permission.Permission;
 import com.khali.api3.repositories.UserRepository;
 import com.khali.api3.services.MembersService;
 import com.khali.api3.services.ResultCenterService;
@@ -55,6 +54,13 @@ public class UserController {
         return userRepository.findById(id)
             .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + id));
     }
+
+    // @GetMapping("/{name}")
+    // public String getUserIdByName(@PathVariable User user) {
+    //     String userId = userRepository.findUserByName(user);
+    //     return userId.getName();
+    // }
+
 
     @GetMapping("/{id}/permissions")
     public List<Permission> getUserPermissions(@PathVariable Long id) {
