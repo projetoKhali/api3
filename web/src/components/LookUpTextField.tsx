@@ -1,15 +1,13 @@
 import { useState } from "react"
+import LookUpOption from "../schemas/LookUpOption";
 
-interface LookUpOption {
-    id: number,
-    name: string,
-}
-
-export default function LookUpTextField (
+interface LookUpProps {
     placeholder: string,
     options: LookUpOption[],
-    onSelect: ((option: LookUpOption | undefined) => void),
-) {
+    onSelect: (option: LookUpOption) => void;
+}
+
+export default function LookUpTextField ({placeholder, options, onSelect}: LookUpProps) {
     const [suggestions, setSuggestions] = useState<LookUpOption[]>([]);
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
