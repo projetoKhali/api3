@@ -36,7 +36,7 @@ public class UserService {
         }
     }
 
-    public User getUserByEmail(String email, String password) {
+    public User getValidatedUser(String email, String password) {
         User user = userRepository.findByEmail(email);
         return  (user.getPassword().equals(password)) ? user : null;
     }

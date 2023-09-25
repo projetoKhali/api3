@@ -108,6 +108,6 @@ public class UserController {
     }
 
     public User getLogin(String email, String password) {
-        return userService.getUserByEmail(email, password);
+        return userService.getValidatedUser(email, password);
     }
 }
