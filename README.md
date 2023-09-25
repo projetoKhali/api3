@@ -165,8 +165,10 @@ Este repositório contém tanto o [Back-End](./api/) quanto o [Front-End](./web/
 
 > [Wireframe completo no Figma](https://www.figma.com/file/0CRUGDxQoOc3QRMK16TyHa/Untitled?type=design&mode=design&t=ukkR699csvDlWLYY-1)
 
-> [ERD e Diagrama de Cardinalidade]()
+> [ERD](https://github.com/projetoKhali/api3/blob/be27d7c6c37234c0423714cce698620c3f090968/Docs/Banners/ERD.PNG)
 
-> [Documentação banco de dados](https://www.figma.com/file/0CRUGDxQoOc3QRMK16TyHa/Untitled?type=design&mode=design&t=ukkR699csvDlWLYY-1)
+> [Diagrama de Entidade-Relacionamento](https://github.com/projetoKhali/api3/blob/be27d7c6c37234c0423714cce698620c3f090968/Docs/Banners/Entidade-Relacionamento.png)
+
+> [Documentação banco de dados](https://github.com/projetoKhali/api3/blob/be27d7c6c37234c0423714cce698620c3f090968/Docs/Banners/Documenta%C3%A7%C3%A3o%20BD.pdf)
 <br>
 
