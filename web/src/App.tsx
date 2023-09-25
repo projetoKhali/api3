@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import './App.css';
 import Appointments from "./pages/Appointments";
-import Client from './pages/Client';
+import Clients from './pages/Clients';
 import Home from "./pages/Home";
 import Layout from './pages/Layout';
 import ResultCenters from './pages/ResultCenters';
@@ -16,7 +16,7 @@ function App() {
                     <Route index element={<Home />} />
                     <Route path="appointments" element={<Appointments/>} />
                     <Route path="users" element={<Users/>} />
-                    <Route path="client" element={<Client />} />
+                    <Route path="clients" element={<Clients />} />
                     <Route path="resultCenters" element={<ResultCenters/>} />
                 </Route>
             </Routes>
