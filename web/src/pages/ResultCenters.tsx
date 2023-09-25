@@ -2,12 +2,12 @@ import { Table } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import { useEffect, useState } from 'react';
 import { getResultCenters } from '../services/ResultCenterService';
-import ResultCenterData from '../models/ResultCenterData';
-import '../styles/userTData.css';
+import ResultCenterSchema from '../schemas/ResultCenter';
 import ResultCenterForm from '../components/ResultCenterForm';
+import '../styles/userTData.css';
 
 export default function ResultCenters(){
-    const [resultCenters, setResultCenters] = useState<ResultCenterData[]>([]);
+    const [resultCenters, setResultCenters] = useState<ResultCenterSchema[]>([]);
     const requestResultCenters = () => {
         getResultCenters().then(ResultCenterResponse =>
             setResultCenters(ResultCenterResponse)
@@ -17,7 +17,7 @@ export default function ResultCenters(){
         requestResultCenters()
     }, []);
 
-    const columns: ColumnsType<ResultCenterData> = [
+    const columns: ColumnsType<ResultCenterSchema> = [
         {
           title: 'Nome',
           dataIndex: 'name',

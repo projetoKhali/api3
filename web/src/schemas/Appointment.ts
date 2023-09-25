@@ -1,21 +1,26 @@
-export interface Appointment {
+export interface AppointmentSchema {
     requester: string,
     type: string,
     startDate: string,
     endDate: string,
-    resultCenter: string,
+    resultCenter: {
+        id: number
+    },
     client: string,
     project: string,
     justification: string,
     status: string,
 }
 
-export interface PostAppointment {
+export interface PostAppointmentSchema {
+    requester: number,
     type: string,
     startDate: string,
     endDate: string,
-    resultCenter: string,
-    client: string,
+    resultCenter: {
+        id: number,
+    },
+    client: number,
     project: string,
 }
 

@@ -1,13 +1,19 @@
 import axios from 'axios';
-import User from '../models/User';
-import { GetUserSchema, PostUserSchema } from '../schemas/User'
+import { UserSchema, PostUserSchema } from '../schemas/User';
 
 const API_URL = 'http://127.0.0.1:8080/users';
 
-export async function getUsers (): Promise<User[]> {
+export interface PostUser {
+    name: string,
+    registration: string,
+    email: string,
+    userType: string
+}
+
+export async function getUsers (): Promise<UserSchema[]> {
     const response = await axios.get(`${API_URL}`, {});
-    return await response.data.map((item: GetUserSchema) => ({
-        key: item.id.toString(),
+    return await response.data.map((item: any) => ({
+        id: item.id, 
         name: item.name? item.name : "N/A",
         registration: item.registration? item.registration : "N/A",
         userType: item.userType? item.userType : "N/A",
@@ -16,7 +22,7 @@ export async function getUsers (): Promise<User[]> {
         active: item.active? item.active : "N/A",
         insertDate: item.insertDate? item.insertDate : "N/A",
         expireDate: item.expireDate? item.expireDate : "N/A",
-    })) as User[];
+    })) as UserSchema[];
 }
 
 export async function postUser(user: PostUserSchema){

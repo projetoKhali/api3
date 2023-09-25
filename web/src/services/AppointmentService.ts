@@ -1,9 +1,9 @@
 import axios from 'axios';
-import { Appointment, PostAppointment } from '../schemas/Appointment';
+import { AppointmentSchema, PostAppointmentSchema } from '../schemas/Appointment';
 
 const API_URL = 'http://127.0.0.1:8080/appointments';
 
-export async function getAppointmentsUser (id: number): Promise<Appointment[]> {
+export async function getAppointmentsUser (id: number): Promise<AppointmentSchema[]> {
     const response = await axios.get(`${API_URL}/user/${id}`, {});
     return await response.data.map((item: any) => ({
         user: id,
@@ -16,10 +16,10 @@ export async function getAppointmentsUser (id: number): Promise<Appointment[]> {
         justification: item.justification? item.justification : "N/A",
         status: item.status? item.status : "N/A",
         // insertDate: item.insertDate? item.insertDate : "N/A",
-    })) as Appointment[];
+    })) as AppointmentSchema[];
 }
 
-export async function getAppointmentsAdm () : Promise<Appointment[]> {
+export async function getAppointmentsAdm () : Promise<AppointmentSchema[]> {
     const response = await axios.get(API_URL, {});
     return await response.data.map((item: any) => ({
         user: item.user? item.user.name : "N/A",
@@ -33,11 +33,11 @@ export async function getAppointmentsAdm () : Promise<Appointment[]> {
         status: item.status? item.status : "N/A",
         feedback: item.feedback? item.feedback : "N/A",
         updateAppointment: item.updateAppointment? item.updateAppointment : "N/A",
-    })) as Appointment[];
+    })) as AppointmentSchema[];
 
 }
 
-export async function getAppointmentsManager(id: number): Promise<Appointment[]> {
+export async function getAppointmentsManager(id: number): Promise<AppointmentSchema[]> {
     const response = await axios.get(`${API_URL}/manager/${id}`, {});
     return await response.data.map((item: any) => ({
         user: item.user? item.user.name : "N/A",
@@ -49,11 +49,11 @@ export async function getAppointmentsManager(id: number): Promise<Appointment[]>
         project: item.project? item.project : "N/A",
         justification: item.justification? item.justification : "N/A",
         status: item.status? item.status : "N/A",
-    })) as Appointment[];
+    })) as AppointmentSchema[];
 }
 
 
-export async function postAppointment(appointment: PostAppointment){
+export async function postAppointment (appointment: PostAppointmentSchema){
     return await fetch(`${API_URL}`, {
         method: 'POST',
         headers: {
@@ -65,7 +65,6 @@ export async function postAppointment(appointment: PostAppointment){
     .catch(error => console.error(error));
     
 }
-
 
 function formatDateTime(dateTime: string): string {
     const date = new Date(dateTime);
