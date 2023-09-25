@@ -1,12 +1,12 @@
-# Ferramenta para controle de Horas extras e sobreaviso
+# Ferramenta para controle de Horas Extras e Sobreavisos
 
 <img align="right" width="256"  src="Docs\Banners\Api.png"/>
 
 Sistema que faça o controle da jornada de trabalho do colaborador, identifique e classifique horas
-extras, controle das horas extras e sobreavisos.
+extras e sobreavisos.
 
 Acesso de administrador (master para os departamentos pessoal e financeiro), gestor (aprovação
-e lançamento) e colaborador (apontar horas extras) e manter histórico dos Desligados.
+e lançamento) e colaborador (apontar horas extras).
 <br>
 
 <img src="Docs\Banners\equipe.png"/>
