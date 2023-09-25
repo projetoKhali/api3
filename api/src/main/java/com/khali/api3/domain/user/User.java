@@ -32,6 +32,7 @@ public class User {
     private String name;
 
     @Enumerated(EnumType.STRING)
+
     private UserType userType;
 
     @Column(unique=true)

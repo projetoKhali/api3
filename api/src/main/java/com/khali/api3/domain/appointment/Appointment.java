@@ -33,7 +33,7 @@ import lombok.Setter;
 public class Appointment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long apt_id;
 
     @ManyToOne
     @JoinColumn(name="usr_id", referencedColumnName = "id")
@@ -48,8 +48,8 @@ public class Appointment {
     private Timestamp insertDate;
 
     @ManyToOne
-    @JoinColumn(name="rc_id", referencedColumnName = "id")
-    private ResultCenter resultCenter;
+    @JoinColumn(name="rc_id")
+    private ResultCenter resultCenterId;
 
     @ManyToOne
     @JoinColumn(name="clt_id", referencedColumnName = "id")
