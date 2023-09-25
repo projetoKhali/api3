@@ -107,9 +107,7 @@ public class UserController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/login")
     public User getLogin(String email, String password) {
-        User user = userService.getUserByEmail(email, password);
-        return user;
+        return userService.getUserByEmail(email, password);
     }
 }
