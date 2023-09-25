@@ -1,6 +1,7 @@
 package com.khali.api3.repositories;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -8,9 +9,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 import com.khali.api3.domain.appointment.Appointment;
-import java.util.List;
-import java.util.Optional;
-
 import com.khali.api3.domain.resultCenter.ResultCenter;
 
 
@@ -24,9 +22,15 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long>{
         save(apt);
     }
 
-    // utiliza anotações JPA para saber qual tabela e atributo fazer a pesquisa
-    @Query("SELECT a FROM appointments a WHERE a.user = :usr_id")
-    List<Appointment> findAppointmentByUser(@Param("usr_id") Long userId);
+    public List<Appointment> findByResultCenter(ResultCenter resultCenter);
+    public List<Appointment> findAll();
+    public Optional<Appointment> findById(Long id);
     
+    // utiliza anotações JPA para saber qual tabela e atributo fazer a pesquisa
+    @Query(value = "SELECT * FROM appointments a WHERE a.usr_id = :usr_id", nativeQuery = true)
+    List<Appointment> findAppointmentByUser(@Param("usr_id") Long userId);
+
+    @Query(value = "select * from appointments a where rc_id in ( select id from result_centers where gst_id = :usr_id);", nativeQuery = true)
+    List<Appointment> findByManager(@Param("usr_id") Long userId);
 }
 
