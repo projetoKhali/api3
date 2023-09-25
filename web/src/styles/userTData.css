@@ -1,0 +1,31 @@
+th {
+    background-color: #74C2CD !important;
+    border-radius: 15px;
+    padding: 0px !important;
+
+}
+:where(.css-dev-only-do-not-override-i0102m).ant-table-wrapper .ant-table-container table > thead > tr:first-child > :first-child {
+    border-start-start-radius: 15px !important;
+}
+
+:where(.css-dev-only-do-not-override-i0102m).ant-table-wrapper .ant-table-thead > tr > th, :where(.css-dev-only-do-not-override-i0102m).ant-table-wrapper .ant-table-thead > tr > td {
+    text-align: center !important;
+}
+
+:where(.css-dev-only-do-not-override-i0102m).ant-table-wrapper table {
+    border-spacing: 10px !important;
+}
+
+:where(.css-dev-only-do-not-override-i0102m).ant-table-wrapper .ant-table-cell, :where(.css-dev-only-do-not-override-i0102m).ant-table-wrapper .ant-table-thead > tr > th, :where(.css-dev-only-do-not-override-i0102m).ant-table-wrapper .ant-table-tbody > tr > th, :where(.css-dev-only-do-not-override-i0102m).ant-table-wrapper .ant-table-tbody > tr > td, :where(.css-dev-only-do-not-override-i0102m).ant-table-wrapper tfoot > tr > th, :where(.css-dev-only-do-not-override-i0102m).ant-table-wrapper tfoot > tr > td {
+    position:static;
+}
+
+:where(.css-dev-only-do-not-override-i0102m).ant-table-wrapper .ant-table-container table > thead > tr:first-child > :last-child {
+
+    border-start-end-radius: 15px;
+
+}
+:where(.css-dev-only-do-not-override-i0102m).ant-table-wrapper .ant-table-thead > tr > th, :where(.css-dev-only-do-not-override-i0102m).ant-table-wrapper .ant-table-thead > tr > td{
+    background-color: white;
+    border-bottom: 0px solid #ffffff;
+}

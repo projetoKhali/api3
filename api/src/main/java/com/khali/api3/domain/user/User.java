@@ -1,6 +1,7 @@
 package com.khali.api3.domain.user;
 
 import jakarta.persistence.*;
+import java.sql.Timestamp;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -16,6 +17,7 @@ import lombok.Setter;
 @Setter
 @EqualsAndHashCode
 public class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -25,6 +27,7 @@ public class User {
     private String name;
 
     @Enumerated(EnumType.STRING)
+
     private UserType userType;
 
     @Column(unique=true)
@@ -33,4 +36,11 @@ public class User {
     @Column(unique=true)
     private String password;
 
+    private Boolean active;
+
+    @Column(name = "insert_date")
+    private Timestamp insertDate;
+
+    @Column(name = "expire_date")
+    private Timestamp expiredDate;
 }

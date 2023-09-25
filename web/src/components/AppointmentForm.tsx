@@ -1,0 +1,62 @@
+import { useState } from 'react';
+import { PostAppointment } from '../schemas/Appointment';
+import { postAppointment } from '../services/AppointmentService';
+
+interface AppointmentFormProps {
+    successCallback: () => void;
+    errorCallback: () => void;
+}
+
+export default function AppointmentForm ({ successCallback, errorCallback }: AppointmentFormProps) {
+    const [postAppointmentType, setPostAppointmentType] = useState<string>('');
+    const [postAppointmentStartDate, setPostAppointmentStartDate] = useState<string>('');
+    const [postAppointmentEndDate, setPostAppointmentEndDate] = useState<string>('');
+    const [postAppointmentResultCenter, setPostAppointmentResultCenter] = useState<string>('');
+    const [postAppointmentClient, setPostAppointmentClient] = useState<string>('');
+    const [postAppointmentProject, setPostAppointmentProject] = useState<string>('');
+    const [postAppointmentJustification, setPostAppointmentJustification] = useState<string>('');
+
+    function handleTypeChange(event: React.ChangeEvent<HTMLInputElement>){ setPostAppointmentType(event.target.value); }
+    function handleStartDateChange(event: React.ChangeEvent<HTMLInputElement>){ setPostAppointmentStartDate(event.target.value); }
+    function handleEndDateChange(event: React.ChangeEvent<HTMLInputElement>){ setPostAppointmentEndDate(event.target.value); }
+    function handleResultCenterChange(event: React.ChangeEvent<HTMLInputElement>){ setPostAppointmentResultCenter(event.target.value); }
+    function handleClientChange(event: React.ChangeEvent<HTMLInputElement>){ setPostAppointmentClient(event.target.value); }
+    function handleProjectChange(event: React.ChangeEvent<HTMLInputElement>){ setPostAppointmentProject(event.target.value); }
+    function handleJustificationChange(event: React.ChangeEvent<HTMLInputElement>){ setPostAppointmentJustification(event.target.value); }
+
+    function handleSubmit(event: React.ChangeEvent<HTMLFormElement>) {
+      if (!postAppointmentType
+        || !postAppointmentStartDate
+        || !postAppointmentEndDate
+        || !postAppointmentResultCenter
+        || !postAppointmentClient
+        || !postAppointmentProject
+        || !postAppointmentJustification
+      ) return errorCallback();
+
+      event.preventDefault();
+      postAppointment({
+        type: postAppointmentType,
+        startDate: postAppointmentStartDate,
+        endDate: postAppointmentEndDate,
+        resultCenter: postAppointmentResultCenter,
+        client: postAppointmentClient,
+        project: postAppointmentProject,
+        justification: postAppointmentJustification,
+      } as PostAppointment)
+      .then(() => successCallback());
+    }
+
+    return (
+      <form onSubmit={handleSubmit}>
+          <input type="text" placeholder="Tipo" onChange={handleTypeChange}/>
+          <input type="text" placeholder="Início" onChange={handleStartDateChange}/>
+          <input type="text" placeholder="Fim" onChange={handleEndDateChange}/>
+          <input type="text" placeholder="CR" onChange={handleResultCenterChange}/>
+          <input type="text" placeholder="Cliente" onChange={handleClientChange}/>
+          <input type="text" placeholder="Projeto" onChange={handleProjectChange}/>
+          <input type="text" placeholder="Justificativa" onChange={handleJustificationChange}/>
+          <button type="submit">Cadastrar</button>
+      </form>
+    );
+}

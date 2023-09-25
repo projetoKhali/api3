@@ -40,8 +40,12 @@ public class Appointment {
     // private ResultCenter resultCenterId;
 
     @ManyToOne
-    @JoinColumn(name="client_id")
-    private Client clientId;
+    @JoinColumn(name="rc_id")
+    private ResultCenter resultCenter;
+
+    @ManyToOne
+    @JoinColumn(name="clt_id", referencedColumnName = "id")
+    private Client client;
 
     private String project;
     private String justification;

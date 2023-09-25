@@ -1,0 +1,40 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@500;700&display=swap');
+
+.ant-menu-item.ant-menu-item-only-child {
+    font-family: 'Inter', sans-serif;
+    padding-left: 0;
+    background-color: #D9D9D9;
+    margin-bottom: 15px;
+
+}
+li {
+    padding-left: 0 !important;
+    display: flex;
+    flex-direction: column;
+    
+}
+.ant-menu-item-selected.ant-menu-item-only-child {
+    background-color: #617AFF;
+    color: black;
+    margin-bottom: 15px;
+}
+
+.userName{
+    padding-left: 0 !important;
+    font-size: 30px;
+    display: flex;
+    float: left;
+    justify-content: center;
+    background-color: #D9D9D9;
+    width: 250px;
+    border-radius: 10px;
+    height: 55px;
+    margin-bottom: 35px;
+}
+
+#user {
+    color: black;
+    padding-top: 30px;
+    font-weight: bold !important;
+    font-family: 'Inter', sans-serif;
+}
