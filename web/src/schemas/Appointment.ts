@@ -3,7 +3,9 @@ export interface AppointmentSchema {
     type: string,
     startDate: string,
     endDate: string,
-    resultCenter: string,
+    resultCenter: {
+        id: number
+    },
     client: string,
     project: string,
     justification: string,
@@ -15,7 +17,9 @@ export interface PostAppointmentSchema {
     type: string,
     startDate: string,
     endDate: string,
-    resultCenter: number,
+    resultCenter: {
+        id: number,
+    },
     client: number,
     project: string,
 }

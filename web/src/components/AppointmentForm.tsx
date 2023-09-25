@@ -21,7 +21,6 @@ export default function AppointmentForm ({ successCallback, errorCallback }: App
     // const [postAppointmentClient, setPostAppointmentClient] = useState<string>('');
     const [postAppointmentProject, setPostAppointmentProject] = useState<string>('');
     const [postAppointmentJustification, setPostAppointmentJustification] = useState<string>('');
-    const [postAppointmentStatus, setPostAppointmentStatus] = useState<string>('');
 
     const [postAppointmentClient, setPostAppointmentClient] = useState<LookUpOption | undefined>();
     const [availableClients, setAvailableClients] = useState<LookUpOption[]>([]);
@@ -42,7 +41,6 @@ export default function AppointmentForm ({ successCallback, errorCallback }: App
     // function handleClientChange(event: React.ChangeEvent<HTMLInputElement>){ setPostAppointmentClient(event.target.value); }
     function handleProjectChange(event: React.ChangeEvent<HTMLInputElement>){ setPostAppointmentProject(event.target.value); }
     function handleJustificationChange(event: React.ChangeEvent<HTMLInputElement>){ setPostAppointmentJustification(event.target.value); }
-    function handleStatusChange(event: React.ChangeEvent<HTMLInputElement>){ setPostAppointmentStatus(event.target.value); }
 
     function handleSubmit(event: React.ChangeEvent<HTMLFormElement>) {
       if (!postAppointmentType
@@ -52,7 +50,6 @@ export default function AppointmentForm ({ successCallback, errorCallback }: App
         || !postAppointmentClient
         || !postAppointmentProject
         || !postAppointmentJustification
-        || !postAppointmentStatus
       ) return errorCallback();
 
       event.preventDefault();
@@ -61,11 +58,10 @@ export default function AppointmentForm ({ successCallback, errorCallback }: App
         type: postAppointmentType,
         startDate: postAppointmentStartDate,
         endDate: postAppointmentEndDate,
-        resultCenter: 1,
+        resultCenter: { id: 1 },
         client: postAppointmentClient.id,
         project: postAppointmentProject,
         justification: postAppointmentJustification,
-        status: postAppointmentStatus,
       } as PostAppointmentSchema)
       .then(() => successCallback());
     }
@@ -87,7 +83,6 @@ export default function AppointmentForm ({ successCallback, errorCallback }: App
 
           <input type="text" placeholder="Projeto" onChange={handleProjectChange}/>
           <input type="text" placeholder="Justificativa" onChange={handleJustificationChange}/>
-          <input type="text" placeholder="Status" onChange={handleStatusChange}/>
           <button type="submit">Cadastrar</button>
       </form>
     );

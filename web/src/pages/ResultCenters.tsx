@@ -1,8 +1,7 @@
 import { Table } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import { useEffect, useState } from 'react';
-import { getResultCenters } from '../services/ResultCenter';
-import '../schemas/ResultCenter';
+import { getResultCenters } from '../services/ResultCenterService';
 import ResultCenter from '../schemas/ResultCenter';
 import '../styles/userTData.css';
 import UserForm from '../components/UserForm';

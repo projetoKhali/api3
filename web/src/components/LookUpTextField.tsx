@@ -8,16 +8,25 @@ interface LookUpProps {
 }
 
 export default function LookUpTextField ({placeholder, options, onSelect}: LookUpProps) {
+    const [inputValue, setInputValue] = useState<string>('');
     const [suggestions, setSuggestions] = useState<LookUpOption[]>([]);
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setSuggestions(options.filter(option => option.name.includes(e.target.value)));
+        setInputValue(e.target.value)
+        setSuggestions(options.filter(option => e.target.value && option.name.includes(e.target.value)));
+    }
+
+    const handleSelect = (option: LookUpOption) => {
+        onSelect(option);
+        setSuggestions([]);
+        setInputValue(option.name);
     }
 
     return (
         <div className="lookuptextfield-container">
             <input
                 type="text"
+                value={inputValue}
                 onChange={handleInputChange}
                 placeholder={placeholder}
             />
@@ -27,7 +36,7 @@ export default function LookUpTextField ({placeholder, options, onSelect}: LookU
                         <div
                             key={suggestion.id}
                             className="lookuptextfield-suggestion"
-                            onClick={() => {onSelect(suggestion)}}
+                            onClick={() => {handleSelect(suggestion)}}
                         >{suggestion.name}</div>
                     ))}
                 </div>
