@@ -35,5 +35,10 @@ public class UserService {
             throw new EntityNotFoundException("Usuário não encontrado com o registro: " + registration);
         }
     }
+
+    public User getUserByEmail(String email, String password) {
+        User user = userRepository.findByEmail(email);
+        return  (user.getPassword().equals(password)) ? user : null;
+    }
     
 }
