@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { useState } from 'react';
 import { postAppointment } from '../services/AppointmentService';
 import { PostAppointmentSchema } from '../schemas/Appointment';

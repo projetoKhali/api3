@@ -6,10 +6,9 @@ import { UserSchema } from '../schemas/User';
 const API_URL = 'http://127.0.0.1:8080/resultCenters';
 
 
-
 async function mapResponse (response: AxiosResponse) {
     return response.data.map((item: any) => ({
-        key: item.id.toString(),
+        id: item.id,
         name: item.name? item.name : "N/A",
         code: item.code? item.code : "N/A",
         acronym: item.acronym? item.acronym : "N/A",

@@ -7,7 +7,7 @@ export interface PostResultCenterSchema {
     }
 }
 
-export default interface ResultCenterSchema {
+export interface ResultCenterSchema {
   id: number;
   name: string;
   code: string;

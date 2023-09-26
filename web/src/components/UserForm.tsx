@@ -1,3 +1,5 @@
+import React from "react";
+
 import { useState } from 'react';
 import { PostUserSchema } from '../schemas/User';
 import { postUser } from '../services/UserService';

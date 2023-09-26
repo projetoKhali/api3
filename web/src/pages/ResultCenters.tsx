@@ -1,8 +1,10 @@
+import React from "react";
+
 import { Table } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import { useEffect, useState } from 'react';
 import { getResultCenters } from '../services/ResultCenterService';
-import ResultCenterSchema from '../schemas/ResultCenter';
+import { ResultCenterSchema } from '../schemas/ResultCenter';
 import ResultCenterForm from '../components/ResultCenterForm';
 import '../styles/userTData.css';
 
