@@ -1,30 +1,34 @@
-import axios from 'axios';
-import ResultCenterData from '../models/ResultCenterData';
+import axios, { AxiosResponse } from 'axios';
+import { ResultCenterSchema, PostResultCenterSchema } from '../schemas/ResultCenter';
+
+import { UserSchema } from '../schemas/User';
 
 const API_URL = 'http://127.0.0.1:8080/resultCenters';
 
-export interface PostResultCenterData {
-    name: string,
-    code: string,
-    acronym: string,
-    gestor: {
-        id : string
-    }
-}
 
-export async function getResultCenters (): Promise<ResultCenterData[]> {
-    const response = await axios.get(API_URL, {});
-    return await response.data.map((item: any) => ({
-        key: item.id.toString(),
+async function mapResponse (response: AxiosResponse) {
+    return response.data.map((item: any) => ({
+        id: item.id,
         name: item.name? item.name : "N/A",
         code: item.code? item.code : "N/A",
         acronym: item.acronym? item.acronym : "N/A",
         gestor: item.gestor? item.gestor.name : "N/A",
         insertDate: item.insertDate? item.insertDate : "N/A",
-    })) as ResultCenterData[];
+    })) as ResultCenterSchema[]
 }
 
-export async function postResultCenter(resultCenter: PostResultCenterData){
+export async function getResultCenters (): Promise<ResultCenterSchema[]> {
+    const response = await axios.get(API_URL, {});
+    return await mapResponse(response);
+}
+
+export async function getResultCentersOfUser (user: UserSchema): Promise<ResultCenterSchema[]> {
+    const userId = user.id;
+    const response = await axios.get(`${API_URL}/of/${userId}`, {});
+    return await mapResponse(response);
+}
+
+export async function postResultCenter(resultCenter: PostResultCenterSchema) {
     return await fetch(API_URL, {
         method: 'POST',
         headers: {
@@ -34,5 +38,4 @@ export async function postResultCenter(resultCenter: PostResultCenterData){
     }).then(response=> response.json())
     .then((data)=> console.log(data))
     .catch(error => console.error(error));
-    
 }

@@ -20,3 +20,7 @@
 .sidemenu {
    
 }
+
+.lookuptextfield-suggestion:hover {
+  cursor: pointer;
+}

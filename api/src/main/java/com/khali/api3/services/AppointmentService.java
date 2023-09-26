@@ -156,10 +156,6 @@ public class AppointmentService {
         for(Appointment appointment : appointments){
             appointment.setStatus(status);
         }
-
         appointmentRepository.saveAll(updatedAppointments);
-
     }
-    
-
 }

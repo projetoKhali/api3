@@ -1,18 +1,12 @@
 package com.khali.api3.domain.user;
+
+import jakarta.persistence.*;
 import java.sql.Timestamp;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity(name="users")
@@ -23,6 +17,7 @@ import lombok.Setter;
 @Setter
 @EqualsAndHashCode
 public class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -38,10 +33,14 @@ public class User {
     @Column(unique=true)
     private String email;
 
+    @Column(unique=true)
     private String password;
+
     private Boolean active;
+
     @Column(name = "insert_date")
     private Timestamp insertDate;
+
     @Column(name = "expire_date")
     private Timestamp expiredDate;
 }

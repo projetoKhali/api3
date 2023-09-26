@@ -13,13 +13,13 @@ const PermissionSideMenuItemMap: Record<string, SideMenuItem[]> = {
     "Appoint": [
         {
             label: "Apontamentos",
-            url: "/appointments",
+            url: "/appointments/user",
         },
     ],
     "Validate": [
         {
             label: "Aprovações",
-            url: "#"
+            url: "/appointments/manager"
         },
     ],
     "Register": [
@@ -47,10 +47,10 @@ const PermissionSideMenuItemMap: Record<string, SideMenuItem[]> = {
         // },
     ],
     "FullAccess": [
-        // {
-        //     label: "Apontaments ADM",
-        //     url: "#"
-        // }
+        {
+            label: "Apontaments ADM",
+            url: "/appointments"
+        }
     ]
 }
 
