@@ -54,7 +54,7 @@ export async function getAppointmentsManager(id: number): Promise<Appointment[]>
 
 
 export async function postAppointment(appointment: PostAppointment){
-    return await fetch(`${API_URL}`, {
+    return await fetch(API_URL, {
         method: 'POST',
         headers: {
             "Content-Type": 'application/json'
@@ -66,11 +66,13 @@ export async function postAppointment(appointment: PostAppointment){
     
 }
 
-
 function formatDateTime(dateTime: string): string {
     const date = new Date(dateTime);
-    const formattedDate = date.toLocaleDateString();
-    const formattedTime = date.toLocaleTimeString();
-
+    const formattedDate = date.getUTCDate().toString().padStart(2, '0') + '/' +
+    (date.getUTCMonth() + 1).toString().padStart(2, '0') + '/' +
+    date.getUTCFullYear();
+    const formattedTime = date.getUTCHours().toString().padStart(2, '0') + ':' +
+    date.getUTCMinutes().toString().padStart(2, '0') + ':' +
+    date.getUTCSeconds().toString().padStart(2, '0');
     return `${formattedDate} ${formattedTime}`;
 }

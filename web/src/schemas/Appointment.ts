@@ -1,6 +1,6 @@
 export interface Appointment {
-    requester: string,
-    type: string,
+    user: string,
+    appointmentType: string,
     startDate: string,
     endDate: string,
     resultCenter: string,
@@ -11,11 +11,19 @@ export interface Appointment {
 }
 
 export interface PostAppointment {
-    type: string,
+    user:{
+        id: string
+    }
+    appointmentType: string,
     startDate: string,
     endDate: string,
-    resultCenter: string,
-    client: string,
+    resultCenter: {
+        id: string
+    }
+    client: {
+        id: string
+    }
     project: string,
+    justification: string
 }
 
