@@ -74,7 +74,6 @@ export default function Appointments () {
             ) : (
                 null
             )}
-
         </div>
     );
 }

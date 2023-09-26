@@ -59,6 +59,13 @@ public class UserController {
             .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + id));
     }
 
+    // @GetMapping("/{name}")
+    // public String getUserIdByName(@PathVariable User user) {
+    //     String userId = userRepository.findUserByName(user);
+    //     return userId.getName();
+    // }
+
+
     @GetMapping("/{id}/permissions")
     public List<Permission> getUserPermissions(@PathVariable Long id) {
         try {

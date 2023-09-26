@@ -1,26 +1,35 @@
 export interface AppointmentSchema {
-    requester: string,
-    type: string,
+    user:{
+        id: number,
+    }
+    appointmentType: string,
     startDate: string,
     endDate: string,
     resultCenter: {
-        id: number
+        id: number,
     },
-    client: string,
+    client: {
+        id: number,
+    },
     project: string,
     justification: string,
     status: string,
 }
 
 export interface PostAppointmentSchema {
-    requester: number,
-    type: string,
-    startDate: string,
-    endDate: string,
+    user:{
+        id: number,
+    }
     resultCenter: {
         id: number,
     },
-    client: number,
+    client: {
+        id: number,
+    }
+    appointmentType: string,
+    startDate: string,
+    endDate: string,
     project: string,
+    justification: string
 }
 
