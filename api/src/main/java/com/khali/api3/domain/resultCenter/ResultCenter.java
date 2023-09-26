@@ -5,24 +5,27 @@ import java.sql.Timestamp;
 import com.khali.api3.domain.user.User;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.Getter;
 import lombok.Setter;
 
-@Entity(name="resultCenters")
-@Table(name="resultCenters")
+@Entity(name="resultcenter")
+@Table(name="result_centers")
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
+@EqualsAndHashCode
 public class ResultCenter {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

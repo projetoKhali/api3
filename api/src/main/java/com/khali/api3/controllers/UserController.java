@@ -20,6 +20,7 @@ import com.khali.api3.domain.user.UserType;
 import com.khali.api3.repositories.UserRepository;
 import com.khali.api3.services.MembersService;
 import com.khali.api3.services.ResultCenterService;
+import com.khali.api3.services.UserService;
 
 import jakarta.persistence.EntityNotFoundException;
 
@@ -32,16 +33,19 @@ public class UserController {
 
     @Autowired private final MembersService membersService;
     @Autowired private final ResultCenterService resultCenterService;
+    @Autowired private final UserService userService;
 
     @Autowired
     public UserController(
         UserRepository userRepository,
         MembersService membersService,
-        ResultCenterService resultCenterService
+        ResultCenterService resultCenterService,
+        UserService userService
     ) {
         this.userRepository = userRepository;
         this.membersService = membersService;
         this.resultCenterService = resultCenterService;
+        this.userService = userService;
     }
 
     @GetMapping
@@ -108,5 +112,9 @@ public class UserController {
     public ResponseEntity<?> deleteUser(@PathVariable Long id) {
         userRepository.deleteById(id);
         return ResponseEntity.ok().build();
+    }
+
+    public User getLogin(String email, String password) {
+        return userService.getValidatedUser(email, password);
     }
 }

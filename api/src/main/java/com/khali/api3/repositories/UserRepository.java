@@ -11,7 +11,9 @@ import com.khali.api3.domain.user.User;
 public interface UserRepository extends JpaRepository<User, Long>{
     public User findByRegistration(String registration);
 
-
     @Query(value = "SELECT * FROM users a WHERE a.name = :name", nativeQuery = true)
     String findUserByName(@Param("name") User userName);
+
+    @Query(value = "select * from users where email = :email", nativeQuery = true)
+    public User findByEmail(String email);
 }

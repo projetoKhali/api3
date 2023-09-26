@@ -62,12 +62,7 @@ public class AppointmentController {
         return appointmentService.findAppointmentByDate(appointmentsList, dataInit, dataFim);
     }
 
-    @GetMapping("/manager/time/{id}")
-    public List<Appointment> getAppointmentByHour(User user){
-        LocalTime dataInit = LocalTime.of(9, 30, 00);
-        LocalTime dataFim = LocalTime.of(12, 00, 00);
-        List<Appointment> appointmentsList = appointmentRepository.findByManager(user.getId());
-
+    public List<Appointment> getAppointmentByHour(List<Appointment> appointmentsList, LocalTime dataInit, LocalTime dataFim){
         return appointmentService.findAppointmentByHour(appointmentsList, dataInit, dataFim);
     }
     
