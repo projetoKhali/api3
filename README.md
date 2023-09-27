@@ -123,6 +123,7 @@ cliente, CR e colaborador.
 </details>
 <details>
 <summary> Burndown </summary>
+<img src="Docs\Banners\burndown.png"/>
 <br>
 </details>
 

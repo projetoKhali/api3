@@ -1,8 +1,8 @@
 import React from "react";
 
 import { useState } from 'react';
-import { requestLogin } from '../services/UserService';
 import { UserSchema } from "../schemas/User";
+import { requestLogin } from '../services/UserService';
 
 interface LoginProps {
     onLogin: (user: UserSchema | undefined) => void;
@@ -18,9 +18,9 @@ export default function Login ({ onLogin }: LoginProps) {
     function handleSubmit(event: React.ChangeEvent<HTMLFormElement>) {
         event.preventDefault();
         requestLogin(
-            loginUsername,
-            loginPassword
-        ).then(result => onLogin(result));
+        loginUsername,
+        loginPassword
+        ).then(requestLogin => onLogin(requestLogin));
     }
 
     return (

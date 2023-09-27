@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { postClient } from '../services/ClientService';
-import { Client } from '../schemas/Client';
 
 export default function ClientForm({ callback }: { callback: () => void }){
     const [postClientName,setPostClientName] = useState<string>('');

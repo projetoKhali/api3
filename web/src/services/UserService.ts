@@ -1,10 +1,10 @@
 import axios, { AxiosResponse } from 'axios';
-import { UserSchema, PostUserSchema } from '../schemas/User';
+import { PostUserSchema, UserSchema } from '../schemas/User';
 
-const API_URL = 'http://127.0.0.1:8000/users';
+const API_URL = 'http://127.0.0.1:8080/users';
 
 async function mapResponse (response: AxiosResponse) {
-    return response.data.map((item) => ({
+    return response.data.map((item: any) => ({
         id: item.id,
         name: item.name? item.name : "N/A",
         registration: item.registration? item.registration : "N/A",
@@ -17,13 +17,13 @@ async function mapResponse (response: AxiosResponse) {
     })) as UserSchema[]
 }
 
-export async function requestLogin (username: string, password: string): Promise<UserSchema> {
+export async function requestLogin (email: string, password: string): Promise<UserSchema> {
     return await axios.get(`${API_URL}/login`, {
         data: {
-            username,
+            email,
             password,
         }
-    });
+    }) as UserSchema;
 }
 
 export async function getUsers (): Promise<UserSchema[]> {

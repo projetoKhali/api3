@@ -113,6 +113,7 @@ public class UserController {
         return ResponseEntity.ok().build();
     }
 
+    @GetMapping("/login")
     public User getLogin(String email, String password) {
         return userService.getValidatedUser(email, password);
     }

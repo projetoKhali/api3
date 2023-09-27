@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { PostResultCenterData, postResultCenter } from '../services/ResultCenter';
+import { PostResultCenterSchema } from '../schemas/ResultCenter';
+import { postResultCenter } from '../services/ResultCenterService';
 
 export default function ResultCenterForm({ callback }: { callback: () => void }){
     const [postResultCenterName,setPostResultCenterName] = useState<string>('');
@@ -32,7 +33,7 @@ export default function ResultCenterForm({ callback }: { callback: () => void })
         gestor: {
           id: postResultCenterGestor
         }
-      } as PostResultCenterData)
+      } as PostResultCenterSchema)
       .then(() => callback());
     }
 

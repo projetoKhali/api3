@@ -1,15 +1,15 @@
 import { useState } from 'react';
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import './App.css';
+import AppointmentsAdm from "./pages/AdmAppointments";
 import Clients from './pages/Clients';
 import Home from "./pages/Home";
 import Layout from './pages/Layout';
-import AppointmentsManager from "./pages/ManagerAppointments";
-import AppointmentsAdm from "./pages/AdmAppointments";
-import Appointments from "./pages/UserAppointments";
-import ResultCenters from './pages/ResultCenters';
-import Users from "./pages/Users";
 import Login from './pages/Login';
+import AppointmentsManager from "./pages/ManagerAppointments";
+import ResultCenters from './pages/ResultCenters';
+import Appointments from "./pages/UserAppointments";
+import Users from "./pages/Users";
 
 import { UserSchema } from './schemas/User';
 
