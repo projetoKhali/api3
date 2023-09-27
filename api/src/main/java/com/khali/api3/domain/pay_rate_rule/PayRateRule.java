@@ -22,6 +22,7 @@ import java.time.LocalTime;
 public class PayRateRule {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="prt_id")
     private Long id;
 
     @Column(unique=true)
