@@ -35,7 +35,6 @@ public class UserController {
     @Autowired private final ResultCenterService resultCenterService;
     @Autowired private final UserService userService;
 
-    @Autowired
     public UserController(
         UserRepository userRepository,
         MembersService membersService,

@@ -22,8 +22,6 @@ function App() {
     return (
         <>
             {userLoggedIn ? (
-                <Login onLogin={(user: UserSchema | undefined) => setUserLoggedIn(user)} />
-            ) : (
                 <BrowserRouter>
                     <Routes>
                         <Route path="/" element={<Layout/>}>
@@ -37,6 +35,8 @@ function App() {
                         </Route>
                     </Routes>
                 </BrowserRouter>
+            ) : (
+                <Login onLogin={(user: UserSchema | undefined) => setUserLoggedIn(user)} />
             )}
         </>
     )

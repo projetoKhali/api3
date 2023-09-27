@@ -26,16 +26,17 @@ public class User {
     private String registration;
     private String name;
 
+    @Column
     @Enumerated(EnumType.STRING)
-
     private UserType userType;
 
     @Column(unique=true)
     private String email;
 
-    @Column(unique=true)
+    @Column
     private String password;
 
+    @Column
     private Boolean active;
 
     @Column(name = "insert_date")

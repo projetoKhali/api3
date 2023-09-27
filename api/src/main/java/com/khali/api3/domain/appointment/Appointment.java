@@ -1,16 +1,26 @@
 package com.khali.api3.domain.appointment;
 
-import com.khali.api3.domain.user.User;
-import com.khali.api3.domain.client.Client;
-
 import java.sql.Timestamp;
 
-import jakarta.persistence.*;
+import com.khali.api3.domain.client.Client;
+import com.khali.api3.domain.resultCenter.ResultCenter;
+import com.khali.api3.domain.user.User;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity(name="appointments")
@@ -26,18 +36,19 @@ public class Appointment {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name="user_id")
-    private User userId;
+    @JoinColumn(name="usr_id", referencedColumnName = "id")
+    private User user;
 
+    @Column
     @Enumerated(EnumType.STRING)
     private AppointmentType type;
 
+    @Column
     private Timestamp startDate;
+    @Column
     private Timestamp endDate;
-
-    // @ManyToOne
-    // @JoinColumn(name="rc_id")
-    // private ResultCenter resultCenterId;
+    @Column
+    private Timestamp insertDate;
 
     @ManyToOne
     @JoinColumn(name="rc_id")
@@ -48,10 +59,16 @@ public class Appointment {
     private Client client;
 
     private String project;
+    @Column
     private String justification;
 
     @Enumerated(EnumType.STRING)
     private AppointmentStatus status;
 
+    @Column
     private String feedback;
+
+    @OneToOne
+    @JoinColumn(name="apt_updt_id", referencedColumnName = "id")
+    private Appointment apt_updt;
 }

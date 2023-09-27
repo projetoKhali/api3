@@ -27,12 +27,20 @@ public class PayRateRule {
     @Column(unique=true)
     private Long code;
 
+    @Column
     private double hourDuration;
+    @Column
     private double payRate;
 
     @Enumerated(EnumType.STRING)
     private AppointmentType appointmentType;
 
+    @Column
     private LocalTime startTime;
+    @Column
     private LocalTime endTime;
+
+    @Enumerated(EnumType.STRING)
+    private Week daysOfWeek;
+
 }

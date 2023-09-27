@@ -79,7 +79,7 @@ public class AppointmentController {
         Appointment appointment = appointmentRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Appointment not found with id: " + id));
         appointment.setUser(appointmentDetails.getUser());
-        appointment.setAppointmentType(appointmentDetails.getAppointmentType());
+        appointment.setType(appointmentDetails.getType());
         appointment.setStartDate(appointmentDetails.getStartDate());
         appointment.setEndDate(appointmentDetails.getEndDate());
         appointment.setInsertDate(appointmentDetails.getInsertDate());
