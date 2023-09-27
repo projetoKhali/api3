@@ -65,7 +65,7 @@ export default function AppointmentForm ({ userLoggedIn, successCallback, errorC
         startDate: formattedStartDate,
         endDate: formattedEndDate,
         resultCenter: {
-            id: postAppointmentResultCenter,
+            id: postAppointmentResultCenter.id,
         },
         client: {
             id: postAppointmentClient.id,
