@@ -1,7 +1,7 @@
 export interface AppointmentSchema {
     user:{
         id: number,
-    }
+    },
     appointmentType: string,
     startDate: string,
     endDate: string,
@@ -19,13 +19,13 @@ export interface AppointmentSchema {
 export interface PostAppointmentSchema {
     user:{
         id: number,
-    }
+    },
     resultCenter: {
         id: number,
     },
     client: {
         id: number,
-    }
+    },
     appointmentType: string,
     startDate: string,
     endDate: string,

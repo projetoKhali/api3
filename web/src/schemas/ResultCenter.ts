@@ -4,17 +4,17 @@ export interface PostResultCenterSchema {
     acronym: string,
     gestor: {
         id : string
-    }
+    },
 }
 
 export interface ResultCenterSchema {
-  id: number;
-  name: string;
-  code: string;
-  acronym: string;
-  gestor: {
+    id: number;
     name: string;
-    referencedColumnName:string;
-  }
-  insertDate: string;
+    code: string;
+    acronym: string;
+    gestor: {
+        id: number;
+        name: string;
+    },
+    insertDate: string;
 }
