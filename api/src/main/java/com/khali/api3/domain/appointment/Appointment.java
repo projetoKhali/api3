@@ -39,7 +39,7 @@ public class Appointment {
     @JoinColumn(name="usr_id", referencedColumnName = "id")
     private User user;
 
-    @Column
+    @Column(name = "appointment_type")
     @Enumerated(EnumType.STRING)
     private AppointmentType type;
 
