@@ -32,7 +32,7 @@ export default function AppointmentForm ({ userLoggedIn, successCallback, errorC
 
     useState(() => {
         getClients().then( clientsResponse => setAvailableClients(clientsResponse.map(client => ({ id: client.id, name: client.name, }))));
-        getResultCentersOfUser().then( resultCentersResponse => setAvailableResultCenters(resultCentersResponse.map(resultCenter => ({ id: resultCenter.id, name: resultCenter.name, }))));
+        getResultCentersOfUser(userLoggedIn).then( resultCentersResponse => setAvailableResultCenters(resultCentersResponse.map(resultCenter => ({ id: resultCenter.id, name: resultCenter.name, }))));
     })
 
     function handleTypeChange(event: React.ChangeEvent<HTMLInputElement>){ setPostAppointmentType(event.target.value); }
