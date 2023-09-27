@@ -9,17 +9,18 @@ import LookUpTextField from './LookUpTextField';
 
 import { getClients } from '../services/ClientService';
 import { getResultCentersOfUser } from '../services/ResultCenterService';
+import { UserSchema } from '../schemas/User';
 
 interface AppointmentFormProps {
+    userLoggedIn: UserSchema
     successCallback: () => void;
     errorCallback: () => void;
 }
 
-export default function AppointmentForm ({ successCallback, errorCallback }: AppointmentFormProps) {
+export default function AppointmentForm ({ userLoggedIn, successCallback, errorCallback }: AppointmentFormProps) {
     const [postAppointmentType, setPostAppointmentType] = useState<string>('');
     const [postAppointmentStartDate, setPostAppointmentStartDate] = useState<string>('');
     const [postAppointmentEndDate, setPostAppointmentEndDate] = useState<string>('');
-    // const [postAppointmentClient, setPostAppointmentClient] = useState<string>('');
     const [postAppointmentProject, setPostAppointmentProject] = useState<string>('');
     const [postAppointmentJustification, setPostAppointmentJustification] = useState<string>('');
 
@@ -58,7 +59,7 @@ export default function AppointmentForm ({ successCallback, errorCallback }: App
 
       postAppointment({
         user: {
-          id: postAppointmentUser
+          id: userLoggedIn.id
         },
         appointmentType: postAppointmentType,
         startDate: formattedStartDate,

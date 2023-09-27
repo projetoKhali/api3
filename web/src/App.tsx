@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { useState } from 'react';
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import './App.css';
@@ -26,11 +24,11 @@ function App() {
                     <Routes>
                         <Route path="/" element={<Layout/>}>
                             <Route index element={<Home />} />
-                            <Route path="appointments/user" element={<Appointments/>} />
-                            <Route path="appointments/manager" element={<AppointmentsManager/>} />
+                            <Route path="appointments/user" element={<Appointments userLoggedIn={userLoggedIn}/>} />
+                            <Route path="appointments/manager" element={<AppointmentsManager userLoggedIn={userLoggedIn}/>} />
                             <Route path="appointments" element={<AppointmentsAdm/>} />
                             <Route path="users" element={<Users/>} />
-                            <Route path="clients" element={<Clients />} />
+                            <Route path="clients" element={<Clients/>} />
                             <Route path="resultCenters" element={<ResultCenters/>} />
                         </Route>
                     </Routes>

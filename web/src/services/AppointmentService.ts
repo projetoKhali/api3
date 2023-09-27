@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from 'axios';
 import { AppointmentSchema, PostAppointmentSchema } from '../schemas/Appointment';
 
-const API_URL = 'http://127.0.0.1:8080/appointments';
+const API_URL = 'http://127.0.0.1:8000/appointments';
 
 async function mapResponse(response: AxiosResponse): Promise<AppointmentSchema[]> {
     return response.data.map((item: any) => ({

@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from 'axios';
 import { UserSchema, PostUserSchema } from '../schemas/User';
 
-const API_URL = 'http://127.0.0.1:8080/users';
+const API_URL = 'http://127.0.0.1:8000/users';
 
 async function mapResponse (response: AxiosResponse) {
     return response.data.map((item) => ({

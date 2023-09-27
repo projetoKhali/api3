@@ -1,17 +1,20 @@
-import React from "react";
-
 import { Table } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import { useEffect, useState } from 'react';
 import AppointmentForm from '../components/AppointmentForm';
 import { AppointmentSchema } from '../schemas/Appointment';
 import { getAppointmentsUser } from '../services/AppointmentService';
+import { UserSchema } from "../schemas/User";
 
-export default function Appointments () {
+interface AppointmentsProps {
+  userLoggedIn: UserSchema;
+}
+
+export default function Appointments({ userLoggedIn }: AppointmentsProps) {
     const [appointments, setAppointments] = useState<AppointmentSchema[]>([]);
 
     const requestAppointments = () => {
-        getAppointmentsUser(2).then(appointmentsResponse =>
+        getAppointmentsUser(userLoggedIn.id).then(appointmentsResponse =>
             setAppointments(appointmentsResponse)
         );
     };
@@ -66,6 +69,7 @@ export default function Appointments () {
     return (
         <div>
             <AppointmentForm
+                userLoggedIn={userLoggedIn}
                 successCallback={requestAppointments}
                 errorCallback={() => {}}
             />

@@ -15,7 +15,8 @@ export default function Login ({ onLogin }: LoginProps) {
     function handleUsernameChange(event: React.ChangeEvent<HTMLInputElement>){ setLoginUsername(event.target.value); }
     function handlePasswordChange(event: React.ChangeEvent<HTMLInputElement>){ setLoginPassword(event.target.value); }
 
-    function handleSubmit(_: React.ChangeEvent<HTMLFormElement>) {
+    function handleSubmit(event: React.ChangeEvent<HTMLFormElement>) {
+        event.preventDefault();
         requestLogin(
             loginUsername,
             loginPassword
