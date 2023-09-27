@@ -1,0 +1,25 @@
+#!/bin/bash
+git checkout origin/main -- api/src/main/java/com/khali/api3/domain/member/Member.java
+git checkout origin/main -- api/src/main/java/com/khali/api3/domain/member/MemberPrimaryData.java
+git checkout origin/main -- api/src/main/java/com/khali/api3/domain/pay_rate_rule/Week.java
+git checkout origin/main -- api/src/main/java/com/khali/api3/repositories/AppointmentRepository.java
+git checkout origin/main -- api/src/main/java/com/khali/api3/repositories/ClientRepository.java
+git checkout origin/main -- api/src/main/java/com/khali/api3/repositories/PayRateRuleRepository.java
+git checkout origin/main -- api/src/main/java/com/khali/api3/repositories/ResultCenterRepository.java
+git checkout origin/main -- api/src/main/java/com/khali/api3/services/ClientService.java
+git checkout origin/main -- api/src/main/java/com/khali/api3/services/MembersService.java
+git checkout origin/main -- api/src/main/java/com/khali/api3/services/PayRateRuleService.java
+git checkout origin/main -- api/src/main/java/com/khali/api3/services/ResultCenterService.java
+git checkout origin/main -- api/src/test/JPATest.java
+git checkout origin/main -- api/src/test/resources/JPAtests.java
+git checkout origin/main -- api/src/test/resources/PayRateRuleTest.java
+git checkout origin/main -- web/.eslintrc.cjs
+git checkout origin/main -- web/README.md
+git checkout origin/main -- web/index.html
+git checkout origin/main -- web/src/index.css
+git checkout origin/main -- web/src/main.tsx
+git checkout origin/main -- web/src/models/ResultCenterData.ts
+git checkout origin/main -- web/src/models/User.ts
+git checkout origin/main -- web/src/vite-env.d.ts
+git checkout origin/main -- web/tsconfig.json
+git checkout origin/main -- web/tsconfig.node.json
