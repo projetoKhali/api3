@@ -1,7 +1,7 @@
-import { SideMenuItem } from "../components/SideMenu";
 import axios from 'axios';
+import { SideMenuItem } from "../components/SideMenu";
 
-const API_URL = 'http://127.0.0.1:8000';
+const API_URL = 'http://127.0.0.1:8080/users';
 
 const PermissionSideMenuItemMap: Record<string, SideMenuItem[]> = {
     "": [
@@ -49,13 +49,12 @@ const PermissionSideMenuItemMap: Record<string, SideMenuItem[]> = {
     "FullAccess": [
         {
             label: "Apontaments ADM",
-            url: "/appointments"
-        }
+            url:   'http://localhost:7000/Appointments' }
     ]
 }
 
 export async function getUserSideMenuItems (id: number): Promise<SideMenuItem[]> {
-    return await axios.get(`${API_URL}/users/${id}/permissions`, {})
+    return await axios.get(`${API_URL}/permissions/${id}`, {})
     .then(permissionsResponse => {
         console.log(permissionsResponse);
         const items: SideMenuItem[] = [];
