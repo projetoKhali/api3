@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import DropdownOption from '../schemas/DropdownOption';
 
 interface DropdownProps {
-    placeholder: string | undefined,
+    placeholder?: string,
     options: DropdownOption[],
     onSelect: (option: DropdownOption) => void;
 }
