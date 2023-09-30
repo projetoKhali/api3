@@ -1,8 +1,12 @@
 package com.khali.api3.services;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,24 +15,82 @@ import com.khali.api3.domain.appointment.Appointment;
 import com.khali.api3.domain.appointment.AppointmentStatus;
 import com.khali.api3.repositories.AppointmentRepository;
 
+import jakarta.persistence.EntityNotFoundException;
+
 @Service
 public class AppointmentService {
 
     @Autowired
     private AppointmentRepository appointmentRepository;
 
-    // public Appointment saveAppointment(Appointment appointment) {
-    //     return appointmentRepository.save(appointment);
-    // }
+    @Autowired
+    private ResultCenterService resultCenterService;
+    public Appointment saveAppointment(Appointment appointment) {
+        return appointmentRepository.save(appointment);
+    }
     
     public List<Appointment> getAppointment(){
         return appointmentRepository.findAll();
     }
 
     public Appointment getAppointmentByID(Long id){
-        return appointmentRepository.findById(id).orElse(null);
+        Optional<Appointment> appointment = appointmentRepository.findById(id);
+        if(appointment.isPresent()){
+            return appointmentRepository.findById(id).get();
+        }
+        else{throw new EntityNotFoundException("Apontamento não encontrado com o id: " + id);}
     }
 
+    // filtra apontamentos de uma lista por data
+    public List<Appointment> findAppointmentByDate(List<Appointment> apontamentos, LocalDate init, LocalDate end) {
+        List<Appointment> appointmentsList = new ArrayList<>();
+        
+        LocalDateTime dataInicio = init.atStartOfDay();
+        LocalDateTime dataFim = end.atStartOfDay();
+        
+        for (Appointment appointment : apontamentos) {
+            LocalDateTime dateInit = appointment.getStartDate().toLocalDateTime();
+            LocalDateTime dateEnd = appointment.getStartDate().toLocalDateTime();
+            if ((dateInit.equals(dataInicio) || dateInit.isAfter(dataInicio)) &&
+                (dateEnd.equals(dateEnd) || dateEnd.isBefore(dataFim)))
+            {
+                appointmentsList.add(appointment);
+            }
+        }
+        return appointmentsList;
+    }
+
+    // filtra apontamentos de uma lista por data e hora
+    public List<Appointment> findAppointmentByDateHour(List<Appointment> apontamentos, LocalDateTime init, LocalDateTime end) {
+        List<Appointment> appointmentsList = new ArrayList<>();
+        
+        for (Appointment appointment : apontamentos) {
+            LocalDateTime dateInit = appointment.getStartDate().toLocalDateTime();
+            LocalDateTime dateEnd = appointment.getStartDate().toLocalDateTime();
+            if ((dateInit.equals(init) || dateInit.isAfter(init)) &&
+                (dateEnd.equals(end) || dateEnd.isBefore(end)))
+            {
+                appointmentsList.add(appointment);
+            }
+        }
+        return appointmentsList;
+    }
+    
+    // filtra apontamentos de uma lista por hora
+    public List<Appointment> findAppointmentByHour(List<Appointment> apontamentos, LocalTime init, LocalTime end) {
+        List<Appointment> appointmentsList = new ArrayList<>();
+        
+        for (Appointment appointment : apontamentos) {
+            LocalTime dateInit = appointment.getStartDate().toLocalDateTime().toLocalTime();
+            LocalTime dateEnd = appointment.getStartDate().toLocalDateTime().toLocalTime();
+            if ((dateInit.equals(init) || dateInit.isAfter(init)) &&
+                (dateEnd.equals(end) || dateEnd.isBefore(end)))
+            {
+                appointmentsList.add(appointment);
+            }
+        }
+        return appointmentsList;
+    }
 
     public Appointment updateAppointment(Long id, Appointment newAppointment){
         Appointment appointmentExists = appointmentRepository.findById(id).orElse(null);
@@ -94,9 +156,6 @@ public class AppointmentService {
         for(Appointment appointment : appointments){
             appointment.setStatus(status);
         }
-
         appointmentRepository.saveAll(updatedAppointments);
-
     }
-    
 }
