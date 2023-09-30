@@ -6,7 +6,7 @@ BACKEND_URL=http://localhost:8000
 
 # Run Docker Compose and open both backend and frontend in the default browser
 run:
-	docker-compose up --build -d
+	docker-compose up --build
 	@echo "Waiting for Front End to start..."
 	@FRONTEND_READY=""
 	@until [ -n "$$FRONTEND_READY" ]; do \
