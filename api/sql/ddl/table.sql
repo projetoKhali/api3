@@ -1,19 +1,19 @@
 
-create type apt_type as enum (
-    'overtime',
-    'onnotice'
+create type Apt_type as enum (
+    'Overtime',
+    'OnNotice'
 );
 
-create type user_type as enum (
-    'employer',
-    'manager',
-    'admin'
+create type User_type as enum (
+    'Employer',
+    'Manager',
+    'Admin'
 );
 
-create type apt_status as enum (
-    'pending',
-    'aproved',
-    'reject'
+create type Apt_status as enum (
+    'Pending',
+    'Aproved',
+    'Reject'
 );
 
 create table if not exists pay_rate_rules(
@@ -22,7 +22,7 @@ create table if not exists pay_rate_rules(
     code int unique,
     hour_duration numeric,
     pay_rate numeric,
-    appointment_type apt_type,
+    appointment_type Apt_type,
     start_time time check (start_time < end_time),
     end_time time check (end_time > start_time)
 );
@@ -43,7 +43,7 @@ create table if not exists users(
     usr_id serial primary key,
     registration varchar(255) unique not null,
     "name" varchar(255),
-    user_type user_type default 'employer',
+    user_type User_type default 'Employer',
     email varchar(255) unique not null,
     "password" varchar(255) not null,
     active bool default true,
@@ -86,9 +86,9 @@ create table if not exists appointments(
     clt_id int,
     rc_id int,
     project varchar(255) not null,
-    appointment_type apt_type not null,
+    appointment_type Apt_type not null,
     justification varchar(255),
-    status apt_status default 'Pending',
+    status Apt_status default 'Pending',
     insert_date timestamp default now(),
     apt_updt_id int null,
     feedback varchar(255),
