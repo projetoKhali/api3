@@ -51,9 +51,8 @@ services:
       - 7000:7000
     working_dir: /srv/web
     volumes:
-      - type: bind
-        source: ./web/
-        target: /srv/web
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
     tty: true
 
 volumes:
