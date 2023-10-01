@@ -38,8 +38,6 @@ create table if not exists clients(
 create table if not exists users(
     usr_id serial primary key,
     registration varchar(255) unique not null,
-    usr_id serial primary key,
-    registration varchar(255) unique not null,
     "name" varchar(255),
     user_type User_type default 'Employer',
     email varchar(255) unique not null,
@@ -53,7 +51,6 @@ create table if not exists result_centers(
     rc_id serial primary key,
     "name" varchar(255),
     code int unique not null,
-    code int unique not null,
     acronym varchar(255),
     gst_id int not null,
     active bool default true,
@@ -66,7 +63,7 @@ create table if not exists result_centers(
 create table if not exists members(
     usr_id int,
     rc_id int,
-    association_date timestamp default now(),
+    insert_date timestamp default now(),
     constraint members_pk primary key
     (usr_id,rc_id),
     constraint usr_id_fk foreign key
@@ -96,6 +93,6 @@ create table if not exists appointments(
     (clt_id) references clients(clt_id),
     constraint rc_id_fk foreign key
     (rc_id) references result_centers(rc_id),
-    constraint appointment_updt foreign key
+    constraint apt_updt_fk foreign key
     (apt_updt_id) references appointments(apt_id)
 );
