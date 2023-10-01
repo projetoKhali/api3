@@ -18,7 +18,6 @@ create type Apt_status as enum (
 
 create table if not exists pay_rate_rules(
     prt_id serial primary key,
-    prt_id serial primary key,
     code int unique,
     hour_duration numeric,
     pay_rate numeric,
@@ -28,7 +27,6 @@ create table if not exists pay_rate_rules(
 );
 
 create table if not exists clients(
-    clt_id serial primary key,
     clt_id serial primary key,
     "name" varchar(255),
     cnpj varchar(255) unique,
@@ -52,7 +50,6 @@ create table if not exists users(
 );
 
 create table if not exists result_centers(
-    rc_id serial primary key,
     rc_id serial primary key,
     "name" varchar(255),
     code int unique not null,
