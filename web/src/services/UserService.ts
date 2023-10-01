@@ -62,3 +62,24 @@ export async function postUser(user: PostUserSchema){
     .then(response => response.json())
     .catch(error => console.error(error));
 }
+
+export async function putUser(id: number, user: UserSchema) {
+    try {
+        const response = await fetch(`${API_URL}/${id}`, {
+            method: 'PUT',
+            headers: {
+                "Content-Type": 'application/json'
+            },
+            body: JSON.stringify(user)
+        });
+
+        if (!response.ok) {
+            throw new Error(`Erro ao atualizar o usuário: ${response.statusText}`);
+        }
+
+        return response.json();
+    } catch (error) {
+        console.error("Erro ao atualizar o usuário:", error);
+        throw error;
+    }
+}
