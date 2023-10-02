@@ -3,7 +3,7 @@ import type { ColumnsType } from 'antd/es/table';
 import { useEffect, useState } from 'react';
 import UserForm from '../components/UserForm';
 import { UserSchema } from '../schemas/User';
-import { getUsers } from '../services/UserService';
+import { getUsers, putUser } from '../services/UserService';
 import '../styles/userTData.css';
 
 export default function Users() {
@@ -18,6 +18,34 @@ export default function Users() {
     useEffect(() => {
         requestUsers()
     }, []);
+
+    const handleDeactivateUser = (user: UserSchema) => {
+      const confirmResult = window.confirm('Tem certeza de que deseja desativar este usuário?');
+      if (confirmResult) {
+        // Usuário confirmou a desativação, execute a lógica de desativação aqui
+        const updatedUserData = {
+          id: user.id,
+          name: user.name,
+          registration: user.registration,
+          userType: user.userType,
+          email: user.email,
+          password: user.password,
+          active: "false",
+          insertDate: user.insertDate,
+          expireDate: new Date().toISOString()
+        };
+        putUser(user.id, updatedUserData)
+          .then((updatedUser) => {
+            if (updatedUser) {
+              requestUsers();
+            }
+          })
+          .catch((error) => {
+            console.error('Erro ao desativar o usuário:', error);
+          });
+      } else {
+      }
+    };
 
     const columns: ColumnsType<UserSchema> = [
         {
@@ -45,10 +73,15 @@ export default function Users() {
           dataIndex: 'active',
           key: 'active',
         },
+    
         {
           dataIndex: 'tags',
           key: 'tags',
-          render: (_,data) => (data? <button>Desativar</button> : null)
+          render: (_, data) => (
+            data.active ? (
+              <button onClick={() => handleDeactivateUser(data)}>Desativar</button>
+            ) : null
+          ),
         },
         
     ];
@@ -62,4 +95,6 @@ export default function Users() {
             )}
         </div>
     );
+    
 }
+
