@@ -47,7 +47,7 @@ create or replace view vw_result_centers as select
     users.name user_name,
     result_centers.insert_date
 from result_centers
-join users on result_centers.gst_id = users.usr_id;
+join users on result_centers.gst_id = users.id;
 
 
 create or replace view vw_clients as select
