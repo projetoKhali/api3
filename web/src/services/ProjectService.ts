@@ -10,7 +10,7 @@ async function mapResponse (response: AxiosResponse) {
     })) as ProjectSchema[]
 }
 
-export async function getResultCenters (): Promise<ProjectSchema[]> {
+export async function getProject (): Promise<ProjectSchema[]> {
     const response = await axios.get(API_URL, {});
     return await mapResponse(response);
 }
