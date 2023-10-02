@@ -27,23 +27,24 @@ create view vw_appointments as select
     ap.insert_date,
     ap.apt_updt_id,
     ap.feedback,
-    (select code from pay_rate_rules pr where
-        ap.start_date <= pr.start_time and
-        ap.end_date <= pr.end_time)
+    pr.code
 from appointments ap
 join users on ap.usr_id = users.usr_id
 join clients on ap.clt_id = clients.clt_id
-join result_centers on ap.rc_id = result_centers.rc_id;
+join result_centers on ap.rc_id = result_centers.rc_id
+join pay_rate_rules pr on
+    ap.start_date::time >= pr.start_time and
+    ap.end_date::time <= pr.end_time and
+    ap.appointment_type = pr.appointment_type;
 
 create view vw_result_centers as select
     rc.rc_id ,
     rc."name",
     rc.code,
     rc.acronym,
-    rc.usr_id,
+    rc.gst_id,
     users.name gestor,
-    rc.insert_date,
-    rc.cod_pay_rate_rules,
+    rc.insert_date
 from result_centers rc
 join users on rc.gst_id = users.usr_id;
 
