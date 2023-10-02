@@ -11,7 +11,7 @@ async function mapResponse (response: AxiosResponse) {
         userType: item.userType? item.userType : "N/A",
         email: item.email? item.email : "N/A",
         password: item.password? item.password : "N/A",
-        active: item.active? item.active : "N/A",
+        active: item.active? "Ativo" : "Desativado",
         insertDate: item.insertDate? item.insertDate : "N/A",
         expireDate: item.expireDate? item.expireDate : "N/A",
     })) as UserSchema[]
