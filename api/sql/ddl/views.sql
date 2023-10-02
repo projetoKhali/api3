@@ -28,6 +28,7 @@ create view vw_appointments as select
     ap.apt_updt_id,
     ap.feedback,
     pr.code
+    pr.code
 from appointments ap
 join users on ap.usr_id = users.usr_id
 join clients on ap.clt_id = clients.clt_id
@@ -44,7 +45,9 @@ create view vw_result_centers as select
     rc.code,
     rc.acronym,
     rc.gst_id,
+    rc.gst_id,
     users.name gestor,
+    rc.insert_date
     rc.insert_date
 from result_centers rc
 join users on rc.gst_id = users.usr_id;
