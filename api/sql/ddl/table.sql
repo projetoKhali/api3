@@ -72,6 +72,11 @@ create table if not exists members(
     (rc_id) references result_centers (rc_id)
 );
 
+create table if not exists project(
+    id serial primary key,
+    nome varchar
+);
+
 create table if not exists appointments(
     apt_id serial primary key,
     start_date timestamp check (start_date < end_date) not null,
