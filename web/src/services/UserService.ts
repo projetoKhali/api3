@@ -1,10 +1,10 @@
 import axios, { AxiosResponse } from 'axios';
-import { UserSchema, PostUserSchema } from '../schemas/User';
+import { PostUserSchema, UserSchema } from '../schemas/User';
 
-const API_URL = 'http://127.0.0.1:8000/users';
+const API_URL = 'http://127.0.0.1:8080/users';
 
 async function mapResponse (response: AxiosResponse) {
-    return response.data.map((item) => ({
+    return response.data.map((item: any) => ({
         id: item.id,
         name: item.name? item.name : "N/A",
         registration: item.registration? item.registration : "N/A",
@@ -17,13 +17,33 @@ async function mapResponse (response: AxiosResponse) {
     })) as UserSchema[]
 }
 
-export async function requestLogin (username: string, password: string): Promise<UserSchema> {
-    return await axios.get(`${API_URL}/login`, {
-        data: {
-            username,
-            password,
+export async function requestLogin(email: string, password: string): Promise<UserSchema | null> {
+    try {
+        const response = await axios.get(`${API_URL}/login?email=${email}&password=${password}`);
+        const userData = response.data;
+
+        if (userData && userData.id && userData.name && userData.email) {
+            const user: UserSchema = {
+                id: userData.id,
+                name: userData.name,
+                registration: userData.registration || "N/A",
+                userType: userData.userType || "N/A",
+                email: userData.email,
+                password: userData.password || "N/A",
+                active: userData.active || false,
+                insertDate: userData.insertDate || "N/A",
+                expireDate: userData.expiredDate || "N/A",
+            };
+
+            return user;
+        } else {
+            console.error("Resposta da API não possui os campos necessários.");
+            return null;
         }
-    });
+    } catch (error) {
+        console.error("Erro ao fazer login:", error);
+        return null;
+    }
 }
 
 export async function getUsers (): Promise<UserSchema[]> {

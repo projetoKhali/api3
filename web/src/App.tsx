@@ -1,16 +1,16 @@
 import { useState } from 'react';
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import './App.css';
+import AppointmentsAdm from "./pages/AdmAppointments";
 import Clients from './pages/Clients';
 import Home from "./pages/Home";
 import Layout from './pages/Layout';
-import AppointmentsManager from "./pages/ManagerAppointments";
-import AppointmentsAdm from "./pages/AdmAppointments";
-import Appointments from "./pages/UserAppointments";
-import ResultCenters from './pages/ResultCenters';
-import Users from "./pages/Users";
 import Login from './pages/Login';
-
+import AppointmentsManager from "./pages/ManagerAppointments";
+import Projects from "./pages/Projects";
+import ResultCenters from './pages/ResultCenters';
+import Appointments from "./pages/UserAppointments";
+import Users from "./pages/Users";
 import { UserSchema } from './schemas/User';
 
 
@@ -22,7 +22,7 @@ function App() {
             {userLoggedIn ? (
                 <BrowserRouter>
                     <Routes>
-                        <Route path="/" element={<Layout/>}>
+                        <Route path="/" element={<Layout userLoggedIn={userLoggedIn}/>}>
                             <Route index element={<Home />} />
                             <Route path="appointments/user" element={<Appointments userLoggedIn={userLoggedIn}/>} />
                             <Route path="appointments/manager" element={<AppointmentsManager userLoggedIn={userLoggedIn}/>} />
@@ -30,6 +30,7 @@ function App() {
                             <Route path="users" element={<Users/>} />
                             <Route path="clients" element={<Clients/>} />
                             <Route path="resultCenters" element={<ResultCenters/>} />
+                            <Route path="projects" element={<Projects/>} />
                         </Route>
                     </Routes>
                 </BrowserRouter>
