@@ -10,11 +10,15 @@ import org.springframework.security.core.userdetails.UserDetails;
 import jakarta.persistence.*;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
+@Data
+@Builder
 @Entity(name="users")
 @Table(name="users")
 @AllArgsConstructor
@@ -58,6 +62,11 @@ public class User implements UserDetails {
         // TODO Auto-generated method stub
         // throw new UnsupportedOperationException("Unimplemented method 'getUsername'");
         return email;
+    }
+
+    @Override
+    public String getPassword(){
+        return password;
     }
 
     @Override
