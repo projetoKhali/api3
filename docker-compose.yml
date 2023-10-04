@@ -24,7 +24,7 @@ services:
     depends_on:
       - khali_api3_db
     links:
-      - khali_api3_db 
+      - khali_api3_db
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://khali_api3_db:5432/postgres
       SPRING_DATASOURCE_USERNAME: postgres
