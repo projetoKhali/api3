@@ -38,5 +38,8 @@ public class PayRateRule {
 
     @Enumerated(EnumType.STRING)
     private Week daysOfWeek;
+
+    @Column(name = "overlap")
+    private Boolean overlap;
     
 }
