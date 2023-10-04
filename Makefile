@@ -6,7 +6,7 @@ BACKEND_URL=http://localhost:8000
 
 # Run Docker Compose and open both backend and frontend in the default browser
 run:
-	docker-compose up --build -d
+	docker-compose up --build
 	@echo "Waiting for Front End to start..."
 	@FRONTEND_READY=""
 	@until [ -n "$$FRONTEND_READY" ]; do \
@@ -14,7 +14,7 @@ run:
 		sleep 1; \
 	done
 	@echo "Front End is ready. Opening in the browser..."
-	@xdg-open $(FRONTEND_URL) -d
+	@xdg-open $(FRONTEND_URL) 
 	echo "Waiting for Back End to start..."
 	@BACKEND_READY=""
 	@until [ -n "$$BACKEND_READY" ]; do \
@@ -22,7 +22,7 @@ run:
 		sleep 1; \
 	done
 	@echo "Back End is ready. Opening in the browser..."
-	@xdg-open $(BACKEND_URL) -d
+	@xdg-open $(BACKEND_URL) 
 
 # Remove all containers and images
 wipe:
