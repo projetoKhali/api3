@@ -18,13 +18,21 @@ public class PayRateRuleService {
     public PayRateRule savePayRateRule(PayRateRule payRateRule) {
         return payRateRuleRepository.save(payRateRule);
     }
+
+    public void deletePayRateRule(PayRateRule payRateRule) {
+        payRateRuleRepository.delete(payRateRule);
+    }
     
-    public List<PayRateRule> getPayRateRule(){
+    public List<PayRateRule> getAllPayRateRule(){
         return payRateRuleRepository.findAll();
     }
 
     public PayRateRule getPayRateRuleByID(Long id){
         return payRateRuleRepository.findById(id).orElse(null);
+    }
+
+    public List<PayRateRule> getPayRateRuleByCode (Long code) {
+        return payRateRuleRepository.findByCode(code);
     }
 
     public PayRateRule updatePayRateRule(Long id, PayRateRule newPayRateRule){
