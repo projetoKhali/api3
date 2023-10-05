@@ -21,9 +21,8 @@ import jakarta.persistence.EntityNotFoundException;
 @RestController
 @RequestMapping("/clients")
 public class ClientController {
-    private final ClientRepository clientRepository;
+    @Autowired private final ClientRepository clientRepository;
 
-    @Autowired
     public ClientController(ClientRepository clientRepository) {
         this.clientRepository = clientRepository;
     }

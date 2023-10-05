@@ -21,7 +21,8 @@ import jakarta.persistence.EntityNotFoundException;
 @RestController
 @RequestMapping("/resultCenters")
 public class ResultCenterController {
-    private final ResultCenterRepository resultCenterRepository;
+
+    @Autowired private final ResultCenterRepository resultCenterRepository;
 
     public ResultCenterController(@Autowired ResultCenterRepository resultCenterRepository) {
         this.resultCenterRepository = resultCenterRepository;

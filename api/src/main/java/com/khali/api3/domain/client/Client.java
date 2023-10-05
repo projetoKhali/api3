@@ -18,6 +18,7 @@ import lombok.Setter;
 public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="clt_id")
     private Long id;
 
     @Column

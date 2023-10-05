@@ -3,11 +3,11 @@ import type { ColumnsType } from 'antd/es/table';
 import ClientForm from '../components/ClientForm';
 import { useState, useEffect } from 'react';
 import { getClients } from '../services/ClientService';
-import { Client } from '../schemas/Client';
+import { ClientSchema } from '../schemas/Client';
 
 
 export default function Clients () {
-    const [clients, setClients] = useState<Client[]>([]);
+    const [clients, setClients] = useState<ClientSchema[]>([]);
 
     const requestClients = () => {
         getClients().then(clientResponse =>
@@ -18,7 +18,7 @@ export default function Clients () {
         requestClients()
     }, []);
 
-    const columns: ColumnsType<Client> = [
+    const columns: ColumnsType<ClientSchema> = [
         {
           title: 'Nome',
           dataIndex: 'name',

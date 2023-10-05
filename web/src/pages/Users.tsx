@@ -2,16 +2,16 @@ import { Table } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import { useEffect, useState } from 'react';
 import { getUsers } from '../services/UserService';
-import User from '../models/User';
+import { UserSchema } from '../schemas/User';
 import '../styles/userTData.css';
 import UserForm from '../components/UserForm';
 
-export default function Users(){
-    const [data, setData] = useState<User[]>([]);
+export default function Users() {
+    const [users, setUsers] = useState<UserSchema[]>([]);
     const requestUsers = () => {
         getUsers()
         .then(usersResponse => {
-            setData(usersResponse);
+            setUsers(usersResponse);
             console.log('users retornados do request:', usersResponse);
         });
     }
@@ -19,7 +19,7 @@ export default function Users(){
         requestUsers()
     }, []);
 
-    const columns: ColumnsType<User> = [
+    const columns: ColumnsType<UserSchema> = [
         {
           title: 'Nome',
           dataIndex: 'name',
@@ -49,8 +49,8 @@ export default function Users(){
     return (
         <div>
             <UserForm callback={requestUsers}/>
-            {data ? (
-                <Table dataSource={data} columns={columns} />
+            {users ? (
+                <Table dataSource={users} columns={columns} />
             ) : (
                 null
             )}
