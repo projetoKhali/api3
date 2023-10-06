@@ -1,11 +1,12 @@
 import { Table } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import { useEffect, useState } from 'react';
-import { Appointment } from '../schemas/Appointment';
+import { AppointmentSchema } from '../schemas/Appointment';
 import { getAppointmentsAdm } from '../services/AppointmentService';
 
+
 export default function Appointments () {
-    const [appointments, setAppointments] = useState<Appointment[]>([]);
+    const [appointments, setAppointments] = useState<AppointmentSchema[]>([]);
 
     const requestAppointments = () => {
         getAppointmentsAdm().then(appointmentsResponse =>
@@ -18,7 +19,7 @@ export default function Appointments () {
         requestAppointments();
     }, []);
 
-    const columns: ColumnsType<Appointment> = [
+    const columns: ColumnsType<AppointmentSchema> = [
         {
             title: 'Solicitante',
             dataIndex: 'user',

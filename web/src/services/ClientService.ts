@@ -1,9 +1,9 @@
 import axios from 'axios';
-import { Client } from '../schemas/Client';
+import { ClientSchema } from '../schemas/Client';
 
-const API_URL = 'http://127.0.0.1:8080/clients';
+const API_URL = 'http://127.0.0.1:8000/clients';
 
-export async function getClients (): Promise<Client[]> {
+export async function getClients (): Promise<ClientSchema[]> {
     const response = await axios.get(API_URL, {});
     return await response.data.map((item: any) => ({
         key: item.id.toString(), 
@@ -12,10 +12,10 @@ export async function getClients (): Promise<Client[]> {
         // active: item.active? item.active : "N/A",
         // insertDate: item.insertDate? item.insertDate : "N/A",
         // expireDate: item.expireDate? item.expireDate : "N/A",
-    })) as Client[];
+    })) as ClientSchema[];
 }
 
-export async function postClient(user: Client){
+export async function postClient(user: ClientSchema) {
     return await fetch(API_URL, {
         method: 'POST',
         headers: {

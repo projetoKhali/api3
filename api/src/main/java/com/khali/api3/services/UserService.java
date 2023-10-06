@@ -40,5 +40,4 @@ public class UserService {
         User user = userRepository.findByEmail(email);
         return  (user.getPassword().equals(password)) ? user : null;
     }
-    
 }
