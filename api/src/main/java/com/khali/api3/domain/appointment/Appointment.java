@@ -36,7 +36,7 @@ public class Appointment {
     private Long apt_id;
 
     @ManyToOne
-    @JoinColumn(name="usr_id", referencedColumnName = "id")
+    @JoinColumn(name="usr_id", referencedColumnName = "usr_id")
     private User user;
 
     @Enumerated(EnumType.STRING)
@@ -52,7 +52,7 @@ public class Appointment {
     private ResultCenter resultCenter;
 
     @ManyToOne
-    @JoinColumn(name="clt_id", referencedColumnName = "id")
+    @JoinColumn(name="clt_id", referencedColumnName = "clt_id")
     private Client client;
 
     private String project;
@@ -64,6 +64,6 @@ public class Appointment {
     private String feedback;
 
     @OneToOne
-    @JoinColumn(name="apt_updt_id", referencedColumnName = "id")
+    @JoinColumn(name="apt_updt_id", referencedColumnName = "apt_id")
     private Appointment apt_updt;
 }

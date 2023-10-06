@@ -25,6 +25,7 @@ import lombok.Setter;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "usr_id")
     private Long id;
 
     @Column(unique=true)
@@ -33,6 +34,7 @@ public class User {
 
     @Enumerated(EnumType.STRING)
 
+    @Column(name = "user_type")
     private UserType userType;
 
     @Column(unique=true)
