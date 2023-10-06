@@ -1,5 +1,6 @@
 package com.khali.api3.controllers;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -120,6 +121,8 @@ public class UserController {
         User user = userRepository.findById(id)
         .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + id));
         user.setActive(false);
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        user.setExpiredDate(timestamp);
         return userRepository.save(user);
     }
 
