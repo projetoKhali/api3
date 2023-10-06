@@ -33,7 +33,6 @@ public class User {
     private String name;
 
     @Enumerated(EnumType.STRING)
-
     @Column(name = "user_type")
     private UserType userType;
 
