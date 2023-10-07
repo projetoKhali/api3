@@ -13,7 +13,7 @@ const PermissionSideMenuItemMap: Record<string, SideMenuItem[]> = {
     "Appoint": [
         {
             label: "Apontamentos",
-            url: "/appointments/user",
+            url: '/appointments/user',
         },
     ],
     "Validate": [
@@ -29,7 +29,7 @@ const PermissionSideMenuItemMap: Record<string, SideMenuItem[]> = {
         },
         {
             label: "Centros de Resultado",
-            url: "/resultcenters"
+            url: '/resultcenters'
         },
         {
             label: "Clientes",
