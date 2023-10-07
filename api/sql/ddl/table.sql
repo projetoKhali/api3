@@ -26,7 +26,7 @@ create table if not exists clients(
     cnpj varchar(255) unique
 );
 
-create table if not exists user(
+create table if not exists users(
     usr_id serial primary key,
     registration varchar(255) unique not null,
     "name" varchar(255),
