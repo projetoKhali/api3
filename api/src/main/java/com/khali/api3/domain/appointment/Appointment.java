@@ -33,18 +33,22 @@ import lombok.Setter;
 public class Appointment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long apt_id;
+    @Column(name="apt_id")
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name="usr_id", referencedColumnName = "usr_id")
     private User user;
 
-    @Enumerated(EnumType.STRING)
     @Column(name = "appointment_type")
-    private AppointmentType appointmentType;
+    @Enumerated(EnumType.STRING)
+    private AppointmentType type;
 
+    @Column
     private Timestamp startDate;
+    @Column
     private Timestamp endDate;
+    @Column
     private Timestamp insertDate;
 
     @ManyToOne
@@ -56,11 +60,13 @@ public class Appointment {
     private Client client;
 
     private String project;
+    @Column
     private String justification;
 
     @Enumerated(EnumType.STRING)
     private AppointmentStatus status;
 
+    @Column
     private String feedback;
 
     @OneToOne

@@ -28,7 +28,7 @@ import lombok.Setter;
 public class PayRateRule {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "prr_id")
+    @Column(name="prt_id")
     private Long id;
 
     @Column(unique=true)
@@ -49,5 +49,5 @@ public class PayRateRule {
 
     @Enumerated(EnumType.STRING)
     private Week daysOfWeek;
-    
+
 }

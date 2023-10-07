@@ -1,7 +1,7 @@
 import { SideMenuItem } from "../components/SideMenu";
 import axios from 'axios';
 
-const API_URL = 'http://127.0.0.1:8080';
+const API_URL = 'http://127.0.0.1:8000';
 
 const PermissionSideMenuItemMap: Record<string, SideMenuItem[]> = {
     "": [
@@ -13,13 +13,13 @@ const PermissionSideMenuItemMap: Record<string, SideMenuItem[]> = {
     "Appoint": [
         {
             label: "Apontamentos",
-            url: "/appointments",
+            url: "/appointments/user",
         },
     ],
     "Validate": [
         {
             label: "Aprovações",
-            url: "#"
+            url: "/appointments/manager"
         },
     ],
     "Register": [
@@ -47,10 +47,10 @@ const PermissionSideMenuItemMap: Record<string, SideMenuItem[]> = {
         // },
     ],
     "FullAccess": [
-        // {
-        //     label: "Apontaments ADM",
-        //     url: "#"
-        // }
+        {
+            label: "Apontaments ADM",
+            url: "/appointments"
+        }
     ]
 }
 

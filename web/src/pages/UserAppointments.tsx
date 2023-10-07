@@ -2,14 +2,19 @@ import { Table } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import { useEffect, useState } from 'react';
 import AppointmentForm from '../components/AppointmentForm';
-import { Appointment } from '../schemas/Appointment';
-import { getAppointments } from '../services/AppointmentService';
+import { AppointmentSchema } from '../schemas/Appointment';
+import { getAppointmentsUser } from '../services/AppointmentService';
+import { UserSchema } from "../schemas/User";
 
-export default function Appointments () {
-    const [appointments, setAppointments] = useState<Appointment[]>([]);
+interface AppointmentsProps {
+  userLoggedIn: UserSchema;
+}
+
+export default function Appointments({ userLoggedIn }: AppointmentsProps) {
+    const [appointments, setAppointments] = useState<AppointmentSchema[]>([]);
 
     const requestAppointments = () => {
-        getAppointments().then(appointmentsResponse =>
+        getAppointmentsUser(userLoggedIn.id).then(appointmentsResponse =>
             setAppointments(appointmentsResponse)
         );
     };
@@ -18,16 +23,11 @@ export default function Appointments () {
         requestAppointments()
     }, []);
 
-    const columns: ColumnsType<Appointment> = [
-        {
-            title: 'Solicitante',
-            dataIndex: 'requester',
-            key: 'requester',
-        },
+    const columns: ColumnsType<AppointmentSchema> = [
         {
             title: 'Tipo',
-            dataIndex: 'type',
-            key: 'type',
+            dataIndex: 'appointmentType',
+            key: 'appointmentType',
         },
         {
             title: 'Início',
@@ -69,6 +69,7 @@ export default function Appointments () {
     return (
         <div>
             <AppointmentForm
+                userLoggedIn={userLoggedIn}
                 successCallback={requestAppointments}
                 errorCallback={() => {}}
             />
@@ -77,7 +78,6 @@ export default function Appointments () {
             ) : (
                 null
             )}
-
         </div>
     );
 }

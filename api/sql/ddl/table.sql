@@ -11,13 +11,13 @@ CREATE TYPE Apt_status AS ENUM (
 );
 
 create table if not exists pay_rate_rules(
-    id serial primary key,
+    prt_id serial primary key,
     code int unique,
     hour_duration numeric,
     pay_rate numeric,
     appointment_type Apt_type,
     start_time time check (start_time < end_time),
-    end_time time check (end_date > start_time)
+    end_time time check (end_time > start_time)
 );
 
 create table if not exists clients(

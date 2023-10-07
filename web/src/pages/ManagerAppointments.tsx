@@ -1,33 +1,37 @@
 import { Table } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import { useEffect, useState } from 'react';
-import { Appointment } from '../schemas/Appointment';
-import { getAppointments } from '../services/AppointmentService';
+import { AppointmentSchema } from '../schemas/Appointment';
+import { getAppointmentsManager } from '../services/AppointmentService';
+import { UserSchema } from '../schemas/User';
 
-export default function Appointments () {
-    const [appointments, setAppointments] = useState<Appointment[]>([]);
+interface AppointmentsProps {
+  userLoggedIn: UserSchema;
+}
+
+export default function Appointments ({ userLoggedIn }: AppointmentsProps) {
+    const [appointments, setAppointments] = useState<AppointmentSchema[]>([]);
 
     const requestAppointments = () => {
-        getAppointments().then(appointmentsResponse =>
+        getAppointmentsManager(userLoggedIn.id).then(appointmentsResponse =>
             setAppointments(appointmentsResponse)
         );
     };
 
     useEffect(() => {
-        // Chama a função para buscar os compromissos quando o componente for montado
-        requestAppointments();
+        requestAppointments()
     }, []);
 
-    const columns: ColumnsType<Appointment> = [
+    const columns: ColumnsType<AppointmentSchema> = [
         {
             title: 'Solicitante',
-            dataIndex: 'requester',
-            key: 'requester',
+            dataIndex: 'user',
+            key: 'user',
         },
         {
             title: 'Tipo',
-            dataIndex: 'type',
-            key: 'type',
+            dataIndex: 'appointmentType',
+            key: 'appointmentType',
         },
         {
             title: 'Início',
@@ -68,7 +72,7 @@ export default function Appointments () {
 
     return (
         <div>
-        <Table dataSource={appointments} columns={columns} />
-    </div>
+            <Table dataSource={appointments} columns={columns} />
+        </div>
     );
 }

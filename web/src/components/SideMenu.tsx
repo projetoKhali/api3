@@ -98,15 +98,14 @@ export default function SideMenu ({items, userName}: SideMenuProps) {
                         theme="light"
                         inlineCollapsed={collapsed}
                         items={menuItems}
-                        style={{ 
+                        style={{
                             width: '250px', height: '90vh',
                             backgroundColor: '#D9D9D9',
                             borderRadius: '10px',
                         }}
                     >
                     </Menu>
-                    
-                )}                       
+                )}
             </div>
         </div>
     );

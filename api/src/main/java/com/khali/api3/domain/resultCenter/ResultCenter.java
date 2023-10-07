@@ -20,7 +20,6 @@ import lombok.Setter;
 
 @Entity(name="resultcenter")
 @Table(name="result_centers")
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -29,7 +28,7 @@ import lombok.Setter;
 public class ResultCenter {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "rc_id")
+    @Column(name="rc_id")
     private Long id;
     
     private String name;

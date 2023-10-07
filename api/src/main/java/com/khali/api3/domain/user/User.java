@@ -1,4 +1,5 @@
 package com.khali.api3.domain.user;
+
 import java.sql.Timestamp;
 
 import jakarta.persistence.Column;
@@ -23,15 +24,17 @@ import lombok.Setter;
 @Setter
 @EqualsAndHashCode
 public class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "usr_id")
+    @Column(name="usr_id")
     private Long id;
 
     @Column(unique=true)
     private String registration;
     private String name;
 
+    @Column
     @Enumerated(EnumType.STRING)
     @Column(name = "user_type")
     private UserType userType;
@@ -39,10 +42,15 @@ public class User {
     @Column(unique=true)
     private String email;
 
+    @Column
     private String password;
+
+    @Column
     private Boolean active;
+
     @Column(name = "insert_date")
     private Timestamp insertDate;
+
     @Column(name = "expire_date")
     private Timestamp expiredDate;
 }
