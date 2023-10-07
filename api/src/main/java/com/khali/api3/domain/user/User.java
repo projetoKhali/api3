@@ -34,7 +34,6 @@ public class User {
     private String registration;
     private String name;
 
-    @Column
     @Enumerated(EnumType.STRING)
     @Column(name = "user_type")
     private UserType userType;
