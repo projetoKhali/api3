@@ -1,5 +1,4 @@
-import { SearchOutlined } from '@ant-design/icons';
-import { Radio, Table } from 'antd';
+import { Checkbox, Table } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import { useEffect, useState } from 'react';
 import UserForm from '../components/UserForm';
@@ -9,7 +8,7 @@ import '../styles/userTData.css';
 
 export default function Users() {
     const [users, setUsers] = useState<UserSchema[]>([]);
-    const [activeStatusFilter, setActiveStatusFilter] = useState<string | undefined>(undefined);
+    const [showDeactivated, setShowDeactivated] = useState(false);
 
     const requestUsers = () => {
         getUsers()
@@ -49,14 +48,6 @@ export default function Users() {
         }
     };
 
-    const handleFilter = (value: string | undefined) => {
-        setActiveStatusFilter(value);
-    };
-
-    const filteredUsers = activeStatusFilter
-        ? users.filter((user) => user.active === activeStatusFilter)
-        : users;
-
     const columns: ColumnsType<UserSchema> = [
         {
             title: 'Nome',
@@ -82,27 +73,6 @@ export default function Users() {
             title: 'Status',
             dataIndex: 'active',
             key: 'active',
-            filterDropdown: () => (
-                <div>
-                    <Radio.Group
-                        onChange={(e) => {
-                            setActiveStatusFilter(e.target.value);
-                        }}
-                        value={activeStatusFilter}
-                    >
-                        <Radio value="Ativo">Ativo</Radio>
-                        <Radio value="Desativado">Desativado</Radio>
-                    </Radio.Group>
-                </div>
-            ),
-            onFilterDropdownVisibleChange: (visible) => {
-                if (!visible) {
-                    handleFilter(activeStatusFilter);
-                }
-            },
-            filterIcon: (filtered) => (
-                <SearchOutlined style={{ color: filtered ? '#1890ff' : undefined }} />
-            ),
         },
         {
             dataIndex: 'tags',
@@ -115,9 +85,18 @@ export default function Users() {
         },
     ];
 
-    return (
+    // Filtra os usuários com base no estado showDeactivated
+    const filteredUsers = showDeactivated ? users.filter((user) => user.active === "Desativado") : users.filter((user) => user.active === "Ativo");
+
+   return (
         <div>
             <UserForm callback={requestUsers} />
+            <Checkbox
+                checked={showDeactivated}
+                onChange={(e) => setShowDeactivated(e.target.checked)}
+            >
+                Mostrar Usuários Desativados
+            </Checkbox>
             <Table dataSource={filteredUsers} columns={columns} />
         </div>
     );
