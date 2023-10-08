@@ -1,9 +1,9 @@
 import axios, { AxiosResponse } from 'axios';
-import { ResultCenterSchema, PostResultCenterSchema } from '../schemas/ResultCenter';
+import { PostResultCenterSchema, ResultCenterSchema } from '../schemas/ResultCenter';
 
 import { UserSchema } from '../schemas/User';
 
-const API_URL = 'http://127.0.0.1:8000/resultCenters';
+const API_URL = 'http://127.0.0.1:8080/resultCenters';
 
 
 async function mapResponse (response: AxiosResponse) {

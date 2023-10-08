@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
-
 import type { MenuProps } from 'antd';
 import { Button, Menu, Tooltip } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 import '../styles/menuStyle.css';
 
@@ -53,7 +53,11 @@ export default function SideMenu ({items, userName}: SideMenuProps) {
 
     const menuItems = [
         ...items.map((item) => {
-            return createItem(item.label, item.label);
+            return (
+                <Menu.Item key={item.label}>
+                    <Link to={item.url}>{item.label}</Link> {}
+                </Menu.Item>
+            );
         }),
     ];
 
@@ -97,13 +101,13 @@ export default function SideMenu ({items, userName}: SideMenuProps) {
                         mode="inline"
                         theme="light"
                         inlineCollapsed={collapsed}
-                        items={menuItems}
                         style={{
                             width: '250px', height: '90vh',
                             backgroundColor: '#D9D9D9',
                             borderRadius: '10px',
                         }}
                     >
+                        {menuItems} {/* Renderize os itens do menu aqui */}
                     </Menu>
                 )}
             </div>
