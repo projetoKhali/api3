@@ -1,7 +1,7 @@
 import { SideMenuItem } from "../components/SideMenu";
 import axios from 'axios';
 
-const API_URL = 'http://127.0.0.1:8000';
+const API_URL = `${process.env.BACKEND_URL}`;
 
 const PermissionSideMenuItemMap: Record<string, SideMenuItem[]> = {
     "": [

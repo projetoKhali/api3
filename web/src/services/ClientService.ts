@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { ClientSchema } from '../schemas/Client';
 
-const API_URL = 'http://127.0.0.1:8000/clients';
+const API_URL = `${process.env.BACKEND_URL}/clients`;
 
 export async function getClients (): Promise<ClientSchema[]> {
     const response = await axios.get(API_URL, {});

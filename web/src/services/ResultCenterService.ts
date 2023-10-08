@@ -3,7 +3,7 @@ import { ResultCenterSchema, PostResultCenterSchema } from '../schemas/ResultCen
 
 import { UserSchema } from '../schemas/User';
 
-const API_URL = 'http://127.0.0.1:8000/resultCenters';
+const API_URL = `${process.env.BACKEND_URL}/resultCenters`;
 
 
 async function mapResponse (response: AxiosResponse) {
