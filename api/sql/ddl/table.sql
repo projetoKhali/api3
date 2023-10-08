@@ -10,7 +10,7 @@ create type User_type as enum (
     'Admin'
 );
 
-create type Apt_status as enum (
+CREATE TYPE Apt_status AS ENUM (
     'Pending',
     'Aproved',
     'Reject'
@@ -39,7 +39,7 @@ create table if not exists users(
     usr_id serial primary key,
     registration varchar(255) unique not null,
     "name" varchar(255),
-    user_type User_type default 'Employer',
+    user_type varchar,
     email varchar(255) unique not null,
     "password" varchar(255) not null,
     active bool default true,
