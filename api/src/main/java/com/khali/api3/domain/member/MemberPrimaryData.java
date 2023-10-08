@@ -23,11 +23,10 @@ import lombok.Setter;
 public class MemberPrimaryData implements Serializable{
     @ManyToOne
     @JoinColumn(name="usr_id", referencedColumnName = "usr_id")
-    @JoinColumn(name="usr_id", referencedColumnName = "usr_id")
     private User user;
     
     @ManyToOne
-    @JoinColumn(name="rc_id", referencedColumnName = "rc_id")
+    @JoinColumn(name="cr_id", referencedColumnName = "rc_id")
     private ResultCenter resultCenter;
 
     @Override
