@@ -4,12 +4,6 @@ CREATE TYPE Apt_type AS ENUM (
     'OnNotice'
 );
 
-CREATE TYPE User_type AS ENUM (
-    'Employer',
-    'Manager',
-    'Admin'
-);
-
 CREATE TYPE Apt_status AS ENUM (
     'Pending',
     'Aproved',
@@ -36,7 +30,7 @@ create table if not exists users(
     usr_id serial primary key,
     registration varchar(255) unique not null,
     "name" varchar(255),
-    user_type User_type DEFAULT 'Employer',
+    user_type varchar,
     email varchar(255) unique not null,
     "password" varchar(255) not null,
     active bool default true,
