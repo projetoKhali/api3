@@ -64,13 +64,13 @@ public class UserController {
     // }
 
 
-    @GetMapping("/{id}/permissions")
+    @GetMapping("/permissions/{id}")
     public List<Permission> getUserPermissions(@PathVariable Long id) {
         try {
             List<Permission> permissions = new ArrayList<Permission>();
             User user = userRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + id));
-            if (user.getUserType().equals(UserType.Admin)) {
+            if (user.getUserType() == UserType.Admin) {
                 permissions.add(Permission.FullAccess);
                 permissions.add(Permission.Register);
                 permissions.add(Permission.Report);
@@ -132,6 +132,7 @@ public class UserController {
         return userRepository.save(user);
     }
 
+    @GetMapping("/login")
     public User getLogin(String email, String password) {
         return userService.getValidatedUser(email, password);
     }
