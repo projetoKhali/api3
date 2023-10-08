@@ -61,7 +61,7 @@ public class ProjectController {
 
     @GetMapping("/name/{name}")
     public Project getProjectByName(@PathVariable String name){
-        return projectRepository.findProjectByName(name);
+        return projectRepository.findByName(name);
     }
 
     @GetMapping("/all")
