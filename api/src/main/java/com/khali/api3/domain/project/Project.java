@@ -1,5 +1,7 @@
 package com.khali.api3.domain.project;
 
+import java.sql.Timestamp;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -29,13 +31,13 @@ import lombok.Setter;
     @Column
     private String description;
 
-    @Column(name = "start_date")
-    private String startDate;
+    @Column(name = "insert_date")
+    private Timestamp insertDate;
 
-    @Column(name = "end_date")
-    private String endDate;
+    @Column(name = "expire_date")
+    private Timestamp expireDate;
 
     @Column
-    private String active;
+    private boolean active;
 
 }
