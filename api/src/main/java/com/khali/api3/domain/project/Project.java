@@ -2,6 +2,8 @@ package com.khali.api3.domain.project;
 
 import java.sql.Timestamp;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -26,6 +28,7 @@ import lombok.Setter;
     private Long id;
 
     @Column
+    @JsonProperty("name")
     private String name;
 
     @Column

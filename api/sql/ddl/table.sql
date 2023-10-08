@@ -66,6 +66,15 @@ create table if not exists members(
     (rc_id) REFERENCES result_centers (rc_id)
 );
 
+create table if not exists projects(
+    prj_id serial primary key,
+    "name" varchar(255) unique not null,
+    description varchar(255),
+    active bool default true,
+    insert_date timestamp default now(),
+    expire_date timestamp
+)
+
 create table if not exists appointments(
     apt_id serial primary key,
     start_date timestamp check (start_date < end_date),
