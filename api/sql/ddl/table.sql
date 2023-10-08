@@ -17,13 +17,13 @@ CREATE TYPE Apt_status AS ENUM (
 );
 
 create table if not exists pay_rate_rules(
-    id serial primary key,
+    prt_id serial primary key,
     code int unique,
     hour_duration numeric,
     pay_rate numeric,
     appointment_type Apt_type,
     start_time time check (start_time < end_time),
-    end_time time check (end_date > start_time)
+    end_time time check (end_time > start_time)
 );
 
 create table if not exists clients(
@@ -52,7 +52,7 @@ create table if not exists result_centers(
     gst_id int not null,
     insert_date timestamp default now(),
     CONSTRAINT gst_id_fk foreign KEY
-    (gst_id) REFERENCES users (id)
+    (gst_id) REFERENCES users (usr_id)
 );
 
 create table if not exists members(
@@ -61,9 +61,9 @@ create table if not exists members(
     CONSTRAINT members_pk primary key
     (usr_id,rc_id),
     CONSTRAINT usr_id_fk foreign key
-    (usr_id) REFERENCES users (id),
+    (usr_id) REFERENCES users (usr_id),
     CONSTRAINT rc_id_fk foreign key
-    (rc_id) REFERENCES result_centers (id)
+    (rc_id) REFERENCES result_centers (rc_id)
 );
 
 create table if not exists appointments(
@@ -82,9 +82,9 @@ create table if not exists appointments(
     feedback varchar(255),
     
     CONSTRAINT usr_id_fk foreign key
-    (usr_id) references users(id),
+    (usr_id) references users(usr_id),
     CONSTRAINT clt_id_fk foreign key
-    (clt_id) references clients(id),
+    (clt_id) references clients(clt_id),
     CONSTRAINT rc_id_fk foreign key
-    (rc_id) references result_centers(id)
+    (rc_id) references result_centers(rc_id)
 );

@@ -35,7 +35,6 @@ public class UserController {
     @Autowired private final ResultCenterService resultCenterService;
     @Autowired private final UserService userService;
 
-    @Autowired
     public UserController(
         UserRepository userRepository,
         MembersService membersService,
@@ -58,6 +57,13 @@ public class UserController {
         return userRepository.findById(id)
             .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + id));
     }
+
+    // @GetMapping("/{name}")
+    // public String getUserIdByName(@PathVariable User user) {
+    //     String userId = userRepository.findUserByName(user);
+    //     return userId.getName();
+    // }
+
 
     @GetMapping("/{id}/permissions")
     public List<Permission> getUserPermissions(@PathVariable Long id) {

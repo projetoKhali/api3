@@ -25,9 +25,8 @@ import jakarta.persistence.EntityNotFoundException;
 @RequestMapping("/appointments")
 public class AppointmentController {
 
-    @Autowired
-    private final AppointmentRepository appointmentRepository;
-    private final AppointmentService appointmentService;
+    @Autowired private final AppointmentRepository appointmentRepository;
+    @Autowired private final AppointmentService appointmentService;
 
     public AppointmentController(
         AppointmentRepository appointmentRepository,
@@ -65,7 +64,7 @@ public class AppointmentController {
     public List<Appointment> getAppointmentByHour(List<Appointment> appointmentsList, LocalTime dataInit, LocalTime dataFim){
         return appointmentService.findAppointmentByHour(appointmentsList, dataInit, dataFim);
     }
-    
+
     public List<Appointment> getAppointmentByDateHour(List<Appointment> appointmentsList, LocalDateTime dataInit, LocalDateTime dataFim){
         return appointmentService.findAppointmentByDateHour(appointmentsList, dataInit, dataFim);
     }
@@ -79,10 +78,8 @@ public class AppointmentController {
     public Appointment updateAppointment(@PathVariable Long id, @RequestBody Appointment appointmentDetails) {
         Appointment appointment = appointmentRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Appointment not found with id: " + id));
-
-        // Update the appointment object with the details from the request body
         appointment.setUser(appointmentDetails.getUser());
-        appointment.setAppointmentType(appointmentDetails.getAppointmentType());
+        appointment.setType(appointmentDetails.getType());
         appointment.setStartDate(appointmentDetails.getStartDate());
         appointment.setEndDate(appointmentDetails.getEndDate());
         appointment.setInsertDate(appointmentDetails.getInsertDate());

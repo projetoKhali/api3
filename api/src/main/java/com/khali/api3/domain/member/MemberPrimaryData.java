@@ -22,11 +22,11 @@ import lombok.Setter;
 @Embeddable
 public class MemberPrimaryData implements Serializable{
     @ManyToOne
-    @JoinColumn(name="user_id", referencedColumnName = "id")
+    @JoinColumn(name="usr_id", referencedColumnName = "usr_id")
     private User user;
     
     @ManyToOne
-    @JoinColumn(name="cr_id", referencedColumnName = "id")
+    @JoinColumn(name="cr_id", referencedColumnName = "rc_id")
     private ResultCenter resultCenter;
 
     @Override
@@ -34,7 +34,7 @@ public class MemberPrimaryData implements Serializable{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        MemberPrimaryData that = (MemberPrimaryData) o;
+        MemberPrimaryData that = (MemberPrimaryData)o;
 
         return Objects.equals(user, that.user) && Objects.equals(resultCenter, that.resultCenter);
     }

@@ -33,6 +33,4 @@ public enum Week {
         }
         return true;
     }
-
-
 }

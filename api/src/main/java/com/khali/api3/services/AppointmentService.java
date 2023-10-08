@@ -136,8 +136,8 @@ public class AppointmentService {
                 appointmentExists.setStatus(newAppointment.getStatus());
             }
 
-            if (newAppointment.getAppointmentType() != null) {
-                appointmentExists.setAppointmentType(newAppointment.getAppointmentType());
+            if (newAppointment.getType() != null) {
+                appointmentExists.setType(newAppointment.getType());
             }
 
             if (newAppointment.getUser() != null) {
@@ -156,10 +156,6 @@ public class AppointmentService {
         for(Appointment appointment : appointments){
             appointment.setStatus(status);
         }
-
         appointmentRepository.saveAll(updatedAppointments);
-
     }
-    
-
 }
