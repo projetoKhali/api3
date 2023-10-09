@@ -1,5 +1,7 @@
-export interface ParametrizationSchema {
+export interface ParameterSchema {
+    id: number,
     nightShiftStart: string,
     nightShiftEnd: string,
     closingDayOfMonth: number,   
+    insertDate: string,
 }
