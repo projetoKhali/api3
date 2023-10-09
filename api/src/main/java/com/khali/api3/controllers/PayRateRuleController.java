@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.khali.api3.domain.pay_rate_rule.PayRateRule;
-import com.khali.api3.domain.resultCenter.ResultCenter;
 import com.khali.api3.repositories.PayRateRuleRepository;
 import com.khali.api3.services.PayRateRuleService;
 
