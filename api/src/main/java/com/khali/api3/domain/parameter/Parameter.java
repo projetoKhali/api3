@@ -1,4 +1,4 @@
-package com.khali.api3.domain.parameters;
+package com.khali.api3.domain.parameter;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,7 +23,7 @@ import jakarta.persistence.Table;
 @Getter
 @Setter
 @EqualsAndHashCode
-public class Parameters {
+public class Parameter {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
