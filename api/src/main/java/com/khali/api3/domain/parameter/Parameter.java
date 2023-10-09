@@ -37,4 +37,8 @@ public class Parameter {
 
     @Column (name = "start_night_time")
     private LocalTime startNightTime;
+
+    @Column (name = "end_night_time")
+    private LocalTime endNightTime;
+    
 }
