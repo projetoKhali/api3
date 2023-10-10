@@ -35,7 +35,7 @@ public class ClientController {
     @GetMapping("/{id}")
     public Client getClientById(@PathVariable Long id) {
         return clientRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Client not found with id: " + id));
+            .orElseThrow(() -> new EntityNotFoundException("Client not found with id: " + id));
     }
 
     @PostMapping
@@ -46,7 +46,7 @@ public class ClientController {
     @PutMapping("/{id}")
     public Client updateClient(@PathVariable Long id, @RequestBody Client clientDetails) {
         Client client = clientRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Client not found with id: " + id));
+            .orElseThrow(() -> new EntityNotFoundException("Client not found with id: " + id));
 
         // Update the client object with the details from the request body
         client.setName(clientDetails.getName());
