@@ -1,6 +1,7 @@
 package com.khali.api3.controllers;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -30,6 +31,11 @@ public class ClientController {
     @GetMapping
     public List<Client> getAllClients() {
         return clientRepository.findAll();
+    }
+
+    @GetMapping("/active")
+    public List<Client> getActiveClients() {
+        return clientRepository.findAllActive();
     }
 
     @GetMapping("/{id}")
