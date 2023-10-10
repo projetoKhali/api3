@@ -44,9 +44,6 @@ public class User {
     @Column
     private String password;
 
-    @Column
-    private Boolean active;
-
     @Column(name = "insert_date")
     private Timestamp insertDate;
 

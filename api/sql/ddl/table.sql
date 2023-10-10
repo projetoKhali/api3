@@ -42,7 +42,6 @@ create table if not exists users(
     user_type varchar,
     email varchar(255) unique not null,
     "password" varchar(255) not null,
-    active bool default true,
     insert_date timestamp default now(),
     expire_date timestamp
 );
