@@ -11,7 +11,7 @@ async function mapResponse (response: AxiosResponse) {
         userType: item.userType? item.userType : "N/A",
         email: item.email? item.email : "N/A",
         password: item.password? item.password : "N/A",
-        active: item.active? item.active : "N/A",
+        active: item.active? "Ativo" : "Desativado",
         insertDate: item.insertDate? item.insertDate : "N/A",
         expireDate: item.expireDate? item.expireDate : "N/A",
     })) as UserSchema[]
@@ -61,4 +61,25 @@ export async function postUser(user: PostUserSchema){
     })
     .then(response => response.json())
     .catch(error => console.error(error));
+}
+
+export async function putUser(id: number, user: UserSchema) {
+    try {
+        const response = await fetch(`${API_URL}/${id}`, {
+            method: 'PUT',
+            headers: {
+                "Content-Type": 'application/json'
+            },
+            body: JSON.stringify(user)
+        });
+
+        if (!response.ok) {
+            throw new Error(`Erro ao atualizar o usuário: ${response.statusText}`);
+        }
+
+        return response.json();
+    } catch (error) {
+        console.error("Erro ao atualizar o usuário:", error);
+        throw error;
+    }
 }
