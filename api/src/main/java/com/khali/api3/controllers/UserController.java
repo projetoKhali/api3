@@ -118,6 +118,7 @@ public class UserController {
         User user = userRepository.findById(id)
         .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + id));
         user.setActive(true);
+        user.setExpiredDate(null);
         return userRepository.save(user);
     }
     
