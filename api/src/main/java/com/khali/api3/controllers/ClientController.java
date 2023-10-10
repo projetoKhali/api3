@@ -48,10 +48,8 @@ public class ClientController {
         Client client = clientRepository.findById(id)
             .orElseThrow(() -> new EntityNotFoundException("Client not found with id: " + id));
 
-        // Update the client object with the details from the request body
         client.setName(clientDetails.getName());
         client.setCnpj(clientDetails.getCnpj());
-        // Update other fields as needed
 
         return clientRepository.save(client);
     }
