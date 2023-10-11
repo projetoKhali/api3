@@ -65,7 +65,7 @@ export async function postUser(user: PostUserSchema){
 
 export async function putUser(id: number, user: UserSchema) {
     try {
-        const response = await fetch(`${API_URL}/${id}`, {
+        const response = await fetch(`${API_URL}/${id}/desactivate`, {
             method: 'PUT',
             headers: {
                 "Content-Type": 'application/json'

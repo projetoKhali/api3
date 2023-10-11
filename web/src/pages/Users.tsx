@@ -32,9 +32,9 @@ export default function Users() {
                 userType: user.userType,
                 email: user.email,
                 password: user.password,
-                active: "false",
+                active: user.active,
                 insertDate: user.insertDate,
-                expireDate: new Date().toISOString()
+                expireDate: user.expireDate
             };
             putUser(user.id, updatedUserData)
                 .then((updatedUser) => {
