@@ -63,20 +63,31 @@ export async function postUser(user: PostUserSchema){
     .catch(error => console.error(error));
 }
 
-export async function putUser(id: number, user: UserSchema) {
+export async function putUser(id: number, user: UserSchema, action: number) {
+    let response = null;
+
     try {
-        const response = await fetch(`${API_URL}/${id}/desactivate`, {
-            method: 'PUT',
-            headers: {
-                "Content-Type": 'application/json'
-            },
-            body: JSON.stringify(user)
-        });
-
-        if (!response.ok) {
-            throw new Error(`Erro ao atualizar o usuário: ${response.statusText}`);
+        if (action === 1) {
+            response = await fetch(`${API_URL}/${id}/desactivate`, {
+                method: 'PUT',
+                headers: {
+                    "Content-Type": 'application/json'
+                },
+                body: JSON.stringify(user)
+            });
         }
-
+        if (action === 2) {
+            response = await fetch(`${API_URL}/${id}/activate`, {
+                method: 'PUT',
+                headers: {
+                    "Content-Type": 'application/json'
+                },
+                body: JSON.stringify(user)
+            });
+        }
+        if (!response || !response.ok) {
+            throw new Error(`Erro ao atualizar o usuário: ${response ? response.statusText : 'Resposta não recebida'}`);
+        }
         return response.json();
     } catch (error) {
         console.error("Erro ao atualizar o usuário:", error);

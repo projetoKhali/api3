@@ -36,7 +36,7 @@ export default function Users() {
                 insertDate: user.insertDate,
                 expireDate: user.expireDate
             };
-            putUser(user.id, updatedUserData)
+            putUser(user.id, updatedUserData, 1)
                 .then((updatedUser) => {
                     if (updatedUser) {
                         requestUsers();
@@ -44,6 +44,32 @@ export default function Users() {
                 })
                 .catch((error) => {
                     console.error('Erro ao desativar o usuário:', error);
+                });
+        }
+    };
+
+    const handleActivateUser = (user: UserSchema) => {
+        const confirmResult = window.confirm('Tem certeza de que deseja ativar este usuário?');
+        if (confirmResult) {
+            const updatedUserData = {
+                id: user.id,
+                name: user.name,
+                registration: user.registration,
+                userType: user.userType,
+                email: user.email,
+                password: user.password,
+                active: user.active,
+                insertDate: user.insertDate,
+                expireDate: user.expireDate
+            };
+            putUser(user.id, updatedUserData, 2)
+                .then((updatedUser) => {
+                    if (updatedUser) {
+                        requestUsers();
+                    }
+                })
+                .catch((error) => {
+                    console.error('Erro ao ativar o usuário:', error);
                 });
         }
     };
@@ -78,17 +104,18 @@ export default function Users() {
             dataIndex: 'tags',
             key: 'tags',
             render: (_, data) => (
-                data.active ? (
+                data.active === "Ativo" ? (
                     <button onClick={() => handleDeactivateUser(data)}>Desativar</button>
-                ) : null
+                ) : (
+                    <button onClick={() => handleActivateUser(data)}>Ativar</button>
+                )
             ),
         },
     ];
 
-    // Filtra os usuários com base no estado showDeactivated
     const filteredUsers = showDeactivated ? users.filter((user) => user.active === "Desativado") : users.filter((user) => user.active === "Ativo");
 
-   return (
+return (
         <div>
             <UserForm callback={requestUsers} />
             <Checkbox
