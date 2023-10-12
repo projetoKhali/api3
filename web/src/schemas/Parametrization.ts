@@ -5,3 +5,9 @@ export interface ParameterSchema {
     closingDayOfMonth: number,   
     insertDate: string,
 }
+
+export interface PostParameterSchema {
+    nightShiftStart: string,
+    nightShiftEnd: string,
+    closingDayOfMonth: number,   
+}

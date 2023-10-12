@@ -1,4 +1,5 @@
 export interface PayRateRuleSchema {
+    id: number,
     code: number,
     type: string,
     // shift refere-se a se é diurno ou noturno
@@ -8,4 +9,5 @@ export interface PayRateRuleSchema {
     hourDuration: number,
     percentage: number,
     overlap: boolean,
+    expireDate: string,
 }
