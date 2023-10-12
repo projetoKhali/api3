@@ -1,10 +1,10 @@
 
-CREATE TYPE Apt_type AS ENUM (
+create type Apt_type as enum (
     'Overtime',
     'OnNotice'
 );
 
-CREATE TYPE User_type AS ENUM (
+create type User_type as enum (
     'Employer',
     'Manager',
     'Admin'
@@ -29,14 +29,17 @@ create table if not exists pay_rate_rules(
 create table if not exists clients(
     clt_id serial primary key,
     "name" varchar(255),
-    cnpj varchar(255) unique
+    cnpj varchar(255) unique,
+    active bool default true,
+    insert_date timestamp default now(),
+    expire_date timestamp
 );
 
 create table if not exists users(
     usr_id serial primary key,
     registration varchar(255) unique not null,
     "name" varchar(255),
-    user_type User_type DEFAULT 'Employer',
+    user_type varchar,
     email varchar(255) unique not null,
     "password" varchar(255) not null,
     active bool default true,
@@ -50,20 +53,28 @@ create table if not exists result_centers(
     code int unique not null,
     acronym varchar(255),
     gst_id int not null,
+    active bool default true,
     insert_date timestamp default now(),
-    CONSTRAINT gst_id_fk foreign KEY
-    (gst_id) REFERENCES users (usr_id)
+    expire_date timestamp,
+    constraint gst_id_fk foreign key
+    (gst_id) references users (usr_id)
 );
 
 create table if not exists members(
     usr_id int,
     rc_id int,
-    CONSTRAINT members_pk primary key
+    insert_date timestamp default now(),
+    constraint members_pk primary key
     (usr_id,rc_id),
-    CONSTRAINT usr_id_fk foreign key
-    (usr_id) REFERENCES users (usr_id),
-    CONSTRAINT rc_id_fk foreign key
-    (rc_id) REFERENCES result_centers (rc_id)
+    constraint usr_id_fk foreign key
+    (usr_id) references users (usr_id),
+    constraint rc_id_fk foreign key
+    (rc_id) references result_centers (rc_id)
+);
+
+create table if not exists project(
+    id serial primary key,
+    nome varchar
 );
 
 create table if not exists projects(
@@ -77,23 +88,25 @@ create table if not exists projects(
 
 create table if not exists appointments(
     apt_id serial primary key,
-    start_date timestamp check (start_date < end_date),
-    end_date timestamp check (end_date < start_date),
+    start_date timestamp check (start_date < end_date) not null,
+    end_date timestamp check (end_date > start_date)not null,
     usr_id int,
     clt_id int,
     rc_id int,
-    project varchar(255),
-    appointment_type Apt_type default 'Overtime',
+    project varchar(255) not null,
+    appointment_type Apt_type not null,
     justification varchar(255),
     status Apt_status default 'Pending',
     insert_date timestamp default now(),
-    apt_updt_id int,
+    apt_updt_id int null,
     feedback varchar(255),
     
-    CONSTRAINT usr_id_fk foreign key
+    constraint usr_id_fk foreign key
     (usr_id) references users(usr_id),
-    CONSTRAINT clt_id_fk foreign key
+    constraint clt_id_fk foreign key
     (clt_id) references clients(clt_id),
-    CONSTRAINT rc_id_fk foreign key
-    (rc_id) references result_centers(rc_id)
+    constraint rc_id_fk foreign key
+    (rc_id) references result_centers(rc_id),
+    constraint apt_updt_fk foreign key
+    (apt_updt_id) references appointments(apt_id)
 );

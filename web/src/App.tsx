@@ -7,6 +7,7 @@ import Home from "./pages/Home";
 import Layout from './pages/Layout';
 import Login from './pages/Login';
 import AppointmentsManager from "./pages/ManagerAppointments";
+
 import Projects from "./pages/Projects";
 import ResultCenters from './pages/ResultCenters';
 import Appointments from "./pages/UserAppointments";
