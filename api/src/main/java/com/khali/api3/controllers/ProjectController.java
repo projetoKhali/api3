@@ -67,7 +67,7 @@ public class ProjectController {
         return projectRepository.findByName(name);
     }
 
-    @GetMapping("/all")
+    @GetMapping()
     public Iterable<Project> getAllProjects(){
         return projectRepository.findAll();
     }
