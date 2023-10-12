@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { ParameterSchema } from '../schemas/Parametrization';
+import { ParameterSchema, PostParameterSchema } from '../schemas/Parametrization';
 
 const API_URL = 'http://127.0.0.1:8000/parameters';
 
@@ -14,7 +14,7 @@ export async function getParameters (): Promise<ParameterSchema> {
     }))[0] as ParameterSchema;
 }
 
-export async function postParameter(parameter: ParameterSchema) {
+export async function postParameter(parameter: PostParameterSchema) {
     return await fetch(API_URL, {
         method: 'POST',
         headers: {
