@@ -33,3 +33,21 @@ export interface PostAppointmentSchema {
     justification: string
 }
 
+export interface AppointmentUserSchema {
+    user:{
+        id: number,
+    },
+    appointmentType: string,
+    startDate: string,
+    endDate: string,
+    resultCenter: {
+        id: number,
+    },
+    client: {
+        id: number,
+    },
+    project: string,
+    justification: string,
+    feedback: string
+    status: string,
+}
