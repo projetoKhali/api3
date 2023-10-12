@@ -1,15 +1,23 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { PayRateRuleSchema } from "../schemas/PayRateRule";
-import { ParametrizationSchema } from "../schemas/Parametrization";
+import { ParameterSchema } from "../schemas/Parametrization";
 import { Table } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
+import { getPayRateRules } from "../services/PayRateRulesService";
+import ParametrizationForm from "../components/ParametrizationForm";
 
 export default function Parametrization() {
     const [payRateRules, setPayRateRules] = useState<PayRateRuleSchema[]>([]);
     
     const requestPayRateRules = () => {
-        
-    }
+        getPayRateRules().then(payRateRulesResponse =>
+            setPayRateRules(payRateRulesResponse)
+        );
+    };
+
+    useEffect(() => {
+        requestPayRateRules()
+    }, []);
 
     const columns: ColumnsType<PayRateRuleSchema> = [
         {
@@ -56,7 +64,15 @@ export default function Parametrization() {
 
     return (
         <div>
-            <Table dataSource={payRateRules} columns={columns} />
+            <ParametrizationForm
+                errorCallback={() => {}}
+                successCallback={() => {}}
+            />
+            {payRateRules? (
+                <Table dataSource={payRateRules} columns={columns} />
+            ) : (
+                null
+            )}
         </div>
     );
     
