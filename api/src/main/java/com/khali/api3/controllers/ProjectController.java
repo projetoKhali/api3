@@ -13,24 +13,27 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.khali.api3.domain.project.Project;
 import com.khali.api3.repositories.ProjectRepository;
+import com.khali.api3.services.ProjectService;
 
 @RestController
 @RequestMapping("/projects")
 public class ProjectController {
     
-    @Autowired private final ProjectRepository projectRepository;
+    @Autowired private ProjectService projectService;
+    @Autowired private ProjectRepository projectRepository;
 
-    public ProjectController(ProjectRepository projectRepository) {
+    public ProjectController(ProjectRepository projectRepository, ProjectService projectService) {
         this.projectRepository = projectRepository;
+        this.projectService = projectService;
     }
 
     @PostMapping
-    public Project createProject(@RequestBody Project projeto){
-        return projectRepository.createProject(projeto.getName(), projeto.getDescription());
+    public int createProject(@RequestBody Project projeto) {
+        return projectService.insertProject(projeto.getName(), projeto.getDescription());
     }
 
     @PutMapping("/{id}")
-    public Project updateProject(@PathVariable Long id, Project prj){
+    public Project updateProject(@PathVariable Long id, @RequestBody Project prj){
         Project project = projectRepository.findById(id).get();
         project.setName(prj.getName());
         project.setDescription(prj.getDescription());

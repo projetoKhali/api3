@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 import com.khali.api3.domain.project.Project;
@@ -18,11 +21,8 @@ public interface ProjectRepository extends JpaRepository<Project, Long>{
     public Project findByDescription(String description);
     public List<Project> findAll();
 
-    public default Project createProject(String name, String description) {
-        Project project = new Project();
-        project.setName(name);
-        project.setDescription(description);
-        return save(project);
-    }
-    
+    @Modifying
+    @Query(value = "INSERT INTO projects (name, description) VALUES (:name, :description)", nativeQuery = true)
+    int insertProject(@Param("name") String name, @Param("description") String description);
+
 }
