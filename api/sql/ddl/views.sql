@@ -1,7 +1,7 @@
 create or replace view vw_users as select
     users.usr_id,
     users.registration,
-    users.name,
+    users."name",
     users.user_type,
     users.email,
     users.password,
@@ -10,33 +10,47 @@ create or replace view vw_users as select
     users.expire_date
 from users;
 
-    
-create or replace view vw_appointments as select
-    appointments.apt_id,
-    appointments.start_date,
-    appointments.end_date,
-    users.name as user_name,
-    clients.name as client_name,
-    result_centers.name as center_name,
-    appointments.project,
-    appointments.appointment_type,
-    appointments.justification,
-    appointments.status,
-    appointments.insert_date,
-    appointments.apt_updt_id,
-    appointments.feedback
-from appointments
-join users on appointments.usr_id = users.usr_id
-join clients on appointments.clt_id = clients.clt_id
-join result_centers on appointments.rc_id = result_centers.rc_id;
+create view vw_appointments as select
+    ap.apt_id,
+    ap.start_date,
+    ap.end_date,
+    ap.usr_id,
+    users."name" as user_name,
+    ap.clt_id,
+    clients."name" as client_name,
+    ap.rc_id,
+    result_centers."name" as center_name,
+    ap.project,
+    ap.appointment_type,
+    ap.justification,
+    ap.status,
+    ap.insert_date,
+    ap.apt_updt_id,
+    ap.feedback
+from appointments ap
+join users on ap.usr_id = users.usr_id
+join clients on ap.clt_id = clients.clt_id
+join result_centers on ap.rc_id = result_centers.rc_id;
 
+create or replace view vw_result_centers as select
+    rc.rc_id ,
+    rc."name",
+    rc.code,
+    rc.acronym,
+    rc.gst_id,
+    users.name as gestor,
+    rc.insert_date
+from result_centers rc
+join users on rc.gst_id = users.usr_id;
 
 create or replace view vw_members as select
+    me.usr_id,
+    me.rc_id,
     users.name as user_name,
     result_centers.name as center_name
-from members
-join users on members.usr_id = users.usr_id
-join result_centers on members.rc_id = result_centers.rc_id;
+from members me
+join users on me.usr_id = users.usr_id
+join result_centers on me.rc_id = result_centers.rc_id;
 
 
 create or replace view vw_result_centers as select
@@ -52,7 +66,7 @@ join users on result_centers.gst_id = users.id;
 
 create or replace view vw_clients as select
     clients.clt_id,
-    clients.name as client_name,
+    clients."name" as client_name,
     clients.cnpj
 from clients;
 

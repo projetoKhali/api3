@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
-import { ResultCenterSchema, PostResultCenterSchema } from '../schemas/ResultCenter';
+import { PostResultCenterSchema, ResultCenterSchema } from '../schemas/ResultCenter';
 
 import { UserSchema } from '../schemas/User';
 
