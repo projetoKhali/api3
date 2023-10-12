@@ -1,25 +1,25 @@
 FRONTEND_URL=http://localhost:7000
+	FRONTEND_PATH = web
+
 BACKEND_URL=http://localhost:8000
+	BACKEND_PATH = api
 
-.PHONY: run-local stop-local
+RUN_LOCAL_FRONTEND = npm run dev
+RUN_LOCAL_BACKEND = ./ldev.sh
+CD = cd
 
+# Windows-specific commands
 ifeq ($(OS),Windows_NT)
-	# Windows-specific commands
-	LOCAL_BACKEND = cd /d api & wdev.bat
-	LOCAL_FRONTEND = cd /d web && npm run dev
-else
-	# Unix-like system commands
-	LOCAL_BACKEND = cd api && ldev.sh & \
-	LOCAL_FRONTEND = cd web && npm run dev &
+	LOCAL_BACKEND_RUN = ./wdev.bat
+	CD = cd /d
 endif
 
 run:
 	docker-compose up --build
 
 local:
-	$(LOCAL_BACKEND)
-	cd ..
-	$(LOCAL_FRONTEND)
+	$(CD) $(BACKEND_PATH) && $(RUN_LOCAL_BACKEND) && cd ..
+	$(CD) $(FRONTEND_PATH) && $(RUN_LOCAL_FRONTEND) && cd ..
 
 open:
 	@xdg-open $(FRONTEND_URL)
