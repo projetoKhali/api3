@@ -44,7 +44,5 @@ import lombok.Setter;
     @Temporal(TemporalType.TIMESTAMP)
     private Timestamp expireDate;
 
-    @Column
-    private boolean active;
 
 }
