@@ -10,6 +10,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.sql.Timestamp;
 import java.time.LocalTime;
 
 @Entity(name="pay_rate_rules")
@@ -46,4 +47,7 @@ public class PayRateRule {
 
     @Column(name = "overlap")
     private Boolean overlap;   
+    
+    @Column(name = "expire_date")
+    private Timestamp expire_date;   
 }
