@@ -10,6 +10,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -35,9 +37,11 @@ import lombok.Setter;
     private String description;
 
     @Column(name = "insert_date")
+    @Temporal(TemporalType.TIMESTAMP)
     private Timestamp insertDate;
 
     @Column(name = "expire_date")
+    @Temporal(TemporalType.TIMESTAMP)
     private Timestamp expireDate;
 
     @Column

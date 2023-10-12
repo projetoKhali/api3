@@ -25,8 +25,8 @@ public class ProjectController {
     }
 
     @PostMapping
-    public Project createProject(@RequestBody Project prj){
-        return projectRepository.save(prj);
+    public Project createProject(@RequestBody Project projeto){
+        return projectRepository.createProject(projeto.getName(), projeto.getDescription());
     }
 
     @PutMapping("/{id}")
