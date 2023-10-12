@@ -84,7 +84,7 @@ create table if not exists projects(
     active bool default true,
     insert_date timestamp default now(),
     expire_date timestamp
-)
+);
 
 create table if not exists appointments(
     apt_id serial primary key,
