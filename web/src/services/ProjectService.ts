@@ -9,14 +9,14 @@ async function mapResponse (response: AxiosResponse) {
         id: item.id? item.id : "N/A",
         name: item.name? item.name : "N/A",
         description: item.description? item.description : "N/A",
-        active: item.expire_date? "Ativo" : "Inativo",
+        active: item.expire_date? "Inativo" : "Ativo",
         insertDate: item.insertDate? formatDateTime(item.insertDate) : "N/A",
         expireDate: item.expireDate? formatDateTime(item.expireDate) : "N/A",
     })) as ProjectSchema[]
 }
 
 export async function getProject (): Promise<ProjectSchema[]> {
-    const response = await axios.get(`${API_URL}/all`, {});
+    const response = await axios.get(`${API_URL}`, {});
     return await mapResponse(response);
 }
 

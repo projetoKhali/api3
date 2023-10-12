@@ -43,7 +43,6 @@ public class ProjectController {
     @PutMapping("/deactivate/{id}")
     public Project desactivateProject(@PathVariable Long id){
         Project prj = projectRepository.findById(id).get();
-        prj.setActive(false);
         Timestamp now = new Timestamp(System.currentTimeMillis());
         prj.setExpireDate(now);
         return projectRepository.save(prj);
@@ -52,7 +51,6 @@ public class ProjectController {
     @PutMapping("/activate/{id}")
     public Project activateProject(@PathVariable Long id){
         Project prj = projectRepository.findById(id).get();
-        prj.setActive(true);
         prj.setExpireDate(null);
         return projectRepository.save(prj);
     }

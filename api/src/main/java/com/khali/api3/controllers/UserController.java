@@ -76,7 +76,7 @@ public class UserController {
                 permissions.add(Permission.Report);
             }
             if (membersService.getMembersByUser(user).size() > 0) permissions.add(Permission.Appoint);
-            // if (resultCenterService.findByGestorID(id).size() > 0) permissions.add(Permission.Validate);
+            if (resultCenterService.findByGestorID(id).size() > 0) permissions.add(Permission.Validate);
             for (Permission permission : permissions) System.out.println(permission);
             return permissions;
         } catch (Error e) {
