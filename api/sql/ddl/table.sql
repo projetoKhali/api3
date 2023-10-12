@@ -81,7 +81,6 @@ create table if not exists projects(
     prj_id serial primary key,
     "name" varchar(255) unique not null,
     description varchar(255),
-    active bool default true,
     insert_date timestamp default now(),
     expire_date timestamp
 );
