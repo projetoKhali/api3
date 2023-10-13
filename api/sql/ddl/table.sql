@@ -5,9 +5,9 @@ create type Apt_type as enum (
 );
 
 CREATE TYPE Periodo AS ENUM (
-    'Noturno',
-    'Diurno',
-    'Indiferente'
+    'Nightime',
+    'Daytime',
+    'Allday'
 );
 
 create type User_type as enum (
