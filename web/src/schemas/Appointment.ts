@@ -13,6 +13,7 @@ export interface AppointmentSchema {
     },
     project: string,
     justification: string,
+    feedback: string
     status: string,
 }
 

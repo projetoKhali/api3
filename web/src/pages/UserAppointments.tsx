@@ -2,44 +2,31 @@ import { Table } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import { useEffect, useState } from 'react';
 import AppointmentForm from '../components/AppointmentForm';
-import Popup from '../components/PopUp';
+import Popup, { PopupSchema } from '../components/PopUp';
 import { AppointmentSchema } from '../schemas/Appointment';
-import { UserSchema } from "../schemas/User";
+import { UserSchema } from '../schemas/User';
 import { getAppointmentsUser } from '../services/AppointmentService';
 
 interface AppointmentsProps {
     userLoggedIn: UserSchema;
 }
 
-interface AppointmentUserSchema extends AppointmentSchema {
-    feedback: string;
-}
-
-// Defina uma função de utilidade para mapear os objetos AppointmentSchema para AppointmentUserSchema
-const mapAppointmentSchemaToUserSchema = (appointment: AppointmentSchema): AppointmentUserSchema => {
-    return {
-        ...appointment,
-        feedback: '', // Defina a propriedade feedback como vazia ou com um valor padrão
-    };
-};
-
 export default function Appointments({ userLoggedIn }: AppointmentsProps) {
-    const [appointments, setAppointments] = useState<AppointmentUserSchema[]>([]);
-    const [feedbackPopup, setFeedbackPopup] = useState(false);
-    const [feedbackText, setFeedbackText] = useState('');
+    const [appointments, setAppointments] = useState<AppointmentSchema[]>([]);
+    const [popupData, setPopupData] = useState<PopupSchema | null>(null);
+    const [showPopup, setShowPopup] = useState(false);
 
     const requestAppointments = () => {
-        getAppointmentsUser(userLoggedIn.id).then((appointmentsResponse: AppointmentSchema[]) => {
-            const userAppointments = appointmentsResponse.map(appointment => mapAppointmentSchemaToUserSchema(appointment));
-            setAppointments(userAppointments);
-        });
+        getAppointmentsUser(userLoggedIn.id).then((appointmentsResponse) =>
+            setAppointments(appointmentsResponse)
+        );
     };
 
     useEffect(() => {
         requestAppointments();
     }, []);
 
-    const columns: ColumnsType<AppointmentUserSchema> = [
+    const columns: ColumnsType<AppointmentSchema> = [
         {
             title: 'Tipo',
             dataIndex: 'appointmentType',
@@ -57,12 +44,12 @@ export default function Appointments({ userLoggedIn }: AppointmentsProps) {
         },
         {
             title: 'CR',
-            dataIndex: 'resultCenter.id', // Acesse a propriedade id
+            dataIndex: 'resultCenter',
             key: 'resultCenter',
         },
         {
             title: 'Cliente',
-            dataIndex: 'client.id', // Acesse a propriedade id
+            dataIndex: 'client',
             key: 'client',
         },
         {
@@ -82,26 +69,28 @@ export default function Appointments({ userLoggedIn }: AppointmentsProps) {
             render: (status, record) => {
                 if (status === 'Reject') {
                     return (
-                        <button onClick={() => showFeedbackPopup(record.feedback)}>
-                            Feedback do Gestor
-                        </button>
+                        <span
+                            onClick={() => {
+                                setPopupData({
+                                    text: `Feedback do gestor: ${record.feedback}`,
+                                    buttons: [{ text: 'Fechar', onClick: handleClose }],
+                                    isOpen: true,
+                                });
+                                setShowPopup(true);
+                            }}
+                        >
+                            {status}
+                        </span>
                     );
-                } else if (status === 'Pending' || status === 'Approved') {
-                    return "Não há feedback para esse apontamento no momento";
                 } else {
                     return status;
                 }
             },
         },
-    ]
+    ];
 
-    const showFeedbackPopup = (feedback: string) => {
-        setFeedbackPopup(true);
-        setFeedbackText(feedback);
-    };
-
-    const closeFeedbackPopup = () => {
-        setFeedbackPopup(false);
+    const handleClose = () => {
+        setShowPopup(false);
     };
 
     return (
@@ -114,13 +103,8 @@ export default function Appointments({ userLoggedIn }: AppointmentsProps) {
             {appointments ? (
                 <Table dataSource={appointments} columns={columns} />
             ) : null}
-            {feedbackPopup && (
-                <Popup
-                    text={feedbackText}
-                    buttons={[{ text: 'Fechar', onClick: closeFeedbackPopup }]}
-                    onClose={closeFeedbackPopup}
-                />
-            )}
+
+            {showPopup && popupData && <Popup {...popupData} />}
         </div>
     );
 }

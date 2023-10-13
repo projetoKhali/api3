@@ -1,59 +1,29 @@
-import React, { useState } from 'react';
-
-interface PopupProps {
+interface Button {
     text: string;
-    buttons: { text: string; onClick: () => void }[];
-    onClose: () => void;
+    onClick: () => void;
 }
 
-const Popup: React.FC<PopupProps> = ({ text, buttons, onClose }) => {
-    const handlePopupClose = () => {
-        if (onClose) {
-            onClose();
-        }
-    };
-
-    return (
-        <div className="popup">
-            <div className="popup-content">
-                <p>{text}</p>
-                {buttons.map((button, index) => (
-                    <button key={index} onClick={button.onClick}>
-                        {button.text}
-                    </button>
-                ))}
-                <button onClick={handlePopupClose}>Fechar</button>
-            </div>
-        </div>
-    );
+export interface PopupSchema {
+    text: string;
+    buttons: Button[];
+    isOpen: boolean
 }
 
-export default function Appointments() {
-    const [showPopup, setShowPopup] = useState(false);
-    const [popupData, setPopupData] = useState<PopupProps | null>(null);
-
-    const showPopupWithOptions = (data: Omit<PopupProps, 'onClose'>) => {
-        setPopupData({ ...data, onClose: handleClose });
-        setShowPopup(true);
-    }
-
-    const handleClose = () => {
-        setShowPopup(false);
-    }
-
+export default function Popup({ text, buttons, isOpen}: PopupSchema) {
     return (
         <div>
-            <button
-                onClick={() =>
-                    showPopupWithOptions({
-                        text: 'Este é um pop-up informativo.',
-                        buttons: [{ text: 'Fechar', onClick: handleClose }],
-                    })
-                }
-            >
-                Mostrar Pop-up Informativo
-            </button>
-            {showPopup && popupData && <Popup {...popupData} />}
+            {isOpen && (
+                <div className="popup">
+                    <div className="popup-content">
+                        <p>{text}</p>
+                        {buttons.map((button, index) => (
+                            <button key={index} onClick={button.onClick}>
+                                {button.text}
+                            </button>
+                        ))}
+                    </div>
+                </div>
+            )}
         </div>
     );
 }
