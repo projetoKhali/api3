@@ -34,12 +34,12 @@ public class PayRateRuleController {
         return payRateRuleRepository.findAll();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/id/{id}")
     public PayRateRule getPayRateRuleById(@PathVariable Long id) {
         return payRateRuleRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("PayRateRule not found with id: " + id));
     }
-    @GetMapping("/{code}")
+    @GetMapping("/code/{code}")
     public List<PayRateRule> getPayRateRuleByCode(@PathVariable Long code) {
         List<PayRateRule> payRateRules = payRateRuleRepository.findByCode(code);
         if (payRateRules.isEmpty()) {System.out.print("não há verba com o código: " + code);}
@@ -52,13 +52,8 @@ public class PayRateRuleController {
         return payRateRuleRepository.save(payRateRule);
     }
     
-    @DeleteMapping("/{id}")
-    public void deletePayRateRule(@PathVariable Long id) {
-        // inserir aqui lógica de dias vazios. ou pop up?
-        payRateRuleRepository.deletePayRateRuleById(id);
-    }
 
-    @PutMapping("/id")
+    @PutMapping("/{id}")
     public PayRateRule updatePayRateRule(@PathVariable Long id, @RequestBody PayRateRule payRateRuleDetails) {
         return payRateRuleService.updatePayRateRule(id, payRateRuleDetails);
     }
