@@ -30,7 +30,6 @@ create table if not exists clients(
     clt_id serial primary key,
     "name" varchar(255),
     cnpj varchar(255) unique,
-    active bool default true,
     insert_date timestamp default now(),
     expire_date timestamp
 );
@@ -42,7 +41,6 @@ create table if not exists users(
     user_type varchar,
     email varchar(255) unique not null,
     "password" varchar(255) not null,
-    active bool default true,
     insert_date timestamp default now(),
     expire_date timestamp
 );
@@ -53,7 +51,6 @@ create table if not exists result_centers(
     code int unique not null,
     acronym varchar(255),
     gst_id int not null,
-    active bool default true,
     insert_date timestamp default now(),
     expire_date timestamp,
     constraint gst_id_fk foreign key

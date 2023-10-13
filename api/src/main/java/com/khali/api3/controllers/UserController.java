@@ -87,7 +87,6 @@ public class UserController {
 
     @PostMapping
     public User createUser(@RequestBody User user) {
-        user.setActive(true);
         return userRepository.save(user);
     }
 
@@ -101,7 +100,6 @@ public class UserController {
         user.setUserType(userDetails.getUserType());
         user.setEmail(userDetails.getEmail());
         user.setPassword(userDetails.getPassword());
-        user.setActive(userDetails.getActive());
 
         return userRepository.save(user);
     }
@@ -117,7 +115,7 @@ public class UserController {
     public User activateUser(@PathVariable Long id) {
         User user = userRepository.findById(id)
         .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + id));
-        user.setActive(true);
+        user.setExpiredDate(null);
         return userRepository.save(user);
     }
     
@@ -126,7 +124,6 @@ public class UserController {
     public User deactivateUser(@PathVariable Long id) {
         User user = userRepository.findById(id)
         .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + id));
-        user.setActive(false);
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         user.setExpiredDate(timestamp);
         return userRepository.save(user);
