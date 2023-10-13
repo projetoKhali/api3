@@ -32,7 +32,6 @@ public class ParameterController {
         return parameterRepository.findLastParameter();
     }
 
-
     @PostMapping
     public Parameter createParameter(@RequestBody Parameter parameter) {
         return parameterRepository.save(parameter);
