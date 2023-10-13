@@ -12,8 +12,8 @@ create type User_type as enum (
 
 CREATE TYPE Apt_status AS ENUM (
     'Pending',
-    'Aproved',
-    'Reject'
+    'Approved',
+    'Rejected'
 );
 
 create table if not exists pay_rate_rules(
@@ -37,7 +37,7 @@ create table if not exists clients(
 create table if not exists users(
     usr_id serial primary key,
     registration varchar(255) unique not null,
-    "name" varchar(255),
+    "name" varchar(255) not null,
     user_type varchar,
     email varchar(255) unique not null,
     "password" varchar(255) not null,
@@ -47,7 +47,7 @@ create table if not exists users(
 
 create table if not exists result_centers(
     rc_id serial primary key,
-    "name" varchar(255),
+    "name" varchar(255) not null,
     code int unique not null,
     acronym varchar(255),
     gst_id int not null,
@@ -71,7 +71,7 @@ create table if not exists members(
 
 create table if not exists project(
     id serial primary key,
-    nome varchar
+    nome varchar unique not null
 );
 
 create table if not exists projects(
