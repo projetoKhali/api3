@@ -118,7 +118,7 @@ public class UserController {
         user.setExpiredDate(null);
         return userRepository.save(user);
     }
-    
+
     // desativa usuário
     @PutMapping("/{id}/desactivate")
     public User deactivateUser(@PathVariable Long id) {
