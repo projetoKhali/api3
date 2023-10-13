@@ -18,7 +18,7 @@ CREATE TYPE Apt_status AS ENUM (
 
 create table if not exists pay_rate_rules(
     prt_id serial primary key,
-    code int unique,
+    code int unique not null,
     hour_duration numeric,
     pay_rate numeric,
     appointment_type Apt_type,
@@ -95,7 +95,7 @@ create table if not exists appointments(
     status Apt_status default 'Pending',
     insert_date timestamp default now(),
     apt_updt_id int null,
-    feedback varchar(255)
+    feedback varchar(255),
     
     constraint usr_id_fk foreign key
     (usr_id) references users(usr_id),
