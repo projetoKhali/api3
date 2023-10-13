@@ -27,6 +27,7 @@ public class Parameter {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="prm_id")
     private Long id;
 
     @Column (name = "insert_date")
