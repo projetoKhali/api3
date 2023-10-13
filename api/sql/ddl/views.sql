@@ -27,17 +27,10 @@ create view vw_appointments as select
     ap.insert_date,
     ap.apt_updt_id,
     ap.feedback,
-    pr.code
-    pr.code
 from appointments ap
 join users on ap.usr_id = users.usr_id
 join clients on ap.clt_id = clients.clt_id
-join result_centers on ap.rc_id = result_centers.rc_id
-join pay_rate_rules pr on
-    ap.start_date::time >= pr.start_time and
-    ap.end_date::time <= pr.end_time and
-    ap.appointment_type = pr.appointment_type
-    order by apt_id, (a.end_date::time - a.start_date::time) asc;
+join result_centers on ap.rc_id = result_centers.rc_id;
 
 create view vw_result_centers as select
     rc.rc_id ,
