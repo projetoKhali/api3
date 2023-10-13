@@ -16,14 +16,38 @@ CREATE TYPE Apt_status AS ENUM (
     'Reject'
 );
 
+create type Days_of_week as enum (
+    'Dom',
+    'Seg',
+    'Ter',
+    'Qua',
+    'Qui',
+    'Sex',
+    'Sab',
+    'ALL',
+    'UTEIS',
+    'FDS'
+)
+
 create table if not exists pay_rate_rules(
     prt_id serial primary key,
     code int unique,
     hour_duration numeric,
     pay_rate numeric,
     appointment_type Apt_type,
-    start_time time check (start_time < end_time),
-    end_time time check (end_time > start_time)
+    start_time time check,
+    end_time time check,
+    days_of_week Days_of_week,
+    overlap boolean,
+    expire_date timestamp
+);
+
+create table if not exists parameters(
+    prm_id serial primary key,
+    insert_date timestamp default now(),
+    closing_day int,
+    start_night_time time,
+    end_night_time time
 );
 
 create table if not exists clients(
