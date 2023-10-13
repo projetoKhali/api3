@@ -34,24 +34,28 @@ public class PayRateRule {
     @Column(name="prt_id")
     private Long id;
 
-    @Column(unique=true)
+    @Column(name="code", unique=true)
     private Long code;
 
     @Column(name = "hour_duration")
     private double hourDuration;
+
     @Column(name = "pay_rate")
     private double payRate;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "appointment_type")
     private AppointmentType appointmentType;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "days_of_week")
+    private Week daysOfWeek;
 
     @Column(name = "start_time")
     private LocalTime startTime;
     @Column(name = "end_time")
     private LocalTime endTime;
 
-    @Enumerated(EnumType.STRING)
-    private Week daysOfWeek;
 
     @Column(name = "overlap")
     private Boolean overlap;   
