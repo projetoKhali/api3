@@ -10,6 +10,7 @@ import AppointmentsManager from "./pages/ManagerAppointments";
 import ResultCenters from './pages/ResultCenters';
 import Appointments from "./pages/UserAppointments";
 import Users from "./pages/Users";
+import Parametrization from './pages/Parametrization';
 
 import { UserSchema } from './schemas/User';
 
@@ -30,6 +31,7 @@ function App() {
                             <Route path="users" element={<Users/>} />
                             <Route path="clients" element={<Clients/>} />
                             <Route path="resultCenters" element={<ResultCenters/>} />
+                            <Route path="parametrization" element={<Parametrization/>} />
                         </Route>
                     </Routes>
                 </BrowserRouter>
