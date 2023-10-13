@@ -77,6 +77,14 @@ create table if not exists project(
     nome varchar
 );
 
+create table if not exists projects(
+    prj_id serial primary key,
+    "name" varchar(255) unique not null,
+    description varchar(255),
+    insert_date timestamp default now(),
+    expire_date timestamp
+);
+
 create table if not exists appointments(
     apt_id serial primary key,
     start_date timestamp check (start_date < end_date) not null,
