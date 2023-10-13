@@ -45,6 +45,7 @@ export default function ParametrizationForm ({successCallback, errorCallback}: P
             <input type="text" placeholder="Inicio do Período Noturno" onChange={handleNightShiftStartChange}/>
             <input type="text" placeholder="Fim do Período Noturno" onChange={handleNightShiftEndChange}/>
             <input type="text" placeholder="Dia de Fechamento" onChange={handlePostClosingDayOfMonthChange}/>
+            <button type="submit">Salvar</button>
         </form>
     );
         
