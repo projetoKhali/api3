@@ -1,16 +1,18 @@
-FRONTEND_URL=http://localhost:7000
+FRONTEND_URL = http://localhost:7000
 	FRONTEND_PATH = web
+	FRONTEND_RUN_LOCAL = npm i && npm run dev
 
-BACKEND_URL=http://localhost:8000
+BACKEND_URL = http://localhost:8000
 	BACKEND_PATH = api
+	BACKEND_RUN_LOCAL = ./ldev.sh
 
-RUN_LOCAL_FRONTEND = npm run dev
-RUN_LOCAL_BACKEND = ./ldev.sh
+LOAD_ENV = export $(cat .env | xargs)
 CD = cd
 
 # Windows-specific commands
 ifeq ($(OS),Windows_NT)
-	LOCAL_BACKEND_RUN = ./wdev.bat
+	LOCAL_BACKEND_RUN = .\wdev.bat
+	LOAD_ENV = powershell -ExecutionPolicy ByPass -File wloadenv.ps1
 	CD = cd /d
 endif
 
@@ -18,8 +20,8 @@ run:
 	docker-compose up --build
 
 local:
-	$(CD) $(BACKEND_PATH) && $(RUN_LOCAL_BACKEND) && cd ..
-	$(CD) $(FRONTEND_PATH) && $(RUN_LOCAL_FRONTEND) && cd ..
+	$(LOAD_ENV) && $(CD) $(BACKEND_PATH) && $(BACKEND_RUN_LOCAL) && cd ..
+	$(CD) $(FRONTEND_PATH) && $(FRONTEND_RUN_LOCAL) && cd ..
 
 open:
 	@xdg-open $(FRONTEND_URL)
