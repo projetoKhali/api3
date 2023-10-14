@@ -27,8 +27,8 @@ export default function Appointments () {
         },
         {
             title: 'Tipo',
-            dataIndex: 'appointmentType',
-            key: 'appointmentType',
+            dataIndex: 'type',
+            key: 'type',
         },
         {
             title: 'Início',
