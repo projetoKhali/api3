@@ -11,7 +11,7 @@ async function mapResponse (response: AxiosResponse) {
         description: item.description? item.description : "N/A",
         active: item.expire_date? "Inativo" : "Ativo",
         insertDate: item.insertDate? formatDateTime(item.insertDate) : "N/A",
-        expireDate: item.expireDate? formatDateTime(item.expireDate) : "N/A",
+        expireDate: item.expireDate? formatDateTime(item.expireDate) : "Em andamento...",
     })) as ProjectSchema[]
 }
 
