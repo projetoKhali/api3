@@ -96,12 +96,12 @@ public class AppointmentController {
         return appointmentRepository.save(appointment);
     }
 
+    
     @PutMapping("/validate/{id}")
-    public Appointment validateAppointment(@PathVariable Long id, @RequestParam(name="status") String status) {
+    public Appointment validateAppointment(@PathVariable Long id, @RequestParam(name="status") AppointmentStatus status) {
         Appointment appointment = appointmentRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Appointment not found with id: " + id));
-        AppointmentStatus statusEnum = AppointmentStatus.valueOf(status);
-        appointment.setStatus(statusEnum);
+        appointment.setStatus(status);
         
         return appointmentRepository.save(appointment);
     }
