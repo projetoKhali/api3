@@ -12,13 +12,13 @@ create type User_type as enum (
 
 CREATE TYPE Apt_status AS ENUM (
     'Pending',
-    'Aproved',
-    'Reject'
+    'Approved',
+    'Rejected'
 );
 
 create table if not exists pay_rate_rules(
     prt_id serial primary key,
-    code int unique,
+    code int unique not null,
     hour_duration numeric,
     pay_rate numeric,
     appointment_type Apt_type,
@@ -30,7 +30,6 @@ create table if not exists clients(
     clt_id serial primary key,
     "name" varchar(255),
     cnpj varchar(255) unique,
-    active bool default true,
     insert_date timestamp default now(),
     expire_date timestamp
 );
@@ -38,7 +37,7 @@ create table if not exists clients(
 create table if not exists users(
     usr_id serial primary key,
     registration varchar(255) unique not null,
-    "name" varchar(255),
+    "name" varchar(255) not null,
     user_type varchar,
     email varchar(255) unique not null,
     "password" varchar(255) not null,
@@ -48,11 +47,10 @@ create table if not exists users(
 
 create table if not exists result_centers(
     rc_id serial primary key,
-    "name" varchar(255),
+    "name" varchar(255) not null,
     code int unique not null,
     acronym varchar(255),
     gst_id int not null,
-    active bool default true,
     insert_date timestamp default now(),
     expire_date timestamp,
     constraint gst_id_fk foreign key
@@ -73,7 +71,7 @@ create table if not exists members(
 
 create table if not exists project(
     id serial primary key,
-    nome varchar
+    nome varchar unique not null
 );
 
 create table if not exists projects(
