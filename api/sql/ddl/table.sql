@@ -81,6 +81,7 @@ create table if not exists result_centers(
 create table if not exists members(
     usr_id int,
     rc_id int,
+    active bool deafult true,
     insert_date timestamp default now(),
     constraint members_pk primary key
     (usr_id,rc_id),

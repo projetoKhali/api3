@@ -36,6 +36,32 @@ public class MembersService {
         return userMembers;
 
     }
+
+    public List<Member> getMembersByUserId(long id){
+        List<Member> userMembers = new ArrayList<>();
+        List<Member> allMembers = membersRepository.findAll();
+        for (Member member : allMembers) {
+            if ((member.getMemberPK().getUser().getId()) == id) {
+                userMembers.add(member);
+            }
+        }
+        return userMembers;
+    }
+
+    public void alterMembersStatus(List<Member> members, boolean status){
+        if (status) {
+            for (Member member : members) {
+                member.setActive(true);
+                membersRepository.save(member);
+            }
+        } else {
+            for (Member member : members) {
+                member.setActive(false);
+                membersRepository.save(member);
+            }
+        }
+    }
+
     public List<Member> getMembersByRC(ResultCenter resultCenter){
         List<Member> userMembers = new ArrayList<>();
         List<Member> allMembers = membersRepository.findAll();
@@ -49,7 +75,7 @@ public class MembersService {
 
     public Member insertMember(User user, ResultCenter resultCenter){
         MemberPrimaryData memberPK = new MemberPrimaryData(user, resultCenter);
-        Member member = new Member(memberPK);
+        Member member = new Member(memberPK, true, null);
         System.out.println(user.getId()+" | "+resultCenter.getId());
         return membersRepository.save(member);
     }

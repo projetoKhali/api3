@@ -1,5 +1,8 @@
 package com.khali.api3.domain.member;
 
+import java.sql.Timestamp;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
@@ -8,8 +11,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity(name="member")
-@Table(name="member")
+@Entity(name="members")
+@Table(name="members")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -17,4 +20,10 @@ import lombok.Setter;
 public class Member {
     @EmbeddedId
     private MemberPrimaryData memberPK;
+
+    @Column(name="active")
+    boolean active;
+
+    @Column(name="insert_date")
+    Timestamp insertdate;
 }
