@@ -5,6 +5,7 @@ import { getUsers } from '../services/UserService';
 import { UserSchema } from '../schemas/User';
 import '../styles/userTData.css';
 import UserForm from '../components/UserForm';
+import { RenderButtonTableCell } from '../components/ButtonTableCell';
 
 export default function Users() {
     const [users, setUsers] = useState<UserSchema[]>([]);
@@ -40,11 +41,11 @@ export default function Users() {
           dataIndex: 'userType',
           key: 'userType',
         },
-        {
-          dataIndex: 'tags',
-          key: 'tags',
-          render: (_,data) => (data? <button>Ver</button> : null)
-        },
+        RenderButtonTableCell(
+            "Detalhes",
+            "Ver",
+            (item) => {console.log(item.name)}
+        ),
     ];
     return (
         <div>
