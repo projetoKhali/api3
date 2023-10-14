@@ -1,11 +1,10 @@
 package com.khali.api3.controllers;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -65,13 +64,13 @@ public class UserController {
     // }
 
 
-    @GetMapping("/{id}/permissions")
+    @GetMapping("/permissions/{id}")
     public List<Permission> getUserPermissions(@PathVariable Long id) {
         try {
             List<Permission> permissions = new ArrayList<Permission>();
             User user = userRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + id));
-            if (user.getUserType().equals(UserType.Admin)) {
+            if (user.getUserType() == UserType.Admin) {
                 permissions.add(Permission.FullAccess);
                 permissions.add(Permission.Register);
                 permissions.add(Permission.Report);
@@ -88,11 +87,10 @@ public class UserController {
 
     @PostMapping
     public User createUser(@RequestBody User user) {
-        user.setActive(true);
         return userRepository.save(user);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/{id}/update")
     public User updateUser(@PathVariable Long id, @RequestBody User userDetails) {
         User user = userRepository.findById(id)
             .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + id));
@@ -102,17 +100,36 @@ public class UserController {
         user.setUserType(userDetails.getUserType());
         user.setEmail(userDetails.getEmail());
         user.setPassword(userDetails.getPassword());
-        user.setActive(userDetails.getActive());
 
         return userRepository.save(user);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteUser(@PathVariable Long id) {
-        userRepository.deleteById(id);
-        return ResponseEntity.ok().build();
+    // @DeleteMapping("/{id}")
+    // public ResponseEntity<?> deleteUser(@PathVariable Long id) {
+    //     userRepository.deleteById(id);
+    //     return ResponseEntity.ok().build();
+    // }
+
+    // ativa usuário
+    @PutMapping("/{id}/activate")
+    public User activateUser(@PathVariable Long id) {
+        User user = userRepository.findById(id)
+        .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + id));
+        user.setExpiredDate(null);
+        return userRepository.save(user);
     }
 
+    // desativa usuário
+    @PutMapping("/{id}/desactivate")
+    public User deactivateUser(@PathVariable Long id) {
+        User user = userRepository.findById(id)
+        .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + id));
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        user.setExpiredDate(timestamp);
+        return userRepository.save(user);
+    }
+
+    @GetMapping("/login")
     public User getLogin(String email, String password) {
         return userService.getValidatedUser(email, password);
     }

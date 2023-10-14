@@ -1,48 +1,48 @@
-package com.khali.api3.domain.resultCenter;
+package com.khali.api3.domain.project;
 
 import java.sql.Timestamp;
 
-import com.khali.api3.domain.user.User;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity(name="resultcenter")
-@Table(name="result_centers")
+@Entity(name="projects")
+@Table(name="projects")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-@EqualsAndHashCode
-public class ResultCenter {
+    public class Project {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="rc_id")
+    @Column(name="prj_id")
     private Long id;
-    
+
+    @Column
+    @JsonProperty("name")
     private String name;
 
-    @Column(unique=true)
-    private String code;
-    
-    @Column(unique=true)
-    private String acronym;
-
-    @ManyToOne
-    @JoinColumn(name="gst_id", referencedColumnName = "usr_id")
-    private User gestor;
+    @Column
+    private String description;
 
     @Column(name = "insert_date")
+    @Temporal(TemporalType.TIMESTAMP)
     private Timestamp insertDate;
+
+    @Column(name = "expire_date")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Timestamp expireDate;
+
+
 }

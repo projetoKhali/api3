@@ -26,7 +26,7 @@ public class MemberPrimaryData implements Serializable{
     private User user;
     
     @ManyToOne
-    @JoinColumn(name="cr_id", referencedColumnName = "rc_id")
+    @JoinColumn(name="rc_id", referencedColumnName = "rc_id")
     private ResultCenter resultCenter;
 
     @Override

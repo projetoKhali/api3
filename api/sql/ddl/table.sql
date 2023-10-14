@@ -1,90 +1,125 @@
 
-CREATE TYPE Apt_type AS ENUM (
+create type Apt_type as enum (
     'Overtime',
     'OnNotice'
 );
 
-CREATE TYPE User_type AS ENUM (
-    'Employer',
+CREATE TYPE Period_type AS ENUM (
+    'Nightime',
+    'Daytime',
+    'Allday'
+);
+
+create type User_type as enum (
+    'Employee',
     'Manager',
     'Admin'
 );
 
 CREATE TYPE Apt_status AS ENUM (
     'Pending',
-    'Aproved',
-    'Reject'
+    'Approved',
+    'Rejected'
 );
 
-create table if not exists pay_rate_rules(
-    prt_id serial primary key,
-    code int unique,
-    hour_duration numeric,
-    pay_rate numeric,
-    appointment_type Apt_type,
-    start_time time check (start_time < end_time),
-    end_time time check (end_time > start_time)
-);
+CREATE CAST (varchar AS Apt_type) WITH INOUT AS IMPLICIT;
+CREATE CAST (varchar AS Period_type) WITH INOUT AS IMPLICIT;
+CREATE CAST (varchar AS User_type) WITH INOUT AS IMPLICIT;
+CREATE CAST (varchar AS Apt_status) WITH INOUT AS IMPLICIT;
+
 
 create table if not exists clients(
     clt_id serial primary key,
     "name" varchar(255),
-    cnpj varchar(255) unique
+    cnpj varchar(255) unique,
+    insert_date timestamp default now(),
+    expire_date timestamp
 );
 
 create table if not exists users(
     usr_id serial primary key,
     registration varchar(255) unique not null,
-    "name" varchar(255),
-    user_type User_type DEFAULT 'Employer',
+    "name" varchar(255) not null,
+    user_type User_type default 'Employee',
     email varchar(255) unique not null,
     "password" varchar(255) not null,
-    active bool default true,
     insert_date timestamp default now(),
+    expire_date timestamp
+);
+
+create table if not exists "parameters"(
+    prm_id serial primary key,
+    insert_date timestamp default now(),
+    closing_day int,
+    start_night_time time,
+    end_night_time time
+);
+
+create table if not exists pay_rate_rules(
+    prt_id serial primary key,
+    code int unique not null,
+    hour_duration numeric,
+    pay_rate numeric,
+    appointment_type Apt_type,
+    period Period_type,
+    overlap bool,
     expire_date timestamp
 );
 
 create table if not exists result_centers(
     rc_id serial primary key,
-    "name" varchar(255),
+    "name" varchar(255) not null,
     code int unique not null,
     acronym varchar(255),
     gst_id int not null,
     insert_date timestamp default now(),
-    CONSTRAINT gst_id_fk foreign KEY
-    (gst_id) REFERENCES users (usr_id)
+    expire_date timestamp,
+    constraint gst_id_fk foreign key
+    (gst_id) references users (usr_id)
 );
 
 create table if not exists members(
     usr_id int,
     rc_id int,
-    CONSTRAINT members_pk primary key
+    insert_date timestamp default now(),
+    constraint members_pk primary key
     (usr_id,rc_id),
-    CONSTRAINT usr_id_fk foreign key
-    (usr_id) REFERENCES users (usr_id),
-    CONSTRAINT rc_id_fk foreign key
-    (rc_id) REFERENCES result_centers (rc_id)
+    constraint usr_id_fk foreign key
+    (usr_id) references users (usr_id),
+    constraint rc_id_fk foreign key
+    (rc_id) references result_centers (rc_id)
+);
+
+create table if not exists projects(
+    prj_id serial primary key,
+    "name" varchar(255) unique not null,
+    description varchar(255),
+    insert_date timestamp default now(),
+    expire_date timestamp
 );
 
 create table if not exists appointments(
     apt_id serial primary key,
-    start_date timestamp check (start_date < end_date),
-    end_date timestamp check (end_date < start_date),
+    start_date timestamp check (start_date < end_date) not null,
+    end_date timestamp check (end_date > start_date)not null,
     usr_id int,
     clt_id int,
     rc_id int,
-    project varchar(255),
-    appointment_type Apt_type default 'Overtime',
+    prj_id int,
+    appointment_type Apt_type not null,
     justification varchar(255),
     status Apt_status default 'Pending',
     insert_date timestamp default now(),
-    apt_updt_id int,
+    apt_updt_id int null,
     feedback varchar(255),
     
-    CONSTRAINT usr_id_fk foreign key
+    constraint usr_id_fk foreign key
     (usr_id) references users(usr_id),
-    CONSTRAINT clt_id_fk foreign key
+    constraint clt_id_fk foreign key
     (clt_id) references clients(clt_id),
-    CONSTRAINT rc_id_fk foreign key
-    (rc_id) references result_centers(rc_id)
+    constraint rc_id_fk foreign key
+    (rc_id) references result_centers(rc_id),
+    constraint apt_updt_fk foreign key
+    (apt_updt_id) references appointments(apt_id),
+    constraint prj_id_fk foreign key (prj_id) references projects(prj_id)
 );
