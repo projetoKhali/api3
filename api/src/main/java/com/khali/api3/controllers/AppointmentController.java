@@ -12,9 +12,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.khali.api3.domain.appointment.Appointment;
+import com.khali.api3.domain.appointment.AppointmentStatus;
 import com.khali.api3.domain.user.User;
 import com.khali.api3.repositories.AppointmentRepository;
 import com.khali.api3.services.AppointmentService;
@@ -91,6 +93,16 @@ public class AppointmentController {
         appointment.setFeedback(appointmentDetails.getFeedback());
         appointment.setApt_updt(appointmentDetails.getApt_updt());
 
+        return appointmentRepository.save(appointment);
+    }
+
+    @PutMapping("/validate/{id}")
+    public Appointment validateAppointment(@PathVariable Long id, @RequestParam(name="status") String status) {
+        Appointment appointment = appointmentRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Appointment not found with id: " + id));
+        AppointmentStatus statusEnum = AppointmentStatus.valueOf(status);
+        appointment.setStatus(statusEnum);
+        
         return appointmentRepository.save(appointment);
     }
 }
