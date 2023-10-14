@@ -5,7 +5,7 @@ create type Apt_type as enum (
 );
 
 create type User_type as enum (
-    'Employer',
+    'Employee',
     'Manager',
     'Admin'
 );
