@@ -11,9 +11,9 @@ async function mapResponse (response: AxiosResponse) {
         userType: item.userType? item.userType : "N/A",
         email: item.email? item.email : "N/A",
         password: item.password? item.password : "N/A",
-        active: item.active? "Ativo" : "Desativado",
+        active: item.expiredDate === null ? "Ativo" : "Desativado",
         insertDate: item.insertDate? item.insertDate : "N/A",
-        expireDate: item.expireDate? item.expireDate : "N/A",
+        expiredDate: item.expiredDate === null ? "N/A" : item.expireDate,
     })) as UserSchema[]
 }
 
@@ -30,9 +30,8 @@ export async function requestLogin(email: string, password: string): Promise<Use
                 userType: userData.userType || "N/A",
                 email: userData.email,
                 password: userData.password || "N/A",
-                active: userData.active || false,
                 insertDate: userData.insertDate || "N/A",
-                expireDate: userData.expiredDate || "N/A",
+                expiredDate: userData.expiredDate || "N/A",
             };
 
             return user;

@@ -6,7 +6,7 @@ const API_URL = 'http://127.0.0.1:8080/appointments';
 async function mapResponse(response: AxiosResponse): Promise<AppointmentSchema[]> {
     return response.data.map((item: any) => ({
         user: item.id? item.id : -1,
-        appointmentType: item.appointmentType? item.appointmentType : "N/A",
+        type: item.type? item.type : "N/A",
         startDate: item.startDate ? formatDateTime(item.startDate) : "N/A",
         endDate: item.endDate ? formatDateTime(item.endDate) : "N/A",
         resultCenter: item.resultCenter? item.resultCenter.name : "N/A",

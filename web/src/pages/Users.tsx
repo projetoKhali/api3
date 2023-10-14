@@ -32,9 +32,8 @@ export default function Users() {
                 userType: user.userType,
                 email: user.email,
                 password: user.password,
-                active: user.active,
                 insertDate: user.insertDate,
-                expireDate: user.expireDate
+                expiredDate: user.expiredDate
             };
             putUser(user.id, updatedUserData, 1)
                 .then((updatedUser) => {
@@ -58,9 +57,8 @@ export default function Users() {
                 userType: user.userType,
                 email: user.email,
                 password: user.password,
-                active: user.active,
                 insertDate: user.insertDate,
-                expireDate: user.expireDate
+                expiredDate: user.expiredDate
             };
             putUser(user.id, updatedUserData, 2)
                 .then((updatedUser) => {
@@ -101,19 +99,22 @@ export default function Users() {
             key: 'active',
         },
         {
-            dataIndex: 'tags',
-            key: 'tags',
-            render: (_, data) => (
-                data.active === "Ativo" ? (
-                    <button onClick={() => handleDeactivateUser(data)}>Desativar</button>
-                ) : (
+            title: 'Ação',
+            dataIndex: 'expiredDate',
+            key: 'expiredDate',
+            render: (expiredDate, data) => (
+                expiredDate !== "N/A" ? (
                     <button onClick={() => handleActivateUser(data)}>Ativar</button>
+                ) : (
+                    <button onClick={() => handleDeactivateUser(data)}>Desativar</button>
                 )
             ),
         },
     ];
 
-    const filteredUsers = showDeactivated ? users.filter((user) => user.active === "Desativado") : users.filter((user) => user.active === "Ativo");
+    const filteredUsers = showDeactivated
+    ? users.filter((user) => user.expiredDate !== "N/A")
+    : users.filter((user) => user.expiredDate === "N/A");
 
 return (
         <div>
