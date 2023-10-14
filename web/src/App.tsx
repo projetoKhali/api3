@@ -7,6 +7,8 @@ import Home from "./pages/Home";
 import Layout from './pages/Layout';
 import Login from './pages/Login';
 import AppointmentsManager from "./pages/ManagerAppointments";
+
+import Projects from "./pages/Projects";
 import ResultCenters from './pages/ResultCenters';
 import Appointments from "./pages/UserAppointments";
 import Users from "./pages/Users";
@@ -31,6 +33,7 @@ function App() {
                             <Route path="users" element={<Users/>} />
                             <Route path="clients" element={<Clients/>} />
                             <Route path="resultCenters" element={<ResultCenters/>} />
+                            <Route path="projects" element={<Projects/>} />
                             <Route path="parametrization" element={<Parametrization/>} />
                         </Route>
                     </Routes>

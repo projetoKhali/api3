@@ -3,6 +3,7 @@ package com.khali.api3.domain.appointment;
 import java.sql.Timestamp;
 
 import com.khali.api3.domain.client.Client;
+import com.khali.api3.domain.project.Project;
 import com.khali.api3.domain.resultCenter.ResultCenter;
 import com.khali.api3.domain.user.User;
 
@@ -58,8 +59,10 @@ public class Appointment {
     @ManyToOne
     @JoinColumn(name="clt_id", referencedColumnName = "clt_id")
     private Client client;
-
-    private String project;
+    
+    @ManyToOne
+    @JoinColumn(name="prj_id", referencedColumnName = "prj_id")
+    private Project project;
     @Column
     private String justification;
 
