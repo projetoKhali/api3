@@ -11,7 +11,7 @@ CREATE TYPE Periodo AS ENUM (
 );
 
 create type User_type as enum (
-    'Employer',
+    'Employee',
     'Manager',
     'Admin'
 );
