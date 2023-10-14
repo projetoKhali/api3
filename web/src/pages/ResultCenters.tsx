@@ -39,11 +39,11 @@ export default function ResultCenters(){
           dataIndex: 'gestor',
           key: 'gestor',
         },
-        RenderButtonTableCell(
-            "Detalhes",
-            "Ver",
-            (item) => {console.log(item.name)}
-        )
+        RenderButtonTableCell({
+            title: "Detalhes",
+            displayName: "Ver",
+            onClick: (item) => {console.log(item.name)}
+        }),
     ];
     return (
         <div>
