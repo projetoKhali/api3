@@ -1,15 +1,18 @@
 
-create type Apt_type as enum (
+DROP TYPE IF EXISTS Apt_type;
+CREATE TYPE Apt_type AS ENUM (
     'Overtime',
     'OnNotice'
 );
 
-create type User_type as enum (
+DROP TYPE IF EXISTS User_type;
+CREATE TYPE User_type AS ENUM (
     'Employer',
     'Manager',
     'Admin'
 );
 
+DROP TYPE IF EXISTS Apt_status;
 CREATE TYPE Apt_status AS ENUM (
     'Pending',
     'Aproved',
