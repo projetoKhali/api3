@@ -4,14 +4,14 @@ create type Apt_type as enum (
     'OnNotice'
 );
 
-CREATE TYPE Periodo AS ENUM (
+CREATE TYPE Period AS ENUM (
     'Nightime',
     'Daytime',
     'Allday'
 );
 
 create type User_type as enum (
-    'Employer',
+    'Employee',
     'Manager',
     'Admin'
 );
@@ -40,7 +40,7 @@ create table if not exists users(
     usr_id serial primary key,
     registration varchar(255) unique not null,
     "name" varchar(255) not null,
-    user_type User_type default 'Employer',
+    user_type User_type default 'Employee',
     email varchar(255) unique not null,
     "password" varchar(255) not null,
     insert_date timestamp default now(),
@@ -61,7 +61,7 @@ create table if not exists pay_rate_rules(
     hour_duration numeric,
     pay_rate numeric,
     appointment_type Apt_type,
-    periodo Periodo,
+    period Period,
     overlap bool,
     expire_date timestamp
 );
