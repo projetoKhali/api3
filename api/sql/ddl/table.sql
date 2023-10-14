@@ -94,7 +94,7 @@ create table if not exists appointments(
     insert_date timestamp default now(),
     apt_updt_id int null,
     feedback varchar(255),
-    
+
     constraint usr_id_fk foreign key
     (usr_id) references users(usr_id),
     constraint clt_id_fk foreign key
