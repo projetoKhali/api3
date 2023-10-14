@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { PayRateRuleSchema } from '../schemas/PayRateRule';
 
-const API_URL = 'http://127.0.0.1:8000/payRateRules';
+const API_URL = 'http://127.0.0.1:8080/payRateRules';
 
 export async function getPayRateRules (): Promise<PayRateRuleSchema[]> {
     const response = await axios.get(API_URL, {});
@@ -19,26 +19,26 @@ export async function getPayRateRules (): Promise<PayRateRuleSchema[]> {
     })) as PayRateRuleSchema[];
 }
 
-export async function postParameter(parameter: PayRateRuleSchema) {
+export async function postPayRateRule(payRateRule: PayRateRuleSchema) {
     return await fetch(API_URL, {
         method: 'POST',
         headers: {
             "Content-Type": 'application/json'
         },
-        body: JSON.stringify(parameter)
+        body: JSON.stringify(payRateRule)
     }).then(response=> response.json())
     .then((data)=> console.log(data))
     .catch(error => console.error(error));
    
 }
 
-export async function updateParameter(parameter: PayRateRuleSchema) {
+export async function updatePayRateRule(payRateRule: PayRateRuleSchema) {
     return await fetch(API_URL, {
         method: 'PUT',
         headers: {
             "Content-Type": 'application/json'
         },
-        body: JSON.stringify(parameter)
+        body: JSON.stringify(payRateRule)
     }).then(response=> response.json())
     .then((data)=> console.log(data))
     .catch(error => console.error(error));
