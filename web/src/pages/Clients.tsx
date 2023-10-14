@@ -4,7 +4,7 @@ import ClientForm from '../components/ClientForm';
 import { useState, useEffect } from 'react';
 import { getClients } from '../services/ClientService';
 import { ClientSchema } from '../schemas/Client';
-import { RenderButtonTableCell } from '../components/ButtonTableCell';
+import { ButtonTableColumn } from '../components/ButtonTableCell';
 
 
 export default function Clients () {
@@ -30,7 +30,7 @@ export default function Clients () {
           dataIndex: 'cnpj',
           key: 'cnpj',
         },
-        RenderButtonTableCell({
+        ButtonTableColumn({
             title: "Detalhes",
             displayName: "Ver",
             onClick: (item) => {console.log(item.name)}

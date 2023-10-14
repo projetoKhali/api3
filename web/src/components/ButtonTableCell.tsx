@@ -20,7 +20,7 @@ export default function ButtonTableCell<T> ({item, displayName, onClick}: Button
     );
 }
 
-export function RenderButtonTableCell<T>({title, displayName, onClick}: ButtonTableColumnProps<T>): ColumnType<T> {
+export function ButtonTableColumn<T>({title, displayName, onClick}: ButtonTableColumnProps<T>): ColumnType<T> {
   return {
     title,
     key: title,
