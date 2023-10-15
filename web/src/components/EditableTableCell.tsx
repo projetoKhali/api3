@@ -41,6 +41,7 @@ export default function EditableTableCell<T> ({item, getValue, setValue}: Editab
                 <input
                     type="text"
                     onChange={handleEdit}
+                    value={inputValue}
                     className="editable-table-cell-input"
                 />
                 <button
