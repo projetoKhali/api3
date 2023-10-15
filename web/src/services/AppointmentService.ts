@@ -14,6 +14,7 @@ async function mapResponse(response: AxiosResponse): Promise<AppointmentSchema[]
         project: item.project? item.project : "N/A",
         justification: item.justification? item.justification : "N/A",
         status: item.status? item.status : "N/A",
+        feedback: item.feedback? item.feedback : "N/A"
         // insertDate: item.insertDate? item.insertDate : "N/A",
     })) as AppointmentSchema[]
 }

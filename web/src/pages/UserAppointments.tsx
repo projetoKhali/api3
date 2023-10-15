@@ -2,25 +2,28 @@ import { Table } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import { useEffect, useState } from 'react';
 import AppointmentForm from '../components/AppointmentForm';
+import Popup, { PopupSchema } from '../components/PopUp';
 import { AppointmentSchema } from '../schemas/Appointment';
+import { UserSchema } from '../schemas/User';
 import { getAppointmentsUser } from '../services/AppointmentService';
-import { UserSchema } from "../schemas/User";
 
 interface AppointmentsProps {
-  userLoggedIn: UserSchema;
+    userLoggedIn: UserSchema;
 }
 
 export default function Appointments({ userLoggedIn }: AppointmentsProps) {
     const [appointments, setAppointments] = useState<AppointmentSchema[]>([]);
+    const [popupData, setPopupData] = useState<PopupSchema | null>(null);
+    const [showPopup, setShowPopup] = useState(false);
 
     const requestAppointments = () => {
-        getAppointmentsUser(userLoggedIn.id).then(appointmentsResponse =>
+        getAppointmentsUser(userLoggedIn.id).then((appointmentsResponse) =>
             setAppointments(appointmentsResponse)
         );
     };
 
     useEffect(() => {
-        requestAppointments()
+        requestAppointments();
     }, []);
 
     const columns: ColumnsType<AppointmentSchema> = [
@@ -63,8 +66,32 @@ export default function Appointments({ userLoggedIn }: AppointmentsProps) {
             title: 'Status',
             dataIndex: 'status',
             key: 'status',
+            render: (status, record) => {
+                if (status === 'Reject') {
+                    return (
+                        <span
+                            onClick={() => {
+                                setPopupData({
+                                    text: `Feedback do gestor: ${record.feedback}`,
+                                    buttons: [{ text: 'Fechar', onClick: handleClose }],
+                                    isOpen: true,
+                                });
+                                setShowPopup(true);
+                            }}
+                        >
+                            {status}
+                        </span>
+                    );
+                } else {
+                    return status;
+                }
+            },
         },
-    ]
+    ];
+
+    const handleClose = () => {
+        setShowPopup(false);
+    };
 
     return (
         <div>
@@ -73,11 +100,11 @@ export default function Appointments({ userLoggedIn }: AppointmentsProps) {
                 successCallback={requestAppointments}
                 errorCallback={() => {}}
             />
-            {appointments? (
+            {appointments ? (
                 <Table dataSource={appointments} columns={columns} />
-            ) : (
-                null
-            )}
+            ) : null}
+
+            {showPopup && popupData && <Popup {...popupData} />}
         </div>
     );
 }
