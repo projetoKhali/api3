@@ -44,7 +44,6 @@ public class PayRateRule {
     @Column(name = "appointment_type")
     private AppointmentType appointmentType;
 
-    @Enumerated(EnumType.STRING)
     @Column(name = "days_of_week")
     private Boolean[] daysOfWeek;
 
