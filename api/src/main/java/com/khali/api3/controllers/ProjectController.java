@@ -28,8 +28,8 @@ public class ProjectController {
     }
 
     @PostMapping
-    public int createProject(@RequestBody Project projeto) {
-        return projectService.insertProject(projeto.getName(), projeto.getDescription());
+    public Project createProject(@RequestBody Project project) {
+        return projectRepository.save(project);
     }
 
     @PutMapping("/{id}")
