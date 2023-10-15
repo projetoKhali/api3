@@ -20,6 +20,7 @@ export default function Dropdown ({ placeholder, options, onSelect }: DropdownPr
     function handleSelect(option: DropdownOption) {
         setSelected(option);
         onSelect(option);
+        setActive(false);
     }
 
     return (
