@@ -32,4 +32,3 @@ export interface PostAppointmentSchema {
     project: string,
     justification: string
 }
-

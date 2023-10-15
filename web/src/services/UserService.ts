@@ -67,17 +67,18 @@ export async function updateUserActiveStatus(user: UserSchema, newActiveStatus: 
     let endpoint = newActiveStatus ? 'activate' : 'deactivate';
 
     try {
-            response = await fetch(`${API_URL}/${user.id}/${endpoint}`, {
-                method: 'PUT',
-                headers: {
-                    "Content-Type": 'application/json'
-                },
-                body: JSON.stringify(user)
-            });
-        }
+        response = await fetch(`${API_URL}/${user.id}/${endpoint}`, {
+            method: 'PUT',
+            headers: {
+                "Content-Type": 'application/json'
+            },
+            body: JSON.stringify(user)
+        });
+        
         if (!response || !response.ok) {
             throw new Error(`Erro ao atualizar o usuário: ${response ? response.statusText : 'Resposta não recebida'}`);
         }
+        
         return response.json();
     } catch (error) {
         console.error("Erro ao atualizar o usuário:", error);

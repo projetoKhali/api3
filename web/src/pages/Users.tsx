@@ -3,7 +3,7 @@ import type { ColumnsType } from 'antd/es/table';
 import { useEffect, useState } from 'react';
 import UserForm from '../components/UserForm';
 import { UserSchema } from '../schemas/User';
-import { getUsers, putUser } from '../services/UserService';
+import { getUsers, updateUserActiveStatus } from '../services/UserService';
 import '../styles/userTData.css';
 
 export default function Users() {
@@ -22,11 +22,11 @@ export default function Users() {
         requestUsers()
     }, []);
 
-    const handleChangeUserActiveStatus = (userId: number, newActiveStatus: boolean) => {
+    const handleChangeUserActiveStatus = (data: UserSchema, newActiveStatus: boolean) => {
         const operation = newActiveStatus ? 'ativar' : 'desativar';
-        const confirmResult = window.confirm('Tem certeza de que deseja ${operation} este usuário?');
+        const confirmResult = window.confirm(`Tem certeza de que deseja ${operation} este usuário?`);
         if (confirmResult) {
-            updateUserActiveStatus(userId, newActiveStatus)
+            updateUserActiveStatus(data, newActiveStatus)
                 .then((updatedUser) => {
                     if (updatedUser) {
                         requestUsers();
@@ -70,9 +70,9 @@ export default function Users() {
             key: 'expiredDate',
             render: (expiredDate, data) => (
                 expiredDate !== "N/A" ? (
-                    <button onClick={() => handleChangeUserActiveStatus(data.id, true)}>Ativar</button>
+                    <button onClick={() => handleChangeUserActiveStatus(data, true)}>Ativar</button>
                 ) : (
-                    <button onClick={() => handleChangeUserActiveStatus(data.id, false)}>Desativar</button>
+                    <button onClick={() => handleChangeUserActiveStatus(data, false)}>Desativar</button>
                 )
             ),
         },
