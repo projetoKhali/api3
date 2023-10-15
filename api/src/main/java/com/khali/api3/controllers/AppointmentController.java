@@ -102,7 +102,7 @@ public class AppointmentController {
         if (index != 1 && index != 2) {throw new Exception("O valor passado deve ser 1 ou 2");}
         Appointment appointment = appointmentRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Appointment not found with id: " + id));
-        AppointmentStatus status = AppointmentStatus.of(index);     
+        AppointmentStatus status = AppointmentStatus.of(index);
         appointment.setStatus(status);
         return appointmentRepository.save(appointment);
     }

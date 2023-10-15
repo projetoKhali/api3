@@ -5,6 +5,7 @@ const API_URL = 'http://127.0.0.1:8080/appointments';
 
 async function mapResponse(response: AxiosResponse): Promise<AppointmentSchema[]> {
     return response.data.map((item: any) => ({
+        id: item.id? item.id : "N/A",
         user: item.user? item.user.name : "N/A",
         type: item.type? item.type : "N/A",
         startDate: item.startDate ? formatDateTime(item.startDate) : "N/A",
@@ -55,4 +56,29 @@ function formatDateTime(dateTime: string): string {
     date.getUTCMinutes().toString().padStart(2, '0') + ':' +
     date.getUTCSeconds().toString().padStart(2, '0');
     return `${formattedDate} ${formattedTime}`;
+}
+
+
+export async function putAppointment (appointment: AppointmentSchema, newActiveStatus: number) {
+    let response = null;
+    console.log(appointment)
+    try {
+        console.log(`${API_URL}/validate/${appointment.id}?index=${newActiveStatus}`)
+        response = await fetch(`${API_URL}/validate/${appointment.id}?index=${newActiveStatus}`, {
+            method: 'PUT',
+            headers: {
+                "Content-Type": 'application/json'
+            },
+            body: JSON.stringify(appointment)
+        });
+        
+        if (!response || !response.ok) {
+            throw new Error(`Erro ao validar o apontamento: ${response ? response.statusText : 'Resposta não recebida'}`);
+        }
+        
+        return response.json();
+    } catch (error) {
+        console.error("Erro ao validar o apontamento:", error);
+        throw error;
+    }
 }
