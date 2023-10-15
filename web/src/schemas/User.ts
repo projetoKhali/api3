@@ -2,7 +2,8 @@ export interface PostUserSchema {
     name: string,
     registration: string,
     email: string,
-    userType: string
+    userType: string,
+    expiredDate: string;
 }
 export interface UserSchema {
     id: number;
@@ -11,7 +12,6 @@ export interface UserSchema {
     userType: string;
     email: string;
     password: string;
-    active: string;
     insertDate: string;
-    expireDate: string;
+    expiredDate: string;
 }

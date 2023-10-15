@@ -2,7 +2,7 @@ export interface AppointmentSchema {
     user:{
         id: number,
     },
-    appointmentType: string,
+    type: string,
     startDate: string,
     endDate: string,
     resultCenter: {
@@ -28,7 +28,7 @@ export interface PostAppointmentSchema {
     client: {
         id: number,
     },
-    appointmentType: string,
+    type: string,
     startDate: string,
     endDate: string,
     project: {
