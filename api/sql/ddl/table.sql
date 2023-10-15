@@ -4,7 +4,7 @@ create type Apt_type as enum (
     'OnNotice'
 );
 
-CREATE TYPE Period AS ENUM (
+CREATE TYPE Period_type AS ENUM (
     'Nightime',
     'Daytime',
     'Allday'
@@ -23,7 +23,7 @@ CREATE TYPE Apt_status AS ENUM (
 );
 
 CREATE CAST (varchar AS Apt_type) WITH INOUT AS IMPLICIT;
-CREATE CAST (varchar AS Periodo) WITH INOUT AS IMPLICIT;
+CREATE CAST (varchar AS Period_type) WITH INOUT AS IMPLICIT;
 CREATE CAST (varchar AS User_type) WITH INOUT AS IMPLICIT;
 CREATE CAST (varchar AS Apt_status) WITH INOUT AS IMPLICIT;
 
@@ -47,7 +47,7 @@ create table if not exists users(
     expire_date timestamp
 );
 
-create table if not exists parameters(
+create table if not exists "parameters"(
     prm_id serial primary key,
     insert_date timestamp default now(),
     closing_day int,
@@ -61,7 +61,7 @@ create table if not exists pay_rate_rules(
     hour_duration numeric,
     pay_rate numeric,
     appointment_type Apt_type,
-    period Period,
+    period Period_type,
     overlap bool,
     expire_date timestamp
 );
@@ -88,11 +88,6 @@ create table if not exists members(
     (usr_id) references users (usr_id),
     constraint rc_id_fk foreign key
     (rc_id) references result_centers (rc_id)
-);
-
-create table if not exists project(
-    id serial primary key,
-    nome varchar unique not null
 );
 
 create table if not exists projects(
