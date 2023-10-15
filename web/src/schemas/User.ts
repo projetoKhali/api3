@@ -4,6 +4,7 @@ export interface PostUserSchema {
     email: string,
     userType: string,
     expiredDate: string;
+    password: string;
 }
 export interface UserSchema {
     id: number;
