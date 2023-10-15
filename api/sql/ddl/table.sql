@@ -58,11 +58,12 @@ create table if not exists "parameters"(
 create table if not exists pay_rate_rules(
     prt_id serial primary key,
     code int unique not null,
+    min_hour_count numeric,
     hour_duration numeric,
     pay_rate numeric,
     appointment_type Apt_type,
     period Period_type,
-    overlap bool,
+    overlap bool defalt False,
     expire_date timestamp
 );
 
