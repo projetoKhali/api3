@@ -10,6 +10,7 @@ create or replace view vw_users as select
     users.expire_date
 from users;
 
+
 create or replace view vw_appointments as select
     ap.apt_id,
     ap.start_date,
@@ -32,6 +33,7 @@ join users on ap.usr_id = users.usr_id
 join clients on ap.clt_id = clients.clt_id
 join result_centers on ap.rc_id = result_centers.rc_id;
 
+
 create or replace view vw_result_centers as select
     rc.rc_id ,
     rc."name",
@@ -44,26 +46,6 @@ create or replace view vw_result_centers as select
 from result_centers rc
 join users on rc.gst_id = users.usr_id;
 
-create or replace view vw_members as select
-    me.usr_id,
-    me.rc_id,
-    users.name as user_name,
-    result_centers.name as center_name
-from members me
-join users on me.usr_id = users.usr_id
-join result_centers on me.rc_id = result_centers.rc_id;
-
-
-create or replace view vw_result_centers as select
-    result_centers.rc_id,
-    result_centers.name as center_name,
-    result_centers.code,
-    result_centers.acronym,
-    users.name user_name,
-    result_centers.insert_date
-from result_centers
-join users on result_centers.gst_id = users.id;
-
 
 create or replace view vw_clients as select
     clients.clt_id,
@@ -80,24 +62,6 @@ create or replace view vw_members as select
 from members me
 join users on me.usr_id = users.usr_id
 join result_centers on me.rc_id = result_centers.rc_id;
-
-
-create or replace view vw_result_centers as select
-    result_centers.rc_id,
-    result_centers.name as center_name,
-    result_centers.code,
-    result_centers.acronym,
-    users.name user_name,
-    result_centers.insert_date
-from result_centers
-join users on result_centers.gst_id = users.id;
-
-
-create or replace view vw_clients as select
-    clients.clt_id,
-    clients."name" as client_name,
-    clients.cnpj
-from clients;
 
 
 create or replace view vw_pay_rate_rules as select
