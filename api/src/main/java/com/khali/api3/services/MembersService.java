@@ -75,7 +75,8 @@ public class MembersService {
 
     public Member insertMember(User user, ResultCenter resultCenter){
         MemberPrimaryData memberPK = new MemberPrimaryData(user, resultCenter);
-        Member member = new Member(memberPK, true, null);
+        Member member = new Member();
+        member.setMemberPK(memberPK);
         System.out.println(user.getId()+" | "+resultCenter.getId());
         return membersRepository.save(member);
     }
