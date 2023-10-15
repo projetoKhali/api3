@@ -11,9 +11,9 @@ async function mapResponse (response: AxiosResponse) {
         userType: item.userType? item.userType : "N/A",
         email: item.email? item.email : "N/A",
         password: item.password? item.password : "N/A",
-        active: item.active? item.active : "N/A",
+        active: item.expiredDate === null ? "Ativo" : "Desativado",
         insertDate: item.insertDate? item.insertDate : "N/A",
-        expireDate: item.expireDate? item.expireDate : "N/A",
+        expiredDate: item.expiredDate === null ? "N/A" : item.expireDate,
     })) as UserSchema[]
 }
 
@@ -30,9 +30,8 @@ export async function requestLogin(email: string, password: string): Promise<Use
                 userType: userData.userType || "N/A",
                 email: userData.email,
                 password: userData.password || "N/A",
-                active: userData.active || false,
                 insertDate: userData.insertDate || "N/A",
-                expireDate: userData.expiredDate || "N/A",
+                expiredDate: userData.expiredDate || "N/A",
             };
 
             return user;
@@ -61,4 +60,36 @@ export async function postUser(user: PostUserSchema){
     })
     .then(response => response.json())
     .catch(error => console.error(error));
+}
+
+export async function putUser(id: number, user: UserSchema, action: number) {
+    let response = null;
+
+    try {
+        if (action === 1) {
+            response = await fetch(`${API_URL}/${id}/desactivate`, {
+                method: 'PUT',
+                headers: {
+                    "Content-Type": 'application/json'
+                },
+                body: JSON.stringify(user)
+            });
+        }
+        if (action === 2) {
+            response = await fetch(`${API_URL}/${id}/activate`, {
+                method: 'PUT',
+                headers: {
+                    "Content-Type": 'application/json'
+                },
+                body: JSON.stringify(user)
+            });
+        }
+        if (!response || !response.ok) {
+            throw new Error(`Erro ao atualizar o usuário: ${response ? response.statusText : 'Resposta não recebida'}`);
+        }
+        return response.json();
+    } catch (error) {
+        console.error("Erro ao atualizar o usuário:", error);
+        throw error;
+    }
 }

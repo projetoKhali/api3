@@ -1,52 +1,48 @@
-package com.khali.api3.domain.user;
+package com.khali.api3.domain.project;
 
 import java.sql.Timestamp;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity(name="users")
-@Table(name="users")
+@Entity(name="projects")
+@Table(name="projects")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-@EqualsAndHashCode
-public class User {
-
+    public class Project {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="usr_id")
+    @Column(name="prj_id")
     private Long id;
 
-    @Column(unique=true)
-    private String registration;
+    @Column
+    @JsonProperty("name")
     private String name;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "user_type")
-    private UserType userType;
-
-    @Column(unique=true)
-    private String email;
-
     @Column
-    private String password;
+    private String description;
 
     @Column(name = "insert_date")
+    @Temporal(TemporalType.TIMESTAMP)
     private Timestamp insertDate;
 
     @Column(name = "expire_date")
-    private Timestamp expiredDate;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Timestamp expireDate;
+
+
 }

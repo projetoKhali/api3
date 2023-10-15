@@ -4,12 +4,14 @@ CREATE TYPE Apt_type AS ENUM (
     'OnNotice'
 );
 
+
 DROP TYPE IF EXISTS Period_type CASCADE;
 CREATE TYPE Period_type AS ENUM (
     'Nightime',
     'Daytime',
     'Allday'
 );
+
 
 DROP TYPE IF EXISTS User_type CASCADE;
 CREATE TYPE User_type AS ENUM (
@@ -18,138 +20,128 @@ CREATE TYPE User_type AS ENUM (
     'Admin'
 );
 
+
 DROP TYPE IF EXISTS Apt_status CASCADE;
 CREATE TYPE Apt_status AS ENUM (
     'Pending',
-    'Aproved',
-    'Reject'
+    'Approved',
+    'Rejected'
 );
 
-CREATE CAST (varchar AS Apt_type) WITH INOUT AS IMPLICIT;
-CREATE CAST (varchar AS Period_type) WITH INOUT AS IMPLICIT;
-CREATE CAST (varchar AS User_type) WITH INOUT AS IMPLICIT;
-CREATE CAST (varchar AS Apt_status) WITH INOUT AS IMPLICIT;
 
-DROP TABLE IF EXISTS pay_rate_rules CASCADE;
-create table if not exists pay_rate_rules(
-    prt_id serial primary key,
-    code int unique,
-    hour_duration numeric,
-    pay_rate numeric,
-    appointment_type Apt_type,
-    start_time time check (start_time < end_time),
-    end_time time check (end_time > start_time)
-);
+CREATE CAST (VARCHAR AS Apt_type) WITH INOUT AS IMPLICIT;
+CREATE CAST (VARCHAR AS Period_type) WITH INOUT AS IMPLICIT;
+CREATE CAST (VARCHAR AS User_type) WITH INOUT AS IMPLICIT;
+CREATE CAST (VARCHAR AS Apt_status) WITH INOUT AS IMPLICIT;
+
 
 DROP TABLE IF EXISTS clients CASCADE;
-create table if not exists clients(
-    clt_id serial primary key,
-    "name" varchar(255),
-    cnpj varchar(255) unique,
-    active bool default true,
-    insert_date timestamp default now(),
-    expire_date timestamp
+CREATE TABLE IF NOT EXISTS clients(
+    clt_id SERIAL PRIMARY KEY,
+    "name" VARCHAR(255),
+    cnpj VARCHAR(255) UNIQUE,
+    insert_date TIMESTAMP DEFAULT now(),
+    expire_date TIMESTAMP
 );
+
 
 DROP TABLE IF EXISTS users CASCADE;
-create table if not exists users(
-    usr_id serial primary key,
-    registration varchar(255) unique not null,
-    "name" varchar(255),
-    user_type varchar,
-    email varchar(255) unique not null,
-    "password" varchar(255) not null,
-    active bool default true,
-    insert_date timestamp default now(),
-    expire_date timestamp
+CREATE TABLE IF NOT EXISTS users(
+    usr_id SERIAL PRIMARY KEY,
+    registration VARCHAR(255) UNIQUE NOT NULL,
+    "name" VARCHAR(255) NOT NULL,
+    user_type User_type DEFAULT 'Employee',
+    email VARCHAR(255) UNIQUE NOT NULL,
+    "password" VARCHAR(255) NOT NULL,
+    insert_date TIMESTAMP DEFAULT now(),
+    expire_date TIMESTAMP
 );
+
 
 DROP TABLE IF EXISTS "parameters" CASCADE;
-create table if not exists "parameters"(
-    prm_id serial primary key,
-    insert_date timestamp default now(),
-    closing_day int,
-    start_night_time time,
-    end_night_time time
+CREATE TABLE IF NOT EXISTS "parameters"(
+    prm_id SERIAL PRIMARY KEY,
+    insert_date TIMESTAMP DEFAULT now(),
+    closing_day INT,
+    start_night_time TIME,
+    end_night_time TIME
 );
 
+
 DROP TABLE IF EXISTS pay_rate_rules CASCADE;
-create table if not exists pay_rate_rules(
-    prt_id serial primary key,
-    code int unique not null,
+CREATE TABLE IF NOT EXISTS pay_rate_rules(
+    prt_id SERIAL PRIMARY KEY,
+    code INT UNIQUE NOT NULL,
     hour_duration numeric,
     pay_rate numeric,
     appointment_type Apt_type,
     period Period_type,
     overlap bool,
-    expire_date timestamp
+    expire_date TIMESTAMP
 );
+
 
 DROP TABLE IF EXISTS result_centers CASCADE;
-create table if not exists result_centers(
-    rc_id serial primary key,
-    "name" varchar(255),
-    code int unique not null,
-    acronym varchar(255),
-    gst_id int not null,
-    active bool default true,
-    insert_date timestamp default now(),
-    expire_date timestamp,
-    constraint gst_id_fk foreign key
-    (gst_id) references users (usr_id)
+CREATE TABLE IF NOT EXISTS result_centers(
+    rc_id SERIAL PRIMARY KEY,
+    "name" VARCHAR(255) NOT NULL,
+    code INT UNIQUE NOT NULL,
+    acronym VARCHAR(255),
+    gst_id INT NOT NULL,
+    insert_date TIMESTAMP DEFAULT now(),
+    expire_date TIMESTAMP,
+    CONSTRAINT gst_id_fk FOREIGN KEY
+    (gst_id) REFERENCES users (usr_id)
 );
+
 
 DROP TABLE IF EXISTS members CASCADE;
-create table if not exists members(
-    usr_id int,
-    rc_id int,
-    insert_date timestamp default now(),
-    constraint members_pk primary key
+CREATE TABLE IF NOT EXISTS members(
+    usr_id INT,
+    rc_id INT,
+    insert_date TIMESTAMP DEFAULT now(),
+    CONSTRAINT members_pk PRIMARY KEY
     (usr_id,rc_id),
-    constraint usr_id_fk foreign key
-    (usr_id) references users (usr_id),
-    constraint rc_id_fk foreign key
-    (rc_id) references result_centers (rc_id)
+    CONSTRAINT usr_id_fk FOREIGN KEY
+    (usr_id) REFERENCES users (usr_id),
+    CONSTRAINT rc_id_fk FOREIGN KEY
+    (rc_id) REFERENCES result_centers (rc_id)
 );
+
 
 DROP TABLE IF EXISTS projects CASCADE;
-create table if not exists projects(
-    prj_id serial primary key,
-    "name" varchar(255) unique not null,
-    description varchar(255),
-    insert_date timestamp default now(),
-    expire_date timestamp
+CREATE TABLE IF NOT EXISTS projects(
+    prj_id SERIAL PRIMARY KEY,
+    "name" VARCHAR(255) UNIQUE NOT NULL,
+    description VARCHAR(255),
+    insert_date TIMESTAMP DEFAULT now(),
+    expire_date TIMESTAMP
 );
 
-DROP TABLE IF EXISTS project CASCADE;
-create table if not exists project(
-    id serial primary key,
-    nome varchar
-);
 
 DROP TABLE IF EXISTS appointments CASCADE;
-create table if not exists appointments(
-    apt_id serial primary key,
-    start_date timestamp check (start_date < end_date) not null,
-    end_date timestamp check (end_date > start_date) not null,
-    usr_id int,
-    clt_id int,
-    rc_id int,
-    project varchar(255) not null,
-    appointment_type Apt_type not null,
-    justification varchar(255),
-    status Apt_status default 'Pending',
-    insert_date timestamp default now(),
-    apt_updt_id int null,
-    feedback varchar(255),
+CREATE TABLE IF NOT EXISTS appointments(
+    apt_id SERIAL PRIMARY KEY,
+    start_date TIMESTAMP check (start_date < end_date) NOT NULL,
+    end_date TIMESTAMP check (end_date > start_date) NOT NULL,
+    usr_id INT,
+    clt_id INT,
+    rc_id INT,
+    prj_id INT,
+    appointment_type Apt_type NOT NULL,
+    justification VARCHAR(255),
+    status Apt_status DEFAULT 'Pending',
+    insert_date TIMESTAMP DEFAULT now(),
+    apt_updt_id INT NULL,
+    feedback VARCHAR(255),
 
-    constraint usr_id_fk foreign key
-    (usr_id) references users(usr_id),
-    constraint clt_id_fk foreign key
-    (clt_id) references clients(clt_id),
-    constraint rc_id_fk foreign key
-    (rc_id) references result_centers(rc_id),
-    constraint apt_updt_fk foreign key
-    (apt_updt_id) references appointments(apt_id),
-    constraint prj_id_fk foreign key (prj_id) references projects(prj_id)
+    CONSTRAINT usr_id_fk FOREIGN KEY
+    (usr_id) REFERENCES users(usr_id),
+    CONSTRAINT clt_id_fk FOREIGN KEY
+    (clt_id) REFERENCES clients(clt_id),
+    CONSTRAINT rc_id_fk FOREIGN KEY
+    (rc_id) REFERENCES result_centers(rc_id),
+    CONSTRAINT apt_updt_fk FOREIGN KEY
+    (apt_updt_id) REFERENCES appointments(apt_id),
+    CONSTRAINT prj_id_fk FOREIGN KEY (prj_id) REFERENCES projects(prj_id)
 );

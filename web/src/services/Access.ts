@@ -49,7 +49,8 @@ const PermissionSideMenuItemMap: Record<string, SideMenuItem[]> = {
     "FullAccess": [
         {
             label: "Apontaments ADM",
-            url:   '/Appointments' }
+            url:   '/Appointments' 
+        }
     ]
 }
 
