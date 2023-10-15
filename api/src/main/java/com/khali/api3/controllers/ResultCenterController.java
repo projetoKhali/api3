@@ -1,6 +1,7 @@
 package com.khali.api3.controllers;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.khali.api3.domain.resultCenter.ResultCenter;
 import com.khali.api3.repositories.ResultCenterRepository;
+import com.khali.api3.services.MembersService;
+import com.khali.api3.repositories.UserRepository;
 
 import jakarta.persistence.EntityNotFoundException;
 
@@ -23,9 +26,17 @@ import jakarta.persistence.EntityNotFoundException;
 public class ResultCenterController {
 
     @Autowired private final ResultCenterRepository resultCenterRepository;
+    @Autowired private final MembersService membersService;
+    @Autowired private final UserRepository userRepository;
 
-    public ResultCenterController(@Autowired ResultCenterRepository resultCenterRepository) {
+    public ResultCenterController(
+        @Autowired ResultCenterRepository resultCenterRepository,
+        @Autowired MembersService membersService,
+        @Autowired UserRepository userRepository
+    ) {
         this.resultCenterRepository = resultCenterRepository;
+        this.membersService = membersService;
+        this.userRepository = userRepository;
     }
 
     @GetMapping
@@ -37,6 +48,17 @@ public class ResultCenterController {
     public ResultCenter getResultCenterById(@PathVariable Long id) {
         return resultCenterRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("ResultCenter not found with id: " + id));
+    }
+
+    @GetMapping("/of/{id}")
+    public List<ResultCenter> getResultCentersOfUser (@PathVariable Long id) {
+        return membersService.getMembersByUser(
+            userRepository.findById(id)
+            .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + id))
+        )
+        .stream()
+        .<ResultCenter>map(member -> member.getMemberPK().getResultCenter())
+        .collect(Collectors.toList());
     }
 
     @PostMapping

@@ -1,28 +1,32 @@
-FRONTEND_CONTAINER_NAME=khali_api3_web
 FRONTEND_URL=http://localhost:7000
+	FRONTEND_PATH = web
 
-BACKEND_CONTAINER_NAME=khali_api3_api
 BACKEND_URL=http://localhost:8000
+	BACKEND_PATH = api
 
-# Run Docker Compose and open both backend and frontend in the default browser
+RUN_LOCAL_FRONTEND = npm run dev
+RUN_LOCAL_BACKEND = ./ldev.sh
+CD = cd
+
+# Windows-specific commands
+ifeq ($(OS),Windows_NT)
+	LOCAL_BACKEND_RUN = ./wdev.bat
+	CD = cd /d
+endif
+
 run:
-	docker-compose up --build -d
-	@echo "Waiting for Front End to start..."
-	@FRONTEND_READY=""
-	@until [ -n "$$FRONTEND_READY" ]; do \
-		FRONTEND_READY=$$(docker-compose logs $(FRONTEND_CONTAINER_NAME) 2>&1 | grep -m 1 "VITE.*ready in"); \
-		sleep 1; \
-	done
-	@echo "Front End is ready. Opening in the browser..."
-	@xdg-open $(FRONTEND_URL) -d
-	echo "Waiting for Back End to start..."
-	@BACKEND_READY=""
-	@until [ -n "$$BACKEND_READY" ]; do \
-		BACKEND_READY=$$(docker-compose logs $(BACKEND_CONTAINER_NAME) 2>&1 | grep -m 1 ": Started.*in"); \
-		sleep 1; \
-	done
-	@echo "Back End is ready. Opening in the browser..."
-	@xdg-open $(BACKEND_URL) -d
+	docker-compose up --build
+
+local:
+	$(CD) $(BACKEND_PATH) && $(RUN_LOCAL_BACKEND) && cd ..
+	$(CD) $(FRONTEND_PATH) && $(RUN_LOCAL_FRONTEND) && cd ..
+
+open:
+	@xdg-open $(FRONTEND_URL)
+	@xdg-open $(BACKEND_URL)
+
+stop:
+	docker-compose down
 
 # Remove all containers and images
 wipe:
