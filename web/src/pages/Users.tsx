@@ -2,6 +2,7 @@ import { Checkbox, Table } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import { useEffect, useState } from 'react';
 import UserForm from '../components/UserForm';
+// import { ButtonTableColumn } from '../components/ButtonTableCell';
 import { UserSchema } from '../schemas/User';
 import { getUsers, updateUserActiveStatus } from '../services/UserService';
 import '../styles/userTData.css';
@@ -59,6 +60,11 @@ export default function Users() {
             dataIndex: 'userType',
             key: 'userType',
         },
+        // ButtonTableColumn({
+        //     title: "Detalhes",
+        //     displayName: "Ver",
+        //     onClick: (item) => {console.log(item.name)}
+        // }),
         {
             title: 'Status',
             dataIndex: 'active',
