@@ -47,14 +47,13 @@ public class PayRateRule {
     @Column(name = "appointment_type")
     private AppointmentType appointmentType;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "days_of_week")
-    private Week daysOfWeek;
+    // @Enumerated(EnumType.STRING)
+    // @Column(name = "days_of_week")
+    // private Week daysOfWeek;
 
-    @Column(name = "start_time")
-    private LocalTime startTime;
-    @Column(name = "end_time")
-    private LocalTime endTime;
+    @Column(name = "period")
+    private Shift shift;
+   
 
 
     @Column(name = "overlap")
