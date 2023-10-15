@@ -70,9 +70,9 @@ export default function Users() {
             key: 'expiredDate',
             render: (expiredDate, data) => (
                 expiredDate !== "N/A" ? (
-                    <button onClick={() => handleActivateUser(data)}>Ativar</button>
+                    <button onClick={() => handleChangeUserActiveStatus(data.id, true)}>Ativar</button>
                 ) : (
-                    <button onClick={() => handleDeactivateUser(data)}>Desativar</button>
+                    <button onClick={() => handleChangeUserActiveStatus(data.id, false)}>Desativar</button>
                 )
             ),
         },
