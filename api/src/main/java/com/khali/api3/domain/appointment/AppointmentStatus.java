@@ -2,8 +2,8 @@ package com.khali.api3.domain.appointment;
 
 public enum AppointmentStatus {
     Pending(0),
-    Aproved(1),
-    Reject(2);
+    Approved(1),
+    Rejected(2);
 
     public static final AppointmentStatus[] STATUSES = values();
 
