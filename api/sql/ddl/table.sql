@@ -4,10 +4,10 @@ create type Apt_type as enum (
     'OnNotice'
 );
 
-CREATE TYPE Period_type AS ENUM (
-    'Nightime',
-    'Daytime',
-    'Allday'
+CREATE TYPE Expedient_type AS ENUM (
+    'NightTime',
+    'DayTime',
+    'AllDay'
 );
 
 create type User_type as enum (
@@ -23,7 +23,7 @@ CREATE TYPE Apt_status AS ENUM (
 );
 
 CREATE CAST (varchar AS Apt_type) WITH INOUT AS IMPLICIT;
-CREATE CAST (varchar AS Period_type) WITH INOUT AS IMPLICIT;
+CREATE CAST (varchar AS Expedient_type) WITH INOUT AS IMPLICIT;
 CREATE CAST (varchar AS User_type) WITH INOUT AS IMPLICIT;
 CREATE CAST (varchar AS Apt_status) WITH INOUT AS IMPLICIT;
 
@@ -112,7 +112,7 @@ create table if not exists appointments(
     insert_date timestamp default now(),
     apt_updt_id int null,
     feedback varchar(255),
-    
+
     constraint usr_id_fk foreign key
     (usr_id) references users(usr_id),
     constraint clt_id_fk foreign key
