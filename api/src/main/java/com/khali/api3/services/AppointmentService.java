@@ -23,8 +23,6 @@ public class AppointmentService {
     @Autowired
     private AppointmentRepository appointmentRepository;
 
-    @Autowired
-    private ResultCenterService resultCenterService;
     public Appointment saveAppointment(Appointment appointment) {
         return appointmentRepository.save(appointment);
     }

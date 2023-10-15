@@ -1,7 +1,5 @@
 package com.khali.api3.domain.pay_rate_rule;
 
-import java.time.LocalTime;
-
 import com.khali.api3.domain.appointment.AppointmentType;
 
 import jakarta.persistence.Column;
@@ -19,7 +17,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.sql.Timestamp;
-import java.time.LocalTime;
 
 @Entity(name="pay_rate_rules")
 @Table(name="pay_rate_rules")

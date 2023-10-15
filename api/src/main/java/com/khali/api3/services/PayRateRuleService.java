@@ -1,18 +1,12 @@
 package com.khali.api3.services;
 
-import java.sql.Types;
-import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.khali.api3.domain.pay_rate_rule.PayRateRule;
-import com.khali.api3.domain.resultCenter.ResultCenter;
 import com.khali.api3.repositories.PayRateRuleRepository;
-
-import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class PayRateRuleService {
@@ -60,7 +54,6 @@ public class PayRateRuleService {
             if (newPayRateRule.getExpire_date() != null) {
                 payRateRuleExists.setExpire_date(newPayRateRule.getExpire_date());
             }
-
 
             return payRateRuleRepository.save(payRateRuleExists);
         } else {
