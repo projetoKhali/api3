@@ -44,6 +44,7 @@ public class User {
     @Column
     private String password;
 
+    @Transient
     @Column(name = "insert_date")
     private Timestamp insertDate;
 
