@@ -3,8 +3,8 @@ import type { ColumnsType } from 'antd/es/table';
 import { useEffect, useState } from 'react';
 import AppointmentForm from '../components/AppointmentForm';
 import { AppointmentSchema } from '../schemas/Appointment';
-import { getAppointmentsUser } from '../services/AppointmentService';
 import { UserSchema } from "../schemas/User";
+import { getAppointmentsUser } from '../services/AppointmentService';
 
 interface AppointmentsProps {
   userLoggedIn: UserSchema;
@@ -26,8 +26,8 @@ export default function Appointments({ userLoggedIn }: AppointmentsProps) {
     const columns: ColumnsType<AppointmentSchema> = [
         {
             title: 'Tipo',
-            dataIndex: 'appointmentType',
-            key: 'appointmentType',
+            dataIndex: 'type',
+            key: 'type',
         },
         {
             title: 'Início',
