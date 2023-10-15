@@ -15,7 +15,7 @@ async function mapResponse (response: AxiosResponse) {
     })) as ProjectSchema[]
 }
 
-export async function getProject (): Promise<ProjectSchema[]> {
+export async function getProjects(): Promise<ProjectSchema[]> {
     const response = await axios.get(`${API_URL}`, {});
     return await mapResponse(response);
 }
