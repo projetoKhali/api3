@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
 import { PayRateRuleSchema } from "../schemas/PayRateRule";
-import { ParameterSchema } from "../schemas/Parametrization";
 import { Table } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import { getPayRateRules } from "../services/PayRateRulesService";
 import ParametrizationForm from "../components/ParametrizationForm";
-import Popup, { PopupSchema } from '../components/Modal';
+import Popup, { PopupSchema } from "../components/PopUp";
 
 export default function Parametrization() {
     const [payRateRules, setPayRateRules] = useState<PayRateRuleSchema[]>([]);
@@ -22,6 +21,10 @@ export default function Parametrization() {
     useEffect(() => {
         requestPayRateRules()
     }, []);
+
+    const handleClose = () => {
+        setShowPopup(false);
+    };
 
     const columns: ColumnsType<PayRateRuleSchema> = [
         {
@@ -50,7 +53,7 @@ export default function Parametrization() {
             key: 'minHourCount',
         },
         {
-            title: 'Duração da Hora',
+            title: 'Duração da hora',
             dataIndex: 'hourDuration',
             key: 'hourDuration',
         },
@@ -65,7 +68,7 @@ export default function Parametrization() {
             key: 'overlap',
         },
     ]
-    const [open, setOpen] = useState<boolean>(false);
+    // const [open, setOpen] = useState<boolean>(false);
     return (
         <div>
             <ParametrizationForm
@@ -73,8 +76,13 @@ export default function Parametrization() {
                 successCallback={() => {}}
             />
             <button type="button" onClick={() => {
-                                setShowPopup(true);}}>
-                Cadastrar Verba
+                    setPopupData({
+                        text: 'Cadastro de Verbas',
+                        buttons: [{ text: 'x', onClick: handleClose }],
+                        isOpen: true,
+                });
+                    setShowPopup(true);}}>
+            Cadastrar Verba
             </button>
             {payRateRules? (
                 <Table dataSource={payRateRules} columns={columns} />

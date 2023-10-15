@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { PostParameterSchema } from "../schemas/Parametrization";
 import { postParameter } from "../services/ParametrizationService";
-import Modal from "./Modal";
 
 interface ParametrizationFormProps {
     successCallback: () => void;

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { PayRateRuleSchema } from '../schemas/PayRateRule';
+import { PayRateRuleSchema, PostPayRateRuleSchema } from '../schemas/PayRateRule';
 
 const API_URL = 'http://127.0.0.1:8080/payRateRules';
 
@@ -19,7 +19,7 @@ export async function getPayRateRules (): Promise<PayRateRuleSchema[]> {
     })) as PayRateRuleSchema[];
 }
 
-export async function postPayRateRule(payRateRule: PayRateRuleSchema) {
+export async function postPayRateRule(payRateRule: PostPayRateRuleSchema) {
     return await fetch(API_URL, {
         method: 'POST',
         headers: {
