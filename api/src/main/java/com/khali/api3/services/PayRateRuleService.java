@@ -39,14 +39,6 @@ public class PayRateRuleService {
                 payRateRuleExists.setDaysOfWeek(newPayRateRule.getDaysOfWeek());
             }
 
-            if (newPayRateRule.getStartTime() != null) {
-                payRateRuleExists.setStartTime(newPayRateRule.getStartTime());
-            }
-
-            if (newPayRateRule.getEndTime() != null) {
-                payRateRuleExists.setEndTime(newPayRateRule.getEndTime());
-            }
-            
             if (newPayRateRule.getOverlap() != null) {
                 payRateRuleExists.setOverlap(newPayRateRule.getOverlap());
             }

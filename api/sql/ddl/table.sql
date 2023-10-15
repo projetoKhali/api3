@@ -61,7 +61,8 @@ create table if not exists pay_rate_rules(
     hour_duration numeric,
     pay_rate numeric,
     appointment_type Apt_type,
-    period Period_type,
+    expedient Expedient_type,
+    days_of_week SMALLINT,
     overlap bool,
     expire_date timestamp
 );

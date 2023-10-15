@@ -46,17 +46,15 @@ public class PayRateRule {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "days_of_week")
-    private Week daysOfWeek;
+    private Boolean[] daysOfWeek;
 
-    @Column(name = "start_time")
-    private LocalTime startTime;
-    @Column(name = "end_time")
-    private LocalTime endTime;
-
+    @Enumerated(EnumType.STRING)
+    @Column(name = "expedient")
+    private Expedient expedient;
 
     @Column(name = "overlap")
-    private Boolean overlap;   
-    
+    private Boolean overlap;
+
     @Column(name = "expire_date")
-    private Timestamp expire_date;   
+    private Timestamp expire_date;
 }
