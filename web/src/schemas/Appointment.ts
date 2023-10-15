@@ -22,6 +22,7 @@ export interface PostAppointmentSchema {
     user: {
         id: number,
     },
+    appointmentType: string,
     resultCenter: {
         id: number,
     },
