@@ -12,6 +12,7 @@ import { getResultCentersOfUser } from '../services/ResultCenterService';
 import { UserSchema } from '../schemas/User';
 import AppointmentTypeDropdown from './AppointmentTypeDropdown';
 import DropdownOption from '../schemas/DropdownOption';
+import { getProjects } from '../services/ProjectService';
 
 interface AppointmentFormProps {
     userLoggedIn: UserSchema
