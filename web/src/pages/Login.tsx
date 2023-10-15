@@ -22,15 +22,14 @@ export default function Login ({ onLogin }: LoginProps) {
         ).then(user => {
             onLogin(user);
         })
-
-    .catch(error => {
-        console.error("Erro de autenticação:", error);
-    });
+        .catch(error => {
+            console.error("Erro de autenticação:", error);
+        });
     }
 
     return (
         <form onSubmit={handleSubmit}>
-            <input type="text" placeholder="Email" onChange={handleUsernameChange}/>
+            <input type="text" placeholder="Email" onChange={handleUsernameChange} autoFocus/>
             <input type="text" placeholder="Password" onChange={handlePasswordChange}/>
             <button type="submit">Login</button>
         </form>
