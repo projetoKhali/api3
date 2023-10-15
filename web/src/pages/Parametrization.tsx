@@ -5,6 +5,7 @@ import { Table } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import { getPayRateRules } from "../services/PayRateRulesService";
 import ParametrizationForm from "../components/ParametrizationForm";
+import Popup, { PopupSchema } from '../components/Modal';
 
 export default function Parametrization() {
     const [payRateRules, setPayRateRules] = useState<PayRateRuleSchema[]>([]);
@@ -14,6 +15,9 @@ export default function Parametrization() {
             setPayRateRules(payRateRulesResponse)
         );
     };
+    
+    const [popupData, setPopupData] = useState<PopupSchema | null>(null);
+    const [showPopup, setShowPopup] = useState(false);
 
     useEffect(() => {
         requestPayRateRules()
@@ -61,18 +65,23 @@ export default function Parametrization() {
             key: 'overlap',
         },
     ]
-
+    const [open, setOpen] = useState<boolean>(false);
     return (
         <div>
             <ParametrizationForm
                 errorCallback={() => {}}
                 successCallback={() => {}}
             />
+            <button type="button" onClick={() => {
+                                setShowPopup(true);}}>
+                Cadastrar Verba
+            </button>
             {payRateRules? (
                 <Table dataSource={payRateRules} columns={columns} />
             ) : (
                 null
             )}
+            {showPopup && popupData && <Popup {...popupData} />}
         </div>
     );
     

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { PostParameterSchema } from "../schemas/Parametrization";
 import { postParameter } from "../services/ParametrizationService";
+import Modal from "./Modal";
 
 interface ParametrizationFormProps {
     successCallback: () => void;
@@ -43,12 +44,15 @@ export default function ParametrizationForm ({successCallback, errorCallback}: P
           .then(() => successCallback());
     }
 
+    const [open, setOpen] = useState<boolean>(false);
+
     return (
         <form onSubmit={handleSubmit}>
             <input type="text" placeholder="Inicio do Período Noturno" onChange={handleNightShiftStartChange}/>
             <input type="text" placeholder="Fim do Período Noturno" onChange={handleNightShiftEndChange}/>
             <input type="text" placeholder="Dia de Fechamento" onChange={handlePostClosingDayOfMonthChange}/>
             <button type="submit">Salvar</button>
+            
         </form>
     );
         
