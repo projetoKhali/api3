@@ -14,15 +14,4 @@ public class Cryptography {
     public static boolean checkPw(String password, String hash) {
         return encoder.matches(password, hash);
     }
-
-    public static void main(String[] args) {
-        String myentry = "123";
-        String myhash = crypt(myentry);
-        
-        if (checkPw(myentry, myhash)) {
-            System.out.println("Senha correta");
-        } else {
-            System.out.println("Senha incorreta");
-        }
-    }
 }

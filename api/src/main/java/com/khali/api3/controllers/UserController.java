@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.khali.api3.domain.member.Member;
 import com.khali.api3.domain.permission.Permission;
+import com.khali.api3.domain.user.Cryptography;
 import com.khali.api3.domain.user.User;
 import com.khali.api3.domain.user.UserType;
 import com.khali.api3.repositories.UserRepository;
@@ -88,6 +89,7 @@ public class UserController {
 
     @PostMapping
     public User createUser(@RequestBody User user) {
+        user.setPassword(Cryptography.crypt(user.getRegistration()));
         return userRepository.save(user);
     }
 
