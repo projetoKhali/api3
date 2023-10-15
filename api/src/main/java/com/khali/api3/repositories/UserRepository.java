@@ -1,5 +1,7 @@
 package com.khali.api3.repositories;
 
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -9,6 +11,9 @@ import com.khali.api3.domain.user.User;
 
 @RepositoryRestResource
 public interface UserRepository extends JpaRepository<User, Long>{
+
+    public Optional<User> findById(Long id);
+
     public User findByRegistration(String registration);
 
     @Query(value = "SELECT * FROM users a WHERE a.name = :name", nativeQuery = true)

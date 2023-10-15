@@ -3,12 +3,12 @@ import type { ColumnsType } from 'antd/es/table';
 import { useEffect, useState } from 'react';
 import ProjectForm from '../components/ProjectForm';
 import { ProjectSchema } from '../schemas/Project';
-import { getProject } from '../services/ProjectService';
+import { getProjects } from '../services/ProjectService';
 
 export default function Users() {
     const [projects, setProject] = useState<ProjectSchema[]>([]);
     const requestProjects = () => {
-        getProject()
+        getProjects()
         .then(projectsResponse => {
             setProject(projectsResponse);
             console.log('users retornados do request:', projectsResponse);
