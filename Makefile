@@ -20,7 +20,8 @@ run:
 	docker-compose up --build
 
 local:
-	$(LOAD_ENV) && $(CD) $(BACKEND_PATH) && $(BACKEND_RUN_LOCAL) && cd ..
+	$(LOAD_ENV)
+	$(CD) $(BACKEND_PATH) && $(BACKEND_RUN_LOCAL) && cd ..
 	$(CD) $(FRONTEND_PATH) && $(FRONTEND_RUN_LOCAL) && cd ..
 
 open:
