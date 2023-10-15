@@ -112,9 +112,7 @@ export default function Users() {
         },
     ];
 
-    const filteredUsers = showDeactivated
-    ? users.filter((user) => user.expiredDate !== "N/A")
-    : users.filter((user) => user.expiredDate === "N/A");
+    const filteredUsers = users.filter((user) => showDeactivated == (user.expiredDate !== "N/A"));
 
 return (
         <div>
