@@ -35,10 +35,10 @@ const PermissionSideMenuItemMap: Record<string, SideMenuItem[]> = {
             label: "Clientes",
             url: "/clients"
         },
-        // {
-        //     label: "Projetos",
-        //     url: "#"
-        // },
+        {
+            label: "Projetos",
+            url: "/projects"
+        },
     ],
     "Report": [
         // {
@@ -48,7 +48,7 @@ const PermissionSideMenuItemMap: Record<string, SideMenuItem[]> = {
     ],
     "FullAccess": [
         {
-            label: "Apontaments ADM",
+            label: "Apontamentos Geral",
             url:   'http://localhost:7000/Appointments' }
     ]
 }
