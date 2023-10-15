@@ -63,7 +63,7 @@ export default function EditableTableCell<T> ({item, getValue, setValue}: Editab
     );
 }
 
-export function EditableTableCellColumn<T>({title, getValue, setValue}: EditableTableColumnProps<T>): ColumnType<T> {
+export function EditableTableColumn<T>({title, getValue, setValue}: EditableTableColumnProps<T>): ColumnType<T> {
     return {
         title,
         key: title,
