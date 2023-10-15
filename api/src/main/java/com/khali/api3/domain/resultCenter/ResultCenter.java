@@ -34,8 +34,8 @@ public class ResultCenter {
     private String name;
 
     @Column(unique=true)
-    private String code;
-    
+    private Integer code;
+
     @Column(unique=true)
     private String acronym;
 

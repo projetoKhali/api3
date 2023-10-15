@@ -33,7 +33,8 @@ export default function UserForm({ callback }: { callback: () => void }){
         name: postUserName,
         registration: postUserMatricula,
         email: postUserEmail,
-        userType: postUserFuncao
+        userType: postUserFuncao,
+        password: postUserMatricula
       } as PostUserSchema)
       .then(() => callback());
     }

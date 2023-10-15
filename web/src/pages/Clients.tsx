@@ -4,7 +4,7 @@ import ClientForm from '../components/ClientForm';
 import { useState, useEffect } from 'react';
 import { getClients } from '../services/ClientService';
 import { ClientSchema } from '../schemas/Client';
-import { ButtonTableColumn } from '../components/ButtonTableCell';
+// import { ButtonTableColumn } from '../components/ButtonTableCell';
 
 
 export default function Clients () {
@@ -30,11 +30,11 @@ export default function Clients () {
           dataIndex: 'cnpj',
           key: 'cnpj',
         },
-        ButtonTableColumn({
-            title: "Detalhes",
-            displayName: "Ver",
-            onClick: (item) => {console.log(item.name)}
-        }),
+        // ButtonTableColumn({
+        //     title: "Detalhes",
+        //     displayName: "Ver",
+        //     onClick: (item) => {console.log(item.name)}
+        // }),
     ];
     return (
         <div>
