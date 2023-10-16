@@ -6,11 +6,11 @@ const API_URL = 'http://127.0.0.1:8080/payRateRules';
 export async function getPayRateRules (): Promise<PayRateRuleSchema[]> {
     const response = await axios.get(API_URL, {});
     return await response.data.map((item: any) => ({
-        key: item.id.toString(),
+        id: item.id,
         code: item.code? item.code : "N/A",
         appointmentType: item.appointmentType? item.appointmentType : "N/A",
         shift: item.shift? item.shift : "N/A",
-        // weekend: item.weekend? item.weekend : "N/A",
+        daysOfWeek: item.daysOfWeek ? item.daysOfWeek : [],
         minHourCount: item.minHourCount? item.minHourCount : "N/A",
         hourDuration: item.hourDuration? item.hourDuration : "N/A",
         payRate: item.payRate? item.payRate : "N/A",
@@ -32,7 +32,8 @@ export async function postPayRateRule(payRateRule: PostPayRateRuleSchema) {
 }
 
 export async function updatePayRateRule(payRateRule: PayRateRuleSchema) {
-    return await fetch(API_URL, {
+    console.log("PUT PayRateRule:", payRateRule);
+    return await fetch(`${API_URL}/${payRateRule.id}`, {
         method: 'PUT',
         headers: {
             "Content-Type": 'application/json'
