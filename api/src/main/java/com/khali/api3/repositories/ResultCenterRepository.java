@@ -13,6 +13,6 @@ import com.khali.api3.domain.user.User;
 public interface ResultCenterRepository extends JpaRepository<ResultCenter, Long>{
     public ResultCenter save(String resultCenter);
     public void delete(ResultCenter resultCenter);
-    public ResultCenter findByCode(String code);
+    public ResultCenter findByCode(Integer code);
     public List<ResultCenter> findByGestor(User gestor);
 }

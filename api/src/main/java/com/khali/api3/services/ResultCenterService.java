@@ -21,7 +21,7 @@ public class ResultCenterService {
     @Autowired
     private UserRepository userRepository;
 
-    public void deleteResultCenterByCode (String code) {
+    public void deleteResultCenterByCode (Integer code) {
         ResultCenter resultCenter = resultCenterRepository.findByCode(code);
         if (resultCenter != null) {
             resultCenterRepository.delete(resultCenter);
