@@ -50,6 +50,12 @@ export async function getUsers (): Promise<UserSchema[]> {
     return await mapResponse(response);
 }
 
+export async function getUsersOfType (userType: string): Promise<UserSchema[]> {
+    const response = await axios.get(`${API_URL}/usertype/${userType}`, {});
+    return await mapResponse(response);
+
+}
+
 export async function postUser(user: PostUserSchema){
     return await fetch(API_URL, {
         method: 'POST',
