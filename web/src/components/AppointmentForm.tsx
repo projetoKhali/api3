@@ -6,7 +6,6 @@ import { PostAppointmentSchema } from '../schemas/Appointment';
 import DropdownOption from '../schemas/DropdownOption';
 import LookUpOption from '../schemas/LookUpOption';
 
-import LookUpTextField from './LookUpTextField';
 
 
 import { UserSchema } from '../schemas/User';
