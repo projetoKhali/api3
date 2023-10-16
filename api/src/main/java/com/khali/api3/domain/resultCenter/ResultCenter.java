@@ -30,7 +30,7 @@ public class ResultCenter {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="rc_id")
     private Long id;
-    
+
     private String name;
 
     @Column(unique=true)
