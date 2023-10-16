@@ -40,6 +40,9 @@ public class PayRateRule {
     @Column(name = "hour_duration")
     private double hourDuration;
 
+    @Column(name = "min_hour_count")
+    private double minHourCount;
+
     @Column(name = "pay_rate")
     private double payRate;
 
@@ -51,11 +54,10 @@ public class PayRateRule {
     // @Column(name = "days_of_week")
     // private Week daysOfWeek;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "period")
     private Shift shift;
    
-
-
     @Column(name = "overlap")
     private Boolean overlap;   
     
