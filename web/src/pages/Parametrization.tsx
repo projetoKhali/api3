@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { PayRateRuleSchema } from "../schemas/PayRateRule";
 import { Table } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
-import { getPayRateRules, postPayRateRule } from "../services/PayRateRulesService";
+import { getPayRateRules, postPayRateRules } from "../services/PayRateRulesService";
 import ParametrizationForm from "../components/ParametrizationForm";
 import Popup, { PopupSchema } from "../components/PopUpParametrization";
 import { EditableTableColumn } from "../components/EditableTableCell";
@@ -10,12 +10,14 @@ import { PostParameterSchema } from "../schemas/Parametrization";
 import { postParameter } from "../services/ParametrizationService";
 
 export default function Parametrization() {
+    const [previousPayRateRules, setPreviousPayRateRules] = useState<PayRateRuleSchema[]>([]);
     const [payRateRules, setPayRateRules] = useState<PayRateRuleSchema[]>([]);
 
     const requestPayRateRules = () => {
-        getPayRateRules().then(payRateRulesResponse =>
-            setPayRateRules(payRateRulesResponse)
-        );
+        getPayRateRules().then(payRateRulesResponse => {
+            setPreviousPayRateRules(payRateRulesResponse);
+            setPayRateRules(payRateRulesResponse);
+        });
     };
 
     const [popupData, setPopupData] = useState<PopupSchema | null>(null);
@@ -77,17 +79,8 @@ export default function Parametrization() {
         }),
     ]
 
-    async function postPayRateRules(payRateRules: PayRateRuleSchema[]) {
-        return await Promise.all(
-        payRateRules.map(
-        payRateRule => postPayRateRule(payRateRule)
-        )
-        );
-        }
-
     function handleSubmit() {
         if (!postNightShiftStart || !postNightShiftEnd || !postClosingDayOfMonth) {
-            console.log("Hello, world!");
             return;
         }
 
@@ -100,7 +93,10 @@ export default function Parametrization() {
             closingDayOfMonth: postClosingDayOfMonth,
         } as PostParameterSchema);
 
-        // postPayRateRules();
+        postPayRateRules(
+            previousPayRateRules,
+            payRateRules
+        );
     }
 
     return (
