@@ -2,14 +2,12 @@ import React from 'react';
 
 
 import { useEffect, useState } from 'react';
-import { postAppointment } from '../services/AppointmentService';
 import { PostAppointmentSchema } from '../schemas/Appointment';
 import { postAppointment } from '../services/AppointmentService';
 
 import LookUpOption from '../schemas/LookUpOption';
 import LookUpTextField from './LookUpTextField';
 
-import { UserSchema } from '../schemas/User';
 import { getClients } from '../services/ClientService';
 import { getResultCentersOfUser } from '../services/ResultCenterService';
 import { UserSchema } from '../schemas/User';
