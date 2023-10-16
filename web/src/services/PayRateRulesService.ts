@@ -6,7 +6,7 @@ const API_URL = 'http://127.0.0.1:8080/payRateRules';
 export async function getPayRateRules (): Promise<PayRateRuleSchema[]> {
     const response = await axios.get(API_URL, {});
     return await response.data.map((item: any) => ({
-        key: item.id.toString(), 
+        key: item.id.toString(),
         code: item.code? item.code : "N/A",
         appointmentType: item.appointmentType? item.appointmentType : "N/A",
         shift: item.shift? item.shift : "N/A",
@@ -29,7 +29,6 @@ export async function postPayRateRule(payRateRule: PostPayRateRuleSchema) {
     }).then(response=> response.json())
     .then((data)=> console.log(data))
     .catch(error => console.error(error));
-   
 }
 
 export async function updatePayRateRule(payRateRule: PayRateRuleSchema) {
@@ -42,5 +41,21 @@ export async function updatePayRateRule(payRateRule: PayRateRuleSchema) {
     }).then(response=> response.json())
     .then((data)=> console.log(data))
     .catch(error => console.error(error));
-    
+}
+
+export async function postPayRateRules (
+    previousPayRateRules: PayRateRuleSchema[],
+    payRateRules: PayRateRuleSchema[],
+) {
+    return await Promise.all(
+        payRateRules.map(
+            payRateRule => {
+                for (const previousPayRateRule of previousPayRateRules) {
+                    if (payRateRule.code != previousPayRateRule.code) continue;
+                    return updatePayRateRule(payRateRule);
+                }
+                return postPayRateRule(payRateRule);
+            }
+        )
+    );
 }
