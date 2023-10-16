@@ -2,6 +2,9 @@ import { useEffect, useState } from "react";
 import { PostPayRateRuleSchema } from "../schemas/PayRateRule";
 import { postPayRateRule } from "../services/PayRateRulesService";
 import { Checkbox } from "antd";
+import AppointmentTypeDropdown from "./AppointmentTypeDropdown";
+import DropdownOption from "../schemas/DropdownOption";
+import ShiftDropdown from "./ShiftDropdown";
 
 interface PopupFormProps {
     successCallback: () => void;
@@ -56,8 +59,16 @@ export default function PopupForm({ successCallback, errorCallback }: PopupFormP
     return (
         <form onSubmit={handleSubmit}>
             <input type="text" placeholder="Codigo" onChange={handleCodeChange} />
-            <input type="text" placeholder="Tipo" onChange={handleAppointmentTypeChange} />
-            <input type="text" placeholder="Periodo" onChange={handleShiftChange} />
+            <AppointmentTypeDropdown
+                onSelect={(option: DropdownOption) => {
+                    setAppointmentType(option.optionName)
+                }}
+            />
+            <ShiftDropdown
+                onSelect={(option: DropdownOption) => {
+                    setShift(option.optionName)
+                }}
+            />
             {/* <input type="text" placeholder="Fim de Semana" onChange={handleWeekendChange}/> */}
             <input type="text" placeholder="Mínimo de horas" onChange={handleMinHourCountChange} />
             <input type="text" placeholder="Duração da hora" onChange={handleHourDurationChange} />
@@ -66,7 +77,7 @@ export default function PopupForm({ successCallback, errorCallback }: PopupFormP
                 <Checkbox
 
                     checked={postOverlap}
-                    onChange={()=>setOverlap(!postOverlap)} />
+                    onChange={() => setOverlap(!postOverlap)} />
                 Aceitar Sobreposição
 
             </p>
