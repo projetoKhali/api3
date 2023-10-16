@@ -32,7 +32,6 @@ export async function postPayRateRule(payRateRule: PostPayRateRuleSchema) {
 }
 
 export async function updatePayRateRule(payRateRule: PayRateRuleSchema) {
-    console.log("PUT PayRateRule:", payRateRule);
     return await fetch(`${API_URL}/${payRateRule.id}`, {
         method: 'PUT',
         headers: {
