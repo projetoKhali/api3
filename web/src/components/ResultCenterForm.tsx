@@ -1,12 +1,31 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+
+import LookUpOption from '../schemas/LookUpOption';
+import LookUpTextField from './LookUpTextField';
+import SchemaList from './SchemaList';
+
 import { postResultCenter } from '../services/ResultCenterService';
 import { PostResultCenterSchema } from '../schemas/ResultCenter';
+import { getUsers, getUsersOfType } from '../services/UserService';
+import { MemberSchema } from '../schemas/Member';
+import { postMembers } from '../services/MemberService';
 
 export default function ResultCenterForm({ callback }: { callback: () => void }){
-    const [postResultCenterName,setPostResultCenterName] = useState<string>('');
-    const [postResultCenterCode,setPostResultCenterCode] = useState<string>('');
-    const [postResultCenterAcronym,setPostResultCenterAcronym] = useState<string>('');
-    const [postResultCenterGestor,setPostResultCenterGestor] = useState<string>('');
+    const [postResultCenterName, setPostResultCenterName] = useState<string>('');
+    const [postResultCenterCode, setPostResultCenterCode] = useState<string>('');
+    const [postResultCenterAcronym, setPostResultCenterAcronym] = useState<string>('');
+
+    const [postResultCenterManager, setPostResultCenterManager] = useState<LookUpOption | undefined>();
+    const [availableResultCenterManagers, setAvailableResultCenterManagers] = useState<LookUpOption[]>([]);
+
+    const [postResultCenterMembers, setPostResultCenterMembers] = useState<LookUpOption[]>([]);
+    const [selectedResultCenterMemberToAdd, setSelectedResultCenterMemberToAdd] = useState<LookUpOption | undefined>();
+    const [availableResultCenterMembersToAdd, setAvailableResultCenterMembersToAdd] = useState<LookUpOption[]>([]);
+
+    useEffect(() => {
+        getUsersOfType('Manager').then(managersResponse => setAvailableResultCenterManagers(managersResponse.map(manager => ({id: manager.id, name: manager.name, }))));
+        getUsers().then(usersResponse => setAvailableResultCenterMembersToAdd(usersResponse.map(user => ({id: user.id, name: user.name, }))));
+    }, [])
 
     function handleNomeChange(event: React.ChangeEvent<HTMLInputElement>){
       setPostResultCenterName(event.target.value)
@@ -20,30 +39,105 @@ export default function ResultCenterForm({ callback }: { callback: () => void })
       setPostResultCenterAcronym(event.target.value)
     }
 
-    function handleGestorChange(event: React.ChangeEvent<HTMLInputElement>){
-      setPostResultCenterGestor(event.target.value)
+    function handleAddMember(newMember: LookUpOption) {
+        setPostResultCenterMembers((prevMembers) => [...prevMembers, newMember]);
+    }
+
+    function handleRemoveMember(memberToRemove: LookUpOption) {
+        setPostResultCenterMembers((prevMembers) => prevMembers.filter((member) => {
+            member !== memberToRemove
+        }));
+    }
+
+    const memberRenderTemplate = (member: LookUpOption) => {
+        return (
+            <div className="schema-list-item schema-list-item-member">
+                <p className="schema-list-item-title schema-list-item-title-member">
+                    {member.name}
+                </p>
+                <button
+                    className="schema-list-item-button schema-list-item-button-remove"
+                    onClick={() => handleRemoveMember(member)}
+                >
+                    X
+                </button>
+            </div>
+        );
     }
 
     function handleSubmit(event: React.ChangeEvent<HTMLFormElement>) {
-      event.preventDefault();
-      postResultCenter({
-        name: postResultCenterName,
-        code: postResultCenterCode,
-        acronym: postResultCenterAcronym,
-        gestor: {
-          id: postResultCenterGestor
-        }
-      } as PostResultCenterSchema)
-      .then(() => callback());
+        if (!postResultCenterManager) return;
+
+        event.preventDefault();
+        postResultCenter({
+            name: postResultCenterName,
+            code: parseInt(postResultCenterCode),
+            acronym: postResultCenterAcronym,
+            gestor: {
+                id: postResultCenterManager.id
+            }
+        } as PostResultCenterSchema)
+        .then(resultCenterResponse => {
+            if (resultCenterResponse) {
+                console.log(postResultCenterMembers);
+                postMembers(
+                    postResultCenterMembers.map((user) => ({
+                        memberPK: {
+                            user: {
+                                id: user.id,
+                            },
+                            resultCenter: {
+                                id: resultCenterResponse.id
+                            },
+                        }
+                    })) as MemberSchema[]
+                )
+            }
+        })
+        .catch(error => console.error(error))
+        .then(() => callback());
     }
 
     return (
-      <form onSubmit={handleSubmit}>
-          <input type="text" placeholder="Nome" onChange={handleNomeChange}/>
-          <input type="text" placeholder="Código" onChange={handleCodeChange}/>
-          <input type="text" placeholder="Sigla" onChange={handleAcronymChange}/>
-          <input type="text" placeholder="Gestor" onChange={handleGestorChange}/>
-          <button type="submit">Cadastrar</button>
+        <form onSubmit={handleSubmit}>
+            <input type="text" placeholder="Nome" onChange={handleNomeChange}/>
+            <input type="text" placeholder="Código" onChange={handleCodeChange}/>
+            <input type="text" placeholder="Sigla" onChange={handleAcronymChange}/>
+
+            {availableResultCenterManagers && (
+                <LookUpTextField
+                    placeholder="Gestor"
+                    options={availableResultCenterManagers}
+                    onSelect={(option: LookUpOption) => setPostResultCenterManager(option)}
+                />
+            )}
+
+            {availableResultCenterMembersToAdd && (
+                <div className="result-center-form-add-member">
+                    <LookUpTextField
+                        placeholder="Adicionar Membro"
+                        options={availableResultCenterMembersToAdd}
+                        onSelect={(option: LookUpOption) => setSelectedResultCenterMemberToAdd(option)}
+                    />
+                    {selectedResultCenterMemberToAdd ? (
+                        <button
+                            className="result-center-form-add-member-button"
+                            onClick={() => handleAddMember(selectedResultCenterMemberToAdd)}
+                        > + </button>
+                    ) : (
+                        <button
+                            className="result-center-form-add-member-button result-center-form-add-member-button-disabled"
+                            disabled={true}
+                        >+</button>
+                    )}
+                </div>
+            )}
+
+            <button type="submit">Cadastrar</button>
+            <SchemaList<LookUpOption>
+                data={postResultCenterMembers}
+                template={memberRenderTemplate}
+            />
       </form>
     )
 }
