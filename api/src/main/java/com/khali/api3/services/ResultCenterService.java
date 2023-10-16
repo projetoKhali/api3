@@ -37,6 +37,6 @@ public class ResultCenterService {
         if(user.isPresent()) {
             User gestor = user.get();
             return resultCenterRepository.findByGestor(gestor);
-        }else{throw new EntityNotFoundException("Gestor não encontrado com o id: " + id);}     
+        }else{throw new EntityNotFoundException("Gestor não encontrado com o id: " + id);}
     }
 }

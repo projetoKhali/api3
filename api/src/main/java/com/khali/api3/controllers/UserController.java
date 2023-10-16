@@ -131,7 +131,7 @@ public class UserController {
     }
 
     // desativa usuário
-    @PutMapping("/{id}/desactivate")
+    @PutMapping("/{id}/deactivate")
     public User deactivateUser(@PathVariable Long id) {
         User user = userRepository.findById(id)
         .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + id));
