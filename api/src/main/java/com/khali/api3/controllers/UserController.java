@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.khali.api3.domain.member.Member;
 import com.khali.api3.domain.permission.Permission;
+import com.khali.api3.domain.user.Cryptography;
 import com.khali.api3.domain.user.User;
 import com.khali.api3.domain.user.UserType;
 import com.khali.api3.repositories.UserRepository;
@@ -75,13 +77,13 @@ public class UserController {
     // }
 
 
-    @GetMapping("/permissions/{id}")
+    @GetMapping("/{id}/permissions")
     public List<Permission> getUserPermissions(@PathVariable Long id) {
         try {
             List<Permission> permissions = new ArrayList<Permission>();
             User user = userRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + id));
-            if (user.getUserType() == UserType.Admin) {
+            if (user.getUserType().equals(UserType.Admin)) {
                 permissions.add(Permission.FullAccess);
                 permissions.add(Permission.Register);
                 permissions.add(Permission.Report);
@@ -98,6 +100,7 @@ public class UserController {
 
     @PostMapping
     public User createUser(@RequestBody User user) {
+        user.setPassword(Cryptography.crypt(user.getRegistration()));
         return userRepository.save(user);
     }
 
@@ -127,6 +130,8 @@ public class UserController {
         User user = userRepository.findById(id)
         .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + id));
         user.setExpiredDate(null);
+        List<Member> members = membersService.getMembersByUserId(id);
+        membersService.alterMembersStatus(members,true);
         return userRepository.save(user);
     }
 
@@ -137,10 +142,11 @@ public class UserController {
         .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + id));
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         user.setExpiredDate(timestamp);
+        List<Member> members = membersService.getMembersByUserId(id);
+        membersService.alterMembersStatus(members,false);
         return userRepository.save(user);
     }
 
-    @GetMapping("/login")
     public User getLogin(String email, String password) {
         return userService.getValidatedUser(email, password);
     }
