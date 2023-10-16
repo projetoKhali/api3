@@ -4,7 +4,7 @@ export interface PayRateRuleSchema {
     appointmentType: string,
     // shift refere-se a se é diurno ou noturno
     shift: string,
-    // weekend: string,
+    daysOfWeek: boolean[],
     minHourCount: number,
     hourDuration: number,
     payRate: number,
@@ -16,7 +16,7 @@ export interface PostPayRateRuleSchema {
     appointmentType: string,
     // shift refere-se a se é diurno ou noturno
     shift: string,
-    // weekend: string,
+    daysOfWeek: boolean[],
     minHourCount: number,
     hourDuration: number,
     payRate: number,
