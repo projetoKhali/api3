@@ -3,6 +3,7 @@ package com.khali.api3.controllers;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -57,6 +58,16 @@ public class UserController {
     public User getUserById(@PathVariable Long id) {
         return userRepository.findById(id)
             .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + id));
+    }
+
+    @GetMapping("/usertype/{userType}")
+    public List<User> getByUserType(@PathVariable UserType userType) {
+        // return userRepository.findByUserType(userType);
+        return userRepository
+            .findAll()
+            .stream()
+            .filter(user -> user.getUserType() == userType)
+            .collect(Collectors.toList());
     }
 
     // @GetMapping("/{name}")

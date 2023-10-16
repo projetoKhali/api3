@@ -1,4 +1,5 @@
 export interface AppointmentSchema {
+    id: number,
     user:{
         id: number,
     },
