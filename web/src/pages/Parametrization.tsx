@@ -2,10 +2,12 @@ import { useEffect, useState } from "react";
 import { PayRateRuleSchema } from "../schemas/PayRateRule";
 import { Table } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
-import { getPayRateRules } from "../services/PayRateRulesService";
+import { getPayRateRules, postPayRateRule } from "../services/PayRateRulesService";
 import ParametrizationForm from "../components/ParametrizationForm";
 import Popup, { PopupSchema } from "../components/PopUpParametrization";
-import EditableTableCell, { EditableTableColumn } from "../components/EditableTableCell";
+import { EditableTableColumn } from "../components/EditableTableCell";
+import { PostParameterSchema } from "../schemas/Parametrization";
+import { postParameter } from "../services/ParametrizationService";
 
 export default function Parametrization() {
     const [payRateRules, setPayRateRules] = useState<PayRateRuleSchema[]>([]);
@@ -27,33 +29,9 @@ export default function Parametrization() {
         setShowPopup(false);
     };
 
-    const stringToBoolean = (value: string): boolean => {
-        if (value.toLowerCase() === 'true') {
-          return true;
-        } else if (value.toLowerCase() === 'false') {
-          return false;
-        } else {
-          throw new Error('Valor inválido. A string deve ser "true" ou "false".');
-        }
-      };
-
     const [postNightShiftStart, setNightShiftStart] = useState<string>('');
     const [postNightShiftEnd, setNightShiftEnd] = useState<string>('');
-    const [postClosingDayOfMonth, setClosingDayOfMonth] = useState<number | string>('');
-
-    function handleNightShiftStartChange(event: React.ChangeEvent<HTMLInputElement>){ setNightShiftStart(event.target.value) }
-    function handleNightShiftEndChange(event: React.ChangeEvent<HTMLInputElement>){ setNightShiftEnd(event.target.value)}
-    function handlePostClosingDayOfMonthChange(event: React.ChangeEvent<HTMLInputElement>){ 
-        const inputValue = event.target.value;
-        const intValue = parseInt(inputValue, 10);
-        if (!isNaN(intValue)) {
-            setClosingDayOfMonth(intValue);
-        } else {
-            setClosingDayOfMonth("");
-        }
-        return postClosingDayOfMonth;
-    }
-
+    const [postClosingDayOfMonth, setClosingDayOfMonth] = useState<number>(0);
 
     const columns: ColumnsType<PayRateRuleSchema> = [
         EditableTableColumn({
@@ -95,36 +73,34 @@ export default function Parametrization() {
         EditableTableColumn({
             title: 'Cumulativo',
             getValue: (item: PayRateRuleSchema)=>`${item.overlap}`,
-            setValue: (item: PayRateRuleSchema, value: string)=>item.overlap=stringToBoolean(value),          
+            setValue: (item: PayRateRuleSchema, value: string)=>item.overlap=stringToBoolean(value),
         }),
     ]
 
-    function handleSubmit(event: React.ChangeEvent<HTMLFormElement>, ) {
-
-
+    function handleSubmit() {
         if (!postNightShiftStart || !postNightShiftEnd || !postClosingDayOfMonth) {
             console.log("Hello, world!");
-            return errorCallback ();
+            return;
         }
-        
-        event.preventDefault();
-        
+
         const formattedNightShiftStart = formatTime (postNightShiftStart);
         const formattedNightShiftEnd = formatTime (postNightShiftEnd);
-        
+
         postParameter({
             nightShiftStart: formattedNightShiftStart,
             nightShiftEnd: formattedNightShiftEnd,
             closingDayOfMonth: postClosingDayOfMonth,
-          } as PostParameterSchema)
-          .then(() => successCallback());
+        } as PostParameterSchema);
+
+        // postPayRateRules();
     }
-    // const [open, setOpen] = useState<boolean>(false);
+
     return (
         <div>
             <ParametrizationForm
-                errorCallback={() => { }}
-                successCallback={() => { }}
+                setNightShiftStart={setNightShiftStart}
+                setNightShiftEnd={setNightShiftEnd}
+                setPostClosingDayOfMonth={setClosingDayOfMonth}
             />
             <button type="button" onClick={() => {
                 handleSubmit();
@@ -136,7 +112,6 @@ export default function Parametrization() {
                     text: 'Cadastro de Verbas',
                     buttons: [{ text: 'x', onClick: handleClose }],
                     isOpen: true,
-                    
                 });
                 setShowPopup(true);
             }}>
@@ -150,5 +125,25 @@ export default function Parametrization() {
             {showPopup && popupData && <Popup {...popupData} />}
         </div>
     );
-
 }
+
+
+function formatTime(hora: string): string | null {
+    const regex = /^(0?[0-9]|1[0-9]|2[0-3])(:?[0-5][0-9])?$/;
+    if (!regex.test(hora)) {
+        console.error('Formato de hora inválido. Use o formato de 0 a 23.');
+        return null;
+    }
+    const horaFormatada = hora.padEnd(2, '0') + ':00';
+    return horaFormatada;
+}
+
+const stringToBoolean = (value: string): boolean => {
+    if (value.toLowerCase() === 'true') {
+        return true;
+    } else if (value.toLowerCase() === 'false') {
+        return false;
+    } else {
+        throw new Error('Valor inválido. A string deve ser "true" ou "false".');
+    }
+};
