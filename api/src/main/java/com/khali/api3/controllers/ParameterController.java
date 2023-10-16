@@ -27,7 +27,7 @@ public class ParameterController {
         return parameterRepository.findAll();
     }
 
-    @GetMapping("/last")
+    @GetMapping("/latest")
     public Parameter getLastParameters() {
         return parameterRepository.findLastParameter();
     }

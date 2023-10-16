@@ -3,15 +3,26 @@ import { ParameterSchema, PostParameterSchema } from '../schemas/Parametrization
 
 const API_URL = 'http://127.0.0.1:8080/parameters';
 
-export async function getParameters (): Promise<ParameterSchema> {
-    const response = await axios.get(API_URL, {});
-    return await response.data.map((item: any) => ({
-        key: item.id.toString(), 
+function serializeParameters (item: any): ParameterSchema {
+    return {
+        id: item.id.toString(), 
         nightShiftStart: item.nightShiftStart? item.nightShiftStart : "N/A",
         nightShiftEnd: item.nightShiftEnd? item.nightShiftEnd : "N/A",
         closingDayOfMonth: item.closingDayOfMonth? item.closingDayOfMonth : "N/A",
-        // insertDate: item.insertDate? item.insertDate : "N/A",
-    }))[0] as ParameterSchema;
+        insertDate: item.insertDate? item.insertDate : "N/A",
+    }
+}
+
+export async function getParameters (): Promise<ParameterSchema[]> {
+    const response = await axios.get(API_URL, {});
+    return await response.data.map(
+        (item: any) => serializeParameters(item)
+    ) as ParameterSchema[];
+}
+
+export async function getLatestParameter (): Promise<ParameterSchema> {
+    const response = await axios.get(`${API_URL}/latest`, {});
+    return serializeParameters(response.data);
 }
 
 export async function postParameter(parameter: PostParameterSchema) {

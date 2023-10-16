@@ -7,7 +7,7 @@ import ParametrizationForm from "../components/ParametrizationForm";
 import Popup, { PopupSchema } from "../components/PopUpParametrization";
 import { EditableTableColumn } from "../components/EditableTableCell";
 import { PostParameterSchema } from "../schemas/Parametrization";
-import { getParameters, postParameter } from "../services/ParametrizationService";
+import { getLatestParameter, postParameter } from "../services/ParametrizationService";
 
 export default function Parametrization() {
     const [previousPayRateRules, setPreviousPayRateRules] = useState<PayRateRuleSchema[]>([]);
@@ -25,7 +25,7 @@ export default function Parametrization() {
     };
 
     const requestParameteres = () => {
-        getParameters().then(parametersResponse => {
+        getLatestParameter().then(parametersResponse => {
             setNightShiftStart(parametersResponse.nightShiftStart);
             setNightShiftEnd(parametersResponse.nightShiftEnd);
             setClosingDayOfMonth(parametersResponse.closingDayOfMonth)
