@@ -40,6 +40,9 @@ export async function postResultCenter(resultCenter: PostResultCenterSchema) {
         },
         body: JSON.stringify(resultCenter)
     }).then(response=> response.json())
-    .then((data)=> console.log(data))
+    .then((data)=> {
+        console.log(data);
+        return serializeResultCenter(data);
+    })
     .catch(error => console.error(error));
 }
