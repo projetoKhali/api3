@@ -5,8 +5,13 @@ import { useEffect, useState } from 'react';
 import { PostAppointmentSchema } from '../schemas/Appointment';
 import DropdownOption from '../schemas/DropdownOption';
 import LookUpOption from '../schemas/LookUpOption';
+
+import LookUpTextField from './LookUpTextField';
+
+
 import { UserSchema } from '../schemas/User';
 import { postAppointment } from '../services/AppointmentService';
+
 import { getClients } from '../services/ClientService';
 import { getProjects } from '../services/ProjectService';
 import { getResultCentersOfUser } from '../services/ResultCenterService';
