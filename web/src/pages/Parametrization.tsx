@@ -77,6 +77,14 @@ export default function Parametrization() {
         }),
     ]
 
+    async function postPayRateRules(payRateRules: PayRateRuleSchema[]) {
+        return await Promise.all(
+        payRateRules.map(
+        payRateRule => postPayRateRule(payRateRule)
+        )
+        );
+        }
+
     function handleSubmit() {
         if (!postNightShiftStart || !postNightShiftEnd || !postClosingDayOfMonth) {
             console.log("Hello, world!");

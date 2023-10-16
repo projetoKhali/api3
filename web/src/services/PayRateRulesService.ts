@@ -8,12 +8,12 @@ export async function getPayRateRules (): Promise<PayRateRuleSchema[]> {
     return await response.data.map((item: any) => ({
         key: item.id.toString(), 
         code: item.code? item.code : "N/A",
-        type: item.type? item.type : "N/A",
+        appointmentType: item.appointmentType? item.appointmentType : "N/A",
         shift: item.shift? item.shift : "N/A",
-        weekend: item.weekend? item.weekend : "N/A",
+        // weekend: item.weekend? item.weekend : "N/A",
         minHourCount: item.minHourCount? item.minHourCount : "N/A",
         hourDuration: item.hourDuration? item.hourDuration : "N/A",
-        percentage: item.percentage? item.percentage : "N/A",
+        payRate: item.payRate? item.payRate : "N/A",
         overlap: item.overlap? item.overlap : "N/A",
         expireDate: item.expireDate? item.expireDate : "N/A",
     })) as PayRateRuleSchema[];
