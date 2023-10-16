@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { PayRateRuleSchema } from "../schemas/PayRateRule";
 import { Table } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
-import { getPayRateRules, postPayRateRules } from "../services/PayRateRulesService";
+import { getPayRateRules, postPayRateRules, validatePayRateRules } from "../services/PayRateRulesService";
 import ParametrizationForm from "../components/ParametrizationForm";
 import Popup, { PopupSchema } from "../components/PopUpParametrization";
 import { EditableTableColumn } from "../components/EditableTableCell";
@@ -81,6 +81,11 @@ export default function Parametrization() {
 
     function handleSubmit() {
         if (!postNightShiftStart || !postNightShiftEnd || !postClosingDayOfMonth) {
+            return;
+        }
+
+        if (!validatePayRateRules(payRateRules)) {
+            console.error("Verbas contém sobreposição inválida.");
             return;
         }
 
