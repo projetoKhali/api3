@@ -38,13 +38,13 @@ public class PayRateRule {
     private Long code;
 
     @Column(name = "hour_duration")
-    private double hourDuration;
+    private Double hourDuration;
 
     @Column(name = "min_hour_count")
-    private double minHourCount;
+    private Double minHourCount;
 
     @Column(name = "pay_rate")
-    private double payRate;
+    private Double payRate;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "appointment_type")
