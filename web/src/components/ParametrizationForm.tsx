@@ -2,14 +2,20 @@ import React from "react";
 
 interface ParametrizationFormProps {
     setNightShiftStart: (value: string) => void;
+    getNightShiftStart: string;
     setNightShiftEnd: (value: string) => void;
+    getNightShiftEnd: string;
     setPostClosingDayOfMonth: (value: number) => void;
+    getPostClosingDayOfMonth: number;
 }
 
 export default function ParametrizationForm ({
     setNightShiftStart,
+    getNightShiftStart,
     setNightShiftEnd,
-    setPostClosingDayOfMonth
+    getNightShiftEnd,
+    setPostClosingDayOfMonth,
+    getPostClosingDayOfMonth
 }: ParametrizationFormProps) {
 
 
@@ -29,9 +35,24 @@ export default function ParametrizationForm ({
 
     return (
         <form >
-            <input type="text" placeholder="Inicio do Período Noturno" onChange={handleNightShiftStartChange}/>
-            <input type="text" placeholder="Fim do Período Noturno" onChange={handleNightShiftEndChange}/>
-            <input type="text" placeholder="Dia de Fechamento" onChange={handlePostClosingDayOfMonthChange}/>
+            <input
+                type="text"
+                placeholder="Inicio do Período Noturno"
+                value={getNightShiftStart}
+                onChange={handleNightShiftStartChange}
+            />
+            <input
+                type="text"
+                placeholder="Fim do Período Noturno"
+                value={getNightShiftEnd}
+                onChange={handleNightShiftEndChange}
+            />
+            <input
+                type="text"
+                placeholder="Dia de Fechamento"
+                value={getPostClosingDayOfMonth}
+                onChange={handlePostClosingDayOfMonthChange}
+            />
         </form>
     );
 }

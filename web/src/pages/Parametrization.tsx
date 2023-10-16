@@ -7,11 +7,15 @@ import ParametrizationForm from "../components/ParametrizationForm";
 import Popup, { PopupSchema } from "../components/PopUpParametrization";
 import { EditableTableColumn } from "../components/EditableTableCell";
 import { PostParameterSchema } from "../schemas/Parametrization";
-import { postParameter } from "../services/ParametrizationService";
+import { getParameters, postParameter } from "../services/ParametrizationService";
 
 export default function Parametrization() {
     const [previousPayRateRules, setPreviousPayRateRules] = useState<PayRateRuleSchema[]>([]);
     const [payRateRules, setPayRateRules] = useState<PayRateRuleSchema[]>([]);
+
+    const [postNightShiftStart, setNightShiftStart] = useState<string>('');
+    const [postNightShiftEnd, setNightShiftEnd] = useState<string>('');
+    const [postClosingDayOfMonth, setClosingDayOfMonth] = useState<number>(0);
 
     const requestPayRateRules = () => {
         getPayRateRules().then(payRateRulesResponse => {
@@ -20,20 +24,25 @@ export default function Parametrization() {
         });
     };
 
+    const requestParameteres = () => {
+        getParameters().then(parametersResponse => {
+            setNightShiftStart(parametersResponse.nightShiftStart);
+            setNightShiftEnd(parametersResponse.nightShiftEnd);
+            setClosingDayOfMonth(parametersResponse.closingDayOfMonth)
+        });
+    }
+
     const [popupData, setPopupData] = useState<PopupSchema | null>(null);
     const [showPopup, setShowPopup] = useState(false);
 
     useEffect(() => {
-        requestPayRateRules()
+        requestPayRateRules();
+        requestParameteres();
     }, []);
 
     const handleClose = () => {
         setShowPopup(false);
     };
-
-    const [postNightShiftStart, setNightShiftStart] = useState<string>('');
-    const [postNightShiftEnd, setNightShiftEnd] = useState<string>('');
-    const [postClosingDayOfMonth, setClosingDayOfMonth] = useState<number>(0);
 
     const columns: ColumnsType<PayRateRuleSchema> = [
         EditableTableColumn({
@@ -80,36 +89,38 @@ export default function Parametrization() {
     ]
 
     function handleSubmit() {
-        if (!postNightShiftStart || !postNightShiftEnd || !postClosingDayOfMonth) {
-            return;
+        if (postNightShiftStart && postNightShiftEnd && postClosingDayOfMonth) {
+            const formattedNightShiftStart = formatTime (postNightShiftStart);
+            const formattedNightShiftEnd = formatTime (postNightShiftEnd);
+
+            postParameter({
+                nightShiftStart: formattedNightShiftStart,
+                nightShiftEnd: formattedNightShiftEnd,
+                closingDayOfMonth: postClosingDayOfMonth,
+            } as PostParameterSchema);
+        } else {
+            console.error("Parâmetros com valores inválidos.");
         }
 
-        if (!validatePayRateRules(payRateRules)) {
-            console.error("Verbas contém sobreposição inválida.");
-            return;
+        if (validatePayRateRules(payRateRules)) {
+            postPayRateRules(
+                previousPayRateRules,
+                payRateRules
+            );
+        } else {
+            console.error("Verbas contém sobreposição ou valores inválidos.");
         }
-
-        const formattedNightShiftStart = formatTime (postNightShiftStart);
-        const formattedNightShiftEnd = formatTime (postNightShiftEnd);
-
-        postParameter({
-            nightShiftStart: formattedNightShiftStart,
-            nightShiftEnd: formattedNightShiftEnd,
-            closingDayOfMonth: postClosingDayOfMonth,
-        } as PostParameterSchema);
-
-        postPayRateRules(
-            previousPayRateRules,
-            payRateRules
-        );
     }
 
     return (
         <div>
             <ParametrizationForm
                 setNightShiftStart={setNightShiftStart}
+                getNightShiftStart={postNightShiftStart}
                 setNightShiftEnd={setNightShiftEnd}
+                getNightShiftEnd={postNightShiftEnd}
                 setPostClosingDayOfMonth={setClosingDayOfMonth}
+                getPostClosingDayOfMonth={postClosingDayOfMonth}
             />
             <button type="button" onClick={() => {
                 handleSubmit();
