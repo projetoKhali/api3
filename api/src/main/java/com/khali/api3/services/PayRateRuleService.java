@@ -33,6 +33,10 @@ public class PayRateRuleService {
                 payRateRuleExists.setHourDuration(newPayRateRule.getHourDuration());
             }
 
+            if (newPayRateRule.getMinHourCount() != 0.0) {
+                payRateRuleExists.setMinHourCount(newPayRateRule.getMinHourCount());
+            }
+
             if (newPayRateRule.getPayRate() != 0.0) {
                 payRateRuleExists.setPayRate(newPayRateRule.getPayRate());
             }
@@ -41,17 +45,14 @@ public class PayRateRuleService {
                 payRateRuleExists.setAppointmentType(newPayRateRule.getAppointmentType());
             }
 
-            if (newPayRateRule.getDaysOfWeek() != null) {
-                payRateRuleExists.setDaysOfWeek(newPayRateRule.getDaysOfWeek());
+            // if (newPayRateRule.getDaysOfWeek() != null) {
+            //     payRateRuleExists.setDaysOfWeek(newPayRateRule.getDaysOfWeek());
+            // }
+
+            if (newPayRateRule.getShift() != null) {
+                payRateRuleExists.setShift(newPayRateRule.getShift());
             }
 
-            if (newPayRateRule.getStartTime() != null) {
-                payRateRuleExists.setStartTime(newPayRateRule.getStartTime());
-            }
-
-            if (newPayRateRule.getEndTime() != null) {
-                payRateRuleExists.setEndTime(newPayRateRule.getEndTime());
-            }
             
             if (newPayRateRule.getOverlap() != null) {
                 payRateRuleExists.setOverlap(newPayRateRule.getOverlap());
