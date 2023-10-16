@@ -1,12 +1,20 @@
 package com.khali.api3.domain.user;
 
-import jakarta.persistence.*;
 import java.sql.Timestamp;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity(name="users")
@@ -27,8 +35,8 @@ public class User {
     private String registration;
     private String name;
 
-    @Column
     @Enumerated(EnumType.STRING)
+    @Column(name = "user_type")
     private UserType userType;
 
     @Column(unique=true)
@@ -37,9 +45,7 @@ public class User {
     @Column
     private String password;
 
-    @Column
-    private Boolean active;
-
+    @Transient
     @Column(name = "insert_date")
     private Timestamp insertDate;
 

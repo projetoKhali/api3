@@ -25,9 +25,6 @@ public class AppointmentService {
 
     @Autowired
     private ResultCenterService resultCenterService;
-    public Appointment saveAppointment(Appointment appointment) {
-        return appointmentRepository.save(appointment);
-    }
     
     public List<Appointment> getAppointment(){
         return appointmentRepository.findAll();

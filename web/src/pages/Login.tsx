@@ -1,11 +1,9 @@
-import React from "react";
-
-import { useState } from 'react';
-import { requestLogin } from '../services/UserService';
+import React, { useState } from "react";
 import { UserSchema } from "../schemas/User";
+import { requestLogin } from '../services/UserService';
 
 interface LoginProps {
-    onLogin: (user: UserSchema | undefined) => void;
+    onLogin: (user: UserSchema) => void;
 }
 
 export default function Login ({ onLogin }: LoginProps) {
@@ -17,15 +15,21 @@ export default function Login ({ onLogin }: LoginProps) {
 
     function handleSubmit(event: React.ChangeEvent<HTMLFormElement>) {
         event.preventDefault();
+
         requestLogin(
             loginUsername,
             loginPassword
-        ).then(result => onLogin(result));
+        ).then(user => {
+            onLogin(user);
+        })
+        .catch(error => {
+            console.error("Erro de autenticação:", error);
+        });
     }
 
     return (
         <form onSubmit={handleSubmit}>
-            <input type="text" placeholder="Email" onChange={handleUsernameChange}/>
+            <input type="text" placeholder="Email" onChange={handleUsernameChange} autoFocus/>
             <input type="text" placeholder="Password" onChange={handlePasswordChange}/>
             <button type="submit">Login</button>
         </form>

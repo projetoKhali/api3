@@ -1,11 +1,11 @@
 package com.khali.api3.controllers;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,7 +14,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.khali.api3.domain.member.Member;
 import com.khali.api3.domain.permission.Permission;
+
+// import com.khali.api3.domain.user.Cryptography;
+
 import com.khali.api3.domain.user.User;
 import com.khali.api3.domain.user.UserType;
 import com.khali.api3.repositories.UserRepository;
@@ -58,6 +62,16 @@ public class UserController {
             .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + id));
     }
 
+    @GetMapping("/usertype/{userType}")
+    public List<User> getByUserType(@PathVariable UserType userType) {
+        // return userRepository.findByUserType(userType);
+        return userRepository
+            .findAll()
+            .stream()
+            .filter(user -> user.getUserType() == userType)
+            .collect(Collectors.toList());
+    }
+
     // @GetMapping("/{name}")
     // public String getUserIdByName(@PathVariable User user) {
     //     String userId = userRepository.findUserByName(user);
@@ -86,13 +100,19 @@ public class UserController {
         }
     }
 
+    // @PostMapping
+    // public User createUser(@RequestBody User user) {
+    //     user.setPassword(Cryptography.crypt(user.getRegistration()));
+    //     return userRepository.save(user);
+    // }
+
     @PostMapping
     public User createUser(@RequestBody User user) {
-        user.setActive(true);
+        // user.setPassword(Cryptography.crypt(user.getRegistration()));
         return userRepository.save(user);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/{id}/update")
     public User updateUser(@PathVariable Long id, @RequestBody User userDetails) {
         User user = userRepository.findById(id)
             .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + id));
@@ -102,17 +122,40 @@ public class UserController {
         user.setUserType(userDetails.getUserType());
         user.setEmail(userDetails.getEmail());
         user.setPassword(userDetails.getPassword());
-        user.setActive(userDetails.getActive());
 
         return userRepository.save(user);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteUser(@PathVariable Long id) {
-        userRepository.deleteById(id);
-        return ResponseEntity.ok().build();
+    // @DeleteMapping("/{id}")
+    // public ResponseEntity<?> deleteUser(@PathVariable Long id) {
+    //     userRepository.deleteById(id);
+    //     return ResponseEntity.ok().build();
+    // }
+
+    // ativa usuário
+    @PutMapping("/{id}/activate")
+    public User activateUser(@PathVariable Long id) {
+        User user = userRepository.findById(id)
+        .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + id));
+        user.setExpiredDate(null);
+        List<Member> members = membersService.getMembersByUserId(id);
+        membersService.alterMembersStatus(members,true);
+        return userRepository.save(user);
     }
 
+    // desativa usuário
+    @PutMapping("/{id}/deactivate")
+    public User deactivateUser(@PathVariable Long id) {
+        User user = userRepository.findById(id)
+        .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + id));
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        user.setExpiredDate(timestamp);
+        List<Member> members = membersService.getMembersByUserId(id);
+        membersService.alterMembersStatus(members,false);
+        return userRepository.save(user);
+    }
+
+    @GetMapping("/login")
     public User getLogin(String email, String password) {
         return userService.getValidatedUser(email, password);
     }
