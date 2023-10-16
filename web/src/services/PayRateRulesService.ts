@@ -43,6 +43,26 @@ export async function updatePayRateRule(payRateRule: PayRateRuleSchema) {
     .catch(error => console.error(error));
 }
 
+export function validatePayRateRules (payRateRules: PayRateRuleSchema[]): boolean {
+    for (const payRateRuleResult of payRateRules.map(
+        payRateRule => {
+            for (const otherPayRateRule of payRateRules) {
+                if (payRateRule.overlap || otherPayRateRule.overlap) continue;
+                if (payRateRule.shift != otherPayRateRule.shift) continue;
+                for (const dayOfWeekIndex in payRateRule.daysOfWeek) {
+                    const dayOfWeek = payRateRule.daysOfWeek[dayOfWeekIndex];
+                    if (dayOfWeek && dayOfWeek == otherPayRateRule.daysOfWeek[dayOfWeekIndex]) return false;
+                }
+                return false;
+            }
+            return true;
+        }
+    )) {
+        if (!payRateRuleResult) return false;
+    }
+    return true;
+}
+
 export async function postPayRateRules (
     previousPayRateRules: PayRateRuleSchema[],
     payRateRules: PayRateRuleSchema[],
