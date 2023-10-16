@@ -6,15 +6,19 @@ import { UserSchema } from '../schemas/User';
 const API_URL = 'http://127.0.0.1:8080/resultCenters';
 
 
+function serializeResultCenter (resultCenter: any): ResultCenterSchema {
+    return {
+        id: resultCenter.id,
+        name: resultCenter.name? resultCenter.name : "N/A",
+        code: resultCenter.code? resultCenter.code : "N/A",
+        acronym: resultCenter.acronym? resultCenter.acronym : "N/A",
+        gestor: resultCenter.gestor? resultCenter.gestor.name : "N/A",
+        insertDate: resultCenter.insertDate? resultCenter.insertDate : "N/A",
+    }
+}
+
 async function mapResponse (response: AxiosResponse) {
-    return response.data.map((item: any) => ({
-        id: item.id,
-        name: item.name? item.name : "N/A",
-        code: item.code? item.code : "N/A",
-        acronym: item.acronym? item.acronym : "N/A",
-        gestor: item.gestor? item.gestor.name : "N/A",
-        insertDate: item.insertDate? item.insertDate : "N/A",
-    })) as ResultCenterSchema[]
+    return response.data.map((item) => serializeResultCenter(item));
 }
 
 export async function getResultCenters (): Promise<ResultCenterSchema[]> {
