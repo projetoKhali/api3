@@ -27,13 +27,14 @@ import jakarta.persistence.EntityNotFoundException;
 @RequestMapping("/appointments")
 public class AppointmentController {
 
-    @Autowired private final AppointmentRepository appointmentRepository;
-    @Autowired private final AppointmentService appointmentService;
+    @Autowired
+    private final AppointmentRepository appointmentRepository;
+    @Autowired
+    private final AppointmentService appointmentService;
 
     public AppointmentController(
-        AppointmentRepository appointmentRepository,
-        AppointmentService appointmentService
-    ) {
+            AppointmentRepository appointmentRepository,
+            AppointmentService appointmentService) {
         this.appointmentRepository = appointmentRepository;
         this.appointmentService = appointmentService;
     }
@@ -55,19 +56,22 @@ public class AppointmentController {
     }
 
     @GetMapping("/manager/{id}")
-    public List<Appointment> getManagerAppointments(User user){
+    public List<Appointment> getManagerAppointments(User user) {
         return appointmentRepository.findByManager(user.getId());
     }
 
-    public List<Appointment> getAppointmentByDate(List<Appointment> appointmentsList, LocalDate dataInit, LocalDate dataFim){
+    public List<Appointment> getAppointmentByDate(List<Appointment> appointmentsList, LocalDate dataInit,
+            LocalDate dataFim) {
         return appointmentService.findAppointmentByDate(appointmentsList, dataInit, dataFim);
     }
 
-    public List<Appointment> getAppointmentByHour(List<Appointment> appointmentsList, LocalTime dataInit, LocalTime dataFim){
+    public List<Appointment> getAppointmentByHour(List<Appointment> appointmentsList, LocalTime dataInit,
+            LocalTime dataFim) {
         return appointmentService.findAppointmentByHour(appointmentsList, dataInit, dataFim);
     }
 
-    public List<Appointment> getAppointmentByDateHour(List<Appointment> appointmentsList, LocalDateTime dataInit, LocalDateTime dataFim){
+    public List<Appointment> getAppointmentByDateHour(List<Appointment> appointmentsList, LocalDateTime dataInit,
+            LocalDateTime dataFim) {
         return appointmentService.findAppointmentByDateHour(appointmentsList, dataInit, dataFim);
     }
 
@@ -96,14 +100,21 @@ public class AppointmentController {
         return appointmentRepository.save(appointment);
     }
 
-    
     @PutMapping("/validate/{id}")
-    public Appointment validateAppointment(@PathVariable Long id, @RequestParam(name="index") int index) throws Exception {
-        if (index != 1 && index != 2) {throw new Exception("O valor passado deve ser 1 ou 2");}
+    public Appointment validateAppointment(
+            @PathVariable Long id,
+            @RequestParam(name = "index") int index,
+            @RequestParam(name = "feedback") String feedback) throws Exception {
+        if (index != 1 && index != 2) {
+            throw new Exception("O valor passado deve ser 1 ou 2");
+        }
         Appointment appointment = appointmentRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Appointment not found with id: " + id));
-        AppointmentStatus status = AppointmentStatus.of(index);     
+        AppointmentStatus status = AppointmentStatus.of(index);
         appointment.setStatus(status);
+        appointment.setFeedback(feedback);
+
         return appointmentRepository.save(appointment);
     }
+
 }
