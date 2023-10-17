@@ -18,6 +18,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.sql.Timestamp;
+import java.time.LocalTime;
+
 @Entity(name="pay_rate_rules")
 @Table(name="pay_rate_rules")
 @AllArgsConstructor
@@ -31,23 +34,33 @@ public class PayRateRule {
     @Column(name="prt_id")
     private Long id;
 
-    @Column(unique=true)
+    @Column(name="code", unique=true)
     private Long code;
 
     @Column(name = "hour_duration")
-    private double hourDuration;
+    private Double hourDuration;
+
+    @Column(name = "min_hour_count")
+    private Double minHourCount;
+
     @Column(name = "pay_rate")
-    private double payRate;
+    private Double payRate;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "appointment_type")
     private AppointmentType appointmentType;
 
-    @Column(name = "start_time")
-    private LocalTime startTime;
-    @Column(name = "end_time")
-    private LocalTime endTime;
+    // @Enumerated(EnumType.STRING)
+    // @Column(name = "days_of_week")
+    // private Week daysOfWeek;
 
     @Enumerated(EnumType.STRING)
-    private Week daysOfWeek;
-
+    @Column(name = "period")
+    private Shift shift;
+   
+    @Column(name = "overlap")
+    private Boolean overlap;   
+    
+    @Column(name = "expire_date")
+    private Timestamp expire_date;   
 }

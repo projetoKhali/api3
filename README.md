@@ -16,7 +16,6 @@ target="_blank"><img src="https://img.shields.io/badge/-Marcos-%23000000?style=f
 <a href="https://github.com/jhonatanLop" target="_blank"><img src="https://img.shields.io/badge/-Jhonatan-%23000000?style=for-the-badge&logo=GitHUb&logoColor=white"></a>
 <a href="https://github.com/paulo-granthon" target="_blank"><img src="https://img.shields.io/badge/-Paulo-%23000000?style=for-the-badge&logo=GitHUb&logoColor=white"></a>
 <a href="https://github.com/taniacruzz" target="_blank"><img src="https://img.shields.io/badge/-Tânia-%23000000?style=for-the-badge&logo=GitHUb&logoColor=white"</a>
-<a href="https://github.com/MikaelaBgtt" target="_blank"><img src="https://img.shields.io/badge/-Mikáela-%23000000?style=for-the-badge&logo=GitHUb&logoColor=white"></a>
  </div>
 <br>
 <br>
@@ -103,11 +102,25 @@ cliente, CR e colaborador.
 | Como administrador preciso ser capaz de cadastrar colaboradores, gestores e administradores para que eu possa designá-los as permissões corretas no sistema. | Inserir novo usuário do tipo Colaborador; Inserir novo usuário do tipo Gestor; Inserir novo usuário do tipo Administrador. |
 | Como administrador preciso ser capaz de cadastrar squads para que os apontamentos sejam corretamente associados aos Centros de Resultado. | Inserir uma nova Squad. |
 <br>
+
+ <h2 align="center"> Sprint 2 </h2>
+
+|  Story  | Críterios de aceite |
+|:---------|:----------------------|
+| Como gestor preciso ser capaz de aprovar ou rejeitar os apontamentos de hora extra e sobreaviso dos colaboradores da(s) minha(s) squad(s) para barrar apontamentos inválidos.  | Ser capaz de Aprovar ou Reprovar um apontamento. |
+| Como gestor preciso dar um feedback para apontamentos recusado por mim para que o solicitante tenha uma justificativa de o porquê da recusa.  | Ser capaz de inserir uma justificativa no caso de apontamentos reprovados |
+| Como administrador preciso ser capaz de cadastrar clientes e seus respectivos projetos para que sejam referenciados durante o apontamento de horas extras e sobreavisos.  | Inserir novo cliente que possa ser associado em novos apontamentos; Inserir novo projeto que possa ser associado em novos apontamentos |
+| Eu como administrador preciso poder desativar um colaborador no caso de uma desistência.  | Não ter mais visualização dos apontamentos dos usuários do tipo; Usuários desativados deixam de realizam apontamentos |
+| Como administrador preciso ser capaz de configurar os parâmetros da verba dos apontamentos para ter melhor controle sobre as horas trabalhadas dos colaboradores.  | Ser capaz de alterar a duração da verba; Ser capaz de alterar o código da verba; Ser capaz de alterar a porcentagem do valor da hora. |
+
+<br>
 </details>
 
 <details>
 <summary> Backlog das Entregas </summary>
-<br> 
+<br>
+
+<h2>Sprint 1</h2>
 
 |  Entregas  | Story |
 |:---------|:----------------------|
@@ -118,7 +131,18 @@ cliente, CR e colaborador.
 | Criação do sistema de apontamento de horas extras e sobreavisos. | Como colaborador preciso ser capaz de apontar as minhas horas extras e sobreavisos no sistema para que elas fiquem registradas. |
 | Listagem de apontamentos de horas extras e sobreavisos. | Como colaborador preciso ter acesso ao estado dos meus apontamentos de hora extra e sobreaviso para me manter atualizado; Como gestor preciso ser capaz de consultar o histórico de apontamentos da(s) minha(s) squad(s) para facilitar o controle de horas extras e sobreavisos feitos pela minha squad; Como administrador preciso ter acesso aos apontamentos de hora extra e sobreaviso de cada squad dos meus gestores para melhor acompanhamento do período trabalhado dos meus colaboradores. |
 | Sistema de cadastro de colaboradores, gestores e administradores. | Como administrador preciso ser capaz de cadastrar colaboradores, gestores e administradores para que eu possa designá-los as permissões corretas no sistema. |
+
+<h2>Sprint 2</h2>
+
+|  Entregas  | Story |
+|:---------|:----------------------|
+| Validação de apontamentos pelo gestor. | Como gestor preciso ser capaz de aprovar ou rejeitar os apontamentos de hora extra e sobreaviso dos colaboradores da(s) minha(s) squad(s) para barrar apontamentos inválidos. |
+| Funcionalidade de feedback do gestor ao rejeitar um apontamento. | Como gestor preciso dar um feedback para apontamentos recusado por mim para que o solicitante tenha uma justificativa de o porquê da recusa. |
 | Sistema de cadastro de squads. | Como administrador preciso ser capaz de cadastrar squads para que os apontamentos sejam corretamente associados aos Centros de Resultado. |
+| Sistema de cadastro de clientes e projetos. | Como administrador preciso ser capaz de cadastrar clientes e seus respectivos projetos para que sejam referenciados durante o apontamento de horas extras e sobreavisos. |
+| Desativação de usuário. | Eu como administrador preciso poder desativar um colaborador no caso de uma desistência. |
+| Visualização de usuários desativados. | Eu como administrador preciso ter acesso a um histórico de colaboradores que foram desativados. |
+| Funcionalidade de adição e parametrização de verbas do sistema. | Como administrador preciso ser capaz de configurar os parâmetros da verba dos apontamentos para ter melhor controle sobre as horas trabalhadas dos colaboradores |
 
 </details>
 <details>
@@ -131,8 +155,8 @@ Linguagem de programação II, Progamação em Banco de dados e Laboratório de 
 
 ### Prazos
 
-* [ ] 04/09 a 24/09 - Sprint 1
-* [ ] 25/09 a 15/10 - Sprint 2
+* [x] 04/09 a 24/09 - Sprint 1
+* [x] 25/09 a 15/10 - Sprint 2
 * [ ] 16/10 a 05/11 - Sprint 3
 * [ ] 06/11 a 26/11 - Sprint 4
 
@@ -155,6 +179,7 @@ Este repositório contém tanto o [Back-End](./api/) quanto o [Front-End](./web/
 
 #### Front-End `./web/`
 > * [React](https://react.dev/).
+> * [Typescript](https://www.typescriptlang.org).
 
 <br>
 

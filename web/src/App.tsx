@@ -12,6 +12,8 @@ import Projects from "./pages/Projects";
 import ResultCenters from './pages/ResultCenters';
 import Appointments from "./pages/UserAppointments";
 import Users from "./pages/Users";
+import Parametrization from './pages/Parametrization';
+
 import { UserSchema } from './schemas/User';
 
 
@@ -32,6 +34,7 @@ function App() {
                             <Route path="clients" element={<Clients/>} />
                             <Route path="resultCenters" element={<ResultCenters/>} />
                             <Route path="projects" element={<Projects/>} />
+                            <Route path="parametrization" element={<Parametrization/>} />
                         </Route>
                     </Routes>
                 </BrowserRouter>

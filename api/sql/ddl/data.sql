@@ -9,3 +9,9 @@ INSERT INTO members (usr_id, rc_id) VALUES (1, 1);
 INSERT INTO clients (name, cnpj) VALUES ('client', '1');
 
 INSERT INTO projects (name, description) VALUES ('project', 'Khali API3 test project');
+
+INSERT INTO pay_rate_rules (code, hour_duration, min_hour_count, pay_rate, overlap) VALUES (1, 1, 1, 1, true);
+INSERT INTO pay_rate_rules (code, hour_duration, min_hour_count, pay_rate, overlap) VALUES (2, 1, 1, 1, true);
+INSERT INTO pay_rate_rules (code, hour_duration, min_hour_count, pay_rate, overlap) VALUES (3, 1, 1, 1, true);
+INSERT INTO pay_rate_rules (code, hour_duration, min_hour_count, pay_rate, overlap) VALUES (4, 1, 1, 1, true);
+INSERT INTO pay_rate_rules (code, hour_duration, min_hour_count, pay_rate, overlap) VALUES (5, 1, 1, 1, true);
