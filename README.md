@@ -16,7 +16,6 @@ target="_blank"><img src="https://img.shields.io/badge/-Marcos-%23000000?style=f
 <a href="https://github.com/jhonatanLop" target="_blank"><img src="https://img.shields.io/badge/-Jhonatan-%23000000?style=for-the-badge&logo=GitHUb&logoColor=white"></a>
 <a href="https://github.com/paulo-granthon" target="_blank"><img src="https://img.shields.io/badge/-Paulo-%23000000?style=for-the-badge&logo=GitHUb&logoColor=white"></a>
 <a href="https://github.com/taniacruzz" target="_blank"><img src="https://img.shields.io/badge/-Tânia-%23000000?style=for-the-badge&logo=GitHUb&logoColor=white"</a>
-<a href="https://github.com/MikaelaBgtt" target="_blank"><img src="https://img.shields.io/badge/-Mikáela-%23000000?style=for-the-badge&logo=GitHUb&logoColor=white"></a>
  </div>
 <br>
 <br>
