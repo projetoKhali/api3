@@ -50,6 +50,9 @@ const PermissionSideMenuItemMap: Record<string, SideMenuItem[]> = {
         {
             label: "Apontamentos Geral",
             url:   '/Appointments'
+        }, {
+            label: "Parametrização",
+            url: "/parametrization"
         }
     ]
 }
