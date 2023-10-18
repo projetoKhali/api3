@@ -14,6 +14,7 @@ export default function Dropdown ({ placeholder, options, onSelect }: DropdownPr
     useEffect(() => {
         if ((!placeholder || !placeholder.length) && options && options.length > 0) {
             setSelected(options[0]);
+            onSelect(options[0]);
         }
     }, []);
 
