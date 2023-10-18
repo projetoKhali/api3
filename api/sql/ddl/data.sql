@@ -10,8 +10,5 @@ INSERT INTO clients (name, cnpj) VALUES ('client', '1');
 
 INSERT INTO projects (name, description) VALUES ('project', 'Khali API3 test project');
 
-INSERT INTO pay_rate_rules (code, hour_duration, min_hour_count, pay_rate, overlap) VALUES (1, 1, 1, 1, true);
-INSERT INTO pay_rate_rules (code, hour_duration, min_hour_count, pay_rate, overlap) VALUES (2, 1, 1, 1, true);
-INSERT INTO pay_rate_rules (code, hour_duration, min_hour_count, pay_rate, overlap) VALUES (3, 1, 1, 1, true);
-INSERT INTO pay_rate_rules (code, hour_duration, min_hour_count, pay_rate, overlap) VALUES (4, 1, 1, 1, true);
-INSERT INTO pay_rate_rules (code, hour_duration, min_hour_count, pay_rate, overlap) VALUES (5, 1, 1, 1, true);
+INSERT INTO pay_rate_rules (code, hour_duration, min_hour_count, pay_rate, appointment_type, period, overlap) VALUES (1100, 1, 1, 75, 'Overtime'::Apt_type, 'Daytime'::Period_type, false);
+INSERT INTO pay_rate_rules (code, hour_duration, min_hour_count, pay_rate, appointment_type, period, overlap) VALUES (1200, 1, 1, 100, 'Overtime'::Apt_type, 'Nightime'::Period_type, false);
