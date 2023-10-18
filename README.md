@@ -185,4 +185,6 @@ Este repositório contém tanto o [Back-End](./api/) quanto o [Front-End](./web/
 
 > [Documentação banco de dados](https://github.com/projetoKhali/api3/blob/be27d7c6c37234c0423714cce698620c3f090968/docs/Banners/Documenta%C3%A7%C3%A3o%20BD.pdf)
 
+> [Burndown da Sprint 2](https://github.com/projetoKhali/api3/blob/be27d7c6c37234c0423714cce698620c3f090968/docs/burndown/sprint_2.pdf)
+
 <br>
