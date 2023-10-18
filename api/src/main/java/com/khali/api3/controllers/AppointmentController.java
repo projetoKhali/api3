@@ -88,12 +88,11 @@ public class AppointmentController {
         appointment.setType(appointmentDetails.getType());
         appointment.setStartDate(appointmentDetails.getStartDate());
         appointment.setEndDate(appointmentDetails.getEndDate());
-        appointment.setInsertDate(appointmentDetails.getInsertDate());
         appointment.setResultCenter(appointmentDetails.getResultCenter());
         appointment.setClient(appointmentDetails.getClient());
         appointment.setProject(appointmentDetails.getProject());
         appointment.setJustification(appointmentDetails.getJustification());
-        appointment.setStatus(appointmentDetails.getStatus());
+        // appointment.setStatus(appointmentDetails.getStatus());
         appointment.setFeedback(appointmentDetails.getFeedback());
         appointment.setApt_updt(appointmentDetails.getApt_updt());
 
