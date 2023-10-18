@@ -1,6 +1,6 @@
 # Ferramenta para controle de Horas Extras e Sobreavisos
 
-<img align="right" width="256"  src="Docs\Banners\Api.png"/>
+<img align="right" width="256"  src="docs\Banners\Api.png"/>
 
 Sistema que faça o controle da jornada de trabalho do colaborador, identifique e classifique horas extras e sobreavisos.
 
@@ -8,7 +8,7 @@ Acesso de administrador (master para os departamentos pessoal e financeiro), ges
 
 <br>
 
-<img src="Docs\Banners\equipe.png"/>
+<img src="docs\Banners\equipe.png"/>
 
 <div align="center">
     <a href="https://github.com/incivius"target="_blank"><img src="https://img.shields.io/badge/-Marcos-%23000000?style=for-the-badge&logo=GitHUb&logoColor=white"></a>
@@ -19,7 +19,7 @@ Acesso de administrador (master para os departamentos pessoal e financeiro), ges
 
 <br><br><hr>
 
-<img src="Docs\Banners\Projeto.png"/>
+<img src="docs\Banners\Projeto.png"/>
 
 
 ### Detalhes e conhecimentos exigidos no projeto:
@@ -155,7 +155,7 @@ Linguagem de programação II, Progamação em Banco de dados e Laboratório de 
 <br>
 
 <hr>
-<img src="Docs\Banners\ProdutoK.png"/>
+<img src="docs\Banners\ProdutoK.png"/>
 
 ### Arquitetura e Tecnologias
 
@@ -179,10 +179,10 @@ Este repositório contém tanto o [Back-End](./api/) quanto o [Front-End](./web/
 
 > [Wireframe completo no Figma](https://www.figma.com/file/0CRUGDxQoOc3QRMK16TyHa/Untitled?type=design&mode=design&t=ukkR699csvDlWLYY-1)
 
-> [ERD](https://github.com/projetoKhali/api3/blob/be27d7c6c37234c0423714cce698620c3f090968/Docs/Banners/ERD.PNG)
+> [ERD](https://github.com/projetoKhali/api3/blob/be27d7c6c37234c0423714cce698620c3f090968/docs/Banners/ERD.PNG)
 
-> [Diagrama de Entidade-Relacionamento](https://github.com/projetoKhali/api3/blob/be27d7c6c37234c0423714cce698620c3f090968/Docs/Banners/Entidade-Relacionamento.png)
+> [Diagrama de Entidade-Relacionamento](https://github.com/projetoKhali/api3/blob/be27d7c6c37234c0423714cce698620c3f090968/docs/Banners/Entidade-Relacionamento.png)
 
-> [Documentação banco de dados](https://github.com/projetoKhali/api3/blob/be27d7c6c37234c0423714cce698620c3f090968/Docs/Banners/Documenta%C3%A7%C3%A3o%20BD.pdf)
+> [Documentação banco de dados](https://github.com/projetoKhali/api3/blob/be27d7c6c37234c0423714cce698620c3f090968/docs/Banners/Documenta%C3%A7%C3%A3o%20BD.pdf)
 
 <br>
