@@ -73,6 +73,10 @@ public class Appointment {
     @Column
     private String feedback;
 
+    @Transient
+    @Column(name = "insert_date")
+    private Timestamp insertDate;
+
     @OneToOne
     @JoinColumn(name="apt_updt_id", referencedColumnName = "apt_id")
     private Appointment apt_updt;
