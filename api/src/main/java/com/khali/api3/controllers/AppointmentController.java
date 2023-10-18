@@ -101,16 +101,19 @@ public class AppointmentController {
 
     @PutMapping("/validate/{id}")
     public Appointment validateAppointment(
-            @PathVariable Long id,
-            @RequestParam(name = "index") int index,
-            @RequestParam(name = "feedback") String feedback) throws Exception {
+        @PathVariable Long id,
+        @RequestParam(name = "index") int index,
+        @RequestParam(name = "feedback") String feedback
+    ) throws Exception {
+
         if (index != 1 && index != 2) {
             throw new Exception("O valor passado deve ser 1 ou 2");
         }
         Appointment appointment = appointmentRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Appointment not found with id: " + id));
+            .orElseThrow(() -> new EntityNotFoundException("Appointment not found with id: " + id));
         AppointmentStatus status = AppointmentStatus.of(index);
-        appointment.setStatus(status);
+        // appointment.setStatus(status);
+        appointmentRepository.updateStatusAppointment(id, status);
         appointment.setFeedback(feedback);
 
         return appointmentRepository.save(appointment);
