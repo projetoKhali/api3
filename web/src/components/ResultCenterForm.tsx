@@ -122,6 +122,7 @@ export default function ResultCenterForm({ callback }: { callback: () => void })
                     {selectedResultCenterMemberToAdd ? (
                         <button
                             className="result-center-form-add-member-button"
+                            type="button"
                             onClick={() => handleAddMember(selectedResultCenterMemberToAdd)}
                         > + </button>
                     ) : (
