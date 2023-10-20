@@ -84,19 +84,21 @@ public class AppointmentController {
     public Appointment updateAppointment(@PathVariable Long id, @RequestBody Appointment appointmentDetails) {
         Appointment appointment = appointmentRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Appointment not found with id: " + id));
-        appointment.setUser(appointmentDetails.getUser());
-        appointment.setType(appointmentDetails.getType());
-        appointment.setStartDate(appointmentDetails.getStartDate());
-        appointment.setEndDate(appointmentDetails.getEndDate());
-        appointment.setInsertDate(appointmentDetails.getInsertDate());
-        appointment.setResultCenter(appointmentDetails.getResultCenter());
-        appointment.setClient(appointmentDetails.getClient());
-        appointment.setProject(appointmentDetails.getProject());
-        appointment.setJustification(appointmentDetails.getJustification());
-        appointment.setStatus(appointmentDetails.getStatus());
-        appointment.setFeedback(appointmentDetails.getFeedback());
-        appointment.setApt_updt(appointmentDetails.getApt_updt());
-
+        // appointment.setUser(appointmentDetails.getUser());
+        // appointment.setType(appointmentDetails.getType());
+        // appointment.setStartDate(appointmentDetails.getStartDate());
+        // appointment.setEndDate(appointmentDetails.getEndDate());
+        // appointment.setInsertDate(appointmentDetails.getInsertDate());
+        // appointment.setResultCenter(appointmentDetails.getResultCenter());
+        // appointment.setClient(appointmentDetails.getClient());
+        // appointment.setProject(appointmentDetails.getProject());
+        // appointment.setJustification(appointmentDetails.getJustification());
+        // appointment.setStatus(appointmentDetails.getStatus());
+        // appointment.setFeedback(appointmentDetails.getFeedback());
+        // appointment.setApt_updt(appointmentDetails.getApt_updt());
+        
+        appointment.setActive(false);
+        appointmentDetails.setApt_updt(appointment.getId());
         return appointmentRepository.save(appointment);
     }
 

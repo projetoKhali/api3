@@ -16,8 +16,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -71,8 +71,11 @@ public class Appointment {
 
     @Column
     private String feedback;
+    
+    @Transient
+    @Column
+    private boolean active;
 
-    @OneToOne
-    @JoinColumn(name="apt_updt_id", referencedColumnName = "apt_id")
-    private Appointment apt_updt;
+    @Column(name = "apt_updt_id")
+    private Long apt_updt;
 }
