@@ -78,4 +78,24 @@ export async function putAppointment(appointment: AppointmentSchema, newActiveSt
         console.error('Erro ao validar o apontamento:', error);
         throw error;
     }
+
+}
+
+
+export async function getCountNotification(id: number): Promise<number[]> {
+    try {
+        const response = await axios.get(`${API_URL}/notification/${id}`, {});
+        const data = response.data;
+        
+        if (Array.isArray(data)) {
+            // Mapear os elementos da lista para números
+            const numbers = data.map(item => Number(item));
+            return numbers;
+        } else {
+            throw new Error("Os dados não estão no formato esperado.");
+        }
+    } catch (error) {
+        console.error('Erro ao obter notificações:', error);
+        throw error;
+    }
 }
