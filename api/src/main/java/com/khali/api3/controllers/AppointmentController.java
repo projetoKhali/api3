@@ -3,6 +3,7 @@ package com.khali.api3.controllers;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -118,5 +119,17 @@ public class AppointmentController {
 
         return appointmentRepository.save(appointment);
     }
+
+@GetMapping("/notification/{id}")
+public List<Long> notificationAppointment(@PathVariable Long id) {
+    List<Long> notification = new ArrayList<>();
+    long count = appointmentRepository.countAppointmentsByManager(id);
+    notification.add(count);
+    count = appointmentRepository.countAppointmentsRejectedByUser(id);
+    notification.add(count);
+    count = appointmentRepository.countAppointmentsApprovatedByUser(id);
+    notification.add(count);
+    return notification;
+}
 
 }
