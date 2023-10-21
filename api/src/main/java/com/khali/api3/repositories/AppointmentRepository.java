@@ -38,11 +38,11 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long>{
     @Query(value = "SELECT COUNT(*) FROM appointments a WHERE a.rc_id IN (SELECT rc_id FROM result_centers WHERE gst_id = :usr_id) AND a.status = 'Pending'", nativeQuery = true)
     long countAppointmentsByManager(@Param("usr_id") Long userId);
 
-    @Query(value = "SELECT COUNT(*) FROM appointments a WHERE a.urs_id = :urs_id AND a.status = 'Rejeted'", nativeQuery = true)
-    long countAppointmentsRejectedByUser(@Param("usr_id") Long userId);
+    @Query(value = "SELECT COUNT(*) FROM appointments a WHERE a.usr_id = :usr_id AND a.status = 'Rejected'", nativeQuery = true)
+    long countAppointmentsRejectedByUser(@Param("usr_id") Long id);
 
-    @Query(value = "SELECT COUNT(*) FROM appointments a WHERE a.urs_id = :urs_id AND a.status = 'Approved'", nativeQuery = true)
-    long countAppointmentsApprovatedByUser(@Param("usr_id") Long userId);
+    @Query(value = "SELECT COUNT(*) FROM appointments a WHERE a.usr_id = :usr_id AND a.status = 'Approved'", nativeQuery = true)
+    long countAppointmentsApprovatedByUser(@Param("usr_id") Long id);
 
 }
 

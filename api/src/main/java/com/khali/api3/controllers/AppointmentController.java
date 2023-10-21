@@ -120,14 +120,14 @@ public class AppointmentController {
         return appointmentRepository.save(appointment);
     }
 
-@GetMapping("/notification/{id}")
-public List<Long> notificationAppointment(@PathVariable Long id) {
+@GetMapping("/notification/{usr_id}")
+public List<Long> notificationAppointment(@PathVariable Long usr_id) {
     List<Long> notification = new ArrayList<>();
-    long count = appointmentRepository.countAppointmentsByManager(id);
+    long count = appointmentRepository.countAppointmentsByManager(usr_id);
     notification.add(count);
-    count = appointmentRepository.countAppointmentsRejectedByUser(id);
+    count = appointmentRepository.countAppointmentsRejectedByUser(usr_id);
     notification.add(count);
-    count = appointmentRepository.countAppointmentsApprovatedByUser(id);
+    count = appointmentRepository.countAppointmentsApprovatedByUser(usr_id);
     notification.add(count);
     return notification;
 }
