@@ -66,6 +66,7 @@ public class Appointment {
     @Column
     private String justification;
 
+    @Transient
     @Enumerated(EnumType.STRING)
     private AppointmentStatus status;
 
