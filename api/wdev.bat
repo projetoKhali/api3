@@ -2,12 +2,18 @@
 setlocal
 
 rem Check if the first argument is "build"
-if "%1" == "build" (
+if "%~1" == "build" (
     call :build
 )
 
 rem Check if the first argument is "run"
-if "%1" == "run" (
+if "%~1" == "run" (
+    call :run
+)
+
+rem If no arguments were passed run both
+if "%~1" == "" (
+    call :build
     call :run
 )
 
