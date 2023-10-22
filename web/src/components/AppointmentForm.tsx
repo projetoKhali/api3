@@ -50,6 +50,7 @@ export default function AppointmentForm ({ userLoggedIn, successCallback, errorC
     function handleJustificationChange(event: React.ChangeEvent<HTMLInputElement>){ setPostAppointmentJustification(event.target.value); }
 
     function handleSubmit(event: React.ChangeEvent<HTMLFormElement>) {
+      event.preventDefault();
       if (!postAppointmentType
         || !postAppointmentStartDate
         || !postAppointmentEndDate
@@ -57,32 +58,33 @@ export default function AppointmentForm ({ userLoggedIn, successCallback, errorC
         || !postAppointmentClient
         || !postAppointmentProject
         || !postAppointmentJustification
-      ) return errorCallback();
+        ) errorCallback();
 
-      event.preventDefault();
+      else {
 
-      const formattedStartDate = formatDateTime(postAppointmentStartDate);
-      const formattedEndDate = formatDateTime(postAppointmentEndDate);
+        const formattedStartDate = formatDateTime(postAppointmentStartDate);
+        const formattedEndDate = formatDateTime(postAppointmentEndDate);
 
-      postAppointment({
-        user: {
-          id: userLoggedIn.id
-        },
-        type: postAppointmentType,
-        startDate: formattedStartDate,
-        endDate: formattedEndDate,
-        resultCenter: {
-            id: postAppointmentResultCenter.id,
-        },
-        client: {
-            id: postAppointmentClient.id,
-        },
-        project: {
-            id: postAppointmentProject.id,
-        },
-        justification: postAppointmentJustification,
-      } as PostAppointmentSchema)
-      .then(() => successCallback());
+        postAppointment({
+          user: {
+            id: userLoggedIn.id
+          },
+          type: postAppointmentType,
+          startDate: formattedStartDate,
+          endDate: formattedEndDate,
+          resultCenter: {
+              id: postAppointmentResultCenter.id,
+          },
+          client: {
+              id: postAppointmentClient.id,
+          },
+          project: {
+              id: postAppointmentProject.id,
+          },
+          justification: postAppointmentJustification,
+        } as PostAppointmentSchema)
+        .then(() => successCallback());
+      }
     }
 
     return (
@@ -90,7 +92,7 @@ export default function AppointmentForm ({ userLoggedIn, successCallback, errorC
 
           <AppointmentTypeDropdown
             onSelect={(option: DropdownOption) => {
-                setPostAppointmentType(option.optionName)
+                setPostAppointmentType(option.optionName);
             }}
           />
 

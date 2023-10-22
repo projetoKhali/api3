@@ -100,6 +100,7 @@ DROP TABLE IF EXISTS members CASCADE;
 CREATE TABLE IF NOT EXISTS members(
     usr_id INT,
     rc_id INT,
+    active BOOLEAN DEFAULT TRUE,
     insert_date TIMESTAMP DEFAULT now(),
     CONSTRAINT members_pk PRIMARY KEY
     (usr_id,rc_id),

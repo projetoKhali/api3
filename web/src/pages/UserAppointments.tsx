@@ -68,7 +68,7 @@ export default function Appointments({ userLoggedIn }: AppointmentsProps) {
             dataIndex: 'status',
             key: 'status',
             render: (status, record) => {
-                if (status === 'Reject') {
+                if (status === 'Rejected') {
                     return (
                         <span
                             onClick={() => {

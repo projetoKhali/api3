@@ -6,7 +6,7 @@ const API_URL = `${process.env.BACKEND_URL}/clients`;
 export async function getClients (): Promise<ClientSchema[]> {
     const response = await axios.get(API_URL, {});
     return await response.data.map((item: any) => ({
-        key: item.id.toString(), 
+        id: item.id.toString(), 
         name: item.name? item.name : "N/A",
         cnpj: item.cnpj? item.cnpj : "N/A",
         // active: item.active? item.active : "N/A",
