@@ -128,12 +128,12 @@ public class AppointmentController {
         long count = appointmentRepository.countAppointmentsByManager(usr_id);
         notification.add(count);
         temp = appointmentRepository.countAppointmentsRejectedByUser(usr_id);
-        count = temp - rejected;
-        rejected = temp;
+        count = temp - this.rejected;
+        this.rejected = temp;
         notification.add(count);
         temp = appointmentRepository.countAppointmentsApprovatedByUser(usr_id);
-        count = temp - approvated;
-        approvated = temp;
+        count = temp - this.approvated;
+        this.approvated = temp;
         notification.add(count);
         return notification;
     }

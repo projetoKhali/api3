@@ -104,7 +104,7 @@ export async function getCountNotification(id: number): Promise<NotificationItem
 
             if (numbers[0] > 0) {
                 notifications.push({
-                    label: `Você possui apontamentos ${numbers[0]} aguardando validação`,
+                    label: `Você possui ${numbers[0]} apontamento(s) aguardando validação`,
                     url: "/appointments/manager"
                 });
             }
