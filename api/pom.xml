@@ -13,7 +13,7 @@
 	<name>api3</name>
 	<description>API project for the third semester of the Khali group at FATEC. </description>
 	<properties>
-		<java.version>11</java.version>
+		<java.version>17</java.version>
 		<lombok-version>1.18.28</lombok-version>
 	</properties>
 	<dependencies>
