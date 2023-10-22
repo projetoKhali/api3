@@ -1,6 +1,8 @@
 import axios, { AxiosResponse } from 'axios';
 import { AppointmentSchema, PostAppointmentSchema } from '../schemas/Appointment';
 
+
+
 const API_URL = 'http://127.0.0.1:8080/appointments';
 
 async function mapResponse(response: AxiosResponse): Promise<AppointmentSchema[]> {
@@ -18,6 +20,15 @@ async function mapResponse(response: AxiosResponse): Promise<AppointmentSchema[]
         feedback: item.feedback ? item.feedback : "N/A"
         // insertDate: item.insertDate? item.insertDate : "N/A",
     })) as AppointmentSchema[]
+}
+
+export interface NotificationItem {
+    label: string;
+    url: string;
+};
+
+export interface NotificationProps {
+    items: NotificationItem[];
 }
 
 export async function getAppointmentsUser(id: number): Promise<AppointmentSchema[]> {
@@ -82,15 +93,37 @@ export async function putAppointment(appointment: AppointmentSchema, newActiveSt
 }
 
 
-export async function getCountNotification(id: number): Promise<number[]> {
+export async function getCountNotification(id: number): Promise<NotificationItem[]> {
     try {
         const response = await axios.get(`${API_URL}/notification/${id}`, {});
         const data = response.data;
-        
+
         if (Array.isArray(data)) {
-            // Mapear os elementos da lista para números
             const numbers = data.map(item => Number(item));
-            return numbers;
+            const notifications: NotificationItem[] = [];
+
+            if (numbers[0] > 0) {
+                notifications.push({
+                    label: `Você possui apontamentos ${numbers[0]} aguardando validação`,
+                    url: "/appointments/manager"
+                });
+            }
+
+            if (numbers[1] > 0) {
+                notifications.push({
+                    label: `Você possui ${numbers[1]} novo(s) apontamento(s) recusado(s)`,
+                    url: "/appointments/manager"
+                });
+            }
+
+            if (numbers[2] > 0) {
+                notifications.push({
+                    label: `Você possui ${numbers[2]} novo(s) apontamento(s) aprovado(s)`,
+                    url: "/appointments/manager"
+                });
+            }
+
+            return notifications;
         } else {
             throw new Error("Os dados não estão no formato esperado.");
         }
@@ -99,3 +132,7 @@ export async function getCountNotification(id: number): Promise<number[]> {
         throw error;
     }
 }
+
+
+
+

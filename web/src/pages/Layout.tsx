@@ -1,27 +1,25 @@
 import { useEffect, useState } from 'react';
 import { Outlet } from 'react-router-dom';
+import NotificationPopUp from '../components/Notification';
 import SideMenu, { SideMenuItem } from '../components/SideMenu';
 import { UserSchema } from "../schemas/User";
 import { getUserSideMenuItems } from '../services/Access';
 
 interface LayoutProps {
-    userLoggedIn: UserSchema ; // Receba o usuário como prop
-  }
-  
+    userLoggedIn: UserSchema;
+}
 
-export default function Layout({userLoggedIn}: LayoutProps) {
-    console.log(userLoggedIn)
+export default function Layout({ userLoggedIn }: LayoutProps) {
     const [menuItems, setMenuItems] = useState<SideMenuItem[]>([]);
-    // const [user, setUser] = useState<UserSchema | undefined>(undefined);
 
-    useEffect(() => {{
-            getUserSideMenuItems(userLoggedIn.id).then(userSideMenuItems => setMenuItems(userSideMenuItems));
-        }
+    useEffect(() => {
+        getUserSideMenuItems(userLoggedIn.id).then(userSideMenuItems => setMenuItems(userSideMenuItems));
     }, [userLoggedIn]);
 
     return (
         <>
-            <SideMenu items={menuItems} userName={userLoggedIn?.name || ''}/>
+            <SideMenu items={menuItems} userName={userLoggedIn?.name || ''} />
+            <NotificationPopUp userId={userLoggedIn.id} />
             <div className="content-area" >
                 <Outlet />
             </div>

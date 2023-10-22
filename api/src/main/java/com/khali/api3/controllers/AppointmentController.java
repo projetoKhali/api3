@@ -27,6 +27,8 @@ import jakarta.persistence.EntityNotFoundException;
 @RestController
 @RequestMapping("/appointments")
 public class AppointmentController {
+    long rejected;
+    long approvated;
 
     @Autowired
     private final AppointmentRepository appointmentRepository;
@@ -102,16 +104,15 @@ public class AppointmentController {
 
     @PutMapping("/validate/{id}")
     public Appointment validateAppointment(
-        @PathVariable Long id,
-        @RequestParam(name = "index") int index,
-        @RequestParam(name = "feedback") String feedback
-    ) throws Exception {
+            @PathVariable Long id,
+            @RequestParam(name = "index") int index,
+            @RequestParam(name = "feedback") String feedback) throws Exception {
 
         if (index != 1 && index != 2) {
             throw new Exception("O valor passado deve ser 1 ou 2");
         }
         Appointment appointment = appointmentRepository.findById(id)
-            .orElseThrow(() -> new EntityNotFoundException("Appointment not found with id: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("Appointment not found with id: " + id));
         AppointmentStatus status = AppointmentStatus.of(index);
         // appointment.setStatus(status);
         appointmentRepository.updateStatusAppointment(id, status);
@@ -120,16 +121,21 @@ public class AppointmentController {
         return appointmentRepository.save(appointment);
     }
 
-@GetMapping("/notification/{usr_id}")
-public List<Long> notificationAppointment(@PathVariable Long usr_id) {
-    List<Long> notification = new ArrayList<>();
-    long count = appointmentRepository.countAppointmentsByManager(usr_id);
-    notification.add(count);
-    count = appointmentRepository.countAppointmentsRejectedByUser(usr_id);
-    notification.add(count);
-    count = appointmentRepository.countAppointmentsApprovatedByUser(usr_id);
-    notification.add(count);
-    return notification;
-}
+    @GetMapping("/notification/{usr_id}")
+    public List<Long> notificationAppointment(@PathVariable Long usr_id) {
+        List<Long> notification = new ArrayList<>();
+        long temp;
+        long count = appointmentRepository.countAppointmentsByManager(usr_id);
+        notification.add(count);
+        temp = appointmentRepository.countAppointmentsRejectedByUser(usr_id);
+        count = temp - rejected;
+        rejected = temp;
+        notification.add(count);
+        temp = appointmentRepository.countAppointmentsApprovatedByUser(usr_id);
+        count = temp - approvated;
+        approvated = temp;
+        notification.add(count);
+        return notification;
+    }
 
 }

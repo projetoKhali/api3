@@ -1,41 +1,37 @@
-import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
-import { Button, Menu } from 'antd';
-import React, { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { NotificationItem, getCountNotification } from '../services/AppointmentService';
 
-type NotificationItem = {
-    key: React.Key;
-    label: React.ReactNode;
-    url: string; // Adicione a propriedade 'url'
-    children?: NotificationItem[];
-    type?: 'group';
-};
-
-export interface NotificationProps {
-    items: NotificationItem[];
+interface NotificationPopUpProps {
+    userId: number;
 }
 
-export default function NotificationPopUp({ items }: NotificationProps) {
+export default function NotificationPopUp({ userId }: NotificationPopUpProps) {
     const [collapsed, setCollapsed] = useState(true);
+    const [notificationItems, setNotificationItems] = useState<NotificationItem[]>([]);
 
     const toggleCollapsed = () => {
         setCollapsed(!collapsed);
     };
 
+    useEffect(() => {
+        getCountNotification(userId).then((notificationItems) => setNotificationItems(notificationItems));
+    }, [userId]);
+
     return (
-        <div className="sidemenu">
+        <div className="notification">
             <div>
-                <Button type="primary" onClick={toggleCollapsed}>
-                    {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-                </Button>
-                {collapsed ? null : (
-                    <Menu>
-                        {items.map((item) => (
-                            <Menu.Item key={item.key}>
+                <button onClick={toggleCollapsed}>
+                    {collapsed ? 'Expandir' : 'Recolher'}
+                </button>
+                {!collapsed && (
+                    <ul>
+                        {notificationItems.map((item, index) => (
+                            <li key={index}>
                                 <Link to={item.url}>{item.label}</Link>
-                            </Menu.Item>
+                            </li>
                         ))}
-                    </Menu>
+                    </ul>
                 )}
             </div>
         </div>
