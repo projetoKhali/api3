@@ -2,8 +2,7 @@
   "name": "api3",
   "version": "1.0.0",
   "scripts": {
-    "start": "cross-env-shell npm run start-scripts",
-    "start-scripts": "if [ $npm_config_os = 'Windows_NT' ] || [ $OSTYPE = cygwin ] || [ $OSTYPE = msys ]; then npm run start-windows; else npm run start-unix; fi",
+    "start": "node os-detect.js",
     "start-unix": "concurrently \"npm run frontend-unix\" \"npm run backend-unix\"",
     "start-windows": "concurrently \"npm run frontend-windows\" \"npm run backend-windows\"",
     "frontend-unix": "cd web && ./ldev.sh",
@@ -12,7 +11,6 @@
     "backend-windows": "cd api && .\\wdev.bat"
   },
   "devDependencies":{
-    "concurrently":"^8.2.2",
-    "cross-env":"^7.0.3"
+    "concurrently":"^8.2.2"
   }
 }
