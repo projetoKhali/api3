@@ -2,13 +2,15 @@
 
 # Function to build the project
 build() {
-    echo "Building the project..."
+    echo "Building the SpringBoot BackEnd..."
     mvn clean install -e -X
 }
 
 # Function to run the Spring Boot application
 run() {
+    echo "Loading the environment variables for the SpringBoot BackEnd..."
     export $(cat .env | xargs)
+    echo "Starting execution of the SpringBoot BackEnd..."
     mvn spring-boot:run -e -X
 }
 
