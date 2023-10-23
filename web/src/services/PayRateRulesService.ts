@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { PayRateRuleSchema, PostPayRateRuleSchema } from '../schemas/PayRateRule';
 
-const API_URL = 'http://127.0.0.1:8080/payRateRules';
+const API_URL = `${import.meta.env.VITE_BACKEND_URL}/payRateRules`;
 
 export async function getPayRateRules (): Promise<PayRateRuleSchema[]> {
     const response = await axios.get(API_URL, {});

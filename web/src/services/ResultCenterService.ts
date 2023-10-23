@@ -3,7 +3,7 @@ import { PostResultCenterSchema, ResultCenterSchema } from '../schemas/ResultCen
 
 import { UserSchema } from '../schemas/User';
 
-const API_URL = `${process.env.BACKEND_URL}/resultCenters`;
+const API_URL = `${import.meta.env.VITE_BACKEND_URL}/resultCenters`;
 
 
 function serializeResultCenter (resultCenter: any): ResultCenterSchema {

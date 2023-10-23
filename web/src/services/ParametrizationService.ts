@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { ParameterSchema, PostParameterSchema } from '../schemas/Parametrization';
 
-const API_URL = 'http://127.0.0.1:8080/parameters';
+const API_URL = `${import.meta.env.VITE_BACKEND_URL}/parameters`;
 
 function serializeParameters (item: any): ParameterSchema {
     return {

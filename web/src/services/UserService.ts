@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from 'axios';
 import { PostUserSchema, UserSchema } from '../schemas/User';
 
-const API_URL = `${process.env.BACKEND_URL}/users`;
+const API_URL = `${import.meta.env.VITE_BACKEND_URL}/users`;
 
 async function mapResponse (response: AxiosResponse) {
     return response.data.map((item: any) => ({

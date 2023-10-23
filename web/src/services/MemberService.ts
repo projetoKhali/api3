@@ -1,6 +1,6 @@
 import { MemberSchema } from '../schemas/Member';
 
-const API_URL = 'http://127.0.0.1:8080/members';
+const API_URL = `${import.meta.env.VITE_BACKEND_URL}/members`;
 
 export async function postMember(member: MemberSchema) {
     return await fetch(`${API_URL}`, {

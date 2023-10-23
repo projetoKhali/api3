@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from 'axios';
 import { PostProjectSchema, ProjectSchema } from '../schemas/Project';
 
-const API_URL = 'http://127.0.0.1:8080/projects';
+const API_URL = `${import.meta.env.VITE_BACKEND_URL}/projects`;
 
 
 async function mapResponse (response: AxiosResponse) {

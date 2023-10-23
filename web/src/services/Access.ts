@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { SideMenuItem } from "../components/SideMenu";
 
-const API_URL = `${process.env.BACKEND_URL}`;
+const API_URL = `${import.meta.env.VITE_BACKEND_URL}`;
 
 const PermissionSideMenuItemMap: Record<string, SideMenuItem[]> = {
     "": [
@@ -58,7 +58,7 @@ const PermissionSideMenuItemMap: Record<string, SideMenuItem[]> = {
 }
 
 export async function getUserSideMenuItems (id: number): Promise<SideMenuItem[]> {
-    return await axios.get(`${API_URL}/${id}/permissions`, {})
+    return await axios.get(`${API_URL}/users/${id}/permissions`, {})
     .then(permissionsResponse => {
         console.log(permissionsResponse);
         const items: SideMenuItem[] = [];
