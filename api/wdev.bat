@@ -21,11 +21,11 @@ endlocal
 exit /b 0
 
 :build
-:: Run "mvn clean install" with debug and error output
+REM Run "mvn clean install" with debug and error output
 echo Building the project...
 mvn clean install -e -X
 
-:: Check the exit code
+REM Check the exit code
 if %errorlevel% neq 0 (
     echo Error compiling project
     exit /b 1
@@ -33,13 +33,15 @@ if %errorlevel% neq 0 (
 exit /b 0
 
 :run
-:: Load the `.env` file to set the values for `application.properties`
+REM Load the `.env` file to set the values for `application.properties`
 echo Loading environment variables from .env file...
-for /f "delims=" %%a in (.env) do set %%a
+for /f "usebackq tokens=1,* delims==" %%i in (.env) do (
+    set "%%i=%%j"
+)
 
-:: Run "mvn spring-boot:run" with debug and error output
+REM Run "mvn spring-boot:run" with debug and error output
 echo Running the Spring Boot application...
 mvn spring-boot:run -e -X
 
-:: Exit the script
+REM Exit the script
 exit /b 0
