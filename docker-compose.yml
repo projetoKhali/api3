@@ -1,18 +1,23 @@
 version: "3.9"
 services:
 
-  # PostgreSQL database
-  khali_api3_db:
-    container_name: khali_api3_db
-    image: postgres:14.1-alpine
-    restart: always
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
+  # TypescriptReact Front End
+  khali_api3_web:
+    container_name: khali_api3_web
+    build:
+      context: ./web/
+      dockerfile: Dockerfile
+    depends_on:
+      - khali_api3_api
+    links:
+      - khali_api3_api
     ports:
-      - 9000:5432
+      - 7000:7000
+    working_dir: /srv/web
     volumes:
-      - db:/var/lib/postgresql:data
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    tty: true
 
   # Spring-Boot REST API
   khali_api3_api:
@@ -37,23 +42,19 @@ services:
         target: /srv/api
     tty: true
 
-  # TypescriptReact Front End
-  khali_api3_web:
-    container_name: khali_api3_web
-    build:
-      context: ./web/
-      dockerfile: Dockerfile
-    depends_on:
-      - khali_api3_api
-    links:
-      - khali_api3_api
+  # PostgreSQL database
+  khali_api3_db:
+    container_name: khali_api3_db
+    image: postgres:14.1-alpine
+    restart: always
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
     ports:
-      - 7000:7000
-    working_dir: /srv/web
+      - 9000:5432
     volumes:
-      - .:/usr/src/app
-      - /usr/src/app/node_modules
-    tty: true
+      - db:/var/lib/postgresql:data
 
 volumes:
   db:
