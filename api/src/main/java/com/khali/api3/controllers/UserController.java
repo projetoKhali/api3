@@ -125,6 +125,15 @@ public class UserController {
 
         return userRepository.save(user);
     }
+    @PutMapping("/{id}/updatePassword")
+    public User updatePassword(@PathVariable Long id, @RequestBody String password) {
+        User user = userRepository.findById(id)
+            .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + id));
+
+        user.setPassword(password);
+
+        return userRepository.save(user);
+    }
 
     // @DeleteMapping("/{id}")
     // public ResponseEntity<?> deleteUser(@PathVariable Long id) {
