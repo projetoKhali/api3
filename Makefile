@@ -1,32 +1,17 @@
-FRONTEND_URL = http://localhost:7000
-FRONTEND_PATH = web
-FRONTEND_RUN_LOCAL = npm i && npm run dev
-
-BACKEND_URL = http://localhost:8000
-BACKEND_PATH = api
-BACKEND_RUN_LOCAL = ./ldev.sh
-
-CD = cd
+LOCAL_RUN = npm run start | lolcat
+DOCKER_RUN = ./lrun_containers.sh
 
 # Windows-specific commands
 ifeq ($(OS),Windows_NT)
-	LOCAL_BACKEND_RUN = .\wdev.bat
-	CD = cd /d
+	LOCAL_RUN = npm run start
+	DOCKER_RUN = .\wrun_containers.bat
 endif
 
 run:
-	docker-compose up --build
+	$(DOCKER_RUN)
 
 local:
-	$(CD) $(BACKEND_PATH) && $(BACKEND_RUN_LOCAL) && cd ..
-	$(CD) $(FRONTEND_PATH) && $(FRONTEND_RUN_LOCAL) && cd ..
-
-open:
-	@xdg-open $(FRONTEND_URL)
-	@xdg-open $(BACKEND_URL)
-
-stop:
-	docker-compose down
+	$(LOCAL_RUN)
 
 # Remove all containers and images
 wipe:
