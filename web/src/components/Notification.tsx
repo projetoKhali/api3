@@ -1,30 +1,31 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { NotificationItem, getCountNotification } from '../services/AppointmentService';
+import { NotificationItem } from '../services/AppointmentService';
 
 interface NotificationPopUpProps {
-    userId: number;
+    notificationItems: NotificationItem[];
+    loadNotifications?: () => void;
 }
 
-export default function NotificationPopUp({ userId }: NotificationPopUpProps) {
-    const [collapsed, setCollapsed] = useState(true);
-    const [notificationItems, setNotificationItems] = useState<NotificationItem[]>([]);
+export default function NotificationPopUp({ notificationItems, loadNotifications }: NotificationPopUpProps) {
+    const [collapsed, setCollapsed] = useState(false);
+    const [loaded, setLoaded] = useState(false);
 
     const toggleCollapsed = () => {
         setCollapsed(!collapsed);
+        if (!loaded && loadNotifications) {
+            loadNotifications(); // Carregar notificações apenas na primeira vez que o botão é pressionado
+            setLoaded(true);
+        }
     };
 
-    useEffect(() => {
-        getCountNotification(userId).then((notificationItems) => setNotificationItems(notificationItems));
-    }, [userId]);
-
     return (
-        <div className="notification">
+        <div className={`notification ${notificationItems.length === 0 ? 'hidden' : ''}`}>
             <div>
                 <button onClick={toggleCollapsed}>
-                    {collapsed ? 'Expandir' : 'Recolher'}
+                    {collapsed ? 'Expandir' : 'X'}
                 </button>
-                {!collapsed && (
+                {!collapsed && notificationItems.length > 0 && (
                     <ul>
                         {notificationItems.map((item, index) => (
                             <li key={index}>

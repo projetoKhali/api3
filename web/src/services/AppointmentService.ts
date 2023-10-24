@@ -101,26 +101,47 @@ export async function getCountNotification(id: number): Promise<NotificationItem
         if (Array.isArray(data)) {
             const numbers = data.map(item => Number(item));
             const notifications: NotificationItem[] = [];
-
             if (numbers[0] > 0) {
-                notifications.push({
-                    label: `Você possui ${numbers[0]} apontamento(s) aguardando validação`,
-                    url: "/appointments/manager"
-                });
+                if (numbers[0] === 1) {
+                    notifications.push({
+                        label: `Você possui ${numbers[0]} apontamento aguardando validação`,
+                        url: "/appointments/manager"
+                    });
+                }
+                else {
+                    notifications.push({
+                        label: `Você possui ${numbers[0]} apontamentos aguardando validação`,
+                        url: "/appointments/manager"
+                    });
+                }
             }
 
             if (numbers[1] > 0) {
-                notifications.push({
-                    label: `Você possui ${numbers[1]} novo(s) apontamento(s) recusado(s)`,
-                    url: "/appointments/manager"
-                });
+                if (numbers[1] === 1) {
+                    notifications.push({
+                        label: `Você possui ${numbers[1]} novo(s) apontamento(s) recusado(s)`,
+                        url: "/appointments/manager"
+                    });
+                } else {
+                    notifications.push({
+                        label: `Você possui ${numbers[1]} novos apontamentos recusados`,
+                        url: "/appointments/manager"
+                    });
+                }
             }
 
             if (numbers[2] > 0) {
-                notifications.push({
-                    label: `Você possui ${numbers[2]} novo(s) apontamento(s) aprovado(s)`,
-                    url: "/appointments/manager"
-                });
+                if (numbers[2] === 1) {
+                    notifications.push({
+                        label: `Você possui ${numbers[2]} novo apontamento aprovado`,
+                        url: "/appointments/manager"
+                    });
+                } else {
+                    notifications.push({
+                        label: `Você possui ${numbers[2]} novos apontamentos aprovados`,
+                        url: "/appointments/manager"
+                    });
+                }
             }
 
             return notifications;
