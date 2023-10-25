@@ -17,6 +17,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -48,8 +49,6 @@ public class Appointment {
     private Timestamp startDate;
     @Column
     private Timestamp endDate;
-    @Column
-    private Timestamp insertDate;
 
     @ManyToOne
     @JoinColumn(name="rc_id")
@@ -58,15 +57,17 @@ public class Appointment {
     @ManyToOne
     @JoinColumn(name="clt_id", referencedColumnName = "clt_id")
     private Client client;
-    
+
     @ManyToOne
     @JoinColumn(name="prj_id", referencedColumnName = "prj_id")
     private Project project;
+
     @Column
     private String justification;
 
     @Column(name = "status", insertable = false, updatable = false)
     @Enumerated(EnumType.STRING)
+    @Transient
     private AppointmentStatus status;
 
     @Column
@@ -77,4 +78,7 @@ public class Appointment {
 
     @Column(name = "apt_updt_id")
     private Long apt_updt;
+
+    @Column(name = "insert_date", insertable = false, updatable = false)
+    private Timestamp insertDate;
 }
