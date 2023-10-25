@@ -43,6 +43,6 @@ public class ResultCenter {
     @JoinColumn(name="gst_id", referencedColumnName = "usr_id")
     private User gestor;
 
-    @Column(name = "insert_date")
+    @Column(name = "insert_date", insertable = false, updatable = false)
     private Timestamp insertDate;
 }
