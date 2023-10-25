@@ -17,7 +17,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import jakarta.persistence.Transient;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -67,7 +66,6 @@ public class Appointment {
 
     @Column(name = "status", insertable = false, updatable = false)
     @Enumerated(EnumType.STRING)
-    @Transient
     private AppointmentStatus status;
 
     @Column
