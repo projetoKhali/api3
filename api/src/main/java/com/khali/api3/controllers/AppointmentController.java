@@ -23,6 +23,7 @@ import com.khali.api3.repositories.AppointmentRepository;
 import com.khali.api3.services.AppointmentService;
 
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 
 @RestController
 @RequestMapping("/appointments")
@@ -80,7 +81,9 @@ public class AppointmentController {
 
     @PostMapping
     public Appointment createAppointment(@RequestBody Appointment appointment) {
-        return appointmentRepository.save(appointment);
+        Appointment savedAppointment = appointmentRepository.save(appointment);
+        appointmentRepository.insertNotification(savedAppointment.getId(), savedAppointment.getUser().getId());
+        return savedAppointment;
     }
 
     @PutMapping("/{id}")
@@ -103,39 +106,51 @@ public class AppointmentController {
     }
 
     @PutMapping("/validate/{id}")
-    public Appointment validateAppointment(
+    @Transactional
+    public Appointment updateAppointmentWithStatus(
             @PathVariable Long id,
             @RequestParam(name = "index") int index,
             @RequestParam(name = "feedback") String feedback) throws Exception {
-
         if (index != 1 && index != 2) {
             throw new Exception("O valor passado deve ser 1 ou 2");
         }
+    
         Appointment appointment = appointmentRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Appointment not found with id: " + id));
+    
         AppointmentStatus status = AppointmentStatus.of(index);
-        // appointment.setStatus(status);
-        appointmentRepository.updateStatusAppointment(id, status);
+        appointment.setStatus(status);
         appointment.setFeedback(feedback);
-
-        return appointmentRepository.save(appointment);
+        appointment = appointmentRepository.save(appointment);
+    
+        if (status == AppointmentStatus.Rejected) {
+            appointmentRepository.updateToRejected(id);
+        } else if (status == AppointmentStatus.Approved) {
+            appointmentRepository.updateToApproved(id);
+        }
+    
+        return appointment;
     }
+    
 
     @GetMapping("/notification/{usr_id}")
     public List<Long> notificationAppointment(@PathVariable Long usr_id) {
         List<Long> notification = new ArrayList<>();
-        long temp;
-        long count = appointmentRepository.countAppointmentsByManager(usr_id);
-        notification.add(count);
-        temp = appointmentRepository.countAppointmentsRejectedByUser(usr_id);
-        count = temp - this.rejected;
-        this.rejected = temp;
-        notification.add(count);
-        temp = appointmentRepository.countAppointmentsApprovatedByUser(usr_id);
-        count = temp - this.approvated;
-        this.approvated = temp;
-        notification.add(count);
+        
+        long pendingNotificationsForManager = appointmentRepository.countPendingNotificationsForManager(usr_id);
+        notification.add(pendingNotificationsForManager);
+        
+        long falseRejectedOrApprovedNotifications = appointmentRepository.countFalseRejectedOrApprovedNotifications(usr_id);
+        notification.add(falseRejectedOrApprovedNotifications);
+        
         return notification;
+    }
+    
+
+    @PutMapping("/notification/update/{usr_id}")
+    @Transactional
+    public void updateNotificationsStatusToTrue(@PathVariable Long usr_id) {
+        appointmentRepository.updateStatusToTrueForUser(usr_id);
     }
 
 }
