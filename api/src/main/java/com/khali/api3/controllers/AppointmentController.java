@@ -12,9 +12,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.khali.api3.domain.appointment.Appointment;
+import com.khali.api3.domain.appointment.AppointmentStatus;
 import com.khali.api3.domain.user.User;
 import com.khali.api3.repositories.AppointmentRepository;
 import com.khali.api3.services.AppointmentService;
@@ -25,20 +27,21 @@ import jakarta.persistence.EntityNotFoundException;
 @RequestMapping("/appointments")
 public class AppointmentController {
 
-    @Autowired private final AppointmentRepository appointmentRepository;
-    @Autowired private final AppointmentService appointmentService;
+    @Autowired
+    private final AppointmentRepository appointmentRepository;
+    @Autowired
+    private final AppointmentService appointmentService;
 
     public AppointmentController(
-        AppointmentRepository appointmentRepository,
-        AppointmentService appointmentService
-    ) {
+            AppointmentRepository appointmentRepository,
+            AppointmentService appointmentService) {
         this.appointmentRepository = appointmentRepository;
         this.appointmentService = appointmentService;
     }
 
     @GetMapping
     public List<Appointment> getAllAppointments() {
-        return appointmentRepository.findAll();
+        return appointmentRepository.findByActive();
     }
 
     @GetMapping("/{id}")
@@ -53,19 +56,22 @@ public class AppointmentController {
     }
 
     @GetMapping("/manager/{id}")
-    public List<Appointment> getManagerAppointments(User user){
+    public List<Appointment> getManagerAppointments(User user) {
         return appointmentRepository.findByManager(user.getId());
     }
 
-    public List<Appointment> getAppointmentByDate(List<Appointment> appointmentsList, LocalDate dataInit, LocalDate dataFim){
+    public List<Appointment> getAppointmentByDate(List<Appointment> appointmentsList, LocalDate dataInit,
+            LocalDate dataFim) {
         return appointmentService.findAppointmentByDate(appointmentsList, dataInit, dataFim);
     }
 
-    public List<Appointment> getAppointmentByHour(List<Appointment> appointmentsList, LocalTime dataInit, LocalTime dataFim){
+    public List<Appointment> getAppointmentByHour(List<Appointment> appointmentsList, LocalTime dataInit,
+            LocalTime dataFim) {
         return appointmentService.findAppointmentByHour(appointmentsList, dataInit, dataFim);
     }
 
-    public List<Appointment> getAppointmentByDateHour(List<Appointment> appointmentsList, LocalDateTime dataInit, LocalDateTime dataFim){
+    public List<Appointment> getAppointmentByDateHour(List<Appointment> appointmentsList, LocalDateTime dataInit,
+            LocalDateTime dataFim) {
         return appointmentService.findAppointmentByDateHour(appointmentsList, dataInit, dataFim);
     }
 
@@ -75,22 +81,49 @@ public class AppointmentController {
     }
 
     @PutMapping("/{id}")
-    public Appointment updateAppointment(@PathVariable Long id, @RequestBody Appointment appointmentDetails) {
+    public Appointment updateAppointment(@PathVariable Long id, @RequestBody Appointment newAppointment) {
         Appointment appointment = appointmentRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Appointment not found with id: " + id));
         appointment.setUser(appointmentDetails.getUser());
         appointment.setType(appointmentDetails.getType());
         appointment.setStartDate(appointmentDetails.getStartDate());
         appointment.setEndDate(appointmentDetails.getEndDate());
-        appointment.setInsertDate(appointmentDetails.getInsertDate());
         appointment.setResultCenter(appointmentDetails.getResultCenter());
         appointment.setClient(appointmentDetails.getClient());
         appointment.setProject(appointmentDetails.getProject());
         appointment.setJustification(appointmentDetails.getJustification());
-        appointment.setStatus(appointmentDetails.getStatus());
+        // appointment.setStatus(appointmentDetails.getStatus());
         appointment.setFeedback(appointmentDetails.getFeedback());
         appointment.setApt_updt(appointmentDetails.getApt_updt());
 
+        // desativando apontamento antigo
+        appointment.setActive(false);
+        appointmentRepository.save(appointment);
+
+        // referenciando apontamento antigo no novo
+        newAppointment.setApt_updt(appointment.getId());
+
+        return appointmentRepository.save(newAppointment);
+    }
+
+    @PutMapping("/validate/{id}")
+    public Appointment validateAppointment(
+        @PathVariable Long id,
+        @RequestParam(name = "index") int index,
+        @RequestParam(name = "feedback") String feedback
+    ) throws Exception {
+
+        if (index != 1 && index != 2) {
+            throw new Exception("O valor passado deve ser 1 ou 2");
+        }
+        Appointment appointment = appointmentRepository.findById(id)
+            .orElseThrow(() -> new EntityNotFoundException("Appointment not found with id: " + id));
+        AppointmentStatus status = AppointmentStatus.of(index);
+        // appointment.setStatus(status);
+        appointmentRepository.updateStatusAppointment(id, status);
+        appointment.setFeedback(feedback);
+
         return appointmentRepository.save(appointment);
     }
+
 }

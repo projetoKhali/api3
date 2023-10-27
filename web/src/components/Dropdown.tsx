@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import DropdownOption from '../schemas/DropdownOption';
 
 interface DropdownProps {
-    placeholder: string | undefined,
+    placeholder?: string,
     options: DropdownOption[],
     onSelect: (option: DropdownOption) => void;
 }
@@ -14,12 +14,14 @@ export default function Dropdown ({ placeholder, options, onSelect }: DropdownPr
     useEffect(() => {
         if ((!placeholder || !placeholder.length) && options && options.length > 0) {
             setSelected(options[0]);
+            onSelect(options[0]);
         }
     }, []);
 
     function handleSelect(option: DropdownOption) {
         setSelected(option);
         onSelect(option);
+        setActive(false);
     }
 
     return (

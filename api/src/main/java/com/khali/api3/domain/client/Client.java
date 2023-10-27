@@ -1,5 +1,7 @@
 package com.khali.api3.domain.client;
 
+import java.sql.Timestamp;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -31,4 +33,9 @@ public class Client {
     @Column(unique=true)
     private String cnpj;
 
+    @Column(name = "insert_date", insertable = false, updatable = false)
+    private Timestamp insertDate;
+
+    @Column(name = "expire_date")
+    private Timestamp expiredDate;
 }

@@ -1,16 +1,16 @@
 export interface PostResultCenterSchema {
     name: string,
-    code: string,
+    code: number,
     acronym: string,
     gestor: {
-        id : string
+        id : number
     },
 }
 
 export interface ResultCenterSchema {
     id: number;
     name: string;
-    code: string;
+    code: number;
     acronym: string;
     gestor: {
         id: number;

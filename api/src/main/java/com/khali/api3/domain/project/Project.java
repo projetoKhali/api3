@@ -36,8 +36,7 @@ import lombok.Setter;
     @Column
     private String description;
 
-    @Column(name = "insert_date")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "insert_date", insertable = false, updatable = false)
     private Timestamp insertDate;
 
     @Column(name = "expire_date")

@@ -1,15 +1,21 @@
 import React from 'react';
 
-import { useState } from 'react';
-import { postAppointment } from '../services/AppointmentService';
-import { PostAppointmentSchema } from '../schemas/Appointment';
 
+import { useEffect, useState } from 'react';
+import { PostAppointmentSchema } from '../schemas/Appointment';
+import DropdownOption from '../schemas/DropdownOption';
 import LookUpOption from '../schemas/LookUpOption';
-import LookUpTextField from './LookUpTextField';
+
+
+
+import { UserSchema } from '../schemas/User';
+import { postAppointment } from '../services/AppointmentService';
 
 import { getClients } from '../services/ClientService';
+import { getProjects } from '../services/ProjectService';
 import { getResultCentersOfUser } from '../services/ResultCenterService';
-import { UserSchema } from '../schemas/User';
+import AppointmentTypeDropdown from './AppointmentTypeDropdown';
+import LookUpTextField from './LookUpTextField';
 
 interface AppointmentFormProps {
     userLoggedIn: UserSchema
@@ -18,11 +24,11 @@ interface AppointmentFormProps {
 }
 
 export default function AppointmentForm ({ userLoggedIn, successCallback, errorCallback }: AppointmentFormProps) {
-    const [postAppointmentType, setPostAppointmentType] = useState<string>('');
     const [postAppointmentStartDate, setPostAppointmentStartDate] = useState<string>('');
     const [postAppointmentEndDate, setPostAppointmentEndDate] = useState<string>('');
-    const [postAppointmentProject, setPostAppointmentProject] = useState<string>('');
     const [postAppointmentJustification, setPostAppointmentJustification] = useState<string>('');
+
+    const [postAppointmentType, setPostAppointmentType] = useState<string>('');
 
     const [postAppointmentClient, setPostAppointmentClient] = useState<LookUpOption | undefined>();
     const [availableClients, setAvailableClients] = useState<LookUpOption[]>([]);
@@ -30,18 +36,21 @@ export default function AppointmentForm ({ userLoggedIn, successCallback, errorC
     const [postAppointmentResultCenter, setPostAppointmentResultCenter] = useState<LookUpOption | undefined>();
     const [availableResultCenters, setAvailableResultCenters] = useState<LookUpOption[]>([]);
 
-    useState(() => {
+    const [postAppointmentProject, setPostAppointmentProject] = useState<LookUpOption | undefined>();
+    const [availableProjects, setAvailableProjects] = useState<LookUpOption[]>([]);
+
+    useEffect(() => {
         getClients().then( clientsResponse => setAvailableClients(clientsResponse.map(client => ({ id: client.id, name: client.name, }))));
         getResultCentersOfUser(userLoggedIn).then( resultCentersResponse => setAvailableResultCenters(resultCentersResponse.map(resultCenter => ({ id: resultCenter.id, name: resultCenter.name, }))));
-    })
+        getProjects().then( projectsResponse => setAvailableProjects(projectsResponse.map(project => ({ id: project.id, name: project.name, }))));
+    }, [])
 
-    function handleTypeChange(event: React.ChangeEvent<HTMLInputElement>){ setPostAppointmentType(event.target.value); }
     function handleStartDateChange(event: React.ChangeEvent<HTMLInputElement>){ setPostAppointmentStartDate(event.target.value); }
     function handleEndDateChange(event: React.ChangeEvent<HTMLInputElement>){ setPostAppointmentEndDate(event.target.value); }
-    function handleProjectChange(event: React.ChangeEvent<HTMLInputElement>){ setPostAppointmentProject(event.target.value); }
     function handleJustificationChange(event: React.ChangeEvent<HTMLInputElement>){ setPostAppointmentJustification(event.target.value); }
 
     function handleSubmit(event: React.ChangeEvent<HTMLFormElement>) {
+      event.preventDefault();
       if (!postAppointmentType
         || !postAppointmentStartDate
         || !postAppointmentEndDate
@@ -49,38 +58,47 @@ export default function AppointmentForm ({ userLoggedIn, successCallback, errorC
         || !postAppointmentClient
         || !postAppointmentProject
         || !postAppointmentJustification
-      ) return errorCallback();
+        ) errorCallback();
 
-      event.preventDefault();
+      else {
 
-      // const id_user = getUsersId(postAppointmentUser)
-      const formattedStartDate = formatDateTime(postAppointmentStartDate);
-      const formattedEndDate = formatDateTime(postAppointmentEndDate);
+        const formattedStartDate = formatDateTime(postAppointmentStartDate);
+        const formattedEndDate = formatDateTime(postAppointmentEndDate);
 
-      postAppointment({
-        user: {
-          id: userLoggedIn.id
-        },
-        appointmentType: postAppointmentType,
-        startDate: formattedStartDate,
-        endDate: formattedEndDate,
-        resultCenter: {
-            id: postAppointmentResultCenter.id,
-        },
-        client: {
-            id: postAppointmentClient.id,
-        },
-        project: postAppointmentProject,
-        justification: postAppointmentJustification,
-      } as PostAppointmentSchema)
-      .then(() => successCallback());
+        postAppointment({
+          user: {
+            id: userLoggedIn.id
+          },
+          type: postAppointmentType,
+          startDate: formattedStartDate,
+          endDate: formattedEndDate,
+          resultCenter: {
+              id: postAppointmentResultCenter.id,
+          },
+          client: {
+              id: postAppointmentClient.id,
+          },
+          project: {
+              id: postAppointmentProject.id,
+          },
+          justification: postAppointmentJustification,
+        } as PostAppointmentSchema)
+        .then(() => successCallback());
+      }
     }
 
     return (
       <form onSubmit={handleSubmit}>
-          <input type="text" placeholder="Tipo" onChange={handleTypeChange}/>
+
+          <AppointmentTypeDropdown
+            onSelect={(option: DropdownOption) => {
+                setPostAppointmentType(option.optionName);
+            }}
+          />
+
           <input type="text" placeholder="Início" onChange={handleStartDateChange}/>
           <input type="text" placeholder="Fim" onChange={handleEndDateChange}/>
+
 
           {availableClients && (
               <LookUpTextField
@@ -98,7 +116,14 @@ export default function AppointmentForm ({ userLoggedIn, successCallback, errorC
               />
           )}
 
-          <input type="text" placeholder="Projeto" onChange={handleProjectChange}/>
+          {availableProjects && (
+              <LookUpTextField
+                  placeholder="Projeto"
+                  options={availableProjects}
+                  onSelect={(option: LookUpOption) => setPostAppointmentProject(option) }
+              />
+          )}
+
           <input type="text" placeholder="Justificativa" onChange={handleJustificationChange}/>
           <button type="submit">Cadastrar</button>
       </form>

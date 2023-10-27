@@ -30,12 +30,12 @@ public class ResultCenter {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="rc_id")
     private Long id;
-    
+
     private String name;
 
     @Column(unique=true)
-    private String code;
-    
+    private Integer code;
+
     @Column(unique=true)
     private String acronym;
 
@@ -43,6 +43,6 @@ public class ResultCenter {
     @JoinColumn(name="gst_id", referencedColumnName = "usr_id")
     private User gestor;
 
-    @Column(name = "insert_date")
+    @Column(name = "insert_date", insertable = false, updatable = false)
     private Timestamp insertDate;
 }

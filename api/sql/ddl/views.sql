@@ -1,5 +1,5 @@
-create view vw_users as select
-    users.usr_id serial,
+CREATE OR REPLACE VIEW vw_users AS SELECT
+    users.usr_id,
     users.registration,
     users."name",
     users.user_type,
@@ -8,31 +8,33 @@ create view vw_users as select
     users.active,
     users.insert_date,
     users.expire_date
-    from users;
+FROM users;
 
-create view vw_appointments as select
+
+CREATE OR REPLACE VIEW vw_appointments AS SELECT
     ap.apt_id,
     ap.start_date,
     ap.end_date,
     ap.usr_id,
-    users."name" as user_name,
+    users."name" AS user_name,
     ap.clt_id,
-    clients."name" as client_name,
+    clients."name" AS client_name,
     ap.rc_id,
-    result_centers."name" as center_name,
+    result_centers."name" AS center_name,
     ap.project,
     ap.appointment_type,
     ap.justification,
     ap.status,
     ap.insert_date,
     ap.apt_updt_id,
-    ap.feedback,
-from appointments ap
-join users on ap.usr_id = users.usr_id
-join clients on ap.clt_id = clients.clt_id
-join result_centers on ap.rc_id = result_centers.rc_id;
+    ap.feedback
+FROM appointments ap
+JOIN users ON ap.usr_id = users.usr_id
+JOIN clients ON ap.clt_id = clients.clt_id
+JOIN result_centers ON ap.rc_id = result_centers.rc_id;
 
-create view vw_result_centers as select
+
+CREATE OR REPLACE VIEW vw_result_centers AS SELECT
     rc.rc_id ,
     rc."name",
     rc.code,
@@ -41,17 +43,28 @@ create view vw_result_centers as select
     rc.gst_id,
     users.name gestor,
     rc.insert_date
-    rc.insert_date
-from result_centers rc
-join users on rc.gst_id = users.usr_id;
+FROM result_centers rc
+JOIN users ON rc.gst_id = users.usr_id;
 
-create view vw_clients as select
+
+CREATE OR REPLACE VIEW vw_clients AS SELECT
     clients.clt_id,
-    clients."name",
+    clients."name" AS client_name,
     clients.cnpj
-from clients;
+FROM clients;
 
-create view vw_pay_rate_rules as select
+
+CREATE OR REPLACE VIEW vw_members AS SELECT
+    me.usr_id,
+    me.rc_id,
+    users.name AS user_name,
+    result_centers.name AS center_name
+FROM members me
+JOIN users ON me.usr_id = users.usr_id
+JOIN result_centers ON me.rc_id = result_centers.rc_id;
+
+
+CREATE OR REPLACE VIEW vw_pay_rate_rules AS SELECT
     pay_rate_rules.prt_id,
     pay_rate_rules.code,
     pay_rate_rules.hour_duration,
@@ -59,4 +72,5 @@ create view vw_pay_rate_rules as select
     pay_rate_rules.appointment_type,
     pay_rate_rules.start_time,
     pay_rate_rules.end_time
-from pay_rate_rules;
+FROM pay_rate_rules;
+

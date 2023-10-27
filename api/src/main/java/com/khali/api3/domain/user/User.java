@@ -44,7 +44,7 @@ public class User {
     @Column
     private String password;
 
-    @Column(name = "insert_date")
+    @Column(name = "insert_date", insertable = false, updatable = false)
     private Timestamp insertDate;
 
     @Column(name = "expire_date")

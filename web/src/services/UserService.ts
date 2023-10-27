@@ -50,6 +50,12 @@ export async function getUsers (): Promise<UserSchema[]> {
     return await mapResponse(response);
 }
 
+export async function getUsersOfType (userType: string): Promise<UserSchema[]> {
+    const response = await axios.get(`${API_URL}/usertype/${userType}`, {});
+    return await mapResponse(response);
+
+}
+
 export async function postUser(user: PostUserSchema){
     return await fetch(API_URL, {
         method: 'POST',
@@ -62,31 +68,23 @@ export async function postUser(user: PostUserSchema){
     .catch(error => console.error(error));
 }
 
-export async function putUser(id: number, user: UserSchema, action: number) {
+export async function updateUserActiveStatus(user: UserSchema, newActiveStatus: boolean) {
     let response = null;
+    let endpoint = newActiveStatus ? 'activate' : 'deactivate';
 
     try {
-        if (action === 1) {
-            response = await fetch(`${API_URL}/${id}/desactivate`, {
-                method: 'PUT',
-                headers: {
-                    "Content-Type": 'application/json'
-                },
-                body: JSON.stringify(user)
-            });
-        }
-        if (action === 2) {
-            response = await fetch(`${API_URL}/${id}/activate`, {
-                method: 'PUT',
-                headers: {
-                    "Content-Type": 'application/json'
-                },
-                body: JSON.stringify(user)
-            });
-        }
+        response = await fetch(`${API_URL}/${user.id}/${endpoint}`, {
+            method: 'PUT',
+            headers: {
+                "Content-Type": 'application/json'
+            },
+            body: JSON.stringify(user)
+        });
+        
         if (!response || !response.ok) {
             throw new Error(`Erro ao atualizar o usuário: ${response ? response.statusText : 'Resposta não recebida'}`);
         }
+        
         return response.json();
     } catch (error) {
         console.error("Erro ao atualizar o usuário:", error);

@@ -5,6 +5,7 @@ import { getResultCenters } from '../services/ResultCenterService';
 import { ResultCenterSchema } from '../schemas/ResultCenter';
 import ResultCenterForm from '../components/ResultCenterForm';
 import '../styles/userTData.css';
+import { ButtonTableColumn } from '../components/ButtonTableCell';
 
 export default function ResultCenters(){
     const [resultCenters, setResultCenters] = useState<ResultCenterSchema[]>([]);
@@ -38,11 +39,11 @@ export default function ResultCenters(){
           dataIndex: 'gestor',
           key: 'gestor',
         },
-        {
-          dataIndex: 'tags',
-          key: 'tags',
-          render: (_,resultCenters) => (resultCenters? <button>Ver</button> : null)
-        },
+        ButtonTableColumn({
+            title: "Detalhes",
+            displayName: "Ver",
+            onClick: (item) => {console.log(item.name)}
+        }),
     ];
     return (
         <div>

@@ -21,7 +21,7 @@ public class ResultCenterService {
     @Autowired
     private UserRepository userRepository;
 
-    public void deleteResultCenterByCode (String code) {
+    public void deleteResultCenterByCode (Integer code) {
         ResultCenter resultCenter = resultCenterRepository.findByCode(code);
         if (resultCenter != null) {
             resultCenterRepository.delete(resultCenter);
@@ -37,6 +37,6 @@ public class ResultCenterService {
         if(user.isPresent()) {
             User gestor = user.get();
             return resultCenterRepository.findByGestor(gestor);
-        }else{throw new EntityNotFoundException("Gestor não encontrado com o id: " + id);}     
+        }else{throw new EntityNotFoundException("Gestor não encontrado com o id: " + id);}
     }
 }

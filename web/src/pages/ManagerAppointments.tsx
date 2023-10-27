@@ -1,25 +1,29 @@
-import { Table } from 'antd';
+import { Button, Table, message } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import { useEffect, useState } from 'react';
+import FeedbackPopup from '../components/PopUpField';
 import { AppointmentSchema } from '../schemas/Appointment';
-import { getAppointmentsManager } from '../services/AppointmentService';
 import { UserSchema } from '../schemas/User';
+import { getAppointmentsManager, putAppointment } from '../services/AppointmentService';
 
 interface AppointmentsProps {
-  userLoggedIn: UserSchema;
+    userLoggedIn: UserSchema;
 }
 
-export default function Appointments ({ userLoggedIn }: AppointmentsProps) {
+export default function Appointments({ userLoggedIn }: AppointmentsProps) {
     const [appointments, setAppointments] = useState<AppointmentSchema[]>([]);
+    const [isFeedbackPopupVisible, setIsFeedbackPopupVisible] = useState(false);
+    const [selectedAppointment, setSelectedAppointment] = useState<AppointmentSchema | null>(null);
+    const [feedbackRequired, setFeedbackRequired] = useState(false);
 
     const requestAppointments = () => {
-        getAppointmentsManager(userLoggedIn.id).then(appointmentsResponse =>
-            setAppointments(appointmentsResponse)
-        );
+        getAppointmentsManager(userLoggedIn.id).then((appointmentsResponse) => {
+            setAppointments(appointmentsResponse);
+        });
     };
 
     useEffect(() => {
-        requestAppointments()
+        requestAppointments();
     }, []);
 
     const columns: ColumnsType<AppointmentSchema> = [
@@ -30,8 +34,8 @@ export default function Appointments ({ userLoggedIn }: AppointmentsProps) {
         },
         {
             title: 'Tipo',
-            dataIndex: 'appointmentType',
-            key: 'appointmentType',
+            dataIndex: 'type',
+            key: 'type',
         },
         {
             title: 'Início',
@@ -68,11 +72,68 @@ export default function Appointments ({ userLoggedIn }: AppointmentsProps) {
             dataIndex: 'status',
             key: 'status',
         },
-    ]
+        {
+            title: 'Ação',
+            key: 'action',
+            render: (record) => (
+                <Button.Group>
+                    <Button
+                        type="primary"
+                        onClick={() => handleValidate(record, true)} // Passar true para validar
+                    >
+                        Validar
+                    </Button>
+                    <Button
+                        type="primary"
+                        danger
+                        onClick={() => handleValidate(record, false)} // Passar false para recusar
+                    >
+                        Recusar
+                    </Button>
+                </Button.Group>
+            ),
+        },
+    ];
+
+    const handleValidate = (data: AppointmentSchema, isValidation: boolean) => {
+        setSelectedAppointment(data);
+        setFeedbackRequired(isValidation); // Define se o feedback é necessário com base na ação
+        setIsFeedbackPopupVisible(true);
+    };
+
+    const handleFeedbackConfirm = (feedback: string) => {
+        if (selectedAppointment) {
+            if (feedbackRequired && feedback.trim() === '') {
+                message.error('Você deve fornecer um feedback antes de rejeitar o apontamento.');
+                return;
+            }
+    
+            const status = feedbackRequired ? 1 : 2;
+            putAppointment(selectedAppointment, status, feedback).then((updatedUser) => {
+                if (updatedUser) {
+                    requestAppointments();
+                    setIsFeedbackPopupVisible(false);
+                    setSelectedAppointment(null);
+                }
+            });
+        }
+    };
+
+    const handleFeedbackCancel = () => {
+        setSelectedAppointment(null);
+        setIsFeedbackPopupVisible(false);
+        setFeedbackRequired(false);
+    };
 
     return (
         <div>
-            <Table dataSource={appointments} columns={columns} />
+            {isFeedbackPopupVisible && (
+                <FeedbackPopup
+                    onConfirm={handleFeedbackConfirm}
+                    onCancel={handleFeedbackCancel}
+                />
+            )}
+            {appointments ? <Table dataSource={appointments} columns={columns} /> : null}
         </div>
     );
 }

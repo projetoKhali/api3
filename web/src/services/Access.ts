@@ -49,12 +49,16 @@ const PermissionSideMenuItemMap: Record<string, SideMenuItem[]> = {
     "FullAccess": [
         {
             label: "Apontamentos Geral",
-            url:   'http://localhost:7000/Appointments' }
+            url:   '/Appointments'
+        }, {
+            label: "Parametrização",
+            url: "/parametrization"
+        }
     ]
 }
 
 export async function getUserSideMenuItems (id: number): Promise<SideMenuItem[]> {
-    return await axios.get(`${API_URL}/permissions/${id}`, {})
+    return await axios.get(`${API_URL}/${id}/permissions`, {})
     .then(permissionsResponse => {
         console.log(permissionsResponse);
         const items: SideMenuItem[] = [];

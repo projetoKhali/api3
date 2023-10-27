@@ -2,8 +2,9 @@ import { Checkbox, Table } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import { useEffect, useState } from 'react';
 import UserForm from '../components/UserForm';
+// import { ButtonTableColumn } from '../components/ButtonTableCell';
 import { UserSchema } from '../schemas/User';
-import { getUsers, putUser } from '../services/UserService';
+import { getUsers, updateUserActiveStatus } from '../services/UserService';
 import '../styles/userTData.css';
 
 export default function Users() {
@@ -22,45 +23,11 @@ export default function Users() {
         requestUsers()
     }, []);
 
-    const handleDeactivateUser = (user: UserSchema) => {
-        const confirmResult = window.confirm('Tem certeza de que deseja desativar este usuário?');
+    const handleChangeUserActiveStatus = (data: UserSchema, newActiveStatus: boolean) => {
+        const operation = newActiveStatus ? 'ativar' : 'desativar';
+        const confirmResult = window.confirm(`Tem certeza de que deseja ${operation} este usuário?`);
         if (confirmResult) {
-            const updatedUserData = {
-                id: user.id,
-                name: user.name,
-                registration: user.registration,
-                userType: user.userType,
-                email: user.email,
-                password: user.password,
-                insertDate: user.insertDate,
-                expiredDate: user.expiredDate
-            };
-            putUser(user.id, updatedUserData, 1)
-                .then((updatedUser) => {
-                    if (updatedUser) {
-                        requestUsers();
-                    }
-                })
-                .catch((error) => {
-                    console.error('Erro ao desativar o usuário:', error);
-                });
-        }
-    };
-
-    const handleActivateUser = (user: UserSchema) => {
-        const confirmResult = window.confirm('Tem certeza de que deseja ativar este usuário?');
-        if (confirmResult) {
-            const updatedUserData = {
-                id: user.id,
-                name: user.name,
-                registration: user.registration,
-                userType: user.userType,
-                email: user.email,
-                password: user.password,
-                insertDate: user.insertDate,
-                expiredDate: user.expiredDate
-            };
-            putUser(user.id, updatedUserData, 2)
+            updateUserActiveStatus(data, newActiveStatus)
                 .then((updatedUser) => {
                     if (updatedUser) {
                         requestUsers();
@@ -93,6 +60,11 @@ export default function Users() {
             dataIndex: 'userType',
             key: 'userType',
         },
+        // ButtonTableColumn({
+        //     title: "Detalhes",
+        //     displayName: "Ver",
+        //     onClick: (item) => {console.log(item.name)}
+        // }),
         {
             title: 'Status',
             dataIndex: 'active',
@@ -104,17 +76,15 @@ export default function Users() {
             key: 'expiredDate',
             render: (expiredDate, data) => (
                 expiredDate !== "N/A" ? (
-                    <button onClick={() => handleActivateUser(data)}>Ativar</button>
+                    <button onClick={() => handleChangeUserActiveStatus(data, true)}>Ativar</button>
                 ) : (
-                    <button onClick={() => handleDeactivateUser(data)}>Desativar</button>
+                    <button onClick={() => handleChangeUserActiveStatus(data, false)}>Desativar</button>
                 )
             ),
         },
     ];
 
-    const filteredUsers = showDeactivated
-    ? users.filter((user) => user.expiredDate !== "N/A")
-    : users.filter((user) => user.expiredDate === "N/A");
+    const filteredUsers = users.filter((user) => showDeactivated == (user.expiredDate !== "N/A"));
 
 return (
         <div>
