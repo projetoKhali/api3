@@ -27,12 +27,13 @@ export default function Layout({ userLoggedIn }: LayoutProps) {
     return (
         <>
             <SideMenu items={menuItems} userName={userLoggedIn?.name || ''} />
+            <div className="content-area">
+                <Outlet />
+                
+            </div>
             {notificationItems.length > 0 && (
                 <NotificationPopUp notificationItems={notificationItems} />
             )}
-            <div className="content-area">
-                <Outlet />
-            </div>
         </>
     );
 }

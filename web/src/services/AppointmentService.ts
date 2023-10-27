@@ -89,7 +89,6 @@ export async function putAppointment(appointment: AppointmentSchema, newActiveSt
         console.error('Erro ao validar o apontamento:', error);
         throw error;
     }
-
 }
 
 
@@ -119,31 +118,16 @@ export async function getCountNotification(id: number): Promise<NotificationItem
             if (numbers[1] > 0) {
                 if (numbers[1] === 1) {
                     notifications.push({
-                        label: `Você possui ${numbers[1]} novo(s) apontamento(s) recusado(s)`,
-                        url: "/appointments/manager"
+                        label: `Seu apontamento foi atualizado`,
+                        url: "/appointments/user"
                     });
                 } else {
                     notifications.push({
-                        label: `Você possui ${numbers[1]} novos apontamentos recusados`,
-                        url: "/appointments/manager"
+                        label: `Você possui ${numbers[1]} novos apontamentos atualizados`,
+                        url: "/appointments/user"
                     });
                 }
             }
-
-            if (numbers[2] > 0) {
-                if (numbers[2] === 1) {
-                    notifications.push({
-                        label: `Você possui ${numbers[2]} novo apontamento aprovado`,
-                        url: "/appointments/manager"
-                    });
-                } else {
-                    notifications.push({
-                        label: `Você possui ${numbers[2]} novos apontamentos aprovados`,
-                        url: "/appointments/manager"
-                    });
-                }
-            }
-
             return notifications;
         } else {
             throw new Error("Os dados não estão no formato esperado.");

@@ -14,7 +14,7 @@ export default function NotificationPopUp({ notificationItems, loadNotifications
     const toggleCollapsed = () => {
         setCollapsed(!collapsed);
         if (!loaded && loadNotifications) {
-            loadNotifications(); // Carregar notificações apenas na primeira vez que o botão é pressionado
+            loadNotifications();
             setLoaded(true);
         }
     };
