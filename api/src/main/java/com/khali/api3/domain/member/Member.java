@@ -24,6 +24,6 @@ public class Member {
     // @Column(name="active")
     // boolean active;
 
-    @Column(name="insert_date")
+    @Column(name = "insert_date", insertable = false, updatable = false)
     Timestamp insertdate;
 }
