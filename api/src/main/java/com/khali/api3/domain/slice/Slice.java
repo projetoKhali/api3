@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import com.khali.api3.domain.appointment.Appointment;
+import com.khali.api3.domain.pay_rate_rule.PayRateRule;;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -16,14 +17,14 @@ import com.khali.api3.domain.appointment.Appointment;
 @Setter
 @EqualsAndHashCode
 public class Slice {
-    private Long appointmentId;
-    private Long payRateRuleId;
+    private Appointment appointment;
+    private PayRateRule payRateRule;
     private Timestamp start;
     private Timestamp end;
 
     public static Slice fromAppointment (Appointment appointment) {
         return new Slice(
-            appointment.getId(),
+            appointment,
             null,
             appointment.getStartDate(),
             appointment.getEndDate()
