@@ -54,6 +54,12 @@ const PermissionSideMenuItemMap: Record<string, SideMenuItem[]> = {
             label: "Parametrização",
             url: "/parametrization"
         }
+    ],
+    "Config" : [
+        {
+            label: "Trocar senha",
+            url: "/changePassword"
+        }
     ]
 }
 
