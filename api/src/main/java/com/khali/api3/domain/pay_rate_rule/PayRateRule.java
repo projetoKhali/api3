@@ -51,7 +51,7 @@ public class PayRateRule {
     private Boolean[] daysOfWeek;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "expedient")
+    @Column(name = "shift")
     private Shift shift;
    
     @Column(name = "overlap")
