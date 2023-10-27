@@ -134,6 +134,7 @@ CREATE TABLE IF NOT EXISTS appointments(
     justification VARCHAR(255),
     status Apt_status DEFAULT 'Pending',
     insert_date TIMESTAMP DEFAULT now(),
+    active BOOLEAN DEFAULT TRUE,
     apt_updt_id INT NULL,
     feedback VARCHAR(255),
 
