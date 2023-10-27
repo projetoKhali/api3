@@ -8,6 +8,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import com.khali.api3.domain.appointment.Appointment;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -18,4 +20,13 @@ public class Slice {
     private Long payRateRuleId;
     private Timestamp start;
     private Timestamp end;
+
+    public static Slice fromAppointment (Appointment appointment) {
+        return new Slice(
+            appointment.getId(),
+            null,
+            appointment.getStartDate(),
+            appointment.getEndDate()
+        );
+    }
 }
