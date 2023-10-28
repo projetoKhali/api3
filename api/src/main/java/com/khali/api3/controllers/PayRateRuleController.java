@@ -36,12 +36,13 @@ public class PayRateRuleController {
     @GetMapping("/id/{id}")
     public PayRateRule getPayRateRuleById(@PathVariable Long id) {
         return payRateRuleRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("PayRateRule not found with id: " + id));
+            .orElseThrow(() -> new EntityNotFoundException("PayRateRule not found with id: " + id));
     }
+
     @GetMapping("/code/{code}")
     public List<PayRateRule> getPayRateRuleByCode(@PathVariable Long code) {
         List<PayRateRule> payRateRules = payRateRuleRepository.findByCode(code);
-        if (payRateRules.isEmpty()) {System.out.print("não há verba com o código: " + code);}
+        if (payRateRules.isEmpty()) System.out.print("não há verba com o código: " + code);
         return payRateRuleRepository.findByCode(code);
     }
 
@@ -50,11 +51,9 @@ public class PayRateRuleController {
         // inserir aqui lógica do overlapping
         return payRateRuleRepository.save(payRateRule);
     }
-    
 
     @PutMapping("/{id}")
     public PayRateRule updatePayRateRule(@PathVariable Long id, @RequestBody PayRateRule payRateRuleDetails) {
         return payRateRuleService.updatePayRateRule(id, payRateRuleDetails);
     }
-    
 }
