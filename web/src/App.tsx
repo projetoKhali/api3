@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import './App.css';
 import AppointmentsAdm from "./pages/AdmAppointments";
@@ -15,10 +15,15 @@ import Users from "./pages/Users";
 import Parametrization from './pages/Parametrization';
 
 import { UserSchema } from './schemas/User';
+import { getPayRateRules } from './services/PayRateRulesService';
 
 
 function App() {
     const [userLoggedIn, setUserLoggedIn] = useState<UserSchema | undefined>();
+
+    useEffect(() => {
+        getPayRateRules().then(response => console.log('---------------------------> PayRateRules:', response));
+    });
 
     return (
         <>
