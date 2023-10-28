@@ -45,7 +45,7 @@ public class AppointmentController {
 
     @GetMapping
     public List<Appointment> getAllAppointments() {
-        return appointmentRepository.findAll();
+        return appointmentRepository.findByActive();
     }
 
     @GetMapping("/{id}")
@@ -87,7 +87,7 @@ public class AppointmentController {
     }
 
     @PutMapping("/{id}")
-    public Appointment updateAppointment(@PathVariable Long id, @RequestBody Appointment appointmentDetails) {
+    public Appointment updateAppointment(@PathVariable Long id, @RequestBody Appointment newAppointment) {
         Appointment appointment = appointmentRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Appointment not found with id: " + id));
         appointment.setUser(appointmentDetails.getUser());
@@ -102,7 +102,14 @@ public class AppointmentController {
         appointment.setFeedback(appointmentDetails.getFeedback());
         appointment.setApt_updt(appointmentDetails.getApt_updt());
 
-        return appointmentRepository.save(appointment);
+        // desativando apontamento antigo
+        appointment.setActive(false);
+        appointmentRepository.save(appointment);
+
+        // referenciando apontamento antigo no novo
+        newAppointment.setApt_updt(appointment.getId());
+
+        return appointmentRepository.save(newAppointment);
     }
 
     @Transactional
