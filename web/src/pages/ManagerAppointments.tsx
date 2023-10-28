@@ -99,23 +99,26 @@ export default function Appointments({ userLoggedIn }: AppointmentsProps) {
         setSelectedAppointment(data);
         setFeedbackRequired(isValidation);
         setIsFeedbackPopupVisible(true);
+        console.log(data);
+        console.log(isValidation);
     };
 
     const handleFeedbackConfirm = (feedback: string) => {
+        console.log(selectedAppointment);
         if (selectedAppointment) {
             if (feedbackRequired && feedback.trim() === '') {
                 message.error('Você deve fornecer um feedback antes de rejeitar o apontamento.');
                 return;
             }
-    
-            const status = feedbackRequired ? 1 : 2;
+            const status = feedbackRequired ? 2 : 1;
             putAppointment(selectedAppointment, status, feedback).then((updatedUser) => {
                 if (updatedUser) {
+                    console.log(updatedUser);
                     requestAppointments();
                     setIsFeedbackPopupVisible(false);
                     setSelectedAppointment(null);
                 }
-            });
+            })
         }
     };
 

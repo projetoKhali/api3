@@ -105,8 +105,8 @@ public class AppointmentController {
         return appointmentRepository.save(appointment);
     }
 
-    @PutMapping("/validate/{id}")
     @Transactional
+    @PutMapping("/validate/{id}")
     public Appointment updateAppointmentWithStatus(
             @PathVariable Long id,
             @RequestParam(name = "index") int index,
@@ -119,7 +119,8 @@ public class AppointmentController {
                 .orElseThrow(() -> new EntityNotFoundException("Appointment not found with id: " + id));
     
         AppointmentStatus status = AppointmentStatus.of(index);
-        appointment.setStatus(status);
+        // appointment.setStatus(status);
+        appointmentRepository.updateStatusAppointment(id, status);
         appointment.setFeedback(feedback);
         appointment = appointmentRepository.save(appointment);
     
@@ -128,7 +129,6 @@ public class AppointmentController {
         } else if (status == AppointmentStatus.Approved) {
             appointmentRepository.updateToApproved(id);
         }
-    
         return appointment;
     }
     

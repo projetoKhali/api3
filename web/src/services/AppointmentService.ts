@@ -138,6 +138,25 @@ export async function getCountNotification(id: number): Promise<NotificationItem
     }
 }
 
+export async function putNotification(userId: number) {
+    try {
+        const url = `${API_URL}/notification/update/${userId}`;
+        const response = await fetch(url, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
 
+        if (!response.ok) {
+            throw new Error(`Erro ao atualizar a notification: ${response.statusText}`);
+        }
+
+        return response.json();
+    } catch (error) {
+        console.error('Erro ao atualizar a notification:', error);
+        throw error;
+    }
+}
 
 
