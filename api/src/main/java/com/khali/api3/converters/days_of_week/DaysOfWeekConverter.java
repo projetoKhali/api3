@@ -4,26 +4,28 @@ import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
 
 @Converter
-public class DaysOfWeekConverter implements AttributeConverter<boolean[], Short> {
+public class DaysOfWeekConverter implements AttributeConverter<Boolean[], Short> {
 
     @Override
-    public Short convertToDatabaseColumn(boolean[] attribute) {
-        // Convert boolean array to SMALLINT
+    public Short convertToDatabaseColumn(Boolean[] attribute) {
+        // Convert Boolean array to SMALLINT
         short result = 0;
         for (int i = 0; i < attribute.length; i++) {
             if (attribute[i]) {
                 result |= (1 << i);
+                System.out.println(result);
             }
         }
         return result;
     }
 
     @Override
-    public boolean[] convertToEntityAttribute(Short dbData) {
-        // Convert SMALLINT to boolean array
-        boolean[] daysOfWeek = new boolean[7];
+    public Boolean[] convertToEntityAttribute(Short dbData) {
+        // Convert SMALLINT to Boolean array
+        Boolean[] daysOfWeek = new Boolean[7];
         for (int i = 0; i < 7; i++) {
             daysOfWeek[i] = (dbData & (1 << i)) != 0;
+            System.out.println(daysOfWeek[i]);
         }
         return daysOfWeek;
     }
