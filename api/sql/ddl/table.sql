@@ -4,6 +4,7 @@ CREATE TYPE Apt_type AS ENUM (
     'OnNotice'
 );
 
+DROP TYPE IF EXISTS Shift_type CASCADE;
 CREATE TYPE Shift_type AS ENUM (
     'NightTime',
     'DayTime',
