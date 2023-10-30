@@ -14,7 +14,7 @@ Acesso de administrador (master para os departamentos pessoal e financeiro), ges
     <a href="https://github.com/incivius"target="_blank"><img src="https://img.shields.io/badge/-Marcos-%23000000?style=for-the-badge&logo=GitHUb&logoColor=white"></a>
     <a href="https://github.com/jhonatanLop" target="_blank"><img src="https://img.shields.io/badge/-Jhonatan-%23000000?style=for-the-badge&logo=GitHUb&logoColor=white"></a>
     <a href="https://github.com/paulo-granthon" target="_blank"><img src="https://img.shields.io/badge/-Paulo-%23000000?style=for-the-badge&logo=GitHUb&logoColor=white"></a>
-    <a href="https://github.com/taniacruzz" target="_blank"><img src="https://img.shields.io/badge/-Tânia-%23000000?style=for-the-badge&logo=GitHUb&logoColor=white"</a>
+    <a href="https://github.com/taniacruzz" target="_blank"><img src="https://img.shields.io/badge/-Tânia-%23000000?style=for-the-badge&logo=GitHUb&logoColor=white"></a>
 </div>
 
 <br><br><hr>
@@ -82,27 +82,29 @@ cliente, CR e colaborador.
 
 <details>
 <summary> Product Backlog </summary>
-<h2 align="center"> Sprint 1 </h2>
+<h2 align="center"> Product Backlog Khali </h2>
 
-|  Story  | Críterios de aceite |
-|:---------|:----------------------|
-| Como colaborador preciso ser capaz de apontar as minhas horas extras e sobreavisos no sistema para que elas fiquem registradas. | Ser capaz de inserir apontamentos de sobreaviso; Ser capaz de inserir apontamentos de horas extras |
-| Como colaborador preciso ter acesso ao estado dos meus apontamentos de hora extra e sobreaviso para me manter atualizado.  | Visualizar status dos apontamentos; Visualizar histórico de apontamentos. |
-| Como gestor preciso ser capaz de consultar o histórico de apontamentos da(s) minha(s) squad(s) para facilitar o controle de horas extras e sobreavisos feitos pela minha squad. | Consulta de apontamentos por squad; Consulta de apontamentos por colaborador; Consulta de apontamentos por data |
-| Como administrador preciso ter acesso aos apontamentos de hora extra e sobreaviso de cada squad dos meus gestores para melhor acompanhamento do período trabalhado dos meus colaboradores. |Visualizar todos os apontamentos lançados de todos os colaboradores. |
-| Como administrador preciso ser capaz de cadastrar colaboradores, gestores e administradores para que eu possa designá-los as permissões corretas no sistema. | Inserir novo usuário do tipo Colaborador; Inserir novo usuário do tipo Gestor; Inserir novo usuário do tipo Administrador. |
-| Como administrador preciso ser capaz de cadastrar squads para que os apontamentos sejam corretamente associados aos Centros de Resultado. | Inserir uma nova Squad. |
-
-<br>
-<h2 align="center"> Sprint 2 </h2>
-
-|  Story  | Críterios de aceite |
-|:---------|:----------------------|
-| Como gestor preciso ser capaz de aprovar ou rejeitar os apontamentos de hora extra e sobreaviso dos colaboradores da(s) minha(s) squad(s) para barrar apontamentos inválidos.  | Ser capaz de Aprovar ou Reprovar um apontamento. |
-| Como gestor preciso dar um feedback para apontamentos recusado por mim para que o solicitante tenha uma justificativa de o porquê da recusa.  | Ser capaz de inserir uma justificativa no caso de apontamentos reprovados |
-| Como administrador preciso ser capaz de cadastrar clientes e seus respectivos projetos para que sejam referenciados durante o apontamento de horas extras e sobreavisos.  | Inserir novo cliente que possa ser associado em novos apontamentos; Inserir novo projeto que possa ser associado em novos apontamentos |
-| Eu como administrador preciso poder desativar um colaborador no caso de uma desistência.  | Não ter mais visualização dos apontamentos dos usuários do tipo; Usuários desativados deixam de realizam apontamentos |
-| Como administrador preciso ser capaz de configurar os parâmetros da verba dos apontamentos para ter melhor controle sobre as horas trabalhadas dos colaboradores.  | Ser capaz de alterar a duração da verba; Ser capaz de alterar o código da verba; Ser capaz de alterar a porcentagem do valor da hora. |
+| Rank | Prioridade |  Story  | Críterios de aceite | Sprint|
+|:-----|:-----------|:--------|:--------------------|:------|
+| 1 | 1 | Como colaborador preciso ser capaz de apontar as minhas horas extras e sobreavisos no sistema para que elas fiquem registradas. | Ser capaz de inserir apontamentos de sobreaviso; Ser capaz de inserir apontamentos de horas extras. | 1 |
+| 2 | 2 | Como colaborador preciso ter acesso ao estado dos meus apontamentos de hora extra e sobreaviso para me manter atualizado.  | Visualizar status dos apontamentos; Visualizar histórico de apontamentos. | 1 |
+| 3 | 3 | Como gestor preciso ser capaz de consultar o histórico de apontamentos da(s) minha(s) squad(s) para facilitar o controle de horas extras e sobreavisos feitos pela minha squad. | Consulta de apontamentos por squad; Consulta de apontamentos por colaborador; Consulta de apontamentos por data | 1 |
+| 4 | 4 | Como administrador preciso ser capaz de cadastrar colaboradores, gestores e administradores para que eu possa designá-los as permissões corretas no sistema. | Inserir novo usuário do tipo Colaborador; Inserir novo usuário do tipo Gestor; Inserir novo usuário do tipo Administrador. | 1 |
+| 5 | 5 | Como administrador preciso ser capaz de cadastrar clientes e seus respectivos projetos para que sejam referenciados durante o apontamento de horas extras e sobreavisos.  | Inserir novo cliente que possa ser associado em novos apontamentos; Inserir novo projeto que possa ser associado em novos apontamentos | 2 |
+| 6 | 6 | Como administrador preciso ser capaz de cadastrar squads para que os apontamentos sejam corretamente associados aos Centros de Resultado. | Inserir uma nova Squad. | 1 |
+| 7 | 7 | Como administrador preciso ter acesso aos apontamentos de hora extra e sobreaviso de cada squad dos meus gestores para melhor acompanhamento do período trabalhado dos meus colaboradores. |Visualizar todos os apontamentos lançados de todos os colaboradores. | 1 |
+| 8 | 1 | Como gestor preciso ser capaz de aprovar ou rejeitar os apontamentos de hora extra e sobreaviso dos colaboradores da(s) minha(s) squad(s) para barrar apontamentos inválidos.  | Ser capaz de Aprovar ou Reprovar um apontamento. | 2 |
+| 9 | 2 | Como gestor preciso dar um feedback para apontamentos recusado por mim para que o solicitante tenha uma justificativa de o porquê da recusa.  | Ser capaz de inserir uma justificativa no caso de apontamentos reprovados | 2 |
+| 10| 3 | Como administrador preciso ser capaz de configurar os parâmetros da verba dos apontamentos para ter melhor controle sobre as horas trabalhadas dos colaboradores.  | Ser capaz de alterar a duração da verba; Ser capaz de alterar o código da verba; Ser capaz de alterar a porcentagem do valor da hora. | 2 |
+| 11 | 4 | Eu como administrador preciso poder desativar um colaborador no caso de uma desistência.  | Não ter mais visualização dos apontamentos dos usuários do tipo; Usuários desativados deixam de realizam apontamentos | 2 |
+| 12 | 1 | Como administrador preciso ser capaz de gerar relatórios CSV contendo as horas trabalhadas dos meus colaboradores para poder integrar com outras ferramentas de análise, pela portabilidade, compartilhamento fácil e baixo custo de processamento. | Ser capaz de extrair um relatório com todos os apontamentos num arquivo “.csv” ;No relatório, ser capaz de escolher quais informações vão ser extraídas | 3 |
+| 13 | 2 | Como gestor, quero receber notificações quando um apontamento de um membro da minha(s) squad(s) for lançado para agilizar o meu processo de validação. | O gestor deve receber uma notificação quando um apontamento de um membro da sua squad for lançado ;O gestor deve poder ter acesso direto ao apontamento lançado através da notificação. | 3 |
+| 14 | 3 | Como colaborador, quero receber notificações quando meu gestor aprovar ou rejeitar meus apontamentos de horas extras e sobreaviso, para que eu fique atualizado sobre o status. | O colaborador deve receber notificações quando um apontamento for avaliado ;O colaborador através da mensagem deve poder ter acesso direto ao apontamento em questão | 3 |
+| 15 | 4 | Eu como colaborador preciso poder editar um apontamento anteriormente reprovado para uma nova avaliação. | Alterar informação do apontamento que foi reprovado e lançá-lo novamente para aprovação do gestor. | 3 |
+| 16 | 1 | Como administrador preciso ter acesso a um Dashboard com informações da jornada de trabalho de todos os meus colaboradores para ter controle sobre os apontamentos lançados, quais são os clientes com mais horas, quais squads fazem mais horas e afins. | Exibição de horas trabalhadas de todas as squads e comparação por squads; Exibição de horas trabalhadas de todos os colaboradores e comparação por colaboradores | 4 |
+| 17 | 2 | Como gestor preciso ter acesso a um Dashboard com informações da minha jornada de trabalho e de todos os colaboradores da(s) minha(s) squad(s) para melhor visualização e tratamento dos dados. | Exibição de horas trabalhadas de todas as squads e comparação por squads; Exibição de horas trabalhadas de todos os colaboradores e comparação por colaboradores; Exibição de horas trabalhadas; feedback do gestor dos apontamento avaliados | 4 |
+| 18 | 3 | Como um colaborador, desejo acessar um Dashboard que me forneça informações claras sobre as horas trabalhadas e metas alcançadas para que eu possa visualizar e analisar meus dados de trabalho de forma eficaz | Exibição de horas trabalhadas; Atualização em tempo real; Feedback do gestor | 4 |
+| 19 | 4 | Eu como colaborador preciso poder redefinir minha senha para almentar a segurança da minha conta em caso de perca ou esquecimento. | poder redefinir minha senha com acesso ao sistema; poder redifinir minha senha sem acesso ao sistema | 4 |
 
 <br>
 </details>
