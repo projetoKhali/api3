@@ -1,8 +1,6 @@
 package com.khali.api3.services;
 
-import java.sql.Types;
 import java.time.LocalTime;
-import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -12,12 +10,9 @@ import org.springframework.stereotype.Service;
 import com.khali.api3.domain.parameter.Parameter;
 import com.khali.api3.domain.pay_rate_rule.PayRateRule;
 import com.khali.api3.domain.pay_rate_rule.Shift;
-import com.khali.api3.domain.resultCenter.ResultCenter;
 import com.khali.api3.domain.util.Pair;
 import com.khali.api3.repositories.ParametersRepository;
 import com.khali.api3.repositories.PayRateRuleRepository;
-
-import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class PayRateRuleService {
