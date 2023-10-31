@@ -136,3 +136,9 @@ CREATE TABLE IF NOT EXISTS appointments(
     (apt_updt_id) REFERENCES appointments(apt_id),
     CONSTRAINT prj_id_fk FOREIGN KEY (prj_id) REFERENCES projects(prj_id)
 );
+
+
+create table if not EXISTS teste(
+    id serial primary key,
+    name varchar(255)
+);
