@@ -75,15 +75,15 @@ public class PayRateRuleService {
         }
     }
 
-    public Pair<LocalTime> getShiftTimeRange(Shift shift) {
+    public Optional<Pair<LocalTime>> getShiftTimeRange(Shift shift) {
         Parameter lastParameter = parameterRepository.findLastParameter();
         switch (shift) {
-            case Shift.Daytime:
+            case Daytime:
                 return Optional.of(new Pair<LocalTime>(
                     lastParameter.getNightShiftEnd(),
                     lastParameter.getNightShiftStart()
                 ));
-            case Shift.Nightime:
+            case Nightime:
                 return Optional.of(new Pair<LocalTime>(
                     lastParameter.getNightShiftStart(),
                     lastParameter.getNightShiftEnd()
@@ -91,8 +91,4 @@ public class PayRateRuleService {
             default: return Optional.empty();
         }
     }
-
-
-
 }
-
