@@ -7,9 +7,9 @@ CREATE TYPE Apt_type AS ENUM (
 
 DROP TYPE IF EXISTS Period_type CASCADE;
 CREATE TYPE Period_type AS ENUM (
-    'Nightime',
-    'Daytime',
-    'Allday'
+    'NightTime',
+    'DayTime',
+    'AllDay'
 );
 
 
@@ -134,6 +134,7 @@ CREATE TABLE IF NOT EXISTS appointments(
     justification VARCHAR(255),
     status Apt_status DEFAULT 'Pending',
     insert_date TIMESTAMP DEFAULT now(),
+    active BOOLEAN DEFAULT TRUE,
     apt_updt_id INT NULL,
     feedback VARCHAR(255),
 
