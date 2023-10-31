@@ -13,12 +13,12 @@ import java.util.Optional;
 public interface PayRateRuleRepository extends JpaRepository<PayRateRule, Long>{
     public PayRateRule save(PayRateRule payRateRule);
     public List<PayRateRule> findAll();
-    public List<PayRateRule> findByCode(Long code); 
-    public Optional<PayRateRule> findById(Long id); 
+    public List<PayRateRule> findByCode(Long code);
+    public Optional<PayRateRule> findById(Long id);
 
     @Query(value = "select * from pay_rate_rules where active = true and overlap = true", nativeQuery = true)
     public List<PayRateRule> findCumulative ();
-   
+
     @Query(value = "select * from pay_rate_rules where active = true and min_hour_count > 0", nativeQuery = true)
     public List<PayRateRule> findMinHourCount ();
 }
