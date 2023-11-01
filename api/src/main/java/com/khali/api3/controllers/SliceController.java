@@ -46,25 +46,32 @@ public class SliceController {
         List<PayRateRule> payRateRulesCumulative = payRateRuleRepository.findCumulative();
         List<PayRateRule> payRateRulesMinHourCount = payRateRuleRepository.findMinHourCount();
 
-        return appointmentRepository
+        List<Slice> result = appointmentRepository
             .findByActive()
             .stream()
+            .peek(appointment -> System.out.println("appointment: " + appointment.toString()))
             .<List<Slice>>map(appointment -> splitDays(
                 Slice.fromAppointment(appointment)
             ))
             .flatMap(List::stream)
+            .peek(slice -> System.out.println("slice after first flatMap: " + slice.toString()))
             .filter(slice -> filterSlicePeriod(
                 slice,
                 filterPeriodStart,
                 filterPeriodEnd
             ))
+            .peek(slice -> System.out.println("slice after filter: " + slice.toString()))
             .<List<Slice>>map(slice -> generateSlicesAppointment(
                 slice,
                 payRateRulesCumulative,
                 payRateRulesMinHourCount
             ))
             .flatMap(List::stream)
+            .peek(slice -> System.out.println("final slices: " + slice.toString()))
             .collect(Collectors.toList());
+
+        result.forEach(slice -> System.out.println("" + result.size() + " items | final slices: " + slice.toString()));
+        return result;
     }
 
     public List<Slice> generateSlicesAppointment (
