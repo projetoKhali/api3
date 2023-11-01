@@ -1,6 +1,9 @@
+import { AppointmentSchema } from "./Appointment";
+import { PayRateRuleSchema } from "./PayRateRule";
+
 export interface SliceSchema {
-    appointmentId: number,
-    payRateRuleId: number,
+    appointment: AppointmentSchema,
+    payRateRule: PayRateRuleSchema,
     start: string,
     end: string,
-};
+}
