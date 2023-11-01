@@ -16,6 +16,7 @@ import jakarta.persistence.Transient;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.Setter;
 
 @Entity(name="projects")
@@ -24,7 +25,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-    public class Project {
+    @ToString
+public class Project {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="prj_id")

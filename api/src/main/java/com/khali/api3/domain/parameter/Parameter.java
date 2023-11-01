@@ -2,6 +2,7 @@ package com.khali.api3.domain.parameter;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.Setter;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -24,6 +25,7 @@ import jakarta.persistence.Transient;
 @Getter
 @Setter
 @EqualsAndHashCode
+@ToString
 public class Parameter {
     
     @Id

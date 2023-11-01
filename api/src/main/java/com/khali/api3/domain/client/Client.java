@@ -13,6 +13,7 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.Setter;
 
 @Entity(name="clients")
@@ -22,6 +23,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @EqualsAndHashCode
+@ToString
 public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

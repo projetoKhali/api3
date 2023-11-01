@@ -14,6 +14,7 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.Setter;
 
 import java.sql.Timestamp;
@@ -25,6 +26,7 @@ import java.sql.Timestamp;
 @Getter
 @Setter
 @EqualsAndHashCode
+@ToString
 public class PayRateRule {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

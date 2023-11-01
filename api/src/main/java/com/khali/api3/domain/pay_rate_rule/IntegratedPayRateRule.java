@@ -7,11 +7,13 @@ import com.khali.api3.domain.util.Pair;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.ToString;
 import lombok.Setter;
 
 @Getter
 @Setter
 @AllArgsConstructor
+@ToString
 public class IntegratedPayRateRule {
     private PayRateRule payRateRule;
     private Optional<Pair<Timestamp>> timeRange;
