@@ -1,36 +1,41 @@
-CREATE TYPE IF NOT EXISTS Apt_type AS ENUM (
+DROP TYPE IF EXISTS Apt_type CASCADE;
+CREATE TYPE Apt_type AS ENUM (
     'Overtime',
     'OnNotice'
 );
 
 
-CREATE TYPE IF NOT EXISTS Period_type AS ENUM (
+DROP TYPE IF EXISTS Period_type CASCADE;
+CREATE TYPE Period_type AS ENUM (
     'Nightime',
     'Daytime',
     'Allday'
 );
 
 
-CREATE TYPE IF NOT EXISTS User_type AS ENUM (
+DROP TYPE IF EXISTS User_type CASCADE;
+CREATE TYPE User_type AS ENUM (
     'Employee',
     'Manager',
     'Admin'
 );
 
 
-CREATE TYPE IF NOT EXISTS Apt_status AS ENUM (
+DROP TYPE IF EXISTS Apt_status CASCADE;
+CREATE TYPE Apt_status AS ENUM (
     'Pending',
     'Approved',
     'Rejected'
 );
 
 
-CREATE CAST IF NOT EXISTS (VARCHAR AS Apt_type) WITH INOUT AS IMPLICIT;
-CREATE CAST IF NOT EXISTS (VARCHAR AS Period_type) WITH INOUT AS IMPLICIT;
-CREATE CAST IF NOT EXISTS (VARCHAR AS User_type) WITH INOUT AS IMPLICIT;
-CREATE CAST IF NOT EXISTS (VARCHAR AS Apt_status) WITH INOUT AS IMPLICIT;
+CREATE CAST (VARCHAR AS Apt_type) WITH INOUT AS IMPLICIT;
+CREATE CAST (VARCHAR AS Period_type) WITH INOUT AS IMPLICIT;
+CREATE CAST (VARCHAR AS User_type) WITH INOUT AS IMPLICIT;
+CREATE CAST (VARCHAR AS Apt_status) WITH INOUT AS IMPLICIT;
 
 
+DROP TABLE IF EXISTS clients CASCADE;
 CREATE TABLE IF NOT EXISTS clients(
     clt_id SERIAL PRIMARY KEY,
     "name" VARCHAR(255),
@@ -40,6 +45,7 @@ CREATE TABLE IF NOT EXISTS clients(
 );
 
 
+DROP TABLE IF EXISTS users CASCADE;
 CREATE TABLE IF NOT EXISTS users(
     usr_id SERIAL PRIMARY KEY,
     registration VARCHAR(255) UNIQUE NOT NULL,
@@ -52,6 +58,7 @@ CREATE TABLE IF NOT EXISTS users(
 );
 
 
+DROP TABLE IF EXISTS "parameters" CASCADE;
 CREATE TABLE IF NOT EXISTS "parameters"(
     prm_id SERIAL PRIMARY KEY,
     insert_date TIMESTAMP DEFAULT now(),
@@ -61,6 +68,7 @@ CREATE TABLE IF NOT EXISTS "parameters"(
 );
 
 
+DROP TABLE IF EXISTS pay_rate_rules CASCADE;
 CREATE TABLE IF NOT EXISTS pay_rate_rules(
     prt_id SERIAL PRIMARY KEY,
     code INT UNIQUE NOT NULL,
@@ -74,6 +82,7 @@ CREATE TABLE IF NOT EXISTS pay_rate_rules(
 );
 
 
+DROP TABLE IF EXISTS result_centers CASCADE;
 CREATE TABLE IF NOT EXISTS result_centers(
     rc_id SERIAL PRIMARY KEY,
     "name" VARCHAR(255) NOT NULL,
@@ -87,6 +96,7 @@ CREATE TABLE IF NOT EXISTS result_centers(
 );
 
 
+DROP TABLE IF EXISTS members CASCADE;
 CREATE TABLE IF NOT EXISTS members(
     usr_id INT,
     rc_id INT,
@@ -101,6 +111,7 @@ CREATE TABLE IF NOT EXISTS members(
 );
 
 
+DROP TABLE IF EXISTS projects CASCADE;
 CREATE TABLE IF NOT EXISTS projects(
     prj_id SERIAL PRIMARY KEY,
     "name" VARCHAR(255) UNIQUE NOT NULL,
@@ -110,6 +121,7 @@ CREATE TABLE IF NOT EXISTS projects(
 );
 
 
+DROP TABLE IF EXISTS appointments CASCADE;
 CREATE TABLE IF NOT EXISTS appointments(
     apt_id SERIAL PRIMARY KEY,
     start_date TIMESTAMP check (start_date < end_date) NOT NULL,
@@ -135,10 +147,4 @@ CREATE TABLE IF NOT EXISTS appointments(
     CONSTRAINT apt_updt_fk FOREIGN KEY
     (apt_updt_id) REFERENCES appointments(apt_id),
     CONSTRAINT prj_id_fk FOREIGN KEY (prj_id) REFERENCES projects(prj_id)
-);
-
-
-create table if not EXISTS teste(
-    id serial primary key,
-    name varchar(255)
 );
