@@ -80,7 +80,6 @@ public class SliceController {
         List<PayRateRule> payRateRulesMinHourCount
 
     ) {
-        List<Slice> subSlices = new ArrayList<Slice>();
         List<Slice> subSlicesCumulative = new ArrayList<Slice>();
 
         for (PayRateRule payRateRule: payRateRulesCumulative) {
@@ -104,6 +103,11 @@ public class SliceController {
         // identify shift
         // match PayRateRule
         // continue recursion
+        
+
+        List<Slice> subSlices = new ArrayList<Slice>();
+        subSlices.addAll(subSlicesCumulative);
+        subSlices.add(appointmentSlice);
 
         return subSlices;
     }
