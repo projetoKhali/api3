@@ -16,9 +16,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import jakarta.persistence.Transient;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -66,18 +64,19 @@ public class Appointment {
     @Column
     private String justification;
 
+    @Column(name = "status", insertable = false, updatable = false)
     @Enumerated(EnumType.STRING)
-    @Transient
     private AppointmentStatus status;
 
     @Column
     private String feedback;
+    
+    @Column(name = "active", insertable = false, updatable = false)
+    private boolean active;
 
-    @Transient
-    @Column(name = "insert_date")
+    @Column(name = "apt_updt_id")
+    private Long apt_updt;
+
+    @Column(name = "insert_date", insertable = false, updatable = false)
     private Timestamp insertDate;
-
-    @OneToOne
-    @JoinColumn(name="apt_updt_id", referencedColumnName = "apt_id")
-    private Appointment apt_updt;
 }
