@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import './App.css';
 import AppointmentsAdm from "./pages/AdmAppointments";
@@ -14,10 +14,15 @@ import Appointments from "./pages/UserAppointments";
 import Users from "./pages/Users";
 
 import { UserSchema } from './schemas/User';
+import { getSlices } from './services/SliceService';
 
 
 function App() {
     const [userLoggedIn, setUserLoggedIn] = useState<UserSchema | undefined>();
+
+    useEffect(() => {
+        getSlices().then(response => console.log('----------------> getSlices:', response));
+    })
 
     return (
         <>
