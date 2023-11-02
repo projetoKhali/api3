@@ -23,7 +23,10 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
 
         public Optional<Appointment> findById(Long id);
 
-        @Query(value = "SELECT * FROM appointments a WHERE a.usr_id = :usr_id", nativeQuery = true)
+        @Query(value = "SELECT * FROM appointments a WHERE a.active = true", nativeQuery = true)
+        List<Appointment> findByActive();
+
+        @Query(value = "SELECT * FROM appointments a WHERE a.usr_id = :usr_id and a.active = true", nativeQuery = true)
         List<Appointment> findAppointmentByUser(@Param("usr_id") Long userId);
 
         @Query(value = "select * from appointments where rc_id in ( select rc_id from result_centers where gst_id = :usr_id) and status = 'Pending';", nativeQuery = true)

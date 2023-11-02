@@ -20,7 +20,7 @@ import jakarta.servlet.http.HttpServletResponse;
 public class CsvController {
 
     @GetMapping("/export")
-    public void exportCsv(HttpServletResponse response, @RequestParam Boolean[] camposBoolean) throws IOException {
+    public void exportCsv(HttpServletResponse response/*, @RequestParam Boolean[] camposBoolean*/) throws IOException {
         response.setContentType("text/csv");
         response.setHeader("Content-Disposition", "attachment; filename=\"relatorio.csv\"");
 
@@ -32,17 +32,28 @@ public class CsvController {
 
             // escreve o cabeçalho do arquivo csv
             List<String> header = new ArrayList<>();
-            if(camposBoolean[0]) header.add("Matricula");
-            if(camposBoolean[1]) header.add("Colaborador");
-            if(camposBoolean[2]) header.add("Verba");
-            if(camposBoolean[3]) header.add("Porcentagem da Verba");
-            if(camposBoolean[4]) header.add("Hora Início");
-            if(camposBoolean[5]) header.add("Hora Fim");
-            if(camposBoolean[6]) header.add("Tipo de Apontamento");
-            if(camposBoolean[7]) header.add("Centro Resultado");
-            if(camposBoolean[8]) header.add("Cliente");
-            if(camposBoolean[9]) header.add("Projeto");
-            if(camposBoolean[10]) header.add("Justificativa");
+            // if(camposBoolean[0]) header.add("Matricula");
+            // if(camposBoolean[1]) header.add("Colaborador");
+            // if(camposBoolean[2]) header.add("Verba");
+            // if(camposBoolean[3]) header.add("Porcentagem da Verba");
+            // if(camposBoolean[4]) header.add("Hora Início");
+            // if(camposBoolean[5]) header.add("Hora Fim");
+            // if(camposBoolean[6]) header.add("Tipo de Apontamento");
+            // if(camposBoolean[7]) header.add("Centro Resultado");
+            // if(camposBoolean[8]) header.add("Cliente");
+            // if(camposBoolean[9]) header.add("Projeto");
+            // if(camposBoolean[10]) header.add("Justificativa");
+            header.add("Matricula");
+            header.add("Colaborador");
+            header.add("Verba");
+            header.add("Porcentagem da Verba");
+            header.add("Hora Início");
+            header.add("Hora Fim");
+            header.add("Tipo de Apontamento");
+            header.add("Centro Resultado");
+            header.add("Cliente");
+            header.add("Projeto");
+            header.add("Justificativa");
 
             csvWriter.writeNext(header.toArray(String[]::new));
             
@@ -65,17 +76,17 @@ public class CsvController {
 
             // testando com dados aleatórios
             List<String> data = new ArrayList<>();
-            if (camposBoolean[0]) data.add("123456");
-            if (camposBoolean[1]) data.add("Fulano de Tal");
-            if (camposBoolean[2]) data.add("123");
-            if (camposBoolean[3]) data.add("100");
-            if (camposBoolean[4]) data.add("2021-09-01 08:00:00");
-            if (camposBoolean[5]) data.add("2021-09-01 12:00:00");
-            if (camposBoolean[6]) data.add("Desenvolvimento");
-            if (camposBoolean[7]) data.add("Centro Resultado");
-            if (camposBoolean[8]) data.add("Cliente");
-            if (camposBoolean[9]) data.add("Projeto");
-            if (camposBoolean[10]) data.add("Justificativa");
+            data.add("123456");
+            data.add("Fulano de Tal");
+            data.add("123");
+            data.add("100");
+            data.add("2021-09-01 08:00:00");
+            data.add("2021-09-01 12:00:00");
+            data.add("Desenvolvimento");
+            data.add("Centro Resultado");
+            data.add("Cliente");
+            data.add("Projeto");
+            data.add("Justificativa");
             
             csvWriter.writeNext(data.toArray(new String[0]));
 

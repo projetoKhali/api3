@@ -8,7 +8,7 @@
 
     <script>
         document.getElementById("exportButton").addEventListener("click", function() {
-            fetch("/export-csv")
+            fetch("http://localhost:8080/csv/export")
                 .then(response => response.blob())
                 .then(blob => {
                     const url = window.URL.createObjectURL(blob);
