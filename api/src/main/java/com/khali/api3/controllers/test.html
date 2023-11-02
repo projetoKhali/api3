@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Export CSV</title>
+</head>
+<body>
+    <button id="exportButton">Export CSV</button>
+
+    <script>
+        document.getElementById("exportButton").addEventListener("click", function() {
+            fetch("/export-csv")
+                .then(response => response.blob())
+                .then(blob => {
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement("a");
+                    a.href = url;
+                    a.download = "relatorio.csv";
+                    document.body.appendChild(a);
+                    a.click();
+                    window.URL.revokeObjectURL(url);
+                });
+        });
+    </script>
+</body>
+</html>
