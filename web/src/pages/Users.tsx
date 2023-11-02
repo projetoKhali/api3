@@ -11,11 +11,20 @@ const Users = () => {
     const [users, setUsers] = useState<UserSchema[]>([]);
     const [filteredUsers, setFilteredUsers] = useState<UserSchema[]>([]);
 
+    // Estado para rastrear os valores dos filtros
+    const [filterValues, setFilterValues] = useState<{ [key: string]: any }>({
+        "search-nome": "",
+        "search-email": "",
+        "number": "",
+        "userType": "",
+        "active": "all", // Padrão para "Todos"
+    });
+
     const requestUsers = () => {
         getUsers()
             .then(usersResponse => {
                 setUsers(usersResponse);
-                setFilteredUsers(usersResponse);
+                applyFilters(filterValues, usersResponse); // Aplicar filtros quando os dados são buscados
             });
     }
 
@@ -23,14 +32,20 @@ const Users = () => {
         requestUsers();
     }, []);
 
-    const handleFilterChange = (filterType: string, filterValue: any) => {
-        if (!filterValue) {
-            setFilteredUsers(users);
-            return;
-        }
-    
-        const newFilteredUsers = users.filter((user) => {
-            const matchesFilter = (() => {
+   const handleFilterChange = (filterType: string, filterValue: any) => {
+        const newFilterValues = { ...filterValues, [filterType]: filterValue };
+
+        setFilterValues(newFilterValues);
+
+        // Aplicar filtros com base nos novos valores dos filtros
+        applyFilters(newFilterValues, users);
+    };
+
+    const applyFilters = (filters: { [key: string]: any }, data: UserSchema[]) => {
+        const newFilteredUsers = data.filter((user) => {
+            return Object.keys(filters).every((filterType) => {
+                const filterValue = filters[filterType];
+                if (!filterValue) return true; // Se o filtro estiver vazio, não aplicar filtro
                 switch (filterType) {
                     case "search-nome":
                         return user.name.toLowerCase().includes(filterValue.toLowerCase());
@@ -41,15 +56,16 @@ const Users = () => {
                     case "number":
                         return user.registration.toLowerCase().includes(filterValue.toLowerCase());
                     case "active":
-                        return (filterValue === "all" || (filterValue === "active" && user.expiredDate === "N/A") || (filterValue === "inactive" && user.expiredDate !== "N/A"));
+                        if (filterValue === "all") return true;
+                        if (filterValue === "active") return user.expiredDate === "N/A";
+                        if (filterValue === "inactive") return user.expiredDate !== "N/A";
+                        return true;
                     default:
                         return true;
                 }
-            })();
-    
-            return matchesFilter;
+            });
         });
-    
+
         setFilteredUsers(newFilteredUsers);
     };
     
