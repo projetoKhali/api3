@@ -27,8 +27,7 @@ export async function postProject(project: PostProjectSchema) {
             "Content-Type": 'application/json'
         },
         body: JSON.stringify(project)
-    }).then(response=> response.json())
-    .then((data)=> console.log(data))
+    }).then(response => response.json())
     .catch(error => console.error(error));
 }
 
