@@ -1,12 +1,13 @@
-import { useState } from "react";
+// Filter.js
+import { useState } from 'react';
 
 interface FilterProps {
-    type: "search" | "selection" | "date-range";
+    type: "search-nome" | "search-email" | "number" | "selection" | "date-range" | "active";
     options?: any[];
     onFilterChange: (value: any) => void;
 }
 
-export default function Filter ({ type, options, onFilterChange }: FilterProps) {
+export default function Filter({ type, options, onFilterChange }: FilterProps) {
     const [filterValue, setFilterValue] = useState('');
 
     const handleFilterChange = (value: any) => {
@@ -16,9 +17,25 @@ export default function Filter ({ type, options, onFilterChange }: FilterProps) 
 
     return (
         <div>
-            {type === "search" && (
+            {type === "search-nome" && (
                 <input
                     type="text"
+                    placeholder="Filtrar..."
+                    value={filterValue}
+                    onChange={(e) => handleFilterChange(e.target.value)}
+                />
+            )}
+            {type === "search-email" && (
+                <input
+                    type="text"
+                    placeholder="Filtrar..."
+                    value={filterValue}
+                    onChange={(e) => handleFilterChange(e.target.value)}
+                />
+            )}
+            {type === "number" && (
+                <input
+                    type="number"
                     placeholder="Filtrar..."
                     value={filterValue}
                     onChange={(e) => handleFilterChange(e.target.value)}
@@ -36,7 +53,16 @@ export default function Filter ({ type, options, onFilterChange }: FilterProps) 
                     ))}
                 </select>
             )}
+            {type === "active" && (
+                <select
+                    value={filterValue}
+                    onChange={(e) => handleFilterChange(e.target.value)}
+                >
+                    <option value="all">Todos</option>
+                    <option value="active">Ativos</option>
+                    <option value="inactive">Desativados</option>
+                </select>
+            )}
         </div>
     );
-};
-
+}

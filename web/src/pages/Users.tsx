@@ -1,10 +1,10 @@
-import { Input, Table } from 'antd';
+import { Table } from 'antd';
 import { ColumnsType } from 'antd/es/table';
 import { useEffect, useState } from 'react';
 import Filter from '../components/Filter';
 import UserForm from '../components/UserForm';
 import { UserSchema } from '../schemas/User';
-import { getUsers } from '../services/UserService';
+import { getUsers, updateUserActiveStatus } from '../services/UserService';
 import '../styles/userTData.css';
 
 const Users = () => {
@@ -28,21 +28,45 @@ const Users = () => {
             setFilteredUsers(users);
             return;
         }
-
+    
         const newFilteredUsers = users.filter((user) => {
-            switch (filterType) {
-                case "search":
-                    return user.name.toLowerCase().includes(filterValue.toLowerCase());
-                case "userType":
-                    return user.userType === filterValue;
-                case "active":
-                    return user.expiredDate !== "N/A" === filterValue;
-                default:
-                    return true;
-            }
+            const matchesFilter = (() => {
+                switch (filterType) {
+                    case "search-nome":
+                        return user.name.toLowerCase().includes(filterValue.toLowerCase());
+                    case "search-email":
+                        return user.email.toLowerCase().includes(filterValue.toLowerCase());
+                    case "userType":
+                        return user.userType === filterValue;
+                    case "number":
+                        return user.registration.toLowerCase().includes(filterValue.toLowerCase());
+                    case "active":
+                        return (filterValue === "all" || (filterValue === "active" && user.expiredDate === "N/A") || (filterValue === "inactive" && user.expiredDate !== "N/A"));
+                    default:
+                        return true;
+                }
+            })();
+    
+            return matchesFilter;
         });
-
+    
         setFilteredUsers(newFilteredUsers);
+    };
+    
+    const handleChangeUserActiveStatus = (data: UserSchema, newActiveStatus: boolean) => {
+        const operation = newActiveStatus ? 'ativar' : 'desativar';
+        const confirmResult = window.confirm(`Tem certeza de que deseja ${operation} este usuário?`);
+        if (confirmResult) {
+            updateUserActiveStatus(data, newActiveStatus)
+                .then((updatedUser) => {
+                    if (updatedUser) {
+                        requestUsers();
+                    }
+                })
+                .catch((error) => {
+                    console.error('Erro ao ativar o usuário:', error);
+                });
+        }
     };
 
     const columns: ColumnsType<UserSchema> = [
@@ -50,17 +74,11 @@ const Users = () => {
             title: "Nome",
             dataIndex: "name",
             key: "name",
-            filterIcon: (filtered: boolean) => (
-                <Filter
-                    type="search"
-                    onFilterChange={(searchText) => handleFilterChange("search", searchText)}
-                />
-            ),
-            filterDropdown: ({ setSelectedKeys }) => (
-                <div style={{ padding: 8 }}>
-                    <Input
-                        placeholder={`Filtrar por nome`}
-                        onChange={(e) => setSelectedKeys([e.target.value])}
+            filterDropdown: () => (
+                <div>
+                    <Filter
+                        type="search-nome"
+                        onFilterChange={(searchTextNome) => handleFilterChange("search-nome", searchTextNome)}
                     />
                 </div>
             ),
@@ -69,33 +87,69 @@ const Users = () => {
             title: 'Matrícula',
             dataIndex: 'registration',
             key: 'registration',
+            filterDropdown: ({ setSelectedKeys }) => (
+                <div>
+                    <Filter
+                        type="number"
+                        onFilterChange={(searchTextMatricula) => handleFilterChange("number", searchTextMatricula)}
+                    />
+                </div>
+            ),
         },
         {
             title: 'Email',
             dataIndex: 'email',
             key: 'email',
+            filterDropdown: ({ setSelectedKeys }) => (
+                <div>
+                    <Filter
+                        type="search-email"
+                        onFilterChange={(searchTextNome) => handleFilterChange("search-email", searchTextNome)}
+                    />
+                </div>
+            ),
         },
         {
             title: 'Função',
             dataIndex: 'userType',
             key: 'userType',
-            filters: [
-                { text: 'Employee', value: 'Employee' },
-                { text: 'Manager', value: 'Manager' },
-                { text: 'Admin', value: 'Admin' },
-            ],
-            onFilter: (value, record) => record.userType === value,
-            filterMultiple: false,
+            filterDropdown: ({ setSelectedKeys }) => (
+                <Filter
+                    type="selection"
+                    options={[
+                        { label: 'Todas', value: '' },
+                        { label: 'Employee', value: 'Employee' },
+                        { label: 'Manager', value: 'Manager' },
+                        { label: 'Admin', value: 'Admin' },
+                    ]}
+                    onFilterChange={(value) => handleFilterChange("userType", value)}
+                />
+            ),
         },
         {
-            title: 'Status',
+            title: 'Ativo',
             dataIndex: 'expiredDate',
             key: 'expiredDate',
-        },
-        {
-            title: 'Ação',
-            dataIndex: 'active',
-            key: 'active',
+            render: (expiredDate, data) => (
+                expiredDate !== "N/A" ? (
+                    <button onClick={() => handleChangeUserActiveStatus(data, true)}>Ativar</button>
+                ) : (
+                    <button onClick={() => handleChangeUserActiveStatus(data, false)}>Desativar</button>
+                )
+            ),
+            filterDropdown: ({ setSelectedKeys }) => (
+                <div>
+                    <Filter
+                        type="active"
+                        options={[
+                            { label: 'Todos', value: 'all' },
+                            { label: 'Ativos', value: 'N/A' },
+                            { label: 'Desativados', value: 'Ativo' },
+                        ]}
+                        onFilterChange={(value) => handleFilterChange("active", value)}
+                    />
+                </div>
+            ),
         },
     ];
 
