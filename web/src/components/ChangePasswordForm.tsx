@@ -6,6 +6,7 @@ import {useState } from 'react';
 import { UserSchema } from '../schemas/User';
 
 import { updatePassword } from '../services/UserService';
+import { Button, Form } from 'antd';
 
 interface ChangePasswordFormProps {
     userLoggedIn: UserSchema
@@ -17,6 +18,10 @@ export default function ChangePasswordForm ({ userLoggedIn, successCallback, err
     const [postOldPassword, setPostOldPassword] = useState<string>('');
     const [postNewPassword1, setPostNewPassword1] = useState<string>('');
     const [postNewPassword2, setPostNewPassword2] = useState<string>('');
+
+    const oldPassword = document.querySelector(".oldPassword") as HTMLInputElement;
+    const newPassword1 = document.querySelector(".newPassword1") as HTMLInputElement;
+    const newPassword2 = document.querySelector(".newPassword2") as HTMLInputElement;
     
     const [showSuccessMessage, setShowSuccessMessage] = useState(false);
     const [showErrorMessage, setShowErrorMessage] = useState(false);
@@ -25,13 +30,7 @@ export default function ChangePasswordForm ({ userLoggedIn, successCallback, err
     function handleNewPassword1Change(event: React.ChangeEvent<HTMLInputElement>){ setPostNewPassword1(event.target.value); }
     function handleNewPassword2Change(event: React.ChangeEvent<HTMLInputElement>){ setPostNewPassword2(event.target.value); }
 
-  //   async function displayMessage(message: string): Promise<any> {
-  //     const displayElement = document.createElement("div"); 
-  //     displayElement.textContent = message; 
-  //     document.body.appendChild(displayElement); 
-  // }
-  
-  
+     
     function handleSubmit(event: React.ChangeEvent<HTMLFormElement>) {
       event.preventDefault();
       if (!postOldPassword
@@ -42,6 +41,9 @@ export default function ChangePasswordForm ({ userLoggedIn, successCallback, err
           setShowSuccessMessage(false);
           setShowErrorMessage(true);
           errorCallback();
+          oldPassword.value = "";
+          newPassword1.value = "";
+          newPassword2.value = "";
         }
 
       else {
@@ -53,17 +55,15 @@ export default function ChangePasswordForm ({ userLoggedIn, successCallback, err
           setShowSuccessMessage(true);
           setShowErrorMessage(false);
           successCallback();
-          setTimeout(() => {
-            setPostOldPassword('');
-            setPostNewPassword1('');
-            setPostNewPassword2('');
-          }, 1000); // Aguarde 1 segundo antes de limpar os campos
-        })
-       
-                
+          oldPassword.value = "";
+          newPassword1.value = "";
+          newPassword2.value = "";
+          
+        }
+        )
+      
       }
     }
-
     return (
       <div>
         {showSuccessMessage && (
@@ -76,14 +76,14 @@ export default function ChangePasswordForm ({ userLoggedIn, successCallback, err
           Falha na alteração de senha.
         </div>
         )}
-        <form onSubmit={handleSubmit}>
+        
+        <form onSubmit={handleSubmit} >
 
-            <input type="password" placeholder="Senha atual" onChange={handleOldPasswordChange}/>
-            <input type="password" placeholder="Nova senha" onChange={handleNewPassword1Change}/>
-            <input type="password" placeholder="Repita a nova Senha" onChange={handleNewPassword2Change}/>
+            <input type="password" placeholder="Senha atual" className= "oldPassword" onChange={handleOldPasswordChange}/>
+            <input type="password" placeholder="Nova senha" className = "newPassword1" onChange={handleNewPassword1Change}/>
+            <input type="password" placeholder="Repita a nova Senha" className = "newPassword2" onChange={handleNewPassword2Change}/>
             <button type="submit">Atualizar Senha</button>
         </form>
-
       </div>
     );
 }
