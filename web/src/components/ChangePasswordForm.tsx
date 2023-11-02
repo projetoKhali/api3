@@ -9,7 +9,7 @@ import { updatePassword } from '../services/UserService';
 
 interface ChangePasswordFormProps {
     userLoggedIn: UserSchema
-    successCallback: () => void
+    successCallback: () => void;
     errorCallback: () => void;
 }
 
@@ -18,37 +18,67 @@ export default function ChangePasswordForm ({ userLoggedIn, successCallback, err
     const [postNewPassword1, setPostNewPassword1] = useState<string>('');
     const [postNewPassword2, setPostNewPassword2] = useState<string>('');
     
+    const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+    const [showErrorMessage, setShowErrorMessage] = useState(false);
+    
     function handleOldPasswordChange(event: React.ChangeEvent<HTMLInputElement>){ setPostOldPassword(event.target.value); }
     function handleNewPassword1Change(event: React.ChangeEvent<HTMLInputElement>){ setPostNewPassword1(event.target.value); }
     function handleNewPassword2Change(event: React.ChangeEvent<HTMLInputElement>){ setPostNewPassword2(event.target.value); }
 
+  //   async function displayMessage(message: string): Promise<any> {
+  //     const displayElement = document.createElement("div"); 
+  //     displayElement.textContent = message; 
+  //     document.body.appendChild(displayElement); 
+  // }
+  
+  
     function handleSubmit(event: React.ChangeEvent<HTMLFormElement>) {
       event.preventDefault();
       if (!postOldPassword
         || !postNewPassword1
         || !postNewPassword2
-        ) {errorCallback();}
-
-      else if (postOldPassword != userLoggedIn.password || postNewPassword1 != postNewPassword2) {errorCallback();}
+        || postOldPassword != userLoggedIn.password 
+        || postNewPassword1 != postNewPassword2) {
+          setShowSuccessMessage(false);
+          setShowErrorMessage(true);
+          errorCallback();
+        }
 
       else {
 
         updatePassword(
           userLoggedIn.id,
           postNewPassword2
-        ).then(() => successCallback())
+        ).then(() => {
+          setShowSuccessMessage(true);
+          setShowErrorMessage(false);
+          successCallback();
+        })
         
       }
     }
 
     return (
-      <form onSubmit={handleSubmit}>
+      <div>
+        {showSuccessMessage && (
+        <div className="alert alert-success" role="alert">
+          Senha alterada com sucesso!
+        </div>
+        )}
+        {showErrorMessage && (
+        <div className="alert alert-success" role="alert">
+          Falha na alteração de senha.
+        </div>
+        )}
+        <form onSubmit={handleSubmit}>
 
-          <input type="text" placeholder="Senha atual" onChange={handleOldPasswordChange}/>
-          <input type="text" placeholder="Nova senha" onChange={handleNewPassword1Change}/>
-          <input type="text" placeholder="Repita a nova Senha" onChange={handleNewPassword2Change}/>
-          <button type="submit">Atualizar Senha</button>
-      </form>
+            <input type="text" placeholder="Senha atual" onChange={handleOldPasswordChange}/>
+            <input type="text" placeholder="Nova senha" onChange={handleNewPassword1Change}/>
+            <input type="text" placeholder="Repita a nova Senha" onChange={handleNewPassword2Change}/>
+            <button type="submit">Atualizar Senha</button>
+        </form>
+
+      </div>
     );
 }
 
