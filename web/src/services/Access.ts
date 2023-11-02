@@ -64,7 +64,7 @@ const PermissionSideMenuItemMap: Record<string, SideMenuItem[]> = {
 }
 
 export async function getUserSideMenuItems (id: number): Promise<SideMenuItem[]> {
-    return await axios.get(`${API_URL}/${id}/permissions`, {})
+    return await axios.get(`${API_URL}/permissions/${id}`, {})
     .then(permissionsResponse => {
         console.log(permissionsResponse);
         const items: SideMenuItem[] = [];
