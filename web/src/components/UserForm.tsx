@@ -51,10 +51,10 @@ export default function UserForm({ callback }: { callback: () => void }) {
         callback();
     });
 
-    // Redefina o estado isPopUpVisible para mostrar o PopUp novamente
     setTimeout(() => {
       setIsPopUpVisible(false);
     }, 5000);
+  
   }
 
   return (

@@ -71,8 +71,8 @@ public class Appointment {
     @Column
     private String feedback;
     
-    @Column(name = "active", insertable = false, updatable = false)
-    private boolean active;
+    // @Column(name = "active", insertable = false, updatable = false)
+    // private boolean active;
 
     @Column(name = "apt_updt_id")
     private Long apt_updt;
