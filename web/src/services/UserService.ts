@@ -91,3 +91,26 @@ export async function updateUserActiveStatus(user: UserSchema, newActiveStatus: 
         throw error;
     }
 }
+export async function updatePassword(id: number, password: string) {
+    let response = null;
+    // let endpoint = newActiveStatus ? 'activate' : 'deactivate';
+
+    try {
+        response = await fetch(`${API_URL}/${id}/updatePassword`, {
+            method: 'PUT',
+            headers: {
+                "Content-Type": 'application/json'
+            },
+            body: password
+        });
+        
+        if (!response || !response.ok) {
+            throw new Error(`Erro ao atualizar senha do usuário: ${response ? response.statusText : 'Resposta não recebida'}`);
+        }
+        
+        return response.json();
+    } catch (error) {
+        console.error("Erro ao atualizar senha do usuário:", error);
+        throw error;
+    }
+}

@@ -12,6 +12,7 @@ import Projects from "./pages/Projects";
 import ResultCenters from './pages/ResultCenters';
 import Appointments from "./pages/UserAppointments";
 import Users from "./pages/Users";
+import ChangePasswordForm from './components/ChangePasswordForm';
 
 import { UserSchema } from './schemas/User';
 
@@ -34,6 +35,7 @@ function App() {
                             <Route path="resultCenters" element={<ResultCenters/>} />
                             <Route path="projects" element={<Projects/>} />
                             <Route path="parametrization" element={<Parametrization/>} />
+                            <Route path="changePassword" element={<ChangePasswordForm userLoggedIn={userLoggedIn}  successCallback = {() => {}} errorCallback={() => {}}/>} />
                         </Route>
                     </Routes>
                 </BrowserRouter>
