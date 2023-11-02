@@ -23,8 +23,8 @@ public class Member {
     @EmbeddedId
     private MemberPrimaryData memberPK;
 
-    @Column(name="active")
-    boolean active;
+    // @Column(name="active")
+    // boolean active;
 
     @Column(name = "insert_date", insertable = false, updatable = false)
     Timestamp insertdate;
