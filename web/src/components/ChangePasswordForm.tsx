@@ -53,8 +53,14 @@ export default function ChangePasswordForm ({ userLoggedIn, successCallback, err
           setShowSuccessMessage(true);
           setShowErrorMessage(false);
           successCallback();
+          setTimeout(() => {
+            setPostOldPassword('');
+            setPostNewPassword1('');
+            setPostNewPassword2('');
+          }, 1000); // Aguarde 1 segundo antes de limpar os campos
         })
-        
+       
+                
       }
     }
 
@@ -72,9 +78,9 @@ export default function ChangePasswordForm ({ userLoggedIn, successCallback, err
         )}
         <form onSubmit={handleSubmit}>
 
-            <input type="text" placeholder="Senha atual" onChange={handleOldPasswordChange}/>
-            <input type="text" placeholder="Nova senha" onChange={handleNewPassword1Change}/>
-            <input type="text" placeholder="Repita a nova Senha" onChange={handleNewPassword2Change}/>
+            <input type="password" placeholder="Senha atual" onChange={handleOldPasswordChange}/>
+            <input type="password" placeholder="Nova senha" onChange={handleNewPassword1Change}/>
+            <input type="password" placeholder="Repita a nova Senha" onChange={handleNewPassword2Change}/>
             <button type="submit">Atualizar Senha</button>
         </form>
 
