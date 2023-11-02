@@ -16,10 +16,10 @@ import com.opencsv.CSVWriter;
 import jakarta.servlet.http.HttpServletResponse;
 
 @RestController
-@RequestMapping("/csv")
+@RequestMapping("/csv-export")
 public class CsvController {
 
-    @GetMapping("/export")
+    @GetMapping
     public void exportCsv(HttpServletResponse response, @RequestParam Boolean[] camposBoolean) throws IOException {
         response.setContentType("text/csv");
         response.setHeader("Content-Disposition", "attachment; filename=\"relatorio.csv\"");
@@ -66,6 +66,5 @@ public class CsvController {
             csvWriter.close();
             System.out.println("Arquivo CSV gerado com sucesso!");
         }
-        // return ;
     }
 }
