@@ -79,7 +79,7 @@ public class UserController {
     // }
 
 
-    @GetMapping("/{id}/permissions")
+    @GetMapping("/permissions/{id}")
     public List<Permission> getUserPermissions(@PathVariable Long id) {
         try {
             List<Permission> permissions = new ArrayList<Permission>();

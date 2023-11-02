@@ -3,6 +3,7 @@ package com.khali.api3.controllers;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,10 +23,13 @@ import com.khali.api3.repositories.AppointmentRepository;
 import com.khali.api3.services.AppointmentService;
 
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 
 @RestController
 @RequestMapping("/appointments")
 public class AppointmentController {
+    long rejected;
+    long approvated;
 
     @Autowired
     private final AppointmentRepository appointmentRepository;
@@ -77,7 +81,9 @@ public class AppointmentController {
 
     @PostMapping
     public Appointment createAppointment(@RequestBody Appointment appointment) {
-        return appointmentRepository.save(appointment);
+        Appointment savedAppointment = appointmentRepository.save(appointment);
+        appointmentRepository.insertNotification(savedAppointment.getId(), savedAppointment.getUser().getId());
+        return savedAppointment;
     }
 
     @PutMapping("/{id}")
@@ -95,24 +101,52 @@ public class AppointmentController {
         return appointmentRepository.save(newAppointment);
     }
 
+    @Transactional
     @PutMapping("/validate/{id}")
-    public Appointment validateAppointment(
-        @PathVariable Long id,
-        @RequestParam(name = "index") int index,
-        @RequestParam(name = "feedback") String feedback
-    ) throws Exception {
-
+    public Appointment updateAppointmentWithStatus(
+            @PathVariable Long id,
+            @RequestParam(name = "index") int index,
+            @RequestParam(name = "feedback") String feedback) throws Exception {
         if (index != 1 && index != 2) {
             throw new Exception("O valor passado deve ser 1 ou 2");
         }
+    
         Appointment appointment = appointmentRepository.findById(id)
-            .orElseThrow(() -> new EntityNotFoundException("Appointment not found with id: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("Appointment not found with id: " + id));
+    
         AppointmentStatus status = AppointmentStatus.of(index);
         // appointment.setStatus(status);
         appointmentRepository.updateStatusAppointment(id, status);
         appointment.setFeedback(feedback);
+        appointment = appointmentRepository.save(appointment);
+    
+        if (status == AppointmentStatus.Rejected) {
+            appointmentRepository.updateToRejected(id);
+        } else if (status == AppointmentStatus.Approved) {
+            appointmentRepository.updateToApproved(id);
+        }
+        return appointment;
+    }
+    
 
-        return appointmentRepository.save(appointment);
+    @GetMapping("/notification/{usr_id}")
+    public List<Long> notificationAppointment(@PathVariable Long usr_id) {
+        List<Long> notification = new ArrayList<>();
+        
+        long pendingNotificationsForManager = appointmentRepository.countPendingNotificationsForManager(usr_id);
+        notification.add(pendingNotificationsForManager);
+        
+        long falseRejectedOrApprovedNotifications = appointmentRepository.countFalseRejectedOrApprovedNotifications(usr_id);
+        notification.add(falseRejectedOrApprovedNotifications);
+        
+        return notification;
+    }
+    
+
+    @PutMapping("/notification/update/{usr_id}")
+    @Transactional
+    public void updateNotificationsStatusToTrue(@PathVariable Long usr_id) {
+        appointmentRepository.updateStatusToTrueForUser(usr_id);
     }
 
 }

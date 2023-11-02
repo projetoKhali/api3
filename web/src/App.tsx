@@ -7,12 +7,11 @@ import Home from "./pages/Home";
 import Layout from './pages/Layout';
 import Login from './pages/Login';
 import AppointmentsManager from "./pages/ManagerAppointments";
-
+import Parametrization from './pages/Parametrization';
 import Projects from "./pages/Projects";
 import ResultCenters from './pages/ResultCenters';
 import Appointments from "./pages/UserAppointments";
 import Users from "./pages/Users";
-import Parametrization from './pages/Parametrization';
 
 import { UserSchema } from './schemas/User';
 
