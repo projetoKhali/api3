@@ -300,6 +300,8 @@ public class SliceController {
 
     public List<ProtoSlice> getSubSlicesMinHourCount (ProtoSlice appointmentSlice, IntegratedPayRateRule integratedPayRateRule) {
 
+        if (!checkDayOfWeek(appointmentSlice, integratedPayRateRule.getPayRateRule().getDaysOfWeek())) return List.of(appointmentSlice);
+
         // Get the overlap between given slice and payRateRule
         Optional<Pair<Timestamp>> overlapOptional = getSliceOverlap(
             appointmentSlice,
@@ -360,6 +362,7 @@ public class SliceController {
 
     public List<ProtoSlice> getSubSlicesDefault (ProtoSlice appointmentSlice, IntegratedPayRateRule integratedPayRateRule) {
         if (appointmentSlice.getLock()) return List.of(appointmentSlice);
+        if (!checkDayOfWeek(appointmentSlice, integratedPayRateRule.getPayRateRule().getDaysOfWeek())) return List.of(appointmentSlice);
 
         // Get the overlap between given slice and payRateRule
         Optional<Pair<Timestamp>> overlapOptional = getSliceOverlap(
