@@ -52,14 +52,13 @@ public class PayRateRuleService {
                 payRateRuleExists.setAppointmentType(newPayRateRule.getAppointmentType());
             }
 
-            // if (newPayRateRule.getDaysOfWeek() != null) {
-            //     payRateRuleExists.setDaysOfWeek(newPayRateRule.getDaysOfWeek());
-            // }
+            if (newPayRateRule.getDaysOfWeek() != null) {
+                payRateRuleExists.setDaysOfWeek(newPayRateRule.getDaysOfWeek());
+            }
 
             if (newPayRateRule.getShift() != null) {
                 payRateRuleExists.setShift(newPayRateRule.getShift());
             }
-            
             if (newPayRateRule.getOverlap() != null) {
                 payRateRuleExists.setOverlap(newPayRateRule.getOverlap());
             }
@@ -67,7 +66,6 @@ public class PayRateRuleService {
             if (newPayRateRule.getExpire_date() != null) {
                 payRateRuleExists.setExpire_date(newPayRateRule.getExpire_date());
             }
-
 
             return payRateRuleRepository.save(payRateRuleExists);
         } else {

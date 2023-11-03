@@ -23,5 +23,4 @@ public interface PayRateRuleRepository extends JpaRepository<PayRateRule, Long> 
 
     @Query(value = "select * from pay_rate_rules where expire_date = null and overlap = false and min_hour_count = 0", nativeQuery = true)
     public List<PayRateRule> findDefault();
-
 }

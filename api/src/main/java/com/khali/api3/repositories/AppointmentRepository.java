@@ -49,7 +49,6 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
     @Query(value = "UPDATE notifications SET type = 'Approved' WHERE apt_id = :aptId", nativeQuery = true)
     void updateToApproved(@Param("aptId") Long appointmentId);
 
-
     @Modifying
     @Query(value =
         "UPDATE Notification n " +
