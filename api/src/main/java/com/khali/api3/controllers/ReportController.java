@@ -19,6 +19,7 @@ import com.khali.api3.repositories.ReportRepository;
 import com.opencsv.CSVWriter;
 
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.transaction.Transactional;
 
 @RestController
 @RequestMapping("/csv-export")
@@ -30,6 +31,7 @@ public class ReportController {
     public ReportController(ReportRepository reportRepository){this.reportRepository = reportRepository;}
 
     @GetMapping
+    @Transactional
     public void exportCsv(HttpServletResponse response, @RequestParam Boolean[] camposBoolean, int usr_id) throws IOException {
         response.setContentType("text/csv");
         response.setHeader("Content-Disposition", "attachment; filename=\"relatorio.csv\"");
