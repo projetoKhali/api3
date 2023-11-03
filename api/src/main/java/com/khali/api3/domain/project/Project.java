@@ -12,7 +12,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
-import jakarta.persistence.Transient;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -39,8 +38,7 @@ public class Project {
     @Column
     private String description;
 
-    @Transient
-    @Column(name = "insert_date")
+    @Column(name = "insert_date", insertable = false, updatable = false)
     private Timestamp insertDate;
 
     @Column(name = "expire_date")

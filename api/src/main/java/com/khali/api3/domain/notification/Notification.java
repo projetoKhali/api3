@@ -1,11 +1,12 @@
-package com.khali.api3.domain.resultCenter;
+package com.khali.api3.domain.notification;
 
-import java.sql.Timestamp;
-
+import com.khali.api3.domain.appointment.AppointmentStatus;
 import com.khali.api3.domain.user.User;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -16,35 +17,31 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 import lombok.Setter;
 
-@Entity(name="resultcenter")
-@Table(name="result_centers")
+@Entity
+@Table(name = "notifications")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @EqualsAndHashCode
-@ToString
-public class ResultCenter {
+public class Notification {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="rc_id")
-    private Long id;
-
-    private String name;
-
-    @Column(unique=true)
-    private Integer code;
-
-    @Column(unique=true)
-    private String acronym;
+    @Column(name = "apt_id")
+    private Integer aptId;
 
     @ManyToOne
-    @JoinColumn(name="gst_id", referencedColumnName = "usr_id")
-    private User gestor;
+    @JoinColumn(name = "usr_id")
+    private User userId;
 
-    @Column(name = "insert_date", insertable = false, updatable = false)
-    private Timestamp insertDate;
+    @Column(name = "status")
+    private boolean status;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "type")
+    private AppointmentStatus type;
+
+   
 }

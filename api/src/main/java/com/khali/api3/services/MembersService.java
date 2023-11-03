@@ -51,12 +51,12 @@ public class MembersService {
     public void alterMembersStatus(List<Member> members, boolean status){
         if (status) {
             for (Member member : members) {
-                member.setActive(true);
+                // member.setActive(true);
                 membersRepository.save(member);
             }
         } else {
             for (Member member : members) {
-                member.setActive(false);
+                // member.setActive(false);
                 membersRepository.save(member);
             }
         }
