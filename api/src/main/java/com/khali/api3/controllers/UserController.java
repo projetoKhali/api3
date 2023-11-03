@@ -85,14 +85,15 @@ public class UserController {
             List<Permission> permissions = new ArrayList<Permission>();
             User user = userRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + id));
-            if (user.getUserType().equals(UserType.Admin)) {
-                permissions.add(Permission.FullAccess);
-                permissions.add(Permission.Register);
-                permissions.add(Permission.Report);
-            }
-            if (membersService.getMembersByUser(user).size() > 0) permissions.add(Permission.Appoint);
-            if (resultCenterService.findByGestorID(id).size() > 0) permissions.add(Permission.Validate);
-            for (Permission permission : permissions) System.out.println(permission);
+                if (user.getUserType().equals(UserType.Admin)) {
+                    permissions.add(Permission.FullAccess);
+                    permissions.add(Permission.Register);
+                    permissions.add(Permission.Report);
+                }
+                if (membersService.getMembersByUser(user).size() > 0) permissions.add(Permission.Appoint);
+                if (resultCenterService.findByGestorID(id).size() > 0) permissions.add(Permission.Validate);
+                permissions.add(Permission.Config);
+                for (Permission permission : permissions) System.out.println(permission);
             return permissions;
         } catch (Error e) {
             e.printStackTrace();
@@ -122,6 +123,15 @@ public class UserController {
         user.setUserType(userDetails.getUserType());
         user.setEmail(userDetails.getEmail());
         user.setPassword(userDetails.getPassword());
+
+        return userRepository.save(user);
+    }
+    @PutMapping("/{id}/updatePassword")
+    public User updatePassword(@PathVariable Long id, @RequestBody String password) {
+        User user = userRepository.findById(id)
+            .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + id));
+
+        user.setPassword(password);
 
         return userRepository.save(user);
     }

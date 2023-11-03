@@ -40,6 +40,9 @@ public class AppointmentController {
         AppointmentRepository appointmentRepository,
         AppointmentService appointmentService
     ) {
+        AppointmentRepository appointmentRepository,
+        AppointmentService appointmentService
+    ) {
         this.appointmentRepository = appointmentRepository;
         this.appointmentService = appointmentService;
     }
@@ -52,6 +55,7 @@ public class AppointmentController {
     @GetMapping("/{id}")
     public Appointment getAppointmentById(@PathVariable Long id) {
         return appointmentRepository.findById(id)
+            .orElseThrow(() -> new EntityNotFoundException("Appointment not found with id: " + id));
             .orElseThrow(() -> new EntityNotFoundException("Appointment not found with id: " + id));
     }
 
@@ -93,11 +97,11 @@ public class AppointmentController {
                 .orElseThrow(() -> new EntityNotFoundException("Appointment not found with id: " + id));
 
         // desativando apontamento antigo
-        appointment.setActive(false);
+        // appointment.setActive(false);
         appointmentRepository.save(appointment);
 
         // referenciando apontamento antigo no novo
-        newAppointment.setApt_updt(appointment.getId());
+        // newAppointment.setApt_updt(appointment.getId());
 
         return appointmentRepository.save(newAppointment);
     }
