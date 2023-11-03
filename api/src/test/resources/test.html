@@ -41,7 +41,7 @@
             ];
 
             // Realiza a chamada para gerar o relatório com os filtros
-            fetch("http://localhost:8080/csv/export?camposBoolean=" + camposBoolean.join(","))
+            fetch("http://localhost:8080/csv-export?camposBoolean=" + camposBoolean.join(",") + "&usr_id=1", { method: "GET" })
 
                 .then(response => response.blob())
                 .then(blob => {
