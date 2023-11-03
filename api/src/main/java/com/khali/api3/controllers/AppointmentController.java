@@ -101,14 +101,14 @@ public class AppointmentController {
         appointment.setJustification(newAppointment.getJustification());
         // appointment.setStatus(newAppointment.getStatus());
         appointment.setFeedback(newAppointment.getFeedback());
-        appointment.setApt_updt(newAppointment.getApt_updt());
+        appointment.setApt_updt(newAppointment.getId());
 
         // desativando apontamento antigo
-        appointment.setActive(false);
+        // appointment.setActive(false);
         appointmentRepository.save(appointment);
 
         // referenciando apontamento antigo no novo
-        newAppointment.setApt_updt(appointment.getId());
+        // newAppointment.setApt_updt(appointment.getId());
 
         return appointmentRepository.save(newAppointment);
     }
