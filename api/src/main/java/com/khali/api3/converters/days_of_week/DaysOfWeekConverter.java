@@ -8,12 +8,10 @@ public class DaysOfWeekConverter implements AttributeConverter<Boolean[], Short>
 
     @Override
     public Short convertToDatabaseColumn(Boolean[] attribute) {
-        // Convert Boolean array to SMALLINT
         short result = 0;
         for (int i = 0; i < attribute.length; i++) {
             if (attribute[i]) {
                 result |= (1 << i);
-                System.out.println(result);
             }
         }
         return result;
@@ -21,11 +19,9 @@ public class DaysOfWeekConverter implements AttributeConverter<Boolean[], Short>
 
     @Override
     public Boolean[] convertToEntityAttribute(Short dbData) {
-        // Convert SMALLINT to Boolean array
         Boolean[] daysOfWeek = new Boolean[7];
         for (int i = 0; i < 7; i++) {
             daysOfWeek[i] = (dbData & (1 << i)) != 0;
-            System.out.println(daysOfWeek[i]);
         }
         return daysOfWeek;
     }
