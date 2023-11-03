@@ -1,8 +1,10 @@
 package com.khali.api3.domain.pay_rate_rule;
 
+import com.khali.api3.converters.days_of_week.DaysOfWeekConverter;
 import com.khali.api3.domain.appointment.AppointmentType;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -47,6 +49,7 @@ public class PayRateRule {
     @Column(name = "appointment_type")
     private AppointmentType appointmentType;
 
+    @Convert(converter = DaysOfWeekConverter.class)
     @Column(name = "days_of_week")
     private Boolean[] daysOfWeek;
 
