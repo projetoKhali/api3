@@ -15,6 +15,7 @@ public enum Permission {
     Register("Register"),
     Report("Report"),
     FullAccess("FullAccess"),
+    Config("Config"),
     ;
 
     private String stringValue;

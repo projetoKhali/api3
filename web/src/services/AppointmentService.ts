@@ -1,6 +1,8 @@
 import axios, { AxiosResponse } from 'axios';
 import { AppointmentSchema, PostAppointmentSchema } from '../schemas/Appointment';
 
+
+
 const API_URL = 'http://127.0.0.1:8080/appointments';
 
 async function mapResponse(response: AxiosResponse): Promise<AppointmentSchema[]> {
@@ -18,6 +20,15 @@ async function mapResponse(response: AxiosResponse): Promise<AppointmentSchema[]
         feedback: item.feedback ? item.feedback : "N/A"
         // insertDate: item.insertDate? item.insertDate : "N/A",
     })) as AppointmentSchema[]
+}
+
+export interface NotificationItem {
+    label: string;
+    url: string;
+};
+
+export interface NotificationProps {
+    items: NotificationItem[];
 }
 
 export async function getAppointmentsUser(id: number): Promise<AppointmentSchema[]> {
@@ -79,3 +90,73 @@ export async function putAppointment(appointment: AppointmentSchema, newActiveSt
         throw error;
     }
 }
+
+
+export async function getCountNotification(id: number): Promise<NotificationItem[]> {
+    try {
+        const response = await axios.get(`${API_URL}/notification/${id}`, {});
+        const data = response.data;
+
+        if (Array.isArray(data)) {
+            const numbers = data.map(item => Number(item));
+            const notifications: NotificationItem[] = [];
+            if (numbers[0] > 0) {
+                if (numbers[0] === 1) {
+                    notifications.push({
+                        label: `Você possui ${numbers[0]} apontamento aguardando validação`,
+                        url: "/appointments/manager"
+                    });
+                }
+                else {
+                    notifications.push({
+                        label: `Você possui ${numbers[0]} apontamentos aguardando validação`,
+                        url: "/appointments/manager"
+                    });
+                }
+            }
+
+            if (numbers[1] > 0) {
+                if (numbers[1] === 1) {
+                    notifications.push({
+                        label: `Seu apontamento foi atualizado`,
+                        url: "/appointments/user"
+                    });
+                } else {
+                    notifications.push({
+                        label: `Você possui ${numbers[1]} novos apontamentos atualizados`,
+                        url: "/appointments/user"
+                    });
+                }
+            }
+            return notifications;
+        } else {
+            throw new Error("Os dados não estão no formato esperado.");
+        }
+    } catch (error) {
+        console.error('Erro ao obter notificações:', error);
+        throw error;
+    }
+}
+
+export async function putNotification(userId: number) {
+    try {
+        const url = `${API_URL}/notification/update/${userId}`;
+        const response = await fetch(url, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error(`Erro ao atualizar a notification: ${response.statusText}`);
+        }
+
+        return response.json();
+    } catch (error) {
+        console.error('Erro ao atualizar a notification:', error);
+        throw error;
+    }
+}
+
+
