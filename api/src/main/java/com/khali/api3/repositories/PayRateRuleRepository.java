@@ -9,12 +9,8 @@ import java.util.Optional;
 
 
 @RepositoryRestResource
-public interface PayRateRuleRepository extends JpaRepository<PayRateRule, Long>{
+public interface PayRateRuleRepository extends JpaRepository<PayRateRule, Long> {
     public List<PayRateRule> findAll();
     public List<PayRateRule> findByCode(Long code); 
     public Optional<PayRateRule> findById(Long id); 
-
-   
-
-   
 }
