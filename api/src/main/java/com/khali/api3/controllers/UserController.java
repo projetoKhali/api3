@@ -158,6 +158,6 @@ public class UserController {
 
     @GetMapping("/login")
     public User getLogin(String email, String password) {
-        return userService.getValidatedUser(email, password);
+        return userService.getValidatedUser(email, Cryptography.encode(password));
     }
 }
