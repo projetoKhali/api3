@@ -6,7 +6,7 @@ import java.security.NoSuchAlgorithmException;
 
 public class Cryptography {
     
-    public static String hash(String input) {
+    public static String encode(String input) {
         try {
             // Crie uma instância do MessageDigest com o algoritmo MD5
             MessageDigest md = MessageDigest.getInstance("MD5");
@@ -28,11 +28,5 @@ public class Cryptography {
             e.printStackTrace();
             return null;
         }
-    }
-
-    public static void main(String[] args) {
-        String input = "123456";
-        String hash = Cryptography.hash(input);
-        System.out.println(hash);
     }
 }
