@@ -46,7 +46,7 @@ public class AppointmentController {
 
     @GetMapping
     public List<Appointment> getAllAppointments() {
-        return appointmentRepository.findByActive();
+        return appointmentRepository.findAll();
     }
 
     @GetMapping("/{id}")
@@ -101,7 +101,7 @@ public class AppointmentController {
         appointment.setJustification(newAppointment.getJustification());
         // appointment.setStatus(newAppointment.getStatus());
         appointment.setFeedback(newAppointment.getFeedback());
-        appointment.setApt_updt(newAppointment.getId());
+        appointment.setApt_updt(newAppointment.getApt_updt());
 
         // desativando apontamento antigo
         // appointment.setActive(false);

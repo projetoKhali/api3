@@ -1,28 +1,73 @@
-import { Checkbox, Table } from 'antd';
-import type { ColumnsType } from 'antd/es/table';
+import { Table } from 'antd';
+import { ColumnsType } from 'antd/es/table';
 import { useEffect, useState } from 'react';
+import Filter from '../components/Filter';
 import UserForm from '../components/UserForm';
-// import { ButtonTableColumn } from '../components/ButtonTableCell';
 import { UserSchema } from '../schemas/User';
 import { getUsers, updateUserActiveStatus } from '../services/UserService';
 import '../styles/userTData.css';
 
-export default function Users() {
+const Users = () => {
     const [users, setUsers] = useState<UserSchema[]>([]);
-    const [showDeactivated, setShowDeactivated] = useState(false);
+    const [filteredUsers, setFilteredUsers] = useState<UserSchema[]>([]);
+
+    const [filterValues, setFilterValues] = useState<{ [key: string]: any }>({
+        "search-nome": "",
+        "search-email": "",
+        "number": "",
+        "userType": "",
+        "active": "all", // Padrão para "Todos"
+    });
 
     const requestUsers = () => {
         getUsers()
             .then(usersResponse => {
                 setUsers(usersResponse);
-                console.log('users retornados do request:', usersResponse);
+                applyFilters(filterValues, usersResponse); // Aplicar filtros quando os dados são buscados
             });
     }
 
     useEffect(() => {
-        requestUsers()
+        requestUsers();
     }, []);
 
+   const handleFilterChange = (filterType: string, filterValue: any) => {
+        const newFilterValues = { ...filterValues, [filterType]: filterValue };
+
+        setFilterValues(newFilterValues);
+
+        // Aplicar filtros com base nos novos valores dos filtros
+        applyFilters(newFilterValues, users);
+    };
+
+    const applyFilters = (filters: { [key: string]: any }, data: UserSchema[]) => {
+        const newFilteredUsers = data.filter((user) => {
+            return Object.keys(filters).every((filterType) => {
+                const filterValue = filters[filterType];
+                if (!filterValue) return true; // Se o filtro estiver vazio, não aplicar filtro
+                switch (filterType) {
+                    case "search-nome":
+                        return user.name.toLowerCase().includes(filterValue.toLowerCase());
+                    case "search-email":
+                        return user.email.toLowerCase().includes(filterValue.toLowerCase());
+                    case "userType":
+                        return user.userType === filterValue;
+                    case "number":
+                        return user.registration.toLowerCase().includes(filterValue.toLowerCase());
+                    case "active":
+                        if (filterValue === "all") return true;
+                        if (filterValue === "active") return user.expiredDate === "N/A";
+                        if (filterValue === "inactive") return user.expiredDate !== "N/A";
+                        return true;
+                    default:
+                        return true;
+                }
+            });
+        });
+
+        setFilteredUsers(newFilteredUsers);
+    };
+    
     const handleChangeUserActiveStatus = (data: UserSchema, newActiveStatus: boolean) => {
         const operation = newActiveStatus ? 'ativar' : 'desativar';
         const confirmResult = window.confirm(`Tem certeza de que deseja ${operation} este usuário?`);
@@ -41,37 +86,63 @@ export default function Users() {
 
     const columns: ColumnsType<UserSchema> = [
         {
-            title: 'Nome',
-            dataIndex: 'name',
-            key: 'name',
+            title: "Nome",
+            dataIndex: "name",
+            key: "name",
+            filterDropdown: () => (
+                <div>
+                    <Filter
+                        type="search-nome"
+                        onFilterChange={(searchTextNome) => handleFilterChange("search-nome", searchTextNome)}
+                    />
+                </div>
+            ),
         },
         {
             title: 'Matrícula',
             dataIndex: 'registration',
             key: 'registration',
+            filterDropdown: () => (
+                <div>
+                    <Filter
+                        type="number"
+                        onFilterChange={(searchTextMatricula) => handleFilterChange("number", searchTextMatricula)}
+                    />
+                </div>
+            ),
         },
         {
             title: 'Email',
             dataIndex: 'email',
             key: 'email',
+            filterDropdown: () => (
+                <div>
+                    <Filter
+                        type="search-email"
+                        onFilterChange={(searchTextNome) => handleFilterChange("search-email", searchTextNome)}
+                    />
+                </div>
+            ),
         },
         {
             title: 'Função',
             dataIndex: 'userType',
             key: 'userType',
+            filterDropdown: () => (
+                <Filter
+                    type="selection"
+                    options={[
+                        { label: 'Todas', value: '' },
+                        { label: 'Employee', value: 'Employee' },
+                        { label: 'Manager', value: 'Manager' },
+                        { label: 'Admin', value: 'Admin' },
+                    ]}
+                    onFilterChange={(value) => handleFilterChange("userType", value)}
+                />
+            ),
         },
-        // ButtonTableColumn({
-        //     title: "Detalhes",
-        //     displayName: "Ver",
-        //     onClick: (item) => {console.log(item.name)}
-        // }),
         {
-            title: 'Status',
-            dataIndex: 'active',
-            key: 'active',
-        },
-        {
-            title: 'Ação',
+            title: 'Ativo',
             dataIndex: 'expiredDate',
             key: 'expiredDate',
             render: (expiredDate, data) => (
@@ -81,21 +152,32 @@ export default function Users() {
                     <button onClick={() => handleChangeUserActiveStatus(data, false)}>Desativar</button>
                 )
             ),
+            filterDropdown: () => (
+                <div>
+                    <Filter
+                        type="active"
+                        options={[
+                            { label: 'Todos', value: 'all' },
+                            { label: 'Ativos', value: 'N/A' },
+                            { label: 'Desativados', value: 'Ativo' },
+                        ]}
+                        onFilterChange={(value) => handleFilterChange("active", value)}
+                    />
+                </div>
+            ),
         },
     ];
 
-    const filteredUsers = users.filter((user) => showDeactivated == (user.expiredDate !== "N/A"));
-
-return (
+    return (
         <div>
             <UserForm callback={requestUsers} />
-            <Checkbox
-                checked={showDeactivated}
-                onChange={(e) => setShowDeactivated(e.target.checked)}
-            >
-                Mostrar Usuários Desativados
-            </Checkbox>
-            <Table dataSource={filteredUsers} columns={columns} />
+            <Table
+                dataSource={filteredUsers}
+                columns={columns}
+                rowKey="id"
+            />
         </div>
     );
 }
+
+export default Users;
