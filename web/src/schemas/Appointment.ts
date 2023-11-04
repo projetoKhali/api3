@@ -2,18 +2,22 @@ export interface AppointmentSchema {
     id: number,
     user:{
         id: number,
+        name: string
     },
     type: string,
     startDate: string,
     endDate: string,
     resultCenter: {
         id: number,
+        name: string,
     },
     client: {
         id: number,
+        name: string,
     },
     project: {
         id: number,
+        name: string,
     },
     justification: string,
     feedback: string
