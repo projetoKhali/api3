@@ -20,6 +20,7 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
         public List<Appointment> findByResultCenter(ResultCenter resultCenter);
 
         public List<Appointment> findAll();
+        public List<Appointment> findByActive(boolean active);
 
         public Optional<Appointment> findById(Long id);
 
