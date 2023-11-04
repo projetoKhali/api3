@@ -12,6 +12,7 @@
   "dependencies": {
     "antd": "^5.9.1",
     "axios": "^1.5.0",
+    "flatpickr": "^4.6.13",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-flatpickr": "^3.10.13",
