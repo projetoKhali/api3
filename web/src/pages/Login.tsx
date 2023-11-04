@@ -30,7 +30,7 @@ export default function Login ({ onLogin }: LoginProps) {
     return (
         <form onSubmit={handleSubmit}>
             <input type="text" placeholder="Email" onChange={handleUsernameChange} autoFocus/>
-            <input type="text" placeholder="Password" onChange={handlePasswordChange}/>
+            <input type="password" placeholder="Password" onChange={handlePasswordChange}/>
             <button type="submit">Login</button>
         </form>
     );
