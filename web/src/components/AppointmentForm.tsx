@@ -15,7 +15,8 @@ import { getResultCentersOfUser } from '../services/ResultCenterService';
 import AppointmentTypeDropdown from './AppointmentTypeDropdown';
 import LookUpTextField from './LookUpTextField';
 
-import "flatpickr/dist/themes/material_green.css";
+import "flatpickr/dist/themes/airbnb.css";
+import { Portuguese } from "flatpickr/dist/l10n/pt.js"
 
 import { Component } from "react";
 import Flatpickr from "flatpickr";
@@ -49,7 +50,9 @@ export default function AppointmentForm({ userLoggedIn, successCallback, errorCa
     if (datePickerRef.current) {
       Flatpickr(datePickerRef.current, {
         enableTime: true,
-        dateFormat: 'Y-m-d H:i',
+        dateFormat: 'd/m/Y H:i',
+        defaultDate: 'today',
+        locale: Portuguese,
       });
     }
     getClients().then(clientsResponse => setAvailableClients(clientsResponse.map(client => ({ id: client.id, name: client.name, }))));
@@ -108,13 +111,15 @@ export default function AppointmentForm({ userLoggedIn, successCallback, errorCa
         }}
       />
       <div>
-      <input
-        ref={datePickerRef}
-        type="text"
-        placeholder="Select Date and Time"
-        className="form-control"
-      />
-    </div>
+        
+        <input
+          ref={datePickerRef}
+          type="text"
+          placeholder="Select Date and Time"
+          className="date_time_picker"
+
+        />
+      </div>
 
       <input type="text" placeholder="Início" onChange={handleStartDateChange} />
       <input type="text" placeholder="Fim" onChange={handleEndDateChange} />
