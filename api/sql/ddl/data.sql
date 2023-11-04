@@ -19,6 +19,8 @@ INSERT INTO pay_rate_rules (code, hour_duration, min_hour_count, pay_rate, appoi
 INSERT INTO pay_rate_rules (code, hour_duration, min_hour_count, pay_rate, appointment_type, shift, overlap, days_of_week) VALUES (3001, 1.1429, 2, 100, 'Overtime'::Apt_type, 'NightTime'::Shift_type, false, 62);
 INSERT INTO pay_rate_rules (code, hour_duration, min_hour_count, pay_rate, appointment_type, shift, overlap, days_of_week) VALUES (3000, 1.1429, 0, 75,  'Overtime'::Apt_type, 'AllDay'::Shift_type,    false, 65);
 INSERT INTO pay_rate_rules (code, hour_duration, min_hour_count, pay_rate, appointment_type, shift, overlap, days_of_week) VALUES (3001, 1.1429, 2, 100, 'Overtime'::Apt_type, 'AllDay'::Shift_type,    false, 65);
-INSERT INTO pay_rate_rules (code, hour_duration, min_hour_count, pay_rate, appointment_type, shift, overlap, days_of_week) VALUES (1809, 1.1429, 2, 30,  'Overtime'::Apt_type, 'NightTime'::Shift_type, true,  127);
+INSERT INTO pay_rate_rules (code, hour_duration, min_hour_count, pay_rate, appointment_type, shift, overlap, days_of_week) VALUES (1809, 1.1429, 0, 30,  'Overtime'::Apt_type, 'NightTime'::Shift_type, true,  127);
 
-INSERT INTO appointments (start_date, end_date, usr_id, clt_id, rc_id, prj_id, appointment_type, justification) VALUES ('2023-10-31 13:00:00', '2023-10-31 17:00:00', 1, 1, 1, 1, 'Overtime'::Apt_type, 'teste');
+INSERT INTO appointments (start_date, end_date, usr_id, clt_id, rc_id, prj_id, appointment_type, justification) VALUES ('2023-10-31 13:00:00', '2023-10-31 17:00:00', 1, 1, 1, 1, 'Overtime'::Apt_type, 'teste_13_17');
+INSERT INTO appointments (start_date, end_date, usr_id, clt_id, rc_id, prj_id, appointment_type, justification) VALUES ('2023-11-01 18:00:00', '2023-11-01 22:00:00', 1, 1, 1, 1, 'Overtime'::Apt_type, 'teste_18_22');
+INSERT INTO appointments (start_date, end_date, usr_id, clt_id, rc_id, prj_id, appointment_type, justification) VALUES ('2023-11-02 03:00:00', '2023-11-02 08:00:00', 1, 1, 1, 1, 'Overtime'::Apt_type, 'teste_03_08');
