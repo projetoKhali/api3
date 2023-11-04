@@ -151,8 +151,8 @@ CREATE TABLE IF NOT EXISTS appointments(
 
 DROP TABLE IF EXISTS notifications CASCADE;
 CREATE TABLE IF NOT EXISTS notifications (
-    appointments_apt_id INT PRIMARY KEY,
-    users_usr_id integer,
+    apt_id INT PRIMARY KEY,
+    usr_id integer,
     status boolean DEFAULT false,
     type apt_status DEFAULT 'Pending',
     CONSTRAINT fk_appointmets_apt_id FOREIGN KEY

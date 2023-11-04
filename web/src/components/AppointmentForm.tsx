@@ -21,7 +21,6 @@ import PopUpMensagem from './PopUpMessage';
 interface AppointmentFormProps {
   userLoggedIn: UserSchema
   successCallback: () => void;
-  callback: () => void;
   errorCallback: () => void;
 }
 

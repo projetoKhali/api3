@@ -9,6 +9,10 @@ interface FilterProps {
 
 export default function Filter({ type, options, onFilterChange }: FilterProps) {
     const [filterValue, setFilterValue] = useState('');
+    const [filterValueData, setFilterValueData] = useState({
+        startDate: '',
+        endDate: '',
+    });
 
     const handleFilterChange = (value: any) => {
         setFilterValue(value);
@@ -63,6 +67,30 @@ export default function Filter({ type, options, onFilterChange }: FilterProps) {
                     <option value="inactive">Desativados</option>
                 </select>
             )}
+            {type === "date-range" ? (
+            <div>
+                <label>Data Inicial</label>
+                <input
+                    type="date"
+                    value={filterValueData.startDate}
+                    onChange={(e) => {
+                        const newStartDate = e.target.value;
+                        setFilterValueData((prevData) => ({ ...prevData, startDate: newStartDate }));
+                    }}
+                />
+
+                <label>Data Final</label>
+                <input
+                    type="date"
+                    value={filterValueData.endDate}
+                    onChange={(e) => {
+                        const newEndDate = e.target.value;
+                        setFilterValueData((prevData) => ({ ...prevData, endDate: newEndDate }));
+                    }}
+                />
+            </div>
+        ) : null}
+
         </div>
     );
 }

@@ -11,7 +11,6 @@ const Users = () => {
     const [users, setUsers] = useState<UserSchema[]>([]);
     const [filteredUsers, setFilteredUsers] = useState<UserSchema[]>([]);
 
-    // Estado para rastrear os valores dos filtros
     const [filterValues, setFilterValues] = useState<{ [key: string]: any }>({
         "search-nome": "",
         "search-email": "",
@@ -103,7 +102,7 @@ const Users = () => {
             title: 'Matrícula',
             dataIndex: 'registration',
             key: 'registration',
-            filterDropdown: ({ setSelectedKeys }) => (
+            filterDropdown: () => (
                 <div>
                     <Filter
                         type="number"
@@ -116,7 +115,7 @@ const Users = () => {
             title: 'Email',
             dataIndex: 'email',
             key: 'email',
-            filterDropdown: ({ setSelectedKeys }) => (
+            filterDropdown: () => (
                 <div>
                     <Filter
                         type="search-email"
@@ -129,7 +128,7 @@ const Users = () => {
             title: 'Função',
             dataIndex: 'userType',
             key: 'userType',
-            filterDropdown: ({ setSelectedKeys }) => (
+            filterDropdown: () => (
                 <Filter
                     type="selection"
                     options={[
@@ -153,7 +152,7 @@ const Users = () => {
                     <button onClick={() => handleChangeUserActiveStatus(data, false)}>Desativar</button>
                 )
             ),
-            filterDropdown: ({ setSelectedKeys }) => (
+            filterDropdown: () => (
                 <div>
                     <Filter
                         type="active"
