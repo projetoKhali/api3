@@ -40,9 +40,6 @@ public class AppointmentController {
         AppointmentRepository appointmentRepository,
         AppointmentService appointmentService
     ) {
-        AppointmentRepository appointmentRepository,
-        AppointmentService appointmentService
-    ) {
         this.appointmentRepository = appointmentRepository;
         this.appointmentService = appointmentService;
     }
@@ -55,7 +52,6 @@ public class AppointmentController {
     @GetMapping("/{id}")
     public Appointment getAppointmentById(@PathVariable Long id) {
         return appointmentRepository.findById(id)
-            .orElseThrow(() -> new EntityNotFoundException("Appointment not found with id: " + id));
             .orElseThrow(() -> new EntityNotFoundException("Appointment not found with id: " + id));
     }
 
