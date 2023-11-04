@@ -12,9 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.khali.api3.domain.report.Report;
 import com.khali.api3.domain.slice.Slice;
-import com.khali.api3.domain.user.User;
 import com.khali.api3.repositories.ReportRepository;
 import com.opencsv.CSVWriter;
 
@@ -39,7 +37,7 @@ public class ReportController {
 
     @GetMapping
     @Transactional
-    public void exportCsv(HttpServletResponse response, @RequestParam Boolean[] camposBoolean, int usr_id) throws IOException {
+    public void exportCsv(HttpServletResponse response, @RequestParam Boolean[] camposBoolean, Integer usr_id) throws IOException {
         response.setContentType("text/csv");
         response.setHeader("Content-Disposition", "attachment; filename=\"relatorio.csv\"");
 

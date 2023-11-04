@@ -14,7 +14,7 @@ function serializeSlice (slice: any): SliceSchema {
 }
 
 async function mapResponse (response: AxiosResponse) {
-    return response.data.map((item) => serializeSlice(item));
+    return response.data.map((item: any) => serializeSlice(item));
 }
 
 export async function getSlices (): Promise<SliceSchema[]> {

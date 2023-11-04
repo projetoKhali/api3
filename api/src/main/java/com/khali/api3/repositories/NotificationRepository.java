@@ -7,7 +7,7 @@ import com.khali.api3.domain.notification.Notification;
 
 // manipulação das tabelas
 @RepositoryRestResource
-public interface NotificationRepository extends JpaRepository<Notification, Long> {
+public interface NotificationRepository extends JpaRepository<Notification, Integer> {
 
         
 }

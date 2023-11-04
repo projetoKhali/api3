@@ -50,7 +50,10 @@ export default function Appointments() {
                         const appointmentStartDate = new Date(appointment.startDate);
                         const filterStartDate = new Date(filterValue.startDate);
                         const filterEndDate = new Date(filterValue.endDate);
+                        console.log('Texto', appointmentStartDate, filterStartDate, filterEndDate)
+                        console.log('Texto', appointmentStartDate >= filterStartDate && appointmentStartDate <= filterEndDate)
                         return appointmentStartDate >= filterStartDate && appointmentStartDate <= filterEndDate;
+
                     case "type":
                         return appointment.type === filterValue;
                     case "status":
