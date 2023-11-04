@@ -68,6 +68,10 @@ public class SliceController {
         List<IntegratedPayRateRule> payRateRulesMinHourCount = mapPayRateRules(payRateRuleRepository.findMinHourCount());
         List<IntegratedPayRateRule> payRateRulesDefault = mapPayRateRules(payRateRuleRepository.findDefault());
 
+        System.out.println("payRateRulesCumulative: " + payRateRulesCumulative);
+        System.out.println("payRateRulesMinHourCount: " + payRateRulesMinHourCount);
+        System.out.println("payRateRulesDefault: " + payRateRulesDefault);
+
         return appointmentRepository
             .findByActive()                                                                         // find the active appointments
             .stream()                                                                               // start a Stream: convert List to Stream
@@ -109,10 +113,12 @@ public class SliceController {
         // they are added into the returning list at the end
         List<ProtoSlice> subSlicesCumulative = new ArrayList<ProtoSlice>();
         for (IntegratedPayRateRule payRateRule: payRateRulesCumulative) {
+            System.out.println("Checking payRateRulesCumulative: " + payRateRule);
             subSlicesCumulative.addAll(getSubSlicesCumulative(
                 appointmentSlice,
                 payRateRule
             ));
+            System.out.println("Resulting subSlices list: " + subSlicesCumulative);
         }
 
         // Create the list of subSlices, initially populated with the given slice
@@ -125,6 +131,7 @@ public class SliceController {
         // Slices generated from the `overlap` of one of those rules should NOT have it's rule changed afterwards (they are locked).
         // only Slices generated from the `remaining` of an `overlap` could have their payRateRule reassigned. 
         for (IntegratedPayRateRule payRateRule: payRateRulesMinHourCount) {
+            System.out.println("Checking payRateRulesMinHourCount: " + payRateRule);
             subSlices = subSlices.stream()
                 .<List<ProtoSlice>>map(subSlice -> getSubSlicesMinHourCount(
                     subSlice,
@@ -132,10 +139,12 @@ public class SliceController {
                 ))
                 .<ProtoSlice>flatMap(List::stream)
                 .collect(Collectors.toList());
+            System.out.println("Resulting subSlices list: " + subSlices);
         }
         
         // after the priority rules are checked, we can check the default rules (those that only differentiate between day and time)
         for (IntegratedPayRateRule payRateRule: payRateRulesDefault) {
+            System.out.println("Checking payRateRulesDefault: " + payRateRule);
             subSlices = subSlices.stream()
                 .<List<ProtoSlice>>map(subSlice -> getSubSlicesDefault(
                     subSlice,
@@ -143,28 +152,28 @@ public class SliceController {
                 ))
                 .<ProtoSlice>flatMap(List::stream)
                 .collect(Collectors.toList());
+            System.out.println("Resulting subSlices list: " + subSlices);
         }
 
         subSlices.addAll(subSlicesCumulative);
+
+        System.out.println("Final subSlices list: " + subSlices);
         return subSlices;
     }
 
     private Optional<Pair<Timestamp>> pairLocalTimeToTimestamp(Optional<Pair<LocalTime>> shiftTimeRangeOptional) {
         if (shiftTimeRangeOptional.isEmpty()) return Optional.empty();
         Pair<LocalTime> shiftTimeRange = shiftTimeRangeOptional.get();
-        Timestamp start = Timestamp.valueOf(shiftTimeRange.x.atDate(LocalDate.of(1970, 1, 1)));
-        Timestamp end = Timestamp.valueOf(shiftTimeRange.y.atDate(LocalDate.of(1970, 1, 1)));
         Optional<Pair<Timestamp>> result = Optional.of(new Pair<Timestamp>(
-            start, start.after(end)
-                ? new Timestamp(end.getTime() + oneDay)
-                : end
+            Timestamp.valueOf(shiftTimeRange.x.atDate(LocalDate.of(1970, 1, 1))),
+            Timestamp.valueOf(shiftTimeRange.y.atDate(LocalDate.of(1970, 1, 1)))
         ));
-        System.out.println("pairLocalTimetoTimestamp: " + result);
         return result;
     }
 
     private boolean checkDayOfWeek (ProtoSlice slice, Boolean[] daysOfWeek) {
-        return daysOfWeek[slice.getStart().toLocalDateTime().getDayOfWeek().getValue() % 7];
+        boolean resurt = daysOfWeek[slice.getStart().toLocalDateTime().getDayOfWeek().getValue() % 7];
+        return resurt;
     }
 
     public List<ProtoSlice> getSubSlices(
@@ -173,7 +182,9 @@ public class SliceController {
         boolean isCumulative,
         boolean isMinHourCount
     ) {
-        if (!checkDayOfWeek(appointmentSlice, integratedPayRateRule.getPayRateRule().getDaysOfWeek())) {
+        if (appointmentSlice.getAppointment().getType() != integratedPayRateRule.getPayRateRule().getAppointmentType()
+        || !checkDayOfWeek(appointmentSlice, integratedPayRateRule.getPayRateRule().getDaysOfWeek())
+        ) {
             return isCumulative ? List.of() : List.of(appointmentSlice);
         }
 
@@ -242,8 +253,9 @@ public class SliceController {
     }
     
     public List<ProtoSlice> getSubSlicesCumulative (ProtoSlice appointmentSlice, IntegratedPayRateRule integratedPayRateRule) {
-
-        if (!checkDayOfWeek(appointmentSlice, integratedPayRateRule.getPayRateRule().getDaysOfWeek())) return List.of();
+        if (appointmentSlice.getAppointment().getType() != integratedPayRateRule.getPayRateRule().getAppointmentType()
+        || !checkDayOfWeek(appointmentSlice, integratedPayRateRule.getPayRateRule().getDaysOfWeek())
+        ) return List.of();
 
         // Get the overlap between given slice and payRateRule
         Optional<Pair<Timestamp>> overlapOptional = getSliceOverlap(
@@ -303,8 +315,9 @@ public class SliceController {
     }
 
     public List<ProtoSlice> getSubSlicesMinHourCount (ProtoSlice appointmentSlice, IntegratedPayRateRule integratedPayRateRule) {
-
-        if (!checkDayOfWeek(appointmentSlice, integratedPayRateRule.getPayRateRule().getDaysOfWeek())) return List.of(appointmentSlice);
+        if (appointmentSlice.getAppointment().getType() != integratedPayRateRule.getPayRateRule().getAppointmentType()
+        || !checkDayOfWeek(appointmentSlice, integratedPayRateRule.getPayRateRule().getDaysOfWeek())
+        ) return List.of(appointmentSlice);
 
         // Get the overlap between given slice and payRateRule
         Optional<Pair<Timestamp>> overlapOptional = getSliceOverlap(
@@ -334,6 +347,9 @@ public class SliceController {
             Pair<Timestamp> remaining = remainingOptional.get();
             Long remainingPreviousHours = overlapPreviousHours;
 
+            System.out.println("overlap: " + overlap);
+            System.out.println("remaining: " + remaining);
+
             if (remaining.x.before(overlap.x)) overlapPreviousHours += getTotalTime(remaining.x, remaining.y);
             else remainingPreviousHours += getTotalTime(overlap.x, overlap.y);
 
@@ -342,11 +358,13 @@ public class SliceController {
                 ProtoSlice.fromPair(
                     appointmentSlice.getAppointment(),
                     remaining,
-                    integratedPayRateRule.getPayRateRule(),
+                    appointmentSlice.getPayRateRule(),
                     remainingPreviousHours,
-                    true
+                    false
                 )
             );
+        } else if (integratedPayRateRule.getPayRateRule().equals(appointmentSlice.getPayRateRule())) {
+            return List.of(appointmentSlice);
         }
 
         slices.add(ProtoSlice.fromPair(
@@ -366,7 +384,9 @@ public class SliceController {
 
     public List<ProtoSlice> getSubSlicesDefault (ProtoSlice appointmentSlice, IntegratedPayRateRule integratedPayRateRule) {
         if (appointmentSlice.getLock()) return List.of(appointmentSlice);
-        if (!checkDayOfWeek(appointmentSlice, integratedPayRateRule.getPayRateRule().getDaysOfWeek())) return List.of(appointmentSlice);
+        if (appointmentSlice.getAppointment().getType() != integratedPayRateRule.getPayRateRule().getAppointmentType()
+        || !checkDayOfWeek(appointmentSlice, integratedPayRateRule.getPayRateRule().getDaysOfWeek())
+        ) return List.of(appointmentSlice);
 
         // Get the overlap between given slice and payRateRule
         Optional<Pair<Timestamp>> overlapOptional = getSliceOverlap(
@@ -409,6 +429,8 @@ public class SliceController {
                     false
                 )
             );
+        } else if (integratedPayRateRule.getPayRateRule().equals(appointmentSlice.getPayRateRule())) {
+            return List.of(appointmentSlice);
         }
 
         slices.add(ProtoSlice.fromPair(
@@ -426,19 +448,6 @@ public class SliceController {
             .collect(Collectors.toList());
     }
 
-    public static Pair<Timestamp> trimPair (Pair<Timestamp> pair) {
-        return new Pair<Timestamp>(
-            trimTimestamp(pair.x),
-            trimTimestamp(pair.y)
-        );
-    }
-
-    public static Timestamp trimTimestamp (Timestamp timestamp) {
-        return new Timestamp(
-            timestamp.getTime() % oneDay
-        );
-    }
-
     private boolean filterSlicePeriod(ProtoSlice slice, Optional<Timestamp> filterPeriodStart, Optional<Timestamp> filterPeriodEnd) {
         return filterPeriodStart.isPresent()
             ? filterPeriodEnd.isPresent()
@@ -449,14 +458,21 @@ public class SliceController {
                 : true;
     }
 
+    public static Pair<Timestamp> truncateToTimePair (Pair<Timestamp> pair) {
+        return new Pair<Timestamp>(
+            truncateToTime(pair.x),
+            truncateToTime(pair.y)
+        );
+    }
+
     private boolean intersects(ProtoSlice slice, Timestamp start, Timestamp end) {
         return slice.getStart().before(end) && slice.getEnd().after(start);
     }
 
     // Removes day, month, year information from Timestamp
-    // private static Timestamp truncateToTime (Timestamp timestamp) {
-    //     return new Timestamp(timestamp.getTime() % oneDay);
-    // }
+    private static Timestamp truncateToTime (Timestamp timestamp) {
+        return new Timestamp(timestamp.getTime() % oneDay);
+    }
 
     // Removes hour, minute, second, mili information from Timestamp
     private static Timestamp truncateToDate (Timestamp timestamp) {
@@ -509,24 +525,40 @@ public class SliceController {
             )
         );
         Pair<Timestamp> timeRange = timeRangeOptional.get();
-        Timestamp start = timestampMax(trimTimestamp(slice.getStart()), timeRange.x);
-        Timestamp end = timestampMin(trimTimestamp(slice.getEnd()), timeRange.y);
+        Timestamp start = timestampMax(
+            truncateToTime(slice.getStart()),
+            timeRange.x
+        );
+        Timestamp end = timestampMin(
+            truncateToTime(slice.getEnd()),
+            timeRange.y.after(timeRange.x)
+                ? timeRange.y
+                : new Timestamp(timeRange.y.getTime() + oneDay)
+        );
         return start.before(end)
-            ? Optional.of(new Pair<Timestamp>(start, end))
+            ? Optional.of(new Pair<Timestamp>(
+                new Timestamp(start.getTime() + truncateToDate(slice.getStart()).getTime()),
+                new Timestamp(end.getTime() + truncateToDate(slice.getEnd()).getTime())
+            ))
             : Optional.empty();
     }
 
     private Optional<Pair<Timestamp>> getRemainingFromOverlap(ProtoSlice slice, Pair<Timestamp> overlap) {
-        Timestamp sliceStart = trimTimestamp(slice.getStart());
-        Timestamp sliceEnd = trimTimestamp(slice.getEnd());
-        Timestamp overlapStart = overlap.x;
-        Timestamp overlapEnd = overlap.y;
-        if (sliceStart.equals(overlapStart) && sliceEnd.equals(overlapEnd)) {
+        Timestamp sliceStart = truncateToTime(slice.getStart());
+        Timestamp sliceEnd = truncateToTime(slice.getEnd());
+        Pair<Timestamp> truncatedOverlap = truncateToTimePair(overlap);
+        if (sliceStart.equals(truncatedOverlap.x) && sliceEnd.equals(truncatedOverlap.y)) {
             return Optional.empty();
         }
-        return sliceStart.before(overlapStart)
-            ? Optional.of(new Pair<Timestamp>(sliceStart, overlapStart))
-            : Optional.of(new Pair<Timestamp>(overlapEnd, sliceEnd));
+        return sliceStart.before(truncatedOverlap.x)
+            ? Optional.of(new Pair<Timestamp>(
+                new Timestamp(sliceStart.getTime() + truncateToDate(slice.getStart()).getTime()),
+                new Timestamp(truncatedOverlap.x.getTime() + truncateToDate(slice.getEnd()).getTime())
+            ))
+            : Optional.of(new Pair<Timestamp>(
+                new Timestamp(truncatedOverlap.y.getTime() + truncateToDate(slice.getStart()).getTime()),
+                new Timestamp(sliceEnd.getTime() + truncateToDate(slice.getEnd()).getTime())
+            ));
     }
 
     private Long getTotalTime (Timestamp start, Timestamp end) {
