@@ -12,9 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.khali.api3.domain.report.Report;
 import com.khali.api3.domain.slice.Slice;
-import com.khali.api3.domain.user.User;
 import com.khali.api3.repositories.ReportRepository;
 import com.opencsv.CSVWriter;
 
@@ -46,22 +44,15 @@ public class ReportController {
         // tras lista de todos os slices
         List<Slice> slices = sliceController.calculateSlices(null, null);
 
+        String[] headers = {"Matricula", "Colaborador", "Verba", "Porcentagem da Verba", "Hora Início", "Hora Fim", "Tipo de Apontamento", "Centro Resultado", "Cliente", "Projeto", "Justificativa"};
+
         try (PrintWriter writer = response.getWriter()) {
             CSVWriter csvWriter = new CSVWriter(writer);
 
             // escreve o cabeçalho do arquivo csv
             List<String> header = new ArrayList<>();
-            if(camposBoolean[0]) header.add("Matricula");
-            if(camposBoolean[1]) header.add("Colaborador");
-            if(camposBoolean[2]) header.add("Verba");
-            if(camposBoolean[3]) header.add("Porcentagem da Verba");
-            if(camposBoolean[4]) header.add("Hora Início");
-            if(camposBoolean[5]) header.add("Hora Fim");
-            if(camposBoolean[6]) header.add("Tipo de Apontamento");
-            if(camposBoolean[7]) header.add("Centro Resultado");
-            if(camposBoolean[8]) header.add("Cliente");
-            if(camposBoolean[9]) header.add("Projeto");
-            if(camposBoolean[10]) header.add("Justificativa");
+
+            for (int i = 0; i < headers.length; i++) { if (camposBoolean[i]) { header.add(headers[i]); }}
 
             csvWriter.writeNext(header.toArray(String[]::new));
 
