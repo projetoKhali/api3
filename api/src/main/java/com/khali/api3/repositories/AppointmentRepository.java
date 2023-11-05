@@ -18,7 +18,7 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
 
     public List<Appointment> findAll();
 
-    @Query(value = "select * from appointments where active = true;", nativeQuery = true)
+    @Query(value = "select * from appointments;", nativeQuery = true)
     public List<Appointment> findByActive();
 
     public List<Appointment> findByResultCenter(ResultCenter resultCenter);

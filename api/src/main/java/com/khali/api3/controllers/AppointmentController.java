@@ -45,7 +45,7 @@ public class AppointmentController {
 
     @GetMapping
     public List<Appointment> getAllAppointments() {
-        return appointmentRepository.findByActive(true);
+        return appointmentRepository.findByActive();
     }
 
     @GetMapping("/{id}")
@@ -90,17 +90,17 @@ public class AppointmentController {
     public Appointment updateAppointment(@PathVariable Long id, @RequestBody Appointment appointmentDetails) {
         Appointment appointment = appointmentRepository.findById(id)
             .orElseThrow(() -> new EntityNotFoundException("Appointment not found with id: " + id));
-        appointment.setUser(newAppointment.getUser());
-        appointment.setType(newAppointment.getType());
-        appointment.setStartDate(newAppointment.getStartDate());
-        appointment.setEndDate(newAppointment.getEndDate());
-        appointment.setResultCenter(newAppointment.getResultCenter());
-        appointment.setClient(newAppointment.getClient());
-        appointment.setProject(newAppointment.getProject());
-        appointment.setJustification(newAppointment.getJustification());
+        appointment.setUser(appointmentDetails.getUser());
+        appointment.setType(appointmentDetails.getType());
+        appointment.setStartDate(appointmentDetails.getStartDate());
+        appointment.setEndDate(appointmentDetails.getEndDate());
+        appointment.setResultCenter(appointmentDetails.getResultCenter());
+        appointment.setClient(appointmentDetails.getClient());
+        appointment.setProject(appointmentDetails.getProject());
+        appointment.setJustification(appointmentDetails.getJustification());
         // appointment.setStatus(newAppointment.getStatus());
-        appointment.setFeedback(newAppointment.getFeedback());
-        appointment.setApt_updt(newAppointment.getApt_updt());
+        appointment.setFeedback(appointmentDetails.getFeedback());
+        appointment.setApt_updt(appointmentDetails.getApt_updt());
 
         // desativando apontamento antigo
         appointment.setActive(false);

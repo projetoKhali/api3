@@ -15,10 +15,9 @@ import { getResultCentersOfUser } from '../services/ResultCenterService';
 import AppointmentTypeDropdown from './AppointmentTypeDropdown';
 import LookUpTextField from './LookUpTextField';
 
+import { Portuguese } from "flatpickr/dist/l10n/pt.js";
 import "flatpickr/dist/themes/airbnb.css";
-import { Portuguese } from "flatpickr/dist/l10n/pt.js"
 
-import { Component } from "react";
 import Flatpickr from "flatpickr";
 
 interface AppointmentFormProps {
@@ -55,7 +54,7 @@ export default function AppointmentForm({ userLoggedIn, successCallback, errorCa
         defaultDate: 'today',
         locale: Portuguese,
       });
-    }; 
+    };
     if (endDateTimePicker.current) {
       Flatpickr(endDateTimePicker.current, {
         enableTime: true,
