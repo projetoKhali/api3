@@ -43,5 +43,4 @@ public class Notification {
     @Column(name = "type")
     private AppointmentStatus type;
 
-   
 }

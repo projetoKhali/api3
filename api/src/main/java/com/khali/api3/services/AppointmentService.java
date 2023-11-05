@@ -22,6 +22,9 @@ public class AppointmentService {
 
     @Autowired
     private AppointmentRepository appointmentRepository;
+
+    @Autowired
+    private ResultCenterService resultCenterService;
     
     public List<Appointment> getAppointment(){
         return appointmentRepository.findAll();
@@ -38,10 +41,10 @@ public class AppointmentService {
     // filtra apontamentos de uma lista por data
     public List<Appointment> findAppointmentByDate(List<Appointment> apontamentos, LocalDate init, LocalDate end) {
         List<Appointment> appointmentsList = new ArrayList<>();
-        
+
         LocalDateTime dataInicio = init.atStartOfDay();
         LocalDateTime dataFim = end.atStartOfDay();
-        
+
         for (Appointment appointment : apontamentos) {
             LocalDateTime dateInit = appointment.getStartDate().toLocalDateTime();
             LocalDateTime dateEnd = appointment.getStartDate().toLocalDateTime();
@@ -57,7 +60,7 @@ public class AppointmentService {
     // filtra apontamentos de uma lista por data e hora
     public List<Appointment> findAppointmentByDateHour(List<Appointment> apontamentos, LocalDateTime init, LocalDateTime end) {
         List<Appointment> appointmentsList = new ArrayList<>();
-        
+
         for (Appointment appointment : apontamentos) {
             LocalDateTime dateInit = appointment.getStartDate().toLocalDateTime();
             LocalDateTime dateEnd = appointment.getStartDate().toLocalDateTime();
@@ -69,11 +72,11 @@ public class AppointmentService {
         }
         return appointmentsList;
     }
-    
+
     // filtra apontamentos de uma lista por hora
     public List<Appointment> findAppointmentByHour(List<Appointment> apontamentos, LocalTime init, LocalTime end) {
         List<Appointment> appointmentsList = new ArrayList<>();
-        
+
         for (Appointment appointment : apontamentos) {
             LocalTime dateInit = appointment.getStartDate().toLocalDateTime().toLocalTime();
             LocalTime dateEnd = appointment.getStartDate().toLocalDateTime().toLocalTime();
@@ -88,7 +91,7 @@ public class AppointmentService {
 
     public Appointment updateAppointment(Long id, Appointment newAppointment){
         Appointment appointmentExists = appointmentRepository.findById(id).orElse(null);
-        
+
         if (appointmentExists != null) {
             if (newAppointment.getApt_updt() != null) {
                 appointmentExists.setApt_updt(newAppointment.getApt_updt());

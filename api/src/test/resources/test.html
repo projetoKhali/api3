@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Gerar Relatório</title>
+</head>
+<body>
+    <h1>Opções de Exportação</h1>
+
+    <!-- Checkbox para selecionar as colunas -->
+    <input type="checkbox" id="chkMatricula" checked> Matrícula
+    <input type="checkbox" id="chkColaborador" checked> Colaborador
+    <input type="checkbox" id="chkVerba" checked> Verba
+    <input type="checkbox" id="chkPorcentagem" checked> Porcentagem da Verba
+    <input type="checkbox" id="chkHoraInicio" checked> Hora de Início
+    <input type="checkbox" id="chkHoraFim" checked> Hora de Fim
+    <input type="checkbox" id="chkTipoApontamento" checked> Tipo de Apontamento
+    <input type="checkbox" id="chkCentroResultado" checked> Centro de Resultado
+    <input type="checkbox" id="chkCliente" checked> Cliente
+    <input type="checkbox" id="chkProjeto" checked> Projeto
+    <input type="checkbox" id="chkJustificativa" checked> Justificativa
+
+    <!-- Botão para gerar o relatório -->
+    <button id="generateReportButton">Gerar Relatório</button>
+
+    <script>
+        document.getElementById("generateReportButton").addEventListener("click", function() {
+            // Obtém o estado dos checkboxes
+            var camposBoolean = [
+                document.getElementById("chkMatricula").checked,
+                document.getElementById("chkColaborador").checked,
+                document.getElementById("chkVerba").checked,
+                document.getElementById("chkPorcentagem").checked,
+                document.getElementById("chkHoraInicio").checked,
+                document.getElementById("chkHoraFim").checked,
+                document.getElementById("chkTipoApontamento").checked,
+                document.getElementById("chkCentroResultado").checked,
+                document.getElementById("chkCliente").checked,
+                document.getElementById("chkProjeto").checked,
+                document.getElementById("chkJustificativa").checked
+            ];
+
+            // Realiza a chamada para gerar o relatório com os filtros
+            fetch("http://localhost:8080/csv-export?camposBoolean=" + camposBoolean.join(",") + "&usr_id=1", { method: "GET" })
+
+                .then(response => response.blob())
+                .then(blob => {
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement("a");
+                    a.href = url;
+                    a.download = "relatorio.csv";
+                    document.body.appendChild(a);
+                    a.click();
+                    window.URL.revokeObjectURL(url);
+                });
+        });
+    </script>
+</body>
+</html>
