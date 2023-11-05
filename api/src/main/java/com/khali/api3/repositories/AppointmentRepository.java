@@ -18,14 +18,15 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
 
     public List<Appointment> findAll();
 
-    @Query(value = "select * from appointments;", nativeQuery = true)
+
+    @Query(value = "select * from appointments where apt_updt_id is null", nativeQuery = true)
     public List<Appointment> findByActive();
 
     public List<Appointment> findByResultCenter(ResultCenter resultCenter);
 
     public Optional<Appointment> findById(Long id);
 
-    @Query(value = "SELECT * FROM appointments a WHERE a.usr_id = :usr_id", nativeQuery = true)
+    @Query(value = "SELECT * FROM appointments a WHERE a.usr_id = :usr_id and a.active = true", nativeQuery = true)
     List<Appointment> findAppointmentByUser(@Param("usr_id") Long userId);
 
     @Query(value = "select * from appointments where rc_id in ( select rc_id from result_centers where gst_id = :usr_id) and status = 'Pending'", nativeQuery = true)
@@ -51,26 +52,25 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
 
     @Modifying
     @Query(value =
-        "UPDATE Notification n " +
-        "SET n.status = true " +
-        "WHERE n.userId.id = :usr_id " +
-        "AND n.type IN ('Rejected', 'Approved') " +
-        "AND n.status = false",
+        "UPDATE notifications " +
+        "SET status = true " +
+        "WHERE usr_id = :usr_id " +
+        "AND type IN ('Rejected', 'Approved') " +
+        "AND status = false",
         nativeQuery = true)
     void updateStatusToTrueForUser(@Param("usr_id") Long usr_id);
 
     @Query(value =
         "SELECT COUNT(*) FROM notifications n " +
         "WHERE n.apt_id IN (SELECT a.apt_id FROM appointments a " +
-        "WHERE a.rc_id IN (SELECT rc.rc_id FROM result_centers rc WHERE rc.gst_id = :userId) " +
+        "WHERE a.rc_id IN (SELECT rc.rc_id FROM result_centers rc WHERE rc.gst_id = :usr_id) " +
         "AND a.status = 'Pending')",
         nativeQuery = true)
-    long countPendingNotificationsForManager(@Param("userId") Long userId);
+    long countPendingNotificationsForManager(@Param("usr_id") Long userId);
 
     @Query(value =
-        "SELECT COUNT(*) FROM notifications WHERE usr_id = :userId " +
+        "SELECT COUNT(*) FROM notifications WHERE usr_id = :usr_id " +
         "AND status = false AND (type = 'Rejected' OR type = 'Approved')",
         nativeQuery = true)
-    long countFalseRejectedOrApprovedNotifications(@Param("userId") Long userId);
-
+    long countFalseRejectedOrApprovedNotifications(@Param("usr_id") Long userId);
 }

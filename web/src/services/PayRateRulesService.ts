@@ -3,19 +3,19 @@ import { PayRateRuleSchema, PostPayRateRuleSchema } from '../schemas/PayRateRule
 
 const API_URL = 'http://127.0.0.1:8080/payRateRules';
 
-export async function getPayRateRules (): Promise<PayRateRuleSchema[]> {
+export async function getPayRateRules(): Promise<PayRateRuleSchema[]> {
     const response = await axios.get(API_URL, {});
     return await response.data.map((item: any) => ({
         id: item.id,
-        code: item.code? item.code : "N/A",
-        appointmentType: item.appointmentType? item.appointmentType : "N/A",
-        shift: item.shift? item.shift : "N/A",
+        code: item.code ? item.code : "N/A",
+        appointmentType: item.appointmentType ? item.appointmentType : "N/A",
+        shift: item.shift ? item.shift : "N/A",
         daysOfWeek: item.daysOfWeek ? item.daysOfWeek : [],
-        minHourCount: item.minHourCount? item.minHourCount : "N/A",
-        hourDuration: item.hourDuration? item.hourDuration : "N/A",
-        payRate: item.payRate? item.payRate : "N/A",
-        overlap: item.overlap? item.overlap : "N/A",
-        expireDate: item.expireDate? item.expireDate : "N/A",
+        minHourCount: item.minHourCount ? item.minHourCount : "N/A",
+        hourDuration: item.hourDuration ? item.hourDuration : "N/A",
+        payRate: item.payRate ? item.payRate : "N/A",
+        overlap: item.overlap ? item.overlap : "N/A",
+        expireDate: item.expireDate ? item.expireDate : "N/A",
     })) as PayRateRuleSchema[];
 }
 
@@ -26,9 +26,9 @@ export async function postPayRateRule(payRateRule: PostPayRateRuleSchema) {
             "Content-Type": 'application/json'
         },
         body: JSON.stringify(payRateRule)
-    }).then(response=> response.json())
-    .then((data)=> console.log(data))
-    .catch(error => console.error(error));
+    })
+        .then(response => response.json())
+        .catch(error => console.error(error));
 }
 
 export async function updatePayRateRule(payRateRule: PayRateRuleSchema) {
@@ -38,12 +38,12 @@ export async function updatePayRateRule(payRateRule: PayRateRuleSchema) {
             "Content-Type": 'application/json'
         },
         body: JSON.stringify(payRateRule)
-    }).then(response=> response.json())
-    .then((data)=> console.log(data))
-    .catch(error => console.error(error));
+    }).then(response => response.json())
+        .then((data) => console.log(data))
+        .catch(error => console.error(error));
 }
 
-export function validatePayRateRules (payRateRules: PayRateRuleSchema[]): boolean {
+export function validatePayRateRules(payRateRules: PayRateRuleSchema[]): boolean {
     for (const payRateRuleResult of payRateRules.map(
         payRateRule => {
             for (const otherPayRateRule of payRateRules) {
@@ -63,7 +63,7 @@ export function validatePayRateRules (payRateRules: PayRateRuleSchema[]): boolea
     return true;
 }
 
-export async function postPayRateRules (
+export async function postPayRateRules(
     previousPayRateRules: PayRateRuleSchema[],
     payRateRules: PayRateRuleSchema[],
 ) {

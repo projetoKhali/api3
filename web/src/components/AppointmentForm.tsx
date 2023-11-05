@@ -14,6 +14,7 @@ import { getProjects } from '../services/ProjectService';
 import { getResultCentersOfUser } from '../services/ResultCenterService';
 import AppointmentTypeDropdown from './AppointmentTypeDropdown';
 import LookUpTextField from './LookUpTextField';
+import PopUpMensagem from './PopUpMessage';
 
 import { Portuguese } from "flatpickr/dist/l10n/pt.js";
 import "flatpickr/dist/themes/airbnb.css";
@@ -24,11 +25,10 @@ interface AppointmentFormProps {
   userLoggedIn: UserSchema
   successCallback: () => void;
   errorCallback: () => void;
-
-}
-
-export default function AppointmentForm({ userLoggedIn, successCallback, errorCallback }: AppointmentFormProps) {
   
+export default function AppointmentForm({ userLoggedIn, successCallback, errorCallback }: AppointmentFormProps) {
+  const [postAppointmentStartDate, setPostAppointmentStartDate] = useState<string>('');
+  const [postAppointmentEndDate, setPostAppointmentEndDate] = useState<string>('');
   const [postAppointmentJustification, setPostAppointmentJustification] = useState<string>('');
 
   const [postAppointmentType, setPostAppointmentType] = useState<string>('');
@@ -41,7 +41,10 @@ export default function AppointmentForm({ userLoggedIn, successCallback, errorCa
 
   const [postAppointmentProject, setPostAppointmentProject] = useState<LookUpOption | undefined>();
   const [availableProjects, setAvailableProjects] = useState<LookUpOption[]>([]);
-
+  
+  const [message, setMessage] = useState<string>('');
+  const [isPopUpVisible, setIsPopUpVisible] = useState(false);
+  
   const startDateTimePicker = useRef<HTMLInputElement>(null);
   const endDateTimePicker = useRef<HTMLInputElement>(null);
 
@@ -63,11 +66,15 @@ export default function AppointmentForm({ userLoggedIn, successCallback, errorCa
         locale: Portuguese,
       });
     };
+
     getClients().then(clientsResponse => setAvailableClients(clientsResponse.map(client => ({ id: client.id, name: client.name, }))));
     getResultCentersOfUser(userLoggedIn).then(resultCentersResponse => setAvailableResultCenters(resultCentersResponse.map(resultCenter => ({ id: resultCenter.id, name: resultCenter.name, }))));
     getProjects().then(projectsResponse => setAvailableProjects(projectsResponse.map(project => ({ id: project.id, name: project.name, }))));
   }, [])
 
+
+  function handleStartDateChange(event: React.ChangeEvent<HTMLInputElement>) { setPostAppointmentStartDate(event.target.value); }
+  function handleEndDateChange(event: React.ChangeEvent<HTMLInputElement>) { setPostAppointmentEndDate(event.target.value); }
   // function handleStartDateChange(event: React.ChangeEvent<HTMLInputElement>) { setPostAppointmentStartDate(event.target.value); }
   // function handleEndDateChange(event: React.ChangeEvent<HTMLInputElement>) { setPostAppointmentEndDate(event.target.value); }
   function handleJustificationChange(event: React.ChangeEvent<HTMLInputElement>) { setPostAppointmentJustification(event.target.value); }
@@ -118,7 +125,6 @@ export default function AppointmentForm({ userLoggedIn, successCallback, errorCa
 
   return (
     <form onSubmit={handleSubmit}>
-
       <AppointmentTypeDropdown
         onSelect={(option: DropdownOption) => {
           setPostAppointmentType(option.optionName);
@@ -144,7 +150,6 @@ export default function AppointmentForm({ userLoggedIn, successCallback, errorCa
 
       {/* <input type="text" placeholder="Início" onChange={handleStartDateChange} />
       <input type="text" placeholder="Fim" onChange={handleEndDateChange} /> */}
-
 
       {availableClients && (
         <LookUpTextField

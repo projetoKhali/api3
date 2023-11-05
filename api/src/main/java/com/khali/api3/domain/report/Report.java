@@ -1,4 +1,4 @@
-package com.khali.api3.domain.resultCenter;
+package com.khali.api3.domain.report;
 
 import java.sql.Timestamp;
 
@@ -12,39 +12,36 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Null;
 import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 import lombok.Setter;
 
-@Entity(name="resultcenter")
-@Table(name="result_centers")
+@Entity(name="report")
+@Table(name="report")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-@EqualsAndHashCode
-@ToString
-public class ResultCenter {
+public class Report {
+    
+    public Report(String json, int id) {}
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="rc_id")
+    @Column(name = "rp_id")
+    @Null
     private Long id;
 
-    private String name;
-
-    @Column(unique=true)
-    private Integer code;
-
-    @Column(unique=true)
-    private String acronym;
+    @Column(name = "reportData")
+    private String jsonString;
 
     @ManyToOne
-    @JoinColumn(name="gst_id", referencedColumnName = "usr_id")
-    private User gestor;
+    @JoinColumn(name="usr_id", referencedColumnName = "usr_id")
+    private User user;
 
     @Column(name = "insert_date", insertable = false, updatable = false)
+    @Null
     private Timestamp insertDate;
 }
