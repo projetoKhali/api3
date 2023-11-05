@@ -140,6 +140,11 @@ cliente, CR e colaborador.
 
 <details>
 <summary> Burndown </summary>
+
+
+<img src="Docs/burndown/Sprint1.jpg"/>
+<img src="Docs/burndown/Sprint2.jpg"/>
+
 <br>
 </details>
 
@@ -181,12 +186,11 @@ Este repositório contém tanto o [Back-End](./api/) quanto o [Front-End](./web/
 
 > [Wireframe completo no Figma](https://www.figma.com/file/0CRUGDxQoOc3QRMK16TyHa/Untitled?type=design&mode=design&t=ukkR699csvDlWLYY-1)
 
-> [ERD](https://github.com/projetoKhali/api3/blob/be27d7c6c37234c0423714cce698620c3f090968/docs/Banners/ERD.PNG)
+> [ERD](https://github.com/projetoKhali/api3/blob/be27d7c6c37234c0423714cce698620c3f090968/Docs/Banners/ERD.PNG)
 
-> [Diagrama de Entidade-Relacionamento](https://github.com/projetoKhali/api3/blob/be27d7c6c37234c0423714cce698620c3f090968/docs/Banners/Entidade-Relacionamento.png)
+> [Diagrama de Entidade-Relacionamento](https://github.com/projetoKhali/api3/blob/be27d7c6c37234c0423714cce698620c3f090968/Docs/Banners/Entidade-Relacionamento.png)
 
-> [Documentação banco de dados](https://github.com/projetoKhali/api3/blob/be27d7c6c37234c0423714cce698620c3f090968/docs/Banners/Documenta%C3%A7%C3%A3o%20BD.pdf)
+> [Documentação banco de dados](https://github.com/projetoKhali/api3/blob/be27d7c6c37234c0423714cce698620c3f090968/Docs/Banners/Documenta%C3%A7%C3%A3o%20BD.pdf)
 
-> [Burndown da Sprint 2](https://github.com/projetoKhali/api3/blob/be27d7c6c37234c0423714cce698620c3f090968/docs/burndown/sprint_2.pdf)
 
 <br>

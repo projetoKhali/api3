@@ -18,6 +18,7 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
 
     public List<Appointment> findAll();
 
+
     @Query(value = "select * from appointments where apt_updt_id is null", nativeQuery = true)
     public List<Appointment> findByActive();
 
