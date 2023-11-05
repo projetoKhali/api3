@@ -90,12 +90,13 @@ public class AppointmentController {
 
     @Transactional
     @PutMapping("/{id}")
-    public Appointment updateAppointment(@PathVariable Long id, @RequestBody Appointment newAppointment) {
+    public Appointment updateAppointment(@PathVariable Long id, @RequestBody Appointment appointmentDetails) {
         Appointment appointment = appointmentRepository.findById(id)
+
                 .orElseThrow(() -> new EntityNotFoundException("Appointment not found with id: " + id));
-        appointmentRepository.save(newAppointment);
-        // referenciando apontamento antigo no novo
-        appointment.setApt_updt(newAppointment.getId());
+        appointmentRepository.save(appointmentDetails);
+
+        appointment.setApt_updt(appointmentDetails.getId());
         return appointmentRepository.save(appointment);
     }
 
