@@ -108,7 +108,7 @@ public class AppointmentController {
         appointmentRepository.save(appointment);
 
         // referenciando apontamento antigo no novo
-        // newAppointment.setApt_updt(appointment.getId());
+        newAppointment.setApt_updt(appointment.getId());
 
         return appointmentRepository.save(newAppointment);
     }
