@@ -12,9 +12,11 @@ import Projects from "./pages/Projects";
 import ResultCenters from './pages/ResultCenters';
 import Appointments from "./pages/UserAppointments";
 import Users from "./pages/Users";
+import ChangePasswordForm from './components/ChangePasswordForm';
 
 import { UserSchema } from './schemas/User';
 import { getSlices } from './services/SliceService';
+import { getPayRateRules } from './services/PayRateRulesService';
 
 
 function App() {
@@ -22,7 +24,8 @@ function App() {
 
     useEffect(() => {
         getSlices().then(response => console.log('----------------> getSlices:', response));
-    })
+        getPayRateRules().then(response => console.log('---------------------------> PayRateRules:', response));
+    });
 
     return (
         <>
@@ -39,6 +42,7 @@ function App() {
                             <Route path="resultCenters" element={<ResultCenters/>} />
                             <Route path="projects" element={<Projects/>} />
                             <Route path="parametrization" element={<Parametrization/>} />
+                            <Route path="changePassword" element={<ChangePasswordForm userLoggedIn={userLoggedIn}  successCallback = {() => {}} errorCallback={() => {}}/>} />
                         </Route>
                     </Routes>
                 </BrowserRouter>

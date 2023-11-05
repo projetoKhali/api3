@@ -4,6 +4,12 @@ CREATE TYPE Apt_type AS ENUM (
     'OnNotice'
 );
 
+DROP TYPE IF EXISTS Shift_type CASCADE;
+CREATE TYPE Shift_type AS ENUM (
+    'NightTime',
+    'DayTime',
+    'AllDay'
+);
 
 DROP TYPE IF EXISTS Period_type CASCADE;
 CREATE TYPE Period_type AS ENUM (
@@ -12,14 +18,12 @@ CREATE TYPE Period_type AS ENUM (
     'AllDay'
 );
 
-
 DROP TYPE IF EXISTS User_type CASCADE;
 CREATE TYPE User_type AS ENUM (
     'Employee',
     'Manager',
     'Admin'
 );
-
 
 DROP TYPE IF EXISTS Apt_status CASCADE;
 CREATE TYPE Apt_status AS ENUM (
@@ -29,10 +33,10 @@ CREATE TYPE Apt_status AS ENUM (
 );
 
 
-CREATE CAST (VARCHAR AS Apt_type) WITH INOUT AS IMPLICIT;
-CREATE CAST (VARCHAR AS Period_type) WITH INOUT AS IMPLICIT;
-CREATE CAST (VARCHAR AS User_type) WITH INOUT AS IMPLICIT;
-CREATE CAST (VARCHAR AS Apt_status) WITH INOUT AS IMPLICIT;
+CREATE CAST (varchar AS Apt_type) WITH INOUT AS IMPLICIT;
+CREATE CAST (varchar AS Shift_type) WITH INOUT AS IMPLICIT;
+CREATE CAST (varchar AS User_type) WITH INOUT AS IMPLICIT;
+CREATE CAST (varchar AS Apt_status) WITH INOUT AS IMPLICIT;
 
 
 DROP TABLE IF EXISTS clients CASCADE;
@@ -76,7 +80,8 @@ CREATE TABLE IF NOT EXISTS pay_rate_rules(
     min_hour_count numeric,
     pay_rate numeric,
     appointment_type Apt_type,
-    period Period_type,
+    shift Shift_type,
+    days_of_week SMALLINT,
     overlap bool,
     expire_date TIMESTAMP
 );
@@ -134,7 +139,6 @@ CREATE TABLE IF NOT EXISTS appointments(
     justification VARCHAR(255),
     status Apt_status DEFAULT 'Pending',
     insert_date TIMESTAMP DEFAULT now(),
-    active BOOLEAN DEFAULT TRUE,
     apt_updt_id INT NULL,
     feedback VARCHAR(255),
 
@@ -151,12 +155,12 @@ CREATE TABLE IF NOT EXISTS appointments(
 
 DROP TABLE IF EXISTS notifications CASCADE;
 CREATE TABLE IF NOT EXISTS notifications (
-    appointments_apt_id INT PRIMARY KEY,
-    users_usr_id integer,
+    apt_id INT PRIMARY KEY,
+    usr_id integer,
     status boolean DEFAULT false,
     type apt_status DEFAULT 'Pending',
-    CONSTRAINT fk_appointmets_apt_id FOREIGN KEY
-    (appointments_apt_id) REFERENCES appointments(apt_id),
-    CONSTRAINT fk_users_usr_id FOREIGN KEY
-    (users_usr_id) REFERENCES users (usr_id)
+    CONSTRAINT fk_apt_id FOREIGN KEY
+    (apt_id) REFERENCES appointments(apt_id),
+    CONSTRAINT fk_usr_id FOREIGN KEY
+    (usr_id) REFERENCES users(usr_id)
 );

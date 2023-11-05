@@ -52,9 +52,9 @@ public class PayRateRuleService {
                 payRateRuleExists.setAppointmentType(newPayRateRule.getAppointmentType());
             }
 
-            // if (newPayRateRule.getDaysOfWeek() != null) {
-            //     payRateRuleExists.setDaysOfWeek(newPayRateRule.getDaysOfWeek());
-            // }
+            if (newPayRateRule.getDaysOfWeek() != null) {
+                payRateRuleExists.setDaysOfWeek(newPayRateRule.getDaysOfWeek());
+            }
 
             if (newPayRateRule.getShift() != null) {
                 payRateRuleExists.setShift(newPayRateRule.getShift());
@@ -68,7 +68,6 @@ public class PayRateRuleService {
                 payRateRuleExists.setExpire_date(newPayRateRule.getExpire_date());
             }
 
-
             return payRateRuleRepository.save(payRateRuleExists);
         } else {
             throw new NoSuchElementException("PayRateRule not found with ID: " + id);
@@ -78,12 +77,12 @@ public class PayRateRuleService {
     public Optional<Pair<LocalTime>> getShiftTimeRange(Shift shift) {
         Parameter lastParameter = parameterRepository.findLastParameter();
         switch (shift) {
-            case Daytime:
+            case DayTime:
                 return Optional.of(new Pair<LocalTime>(
                     lastParameter.getNightShiftEnd(),
                     lastParameter.getNightShiftStart()
                 ));
-            case Nightime:
+            case NightTime:
                 return Optional.of(new Pair<LocalTime>(
                     lastParameter.getNightShiftStart(),
                     lastParameter.getNightShiftEnd()
