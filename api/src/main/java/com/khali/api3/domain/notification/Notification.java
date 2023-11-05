@@ -30,7 +30,7 @@ public class Notification {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "apt_id")
-    private Integer aptId;
+    private Long aptId;
 
     @ManyToOne
     @JoinColumn(name = "usr_id")

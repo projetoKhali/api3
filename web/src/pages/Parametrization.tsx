@@ -116,9 +116,9 @@ export default function Parametrization() {
         <div>
             <ParametrizationForm
                 setNightShiftStart={setNightShiftStart}
-                getNightShiftStart={postNightShiftStart}
+                // getNightShiftStart={postNightShiftStart}
                 setNightShiftEnd={setNightShiftEnd}
-                getNightShiftEnd={postNightShiftEnd}
+                // getNightShiftEnd={postNightShiftEnd}
                 setPostClosingDayOfMonth={setClosingDayOfMonth}
                 getPostClosingDayOfMonth={postClosingDayOfMonth}
             />

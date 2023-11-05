@@ -1,58 +1,82 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
+import Flatpickr from "flatpickr";
+import "flatpickr/dist/themes/airbnb.css";
+
+
 
 interface ParametrizationFormProps {
     setNightShiftStart: (value: string) => void;
-    getNightShiftStart: string;
     setNightShiftEnd: (value: string) => void;
-    getNightShiftEnd: string;
     setPostClosingDayOfMonth: (value: number) => void;
     getPostClosingDayOfMonth: number;
 }
 
-export default function ParametrizationForm ({
+export default function ParametrizationForm({
     setNightShiftStart,
-    getNightShiftStart,
     setNightShiftEnd,
-    getNightShiftEnd,
     setPostClosingDayOfMonth,
     getPostClosingDayOfMonth
 }: ParametrizationFormProps) {
 
+    const startDateTimePicker = useRef<HTMLInputElement>(null);
+    const endDateTimePicker = useRef<HTMLInputElement>(null);
 
-    function handleNightShiftStartChange (event: React.ChangeEvent<HTMLInputElement>) {
-        setNightShiftStart(event.target.value);
-    }
-    function handleNightShiftEndChange (event: React.ChangeEvent<HTMLInputElement>) {
-        setNightShiftEnd(event.target.value);
-    }
-    function handlePostClosingDayOfMonthChange (event: React.ChangeEvent<HTMLInputElement>) {
-        const inputValue = event.target.value;
-        const intValue = parseInt(inputValue, 10);
-        if (!isNaN(intValue)) {
-            setPostClosingDayOfMonth(intValue);
+
+    useEffect(() => {
+        if (startDateTimePicker.current) {
+            Flatpickr(startDateTimePicker.current, {
+                enableTime: true,
+                noCalendar: true,
+                dateFormat: "H:i",
+                time_24hr: true
+            });
+            setNightShiftStart(startDateTimePicker.current.value)
+        };
+        if (endDateTimePicker.current) {
+            Flatpickr(endDateTimePicker.current, {
+                enableTime: true,
+                noCalendar: true,
+                dateFormat: "H:i",
+                time_24hr: true
+            });
+            setNightShiftEnd(endDateTimePicker.current.value)
+          };
+    });
+
+        
+        function handlePostClosingDayOfMonthChange(event: React.ChangeEvent<HTMLInputElement>) {
+            const inputValue = event.target.value;
+            const intValue = parseInt(inputValue, 10);
+            if (!isNaN(intValue)) {
+                setPostClosingDayOfMonth(intValue);
+            }
         }
-    }
 
-    return (
-        <form >
-            <input
-                type="text"
-                placeholder="Inicio do Período Noturno"
-                value={getNightShiftStart}
-                onChange={handleNightShiftStartChange}
-            />
-            <input
-                type="text"
-                placeholder="Fim do Período Noturno"
-                value={getNightShiftEnd}
-                onChange={handleNightShiftEndChange}
-            />
-            <input
-                type="text"
-                placeholder="Dia de Fechamento"
-                value={getPostClosingDayOfMonth}
-                onChange={handlePostClosingDayOfMonthChange}
-            />
-        </form>
-    );
-}
+        return (
+            <form >
+                <div>
+
+                    <input
+                        ref={startDateTimePicker}
+                        type="text"
+                        placeholder="Início do Período Noturno"
+                        className="time_picker"
+
+                    />
+                    <input
+                        ref={endDateTimePicker}
+                        type="text"
+                        placeholder="Fim do Período Noturno"
+                        className="time_picker"
+
+                    />
+                </div>
+                <input
+                    type="text"
+                    placeholder="Dia de Fechamento"
+                    value={getPostClosingDayOfMonth}
+                    onChange={handlePostClosingDayOfMonthChange}
+                />
+            </form>
+        );
+    }
