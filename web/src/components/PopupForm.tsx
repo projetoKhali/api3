@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
+import { Checkbox } from "antd";
+import { useState } from "react";
+import DropdownOption from "../schemas/DropdownOption";
 import { PostPayRateRuleSchema } from "../schemas/PayRateRule";
 import { postPayRateRule } from "../services/PayRateRulesService";
-import { Checkbox } from "antd";
 import AppointmentTypeDropdown from "./AppointmentTypeDropdown";
-import DropdownOption from "../schemas/DropdownOption";
+import PopUpMensagem from "./PopUpMessage";
 import ShiftDropdown from "./ShiftDropdown";
 
 interface PopupFormProps {
@@ -20,7 +21,8 @@ export default function PopupForm({ successCallback, errorCallback }: PopupFormP
     const [postHourDuration, setHourDuration] = useState<number | string>('');
     const [postPayRate, setPayRate] = useState<number | string>('');
     const [postOverlap, setOverlap] = useState<boolean>(false);
-
+    const [message, setMessage] = useState<string>('');
+    const [isPopUpVisible, setIsPopUpVisible] = useState(false);
 
     function handleCodeChange(event: React.ChangeEvent<HTMLInputElement>) { setCode(event.target.value); }
     function handleAppointmentTypeChange(event: React.ChangeEvent<HTMLInputElement>) { setAppointmentType(event.target.value); }
@@ -36,7 +38,9 @@ export default function PopupForm({ successCallback, errorCallback }: PopupFormP
         if (!postCode || !postAppointmentType || !postShift || !postMinHourCount
             || !postHourDuration || !postPayRate || !postOverlap) {
             console.log("Hello, world!");
-            // return errorCallback ();
+            setMessage('Preencha todos os campos obrigatórios.');
+            setIsPopUpVisible(true);
+            errorCallback();
         }
 
         console.log("Hello, world!2");
@@ -53,40 +57,61 @@ export default function PopupForm({ successCallback, errorCallback }: PopupFormP
             payRate: postPayRate,
             overlap: postOverlap,
         } as PostPayRateRuleSchema)
-            .then(() => successCallback());
-    }
+            .then((response) => {
+                if (response.status >= 300) {
+                    setMessage(`Erro ao cadastrar: ${response.status}`);
+                    errorCallback();
+                } else {
+                    setMessage('Apontamento lançado com sucesso.');
+                    successCallback();
+                }
+                setIsPopUpVisible(true);
+            })
+            .catch(() => {
+                setMessage('Erro ao lançar o apontamento.');
+                errorCallback();
+                setIsPopUpVisible(true);
+            });
 
-    return (
-        <form onSubmit={handleSubmit}>
-            <input type="text" placeholder="Codigo" onChange={handleCodeChange} />
-            <AppointmentTypeDropdown
-                onSelect={(option: DropdownOption) => {
-                    setAppointmentType(option.optionName)
-                }}
-            />
-            <ShiftDropdown
-                onSelect={(option: DropdownOption) => {
-                    setShift(option.optionName)
-                }}
-            />
-            {/* <input type="text" placeholder="Fim de Semana" onChange={handleWeekendChange}/> */}
-            <input type="text" placeholder="Mínimo de horas" onChange={handleMinHourCountChange} />
-            <input type="text" placeholder="Duração da hora" onChange={handleHourDurationChange} />
-            <input type="text" placeholder="Porcentagem" onChange={handlePayRateChange} />
-            <p>
-                <Checkbox
+    setTimeout(() => {
+        setIsPopUpVisible(false);
+    }, 5000);
+}
 
-                    checked={postOverlap}
-                    onChange={() => setOverlap(!postOverlap)} />
-                Aceitar Sobreposição
+return (
+    <form onSubmit={handleSubmit}>
+        {isPopUpVisible && (
+            <PopUpMensagem text={message} />
+        )}
+        <input type="text" placeholder="Codigo" onChange={handleCodeChange} />
+        <AppointmentTypeDropdown
+            onSelect={(option: DropdownOption) => {
+                setAppointmentType(option.optionName)
+            }}
+        />
+        <ShiftDropdown
+            onSelect={(option: DropdownOption) => {
+                setShift(option.optionName)
+            }}
+        />
+        {/* <input type="text" placeholder="Fim de Semana" onChange={handleWeekendChange}/> */}
+        <input type="text" placeholder="Mínimo de horas" onChange={handleMinHourCountChange} />
+        <input type="text" placeholder="Duração da hora" onChange={handleHourDurationChange} />
+        <input type="text" placeholder="Porcentagem" onChange={handlePayRateChange} />
+        <p>
+            <Checkbox
 
-            </p>
+                checked={postOverlap}
+                onChange={() => setOverlap(!postOverlap)} />
+            Aceitar Sobreposição
+
+        </p>
 
 
-            <button type="submit">Salvar</button>
+        <button type="submit">Salvar</button>
 
-        </form>
-    );
+    </form>
+);
 
 }
 

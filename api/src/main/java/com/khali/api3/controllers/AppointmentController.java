@@ -46,7 +46,8 @@ public class AppointmentController {
 
     @GetMapping
     public List<Appointment> getAllAppointments() {
-        return appointmentRepository.findByActive(true);
+        return appointmentRepository.findAll();
+
     }
 
     @GetMapping("/{id}")

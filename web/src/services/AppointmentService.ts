@@ -54,7 +54,6 @@ export async function postAppointment(appointment: PostAppointmentSchema) {
         },
         body: JSON.stringify(appointment)
     }).then(response => response.json())
-        .then((data) => console.log(data))
         .catch(error => console.error(error));
 }
 
