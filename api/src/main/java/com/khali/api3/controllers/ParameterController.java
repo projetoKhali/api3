@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.khali.api3.domain.client.Client;
 import com.khali.api3.domain.parameter.Parameter;
 import com.khali.api3.repositories.ParametersRepository;
 
