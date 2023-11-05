@@ -562,6 +562,6 @@ public class SliceController {
     }
 
     private Long getTotalTime (Timestamp start, Timestamp end) {
-        return start.getTime() - end.getTime();
+        return end.getTime() - start.getTime();
     }
 }
