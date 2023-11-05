@@ -12,6 +12,7 @@ import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.Setter;
 
 
@@ -20,6 +21,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Embeddable
+@ToString
 public class MemberPrimaryData implements Serializable{
     @ManyToOne
     @JoinColumn(name="usr_id", referencedColumnName = "usr_id")

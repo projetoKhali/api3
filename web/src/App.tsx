@@ -15,6 +15,7 @@ import Users from "./pages/Users";
 import ChangePasswordForm from './components/ChangePasswordForm';
 
 import { UserSchema } from './schemas/User';
+import { getSlices } from './services/SliceService';
 import { getPayRateRules } from './services/PayRateRulesService';
 
 
@@ -22,6 +23,7 @@ function App() {
     const [userLoggedIn, setUserLoggedIn] = useState<UserSchema | undefined>();
 
     useEffect(() => {
+        getSlices().then(response => console.log('----------------> getSlices:', response));
         getPayRateRules().then(response => console.log('---------------------------> PayRateRules:', response));
     });
 

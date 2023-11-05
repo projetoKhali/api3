@@ -10,6 +10,14 @@ INSERT INTO clients (name, cnpj) VALUES ('client', '1');
 
 INSERT INTO projects (name, description) VALUES ('project', 'Khali API3 test project');
 
+INSERT INTO parameters (closing_day, start_night_time, end_night_time) VALUES (28, '18:00:00', '06:00:00');
+
+INSERT INTO parameters (closing_day, start_night_time, end_night_time) VALUES (28, '18:00:00', '06:00:00');
+
 INSERT INTO pay_rate_rules (code, hour_duration, min_hour_count, pay_rate, appointment_type, shift, overlap, days_of_week) VALUES (1100, 1, 1, 75, 'Overtime'::Apt_type, 'DayTime'::Shift_type, false, 62);
 INSERT INTO pay_rate_rules (code, hour_duration, min_hour_count, pay_rate, appointment_type, shift, overlap, days_of_week) VALUES (1200, 1, 1, 100, 'Overtime'::Apt_type, 'NightTime'::Shift_type, false, 62);
 INSERT INTO pay_rate_rules (code, hour_duration, min_hour_count, pay_rate, appointment_type, shift, overlap, days_of_week) VALUES (1300, 1, 1, 225, 'Overtime'::Apt_type, 'AllDay'::Shift_type, false, 65);
+
+INSERT INTO appointments (start_date, end_date, usr_id, clt_id, rc_id, prj_id, appointment_type, justification) VALUES ('2023-10-31 13:00:00', '2023-10-31 17:00:00', 1, 1, 1, 1, 'Overtime'::Apt_type, 'teste');
+
+INSERT INTO appointments (start_date, end_date, usr_id, clt_id, rc_id, prj_id, appointment_type, justification) VALUES ('2023-10-31 13:00:00', '2023-10-31 17:00:00', 1, 1, 1, 1, 'Overtime'::Apt_type, 'teste');

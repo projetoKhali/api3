@@ -21,6 +21,7 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.Setter;
 
 @Entity(name="appointments")
@@ -30,6 +31,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @EqualsAndHashCode
+@ToString
 public class Appointment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -70,9 +72,6 @@ public class Appointment {
 
     @Column
     private String feedback;
-    
-    @Column(name = "active", insertable = false, updatable = false)
-    private boolean active;
 
     @Column(name = "apt_updt_id")
     private Long apt_updt;
