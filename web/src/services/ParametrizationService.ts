@@ -5,7 +5,7 @@ const API_URL = 'http://127.0.0.1:8080/parameters';
 
 function serializeParameters (item: any): ParameterSchema {
     return {
-        id: item.id.toString(), 
+        id: item.id, 
         nightShiftStart: item.nightShiftStart? item.nightShiftStart : "N/A",
         nightShiftEnd: item.nightShiftEnd? item.nightShiftEnd : "N/A",
         closingDayOfMonth: item.closingDayOfMonth? item.closingDayOfMonth : "N/A",

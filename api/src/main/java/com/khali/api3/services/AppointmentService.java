@@ -22,9 +22,6 @@ public class AppointmentService {
 
     @Autowired
     private AppointmentRepository appointmentRepository;
-
-    @Autowired
-    private ResultCenterService resultCenterService;
     
     public List<Appointment> getAppointment(){
         return appointmentRepository.findAll();

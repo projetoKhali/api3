@@ -8,7 +8,6 @@ import com.khali.api3.domain.parameter.Parameter;
 
 @RepositoryRestResource
 public interface ParametersRepository extends JpaRepository<Parameter, Long>{
-    public Parameter save(Parameter parameter);
 
     @Query(value = "SELECT * FROM parameters ORDER BY insert_date DESC LIMIT 1;", nativeQuery = true)
     Parameter findLastParameter();

@@ -90,7 +90,7 @@ public class AppointmentController {
     @PutMapping("/{id}")
     public Appointment updateAppointment(@PathVariable Long id, @RequestBody Appointment appointmentDetails) {
         Appointment appointment = appointmentRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Appointment not found with id: " + id));
+            .orElseThrow(() -> new EntityNotFoundException("Appointment not found with id: " + id));
         appointment.setUser(newAppointment.getUser());
         appointment.setType(newAppointment.getType());
         appointment.setStartDate(newAppointment.getStartDate());
