@@ -9,5 +9,4 @@ import com.khali.api3.domain.notification.Notification;
 @RepositoryRestResource
 public interface NotificationRepository extends JpaRepository<Notification, Long> {
 
-        
 }
