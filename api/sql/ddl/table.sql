@@ -75,7 +75,7 @@ CREATE TABLE IF NOT EXISTS "parameters"(
 DROP TABLE IF EXISTS pay_rate_rules CASCADE;
 CREATE TABLE IF NOT EXISTS pay_rate_rules(
     prt_id SERIAL PRIMARY KEY,
-    code INT UNIQUE NOT NULL,
+    code INT NOT NULL,
     hour_duration numeric,
     min_hour_count numeric,
     pay_rate numeric,

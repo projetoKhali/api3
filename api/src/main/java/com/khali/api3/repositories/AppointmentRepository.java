@@ -18,7 +18,6 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
 
     public List<Appointment> findAll();
 
-
     @Query(value = "select * from appointments where apt_updt_id is null", nativeQuery = true)
     public List<Appointment> findByActive();
 
@@ -26,7 +25,7 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
 
     public Optional<Appointment> findById(Long id);
 
-    @Query(value = "SELECT * FROM appointments a WHERE a.usr_id = :usr_id and a.active = true", nativeQuery = true)
+    @Query(value = "SELECT * FROM appointments a WHERE a.usr_id = :usr_id", nativeQuery = true)
     List<Appointment> findAppointmentByUser(@Param("usr_id") Long userId);
 
     @Query(value = "select * from appointments where rc_id in ( select rc_id from result_centers where gst_id = :usr_id) and status = 'Pending'", nativeQuery = true)
@@ -39,7 +38,7 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
     );
 
     @Modifying
-    @Query(value = "INSERT INTO notifications (apt_id, users_usr_id, type) VALUES (:aptId, :userId, 'Pending')", nativeQuery = true)
+    @Query(value = "INSERT INTO notifications (apt_id, usr_id, type) VALUES (:aptId, :userId, 'Pending')", nativeQuery = true)
     void insertNotification(@Param("aptId") Long appointmentId, @Param("userId") Long userId);
 
     @Modifying

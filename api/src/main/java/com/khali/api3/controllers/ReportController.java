@@ -44,7 +44,7 @@ public class ReportController {
 
     @GetMapping
     @Transactional
-    public void exportCsv(HttpServletResponse response, @RequestParam Boolean[] camposBoolean, int usr_id) throws IOException {
+    public void exportCsv(HttpServletResponse response, @RequestParam Boolean[] camposBoolean, Integer usr_id) throws IOException {
         response.setContentType("text/csv");
         response.setHeader("Content-Disposition", "attachment; filename=\"relatorio.csv\"");
 
