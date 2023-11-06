@@ -14,7 +14,6 @@ import { getProjects } from '../services/ProjectService';
 import { getResultCentersOfUser } from '../services/ResultCenterService';
 import AppointmentTypeDropdown from './AppointmentTypeDropdown';
 import LookUpTextField from './LookUpTextField';
-import PopUpMensagem from './PopUpMessage';
 
 import { Portuguese } from "flatpickr/dist/l10n/pt.js";
 import "flatpickr/dist/themes/airbnb.css";
@@ -25,7 +24,8 @@ interface AppointmentFormProps {
   userLoggedIn: UserSchema
   successCallback: () => void;
   errorCallback: () => void;
-  
+}
+
 export default function AppointmentForm({ userLoggedIn, successCallback, errorCallback }: AppointmentFormProps) {
   const [postAppointmentStartDate, setPostAppointmentStartDate] = useState<string>('');
   const [postAppointmentEndDate, setPostAppointmentEndDate] = useState<string>('');
