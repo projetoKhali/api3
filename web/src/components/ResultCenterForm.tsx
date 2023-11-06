@@ -4,13 +4,14 @@ import LookUpOption from '../schemas/LookUpOption';
 import LookUpTextField from './LookUpTextField';
 import SchemaList from './SchemaList';
 
-import { postResultCenter } from '../services/ResultCenterService';
-import { PostResultCenterSchema } from '../schemas/ResultCenter';
-import { getUsers, getUsersOfType } from '../services/UserService';
 import { MemberSchema } from '../schemas/Member';
+import { PostResultCenterSchema } from '../schemas/ResultCenter';
 import { postMembers } from '../services/MemberService';
+import { postResultCenter } from '../services/ResultCenterService';
+import { getUsers, getUsersOfType } from '../services/UserService';
+import PopUpMensagem from './PopUpMessage';
 
-export default function ResultCenterForm({ callback }: { callback: () => void }){
+export default function ResultCenterForm({ callback }: { callback: () => void }) {
     const [postResultCenterName, setPostResultCenterName] = useState<string>('');
     const [postResultCenterCode, setPostResultCenterCode] = useState<string>('');
     const [postResultCenterAcronym, setPostResultCenterAcronym] = useState<string>('');
@@ -21,22 +22,24 @@ export default function ResultCenterForm({ callback }: { callback: () => void })
     const [postResultCenterMembers, setPostResultCenterMembers] = useState<LookUpOption[]>([]);
     const [selectedResultCenterMemberToAdd, setSelectedResultCenterMemberToAdd] = useState<LookUpOption | undefined>();
     const [availableResultCenterMembersToAdd, setAvailableResultCenterMembersToAdd] = useState<LookUpOption[]>([]);
+    const [message, setMessage] = useState<string>('');
+    const [isPopUpVisible, setIsPopUpVisible] = useState(false);
 
     useEffect(() => {
-        getUsersOfType('Manager').then(managersResponse => setAvailableResultCenterManagers(managersResponse.map(manager => ({id: manager.id, name: manager.name, }))));
-        getUsers().then(usersResponse => setAvailableResultCenterMembersToAdd(usersResponse.map(user => ({id: user.id, name: user.name, }))));
+        getUsersOfType('Manager').then(managersResponse => setAvailableResultCenterManagers(managersResponse.map(manager => ({ id: manager.id, name: manager.name, }))));
+        getUsers().then(usersResponse => setAvailableResultCenterMembersToAdd(usersResponse.map(user => ({ id: user.id, name: user.name, }))));
     }, [])
 
-    function handleNomeChange(event: React.ChangeEvent<HTMLInputElement>){
-      setPostResultCenterName(event.target.value)
+    function handleNomeChange(event: React.ChangeEvent<HTMLInputElement>) {
+        setPostResultCenterName(event.target.value)
     }
 
-    function handleCodeChange(event: React.ChangeEvent<HTMLInputElement>){
-      setPostResultCenterCode(event.target.value)
+    function handleCodeChange(event: React.ChangeEvent<HTMLInputElement>) {
+        setPostResultCenterCode(event.target.value)
     }
 
-    function handleAcronymChange(event: React.ChangeEvent<HTMLInputElement>){
-      setPostResultCenterAcronym(event.target.value)
+    function handleAcronymChange(event: React.ChangeEvent<HTMLInputElement>) {
+        setPostResultCenterAcronym(event.target.value)
     }
 
     function handleAddMember(newMember: LookUpOption) {
@@ -66,43 +69,61 @@ export default function ResultCenterForm({ callback }: { callback: () => void })
     }
 
     function handleSubmit(event: React.ChangeEvent<HTMLFormElement>) {
-        if (!postResultCenterManager) return;
-
         event.preventDefault();
-        postResultCenter({
-            name: postResultCenterName,
-            code: parseInt(postResultCenterCode),
-            acronym: postResultCenterAcronym,
-            gestor: {
-                id: postResultCenterManager.id
-            }
-        } as PostResultCenterSchema)
-        .then(resultCenterResponse => {
-            if (resultCenterResponse) {
-                console.log(postResultCenterMembers);
-                postMembers(
-                    postResultCenterMembers.map((user) => ({
-                        memberPK: {
-                            user: {
-                                id: user.id,
-                            },
-                            resultCenter: {
-                                id: resultCenterResponse.id
-                            },
-                        }
-                    })) as MemberSchema[]
-                )
-            }
-        })
-        .catch(error => console.error(error))
-        .then(() => callback());
+        if (!postResultCenterManager) {
+            setMessage('Preencha todos os campos obrigatórios.');
+            setIsPopUpVisible(true);
+            callback();
+
+        }
+        else {
+            postResultCenter({
+                name: postResultCenterName,
+                code: parseInt(postResultCenterCode),
+                acronym: postResultCenterAcronym,
+                gestor: {
+                    id: postResultCenterManager.id
+                }
+            } as PostResultCenterSchema)
+                .then(resultCenterResponse => {
+                    if (resultCenterResponse) {
+                        console.log(postResultCenterMembers);
+                        postMembers(
+                            postResultCenterMembers.map((user) => ({
+                                memberPK: {
+                                    user: {
+                                        id: user.id,
+                                    },
+                                    resultCenter: {
+                                        id: resultCenterResponse.id
+                                    },
+                                }
+                            })) as MemberSchema[]
+                        ).then(() => {
+                            setMessage('Apontamento lançado com sucesso.');
+                            callback();
+                            setIsPopUpVisible(true);
+                        })
+                    }
+                })
+                .catch(error => console.error(error))
+                .then(() => callback());
+        }
+        
+        setTimeout(() => {
+            setIsPopUpVisible(false);
+        }, 5000);
+
     }
 
     return (
         <form onSubmit={handleSubmit}>
-            <input type="text" placeholder="Nome" onChange={handleNomeChange}/>
-            <input type="text" placeholder="Código" onChange={handleCodeChange}/>
-            <input type="text" placeholder="Sigla" onChange={handleAcronymChange}/>
+            {isPopUpVisible && (
+                <PopUpMensagem text={message} />
+            )}
+            <input type="text" placeholder="Nome" onChange={handleNomeChange} />
+            <input type="text" placeholder="Código" onChange={handleCodeChange} />
+            <input type="text" placeholder="Sigla" onChange={handleAcronymChange} />
 
             {availableResultCenterManagers && (
                 <LookUpTextField
@@ -122,6 +143,7 @@ export default function ResultCenterForm({ callback }: { callback: () => void })
                     {selectedResultCenterMemberToAdd ? (
                         <button
                             className="result-center-form-add-member-button"
+                            type="button"
                             onClick={() => handleAddMember(selectedResultCenterMemberToAdd)}
                         > + </button>
                     ) : (
@@ -138,6 +160,6 @@ export default function ResultCenterForm({ callback }: { callback: () => void })
                 data={postResultCenterMembers}
                 template={memberRenderTemplate}
             />
-      </form>
+        </form>
     )
 }

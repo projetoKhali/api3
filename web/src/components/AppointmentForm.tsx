@@ -1,12 +1,10 @@
-import React from 'react';
+import React, { useRef } from 'react';
 
 
 import { useEffect, useState } from 'react';
 import { PostAppointmentSchema } from '../schemas/Appointment';
 import DropdownOption from '../schemas/DropdownOption';
 import LookUpOption from '../schemas/LookUpOption';
-
-
 
 import { UserSchema } from '../schemas/User';
 import { postAppointment } from '../services/AppointmentService';
@@ -17,118 +15,174 @@ import { getResultCentersOfUser } from '../services/ResultCenterService';
 import AppointmentTypeDropdown from './AppointmentTypeDropdown';
 import LookUpTextField from './LookUpTextField';
 
+import { Portuguese } from "flatpickr/dist/l10n/pt.js";
+import "flatpickr/dist/themes/airbnb.css";
+
+import Flatpickr from "flatpickr";
+
 interface AppointmentFormProps {
-    userLoggedIn: UserSchema
-    successCallback: () => void;
-    errorCallback: () => void;
+  userLoggedIn: UserSchema
+  successCallback: () => void;
+  errorCallback: () => void;
 }
 
-export default function AppointmentForm ({ userLoggedIn, successCallback, errorCallback }: AppointmentFormProps) {
-    const [postAppointmentStartDate, setPostAppointmentStartDate] = useState<string>('');
-    const [postAppointmentEndDate, setPostAppointmentEndDate] = useState<string>('');
-    const [postAppointmentJustification, setPostAppointmentJustification] = useState<string>('');
+export default function AppointmentForm({ userLoggedIn, successCallback, errorCallback }: AppointmentFormProps) {
+  const [postAppointmentStartDate, setPostAppointmentStartDate] = useState<string>('');
+  const [postAppointmentEndDate, setPostAppointmentEndDate] = useState<string>('');
+  const [postAppointmentJustification, setPostAppointmentJustification] = useState<string>('');
 
-    const [postAppointmentType, setPostAppointmentType] = useState<string>('');
+  const [postAppointmentType, setPostAppointmentType] = useState<string>('');
 
-    const [postAppointmentClient, setPostAppointmentClient] = useState<LookUpOption | undefined>();
-    const [availableClients, setAvailableClients] = useState<LookUpOption[]>([]);
+  const [postAppointmentClient, setPostAppointmentClient] = useState<LookUpOption | undefined>();
+  const [availableClients, setAvailableClients] = useState<LookUpOption[]>([]);
 
-    const [postAppointmentResultCenter, setPostAppointmentResultCenter] = useState<LookUpOption | undefined>();
-    const [availableResultCenters, setAvailableResultCenters] = useState<LookUpOption[]>([]);
+  const [postAppointmentResultCenter, setPostAppointmentResultCenter] = useState<LookUpOption | undefined>();
+  const [availableResultCenters, setAvailableResultCenters] = useState<LookUpOption[]>([]);
 
-    const [postAppointmentProject, setPostAppointmentProject] = useState<LookUpOption | undefined>();
-    const [availableProjects, setAvailableProjects] = useState<LookUpOption[]>([]);
+  const [postAppointmentProject, setPostAppointmentProject] = useState<LookUpOption | undefined>();
+  const [availableProjects, setAvailableProjects] = useState<LookUpOption[]>([]);
+  
+  const [message, setMessage] = useState<string>('');
+  const [isPopUpVisible, setIsPopUpVisible] = useState(false);
+  
+  const startDateTimePicker = useRef<HTMLInputElement>(null);
+  const endDateTimePicker = useRef<HTMLInputElement>(null);
 
-    useEffect(() => {
-        getClients().then( clientsResponse => setAvailableClients(clientsResponse.map(client => ({ id: client.id, name: client.name, }))));
-        getResultCentersOfUser(userLoggedIn).then( resultCentersResponse => setAvailableResultCenters(resultCentersResponse.map(resultCenter => ({ id: resultCenter.id, name: resultCenter.name, }))));
-        getProjects().then( projectsResponse => setAvailableProjects(projectsResponse.map(project => ({ id: project.id, name: project.name, }))));
-    }, [])
+  
+  useEffect(() => {
+    if (startDateTimePicker.current) {
+      Flatpickr(startDateTimePicker.current, {
+        enableTime: true,
+        dateFormat: 'd/m/Y H:i',
+        defaultDate: 'today',
+        locale: Portuguese,
+      });
+    };
+    if (endDateTimePicker.current) {
+      Flatpickr(endDateTimePicker.current, {
+        enableTime: true,
+        dateFormat: 'd/m/Y H:i',
+        defaultDate: 'today',
+        locale: Portuguese,
+      });
+    };
 
-    function handleStartDateChange(event: React.ChangeEvent<HTMLInputElement>){ setPostAppointmentStartDate(event.target.value); }
-    function handleEndDateChange(event: React.ChangeEvent<HTMLInputElement>){ setPostAppointmentEndDate(event.target.value); }
-    function handleJustificationChange(event: React.ChangeEvent<HTMLInputElement>){ setPostAppointmentJustification(event.target.value); }
+    getClients().then(clientsResponse => setAvailableClients(clientsResponse.map(client => ({ id: client.id, name: client.name, }))));
+    getResultCentersOfUser(userLoggedIn).then(resultCentersResponse => setAvailableResultCenters(resultCentersResponse.map(resultCenter => ({ id: resultCenter.id, name: resultCenter.name, }))));
+    getProjects().then(projectsResponse => setAvailableProjects(projectsResponse.map(project => ({ id: project.id, name: project.name, }))));
+  }, [])
 
-    function handleSubmit(event: React.ChangeEvent<HTMLFormElement>) {
-      if (!postAppointmentType
-        || !postAppointmentStartDate
-        || !postAppointmentEndDate
-        || !postAppointmentResultCenter
-        || !postAppointmentClient
-        || !postAppointmentProject
-        || !postAppointmentJustification
-      ) return errorCallback();
 
-      event.preventDefault();
+  function handleStartDateChange(event: React.ChangeEvent<HTMLInputElement>) { setPostAppointmentStartDate(event.target.value); }
+  function handleEndDateChange(event: React.ChangeEvent<HTMLInputElement>) { setPostAppointmentEndDate(event.target.value); }
+  // function handleStartDateChange(event: React.ChangeEvent<HTMLInputElement>) { setPostAppointmentStartDate(event.target.value); }
+  // function handleEndDateChange(event: React.ChangeEvent<HTMLInputElement>) { setPostAppointmentEndDate(event.target.value); }
+  function handleJustificationChange(event: React.ChangeEvent<HTMLInputElement>) { setPostAppointmentJustification(event.target.value); }
 
-      const formattedStartDate = formatDateTime(postAppointmentStartDate);
-      const formattedEndDate = formatDateTime(postAppointmentEndDate);
+  function handleSubmit(event: React.ChangeEvent<HTMLFormElement>) {
+    event.preventDefault();
+    if (!postAppointmentType
+      || !startDateTimePicker.current
+      || !endDateTimePicker.current
+      // || !postAppointmentStartDate
+      // || !postAppointmentEndDate
+      || !postAppointmentResultCenter
+      || !postAppointmentClient
+      || !postAppointmentProject
+      || !postAppointmentJustification
+    ) errorCallback();
+
+    else {
+
+      // const formattedStartDate = formatDateTime(postAppointmentStartDate);
+      // const formattedEndDate = formatDateTime(postAppointmentEndDate);
+      
+      
+      const formattedStarDateTime = formatDateTime(startDateTimePicker.current.value);
+      const formattedEndDateTime = formatDateTime(endDateTimePicker.current.value);
 
       postAppointment({
         user: {
           id: userLoggedIn.id
         },
         type: postAppointmentType,
-        startDate: formattedStartDate,
-        endDate: formattedEndDate,
+        startDate: formattedStarDateTime,
+        endDate: formattedEndDateTime,
         resultCenter: {
-            id: postAppointmentResultCenter.id,
+          id: postAppointmentResultCenter.id,
         },
         client: {
-            id: postAppointmentClient.id,
+          id: postAppointmentClient.id,
         },
         project: {
-            id: postAppointmentProject.id,
+          id: postAppointmentProject.id,
         },
         justification: postAppointmentJustification,
       } as PostAppointmentSchema)
-      .then(() => successCallback());
+        .then(() => successCallback());
     }
+  }
 
-    return (
-      <form onSubmit={handleSubmit}>
+  return (
+    <form onSubmit={handleSubmit}>
+      <AppointmentTypeDropdown
+        onSelect={(option: DropdownOption) => {
+          setPostAppointmentType(option.optionName);
+        }}
+      />
+      <div>
+        
+        <input
+          ref={startDateTimePicker}
+          type="text"
+          placeholder="Início"
+          className="date_time_picker"
 
-          <AppointmentTypeDropdown
-            onSelect={(option: DropdownOption) => {
-                setPostAppointmentType(option.optionName)
-            }}
-          />
+        />
+        <input
+          ref={endDateTimePicker}
+          type="text"
+          placeholder="Fim"
+          className="date_time_picker"
 
-          <input type="text" placeholder="Início" onChange={handleStartDateChange}/>
-          <input type="text" placeholder="Fim" onChange={handleEndDateChange}/>
+        />
+      </div>
 
+      {/* <input type="text" placeholder="Início" onChange={handleStartDateChange} />
+      <input type="text" placeholder="Fim" onChange={handleEndDateChange} /> */}
 
-          {availableClients && (
-              <LookUpTextField
-                  placeholder="Cliente"
-                  options={availableClients}
-                  onSelect={(option: LookUpOption) => setPostAppointmentClient(option) }
-              />
-          )}
+      {availableClients && (
+        <LookUpTextField
+          placeholder="Cliente"
+          options={availableClients}
+          onSelect={(option: LookUpOption) => setPostAppointmentClient(option)}
+        />
+      )}
 
-          {availableResultCenters && (
-              <LookUpTextField
-                  placeholder="Centro de Resultado"
-                  options={availableResultCenters}
-                  onSelect={(option: LookUpOption) => setPostAppointmentResultCenter(option) }
-              />
-          )}
+      {availableResultCenters && (
+        <LookUpTextField
+          placeholder="Centro de Resultado"
+          options={availableResultCenters}
+          onSelect={(option: LookUpOption) => setPostAppointmentResultCenter(option)}
+        />
+      )}
 
-          {availableProjects && (
-              <LookUpTextField
-                  placeholder="Projeto"
-                  options={availableProjects}
-                  onSelect={(option: LookUpOption) => setPostAppointmentProject(option) }
-              />
-          )}
+      {availableProjects && (
+        <LookUpTextField
+          placeholder="Projeto"
+          options={availableProjects}
+          onSelect={(option: LookUpOption) => setPostAppointmentProject(option)}
+        />
+      )}
 
-          <input type="text" placeholder="Justificativa" onChange={handleJustificationChange}/>
-          <button type="submit">Cadastrar</button>
-      </form>
-    );
+      <input type="text" placeholder="Justificativa" onChange={handleJustificationChange} />
+      <button type="submit">Cadastrar</button>
+    </form>
+  );
 }
 
 function formatDateTime(dateTimeStr: string): string {
+  console.log('format datetime: ', dateTimeStr);
   const parts = dateTimeStr.split(' ');
   const dateParts = parts[0].split('/');
   const timeParts = parts[1].split(':');

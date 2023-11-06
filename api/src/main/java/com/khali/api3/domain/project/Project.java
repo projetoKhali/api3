@@ -12,10 +12,10 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
-import jakarta.persistence.Transient;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.Setter;
 
 @Entity(name="projects")
@@ -24,7 +24,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-    public class Project {
+    @ToString
+public class Project {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="prj_id")
@@ -37,8 +38,7 @@ import lombok.Setter;
     @Column
     private String description;
 
-    @Transient
-    @Column(name = "insert_date")
+    @Column(name = "insert_date", insertable = false, updatable = false)
     private Timestamp insertDate;
 
     @Column(name = "expire_date")

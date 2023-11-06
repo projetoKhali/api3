@@ -16,6 +16,7 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.Setter;
 
 @Entity(name="resultcenter")
@@ -25,6 +26,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @EqualsAndHashCode
+@ToString
 public class ResultCenter {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,6 +45,6 @@ public class ResultCenter {
     @JoinColumn(name="gst_id", referencedColumnName = "usr_id")
     private User gestor;
 
-    @Column(name = "insert_date")
+    @Column(name = "insert_date", insertable = false, updatable = false)
     private Timestamp insertDate;
 }

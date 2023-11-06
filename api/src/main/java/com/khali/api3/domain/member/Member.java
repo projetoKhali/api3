@@ -9,6 +9,7 @@ import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.Setter;
 
 @Entity(name="members")
@@ -17,13 +18,14 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
+@ToString
 public class Member {
     @EmbeddedId
     private MemberPrimaryData memberPK;
 
-    @Column(name="active")
-    boolean active;
+    // @Column(name="active")
+    // boolean active;
 
-    @Column(name="insert_date")
+    @Column(name = "insert_date", insertable = false, updatable = false)
     Timestamp insertdate;
 }

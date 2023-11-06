@@ -1,10 +1,10 @@
 package com.khali.api3.domain.pay_rate_rule;
 
-import java.time.LocalTime;
-
+import com.khali.api3.converters.days_of_week.DaysOfWeekConverter;
 import com.khali.api3.domain.appointment.AppointmentType;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -16,10 +16,10 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.Setter;
 
 import java.sql.Timestamp;
-import java.time.LocalTime;
 
 @Entity(name="pay_rate_rules")
 @Table(name="pay_rate_rules")
@@ -28,6 +28,7 @@ import java.time.LocalTime;
 @Getter
 @Setter
 @EqualsAndHashCode
+@ToString
 public class PayRateRule {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -50,17 +51,17 @@ public class PayRateRule {
     @Column(name = "appointment_type")
     private AppointmentType appointmentType;
 
-    // @Enumerated(EnumType.STRING)
-    // @Column(name = "days_of_week")
-    // private Week daysOfWeek;
+    @Convert(converter = DaysOfWeekConverter.class)
+    @Column(name = "days_of_week")
+    private Boolean[] daysOfWeek;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "period")
+    @Column(name = "shift")
     private Shift shift;
    
     @Column(name = "overlap")
-    private Boolean overlap;   
-    
+    private Boolean overlap;
+
     @Column(name = "expire_date")
-    private Timestamp expire_date;   
+    private Timestamp expire_date;
 }

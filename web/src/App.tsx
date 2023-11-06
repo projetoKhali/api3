@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import './App.css';
 import AppointmentsAdm from "./pages/AdmAppointments";
@@ -7,18 +7,25 @@ import Home from "./pages/Home";
 import Layout from './pages/Layout';
 import Login from './pages/Login';
 import AppointmentsManager from "./pages/ManagerAppointments";
-
+import Parametrization from './pages/Parametrization';
 import Projects from "./pages/Projects";
 import ResultCenters from './pages/ResultCenters';
 import Appointments from "./pages/UserAppointments";
 import Users from "./pages/Users";
-import Parametrization from './pages/Parametrization';
+import ChangePasswordForm from './components/ChangePasswordForm';
 
 import { UserSchema } from './schemas/User';
+import { getSlices } from './services/SliceService';
+import { getPayRateRules } from './services/PayRateRulesService';
 
 
 function App() {
     const [userLoggedIn, setUserLoggedIn] = useState<UserSchema | undefined>();
+
+    useEffect(() => {
+        getSlices().then(response => console.log('----------------> getSlices:', response));
+        getPayRateRules().then(response => console.log('---------------------------> PayRateRules:', response));
+    });
 
     return (
         <>
@@ -35,6 +42,7 @@ function App() {
                             <Route path="resultCenters" element={<ResultCenters/>} />
                             <Route path="projects" element={<Projects/>} />
                             <Route path="parametrization" element={<Parametrization/>} />
+                            <Route path="changePassword" element={<ChangePasswordForm userLoggedIn={userLoggedIn}  successCallback = {() => {}} errorCallback={() => {}}/>} />
                         </Route>
                     </Routes>
                 </BrowserRouter>

@@ -1,6 +1,7 @@
 import { Button, Table, message } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import { useEffect, useState } from 'react';
+import Filter from '../components/Filter';
 import FeedbackPopup from '../components/PopUpField';
 import { AppointmentSchema } from '../schemas/Appointment';
 import { UserSchema } from '../schemas/User';
@@ -15,12 +16,63 @@ export default function Appointments({ userLoggedIn }: AppointmentsProps) {
     const [isFeedbackPopupVisible, setIsFeedbackPopupVisible] = useState(false);
     const [selectedAppointment, setSelectedAppointment] = useState<AppointmentSchema | null>(null);
     const [feedbackRequired, setFeedbackRequired] = useState(false);
+    const [filtered, setFiltered] = useState<AppointmentSchema[]>([]);
+
+
+    const [filterValues, setFilterValues] = useState<{ [key: string]: any }>({
+        "search-nome": "",
+        "search-email": "",
+        "number": "",
+        "userType": "",
+        "active": "all",
+        "date-range": "",
+    });
 
     const requestAppointments = () => {
-        getAppointmentsManager(userLoggedIn.id).then((appointmentsResponse) => {
-            setAppointments(appointmentsResponse);
-        });
+        getAppointmentsManager(userLoggedIn.id)
+            .then(appointmentsResponse => {
+                setAppointments(appointmentsResponse);
+                applyFilters(filterValues, appointmentsResponse);
+            });
+    }
+
+    useEffect(() => {
+        requestAppointments();
+    }, []);
+
+
+    const handleFilterChange = (filterType: string, filterValue: any) => {
+        const newFilterValues = { ...filterValues, [filterType]: filterValue };
+
+        setFilterValues(newFilterValues);
+
+        applyFilters(newFilterValues, appointments);
     };
+
+    const applyFilters = (filters: { [key: string]: any }, data: AppointmentSchema[]) => {
+        const newFiltered = data.filter((appointment) => {
+            return Object.keys(filters).every((filterType) => {
+                const filterValue = filters[filterType];
+                if (!filterValue) return true;
+                switch (filterType) {
+                    case "date-range":
+                        const appointmentStartDate = new Date(appointment.startDate);
+                        const filterStartDate = new Date(filterValue.startDate);
+                        const filterEndDate = new Date(filterValue.endDate);
+                        return appointmentStartDate >= filterStartDate && appointmentStartDate <= filterEndDate;
+                    case "type":
+                        return appointment.type === filterValue;
+                    case "status":
+                        return appointment.status === filterValue;
+                    default:
+                        return true;
+                }
+            });
+        });
+    
+        setFiltered(newFiltered);
+    };
+
 
     useEffect(() => {
         requestAppointments();
@@ -36,6 +88,17 @@ export default function Appointments({ userLoggedIn }: AppointmentsProps) {
             title: 'Tipo',
             dataIndex: 'type',
             key: 'type',
+            filterDropdown: () => (
+                <Filter
+                    type="selection"
+                    options={[
+                        { label: 'Todos', value: '' },
+                        { label: 'Hora Extra', value: 'Overtime' },
+                        { label: 'Sobreaviso', value: 'OnNotice' },
+                    ]}
+                    onFilterChange={(value) => handleFilterChange("type", value)}
+                />
+            ),
         },
         {
             title: 'Início',
@@ -79,14 +142,14 @@ export default function Appointments({ userLoggedIn }: AppointmentsProps) {
                 <Button.Group>
                     <Button
                         type="primary"
-                        onClick={() => handleValidate(record, true)} // Passar true para validar
+                        onClick={() => handleValidate(record, false)}
                     >
                         Validar
                     </Button>
                     <Button
                         type="primary"
                         danger
-                        onClick={() => handleValidate(record, false)} // Passar false para recusar
+                        onClick={() => handleValidate(record, true)}
                     >
                         Recusar
                     </Button>
@@ -97,25 +160,28 @@ export default function Appointments({ userLoggedIn }: AppointmentsProps) {
 
     const handleValidate = (data: AppointmentSchema, isValidation: boolean) => {
         setSelectedAppointment(data);
-        setFeedbackRequired(isValidation); // Define se o feedback é necessário com base na ação
+        setFeedbackRequired(isValidation);
         setIsFeedbackPopupVisible(true);
+        console.log(data);
+        console.log(isValidation);
     };
 
     const handleFeedbackConfirm = (feedback: string) => {
+        console.log(selectedAppointment);
         if (selectedAppointment) {
             if (feedbackRequired && feedback.trim() === '') {
                 message.error('Você deve fornecer um feedback antes de rejeitar o apontamento.');
                 return;
             }
-    
-            const status = feedbackRequired ? 1 : 2;
+            const status = feedbackRequired ? 2 : 1;
             putAppointment(selectedAppointment, status, feedback).then((updatedUser) => {
                 if (updatedUser) {
+                    console.log(updatedUser);
                     requestAppointments();
                     setIsFeedbackPopupVisible(false);
                     setSelectedAppointment(null);
                 }
-            });
+            })
         }
     };
 
@@ -133,7 +199,7 @@ export default function Appointments({ userLoggedIn }: AppointmentsProps) {
                     onCancel={handleFeedbackCancel}
                 />
             )}
-            {appointments ? <Table dataSource={appointments} columns={columns} /> : null}
+            {filtered ? <Table dataSource={filtered} columns={columns} /> : null}
         </div>
     );
 }

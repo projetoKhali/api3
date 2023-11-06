@@ -49,7 +49,17 @@ const PermissionSideMenuItemMap: Record<string, SideMenuItem[]> = {
     "FullAccess": [
         {
             label: "Apontamentos Geral",
-            url:   'http://localhost:7000/Appointments' }
+            url:   '/Appointments'
+        }, {
+            label: "Parametrização",
+            url: "/parametrization"
+        }
+    ],
+    "Config" : [
+        {
+            label: "Trocar senha",
+            url: "/changePassword"
+        }
     ]
 }
 

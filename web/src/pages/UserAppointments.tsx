@@ -5,6 +5,7 @@ import AppointmentForm from '../components/AppointmentForm';
 import Popup, { PopupSchema } from '../components/PopUp';
 import { AppointmentSchema } from '../schemas/Appointment';
 
+import Filter from '../components/Filter';
 import { UserSchema } from '../schemas/User';
 import { getAppointmentsUser } from '../services/AppointmentService';
 
@@ -16,22 +17,79 @@ export default function Appointments({ userLoggedIn }: AppointmentsProps) {
     const [appointments, setAppointments] = useState<AppointmentSchema[]>([]);
     const [popupData, setPopupData] = useState<PopupSchema | null>(null);
     const [showPopup, setShowPopup] = useState(false);
+    const [filtered, setFiltered] = useState<AppointmentSchema[]>([]);
+
+    const [filterValues, setFilterValues] = useState<{ [key: string]: any }>({
+        "search-nome": "",
+        "search-email": "",
+        "number": "",
+        "userType": "",
+        "active": "all",
+        "date-range": "",
+    });
 
     const requestAppointments = () => {
-        getAppointmentsUser(userLoggedIn.id).then((appointmentsResponse) =>
-            setAppointments(appointmentsResponse)
-        );
-    };
+        getAppointmentsUser(userLoggedIn.id)
+            .then(appointmentsResponse => {
+                setAppointments(appointmentsResponse);
+                applyFilters(filterValues, appointmentsResponse);
+            });
+    }
 
     useEffect(() => {
         requestAppointments();
     }, []);
+
+
+    const handleFilterChange = (filterType: string, filterValue: any) => {
+        const newFilterValues = { ...filterValues, [filterType]: filterValue };
+
+        setFilterValues(newFilterValues);
+
+        applyFilters(newFilterValues, appointments);
+    };
+
+    const applyFilters = (filters: { [key: string]: any }, data: AppointmentSchema[]) => {
+        const newFiltered = data.filter((appointment) => {
+            return Object.keys(filters).every((filterType) => {
+                const filterValue = filters[filterType];
+                if (!filterValue) return true;
+                switch (filterType) {
+                    case "date-range":
+                        const appointmentStartDate = new Date(appointment.startDate);
+                        const filterStartDate = new Date(filterValue.startDate);
+                        const filterEndDate = new Date(filterValue.endDate);
+                        return appointmentStartDate >= filterStartDate && appointmentStartDate <= filterEndDate;
+                    case "type":
+                        return appointment.type === filterValue;
+                    case "status":
+                        return appointment.status === filterValue;
+                    default:
+                        return true;
+                }
+            });
+        });
+    
+        setFiltered(newFiltered);
+    };
+
 
     const columns: ColumnsType<AppointmentSchema> = [
         {
             title: 'Tipo',
             dataIndex: 'type',
             key: 'type',
+            filterDropdown: () => (
+                <Filter
+                    type="selection"
+                    options={[
+                        { label: 'Todos', value: '' },
+                        { label: 'Hora Extra', value: 'Overtime' },
+                        { label: 'Sobreaviso', value: 'OnNotice' },
+                    ]}
+                    onFilterChange={(value) => handleFilterChange("type", value)}
+                />
+            ),
         },
         {
             title: 'Início',
@@ -68,7 +126,7 @@ export default function Appointments({ userLoggedIn }: AppointmentsProps) {
             dataIndex: 'status',
             key: 'status',
             render: (status, record) => {
-                if (status === 'Reject') {
+                if (status === 'Rejected') {
                     return (
                         <span
                             onClick={() => {
@@ -87,6 +145,18 @@ export default function Appointments({ userLoggedIn }: AppointmentsProps) {
                     return status;
                 }
             },
+            filterDropdown: () => (
+                <Filter
+                    type="selection"
+                    options={[
+                        { label: 'Todos', value: '' },
+                        { label: 'Pendente', value: 'Pending' },
+                        { label: 'Aprovados', value: 'Approved' },
+                        { label: 'Recusados', value: 'Rejected' },
+                    ]}
+                    onFilterChange={(value) => handleFilterChange("status", value)}
+                />
+            ),
         },
     ];
 
@@ -101,8 +171,8 @@ export default function Appointments({ userLoggedIn }: AppointmentsProps) {
                 successCallback={requestAppointments}
                 errorCallback={() => {}}
             />
-            {appointments ? (
-                <Table dataSource={appointments} columns={columns} />
+            {filtered ? (
+                <Table dataSource={filtered} columns={columns} />
             ) : null}
 
             {showPopup && popupData && <Popup {...popupData} />}

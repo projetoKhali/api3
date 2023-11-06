@@ -6,7 +6,7 @@ const API_URL = 'http://127.0.0.1:8080/clients';
 export async function getClients (): Promise<ClientSchema[]> {
     const response = await axios.get(API_URL, {});
     return await response.data.map((item: any) => ({
-        key: item.id.toString(), 
+        id: item.id.toString(), 
         name: item.name? item.name : "N/A",
         cnpj: item.cnpj? item.cnpj : "N/A",
         // active: item.active? item.active : "N/A",
@@ -23,7 +23,6 @@ export async function postClient(user: ClientSchema) {
         },
         body: JSON.stringify(user)
     }).then(response=> response.json())
-    .then((data)=> console.log(data))
     .catch(error => console.error(error));
     
 }

@@ -10,11 +10,11 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import jakarta.persistence.Transient;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.Setter;
 
 @Entity(name="users")
@@ -24,6 +24,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @EqualsAndHashCode
+@ToString
 public class User {
 
     @Id
@@ -45,8 +46,7 @@ public class User {
     @Column
     private String password;
 
-    @Transient
-    @Column(name = "insert_date")
+    @Column(name = "insert_date", insertable = false, updatable = false)
     private Timestamp insertDate;
 
     @Column(name = "expire_date")
