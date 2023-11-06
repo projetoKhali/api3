@@ -136,6 +136,17 @@ cliente, CR e colaborador.
 | Visualização de usuários desativados. | Eu como administrador preciso ter acesso a um histórico de colaboradores que foram desativados. |
 | Funcionalidade de adição e parametrização de verbas do sistema. | Como administrador preciso ser capaz de configurar os parâmetros da verba dos apontamentos para ter melhor controle sobre as horas trabalhadas dos colaboradores |
 
+
+<h2>Sprint 3</h2>
+
+|  Entregas  | Story |
+|:---------|:----------------------|
+| Extração de relatório | Como administrador preciso ser capaz de gerar relatórios CSV contendo as horas trabalhadas dos meus colaboradores para poder integrar com outras ferramentas de análise, pela portabilidade, compartilhamento fácil e baixo custo de processamento. |
+| Notificações | Como gestor, quero receber notificações quando um apontamento de um membro da minha(s) squad(s) for lançado para agilizar o meu processo de validação. |
+| Notificações | Como colaborador, quero receber notificações quando meu gestor aprovar ou rejeitar meus apontamentos de horas extras e sobreaviso, para que eu fique atualizado sobre o status. |
+| Alteração de senha | Eu como colaborador preciso alterar minha senha sempre que necessário |
+| UX | -- Não há story relacionada -- |
+
 </details>
 
 <details>
@@ -155,7 +166,7 @@ Linguagem de programação II, Progamação em Banco de dados e Laboratório de 
 
 * [x] 04/09 a 24/09 - Sprint 1
 * [x] 25/09 a 15/10 - Sprint 2
-* [ ] 16/10 a 05/11 - Sprint 3
+* [x] 16/10 a 05/11 - Sprint 3
 * [ ] 06/11 a 26/11 - Sprint 4
 
 <br>
