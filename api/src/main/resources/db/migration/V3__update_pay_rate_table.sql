@@ -3,4 +3,3 @@ CREATE TYPE Shift_type AS ENUM (
     'DayTime',
     'AllDay'
 );
-
