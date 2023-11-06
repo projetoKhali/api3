@@ -2,8 +2,7 @@ import { Button, Table } from 'antd';
 import { useEffect, useState } from 'react';
 import { SliceSchema } from '../schemas/Slice';
 import { UserSchema } from '../schemas/User';
-import { getReport } from '../services/Report';
-import { getSlices } from '../services/SliceService';
+import { exportSlicesToCSV, getSlices } from '../services/SliceService';
 
 interface SlicesProps {
     userLoggedIn: UserSchema;
@@ -11,7 +10,7 @@ interface SlicesProps {
 
 export default function Slices({ userLoggedIn }: SlicesProps) {
     const [slices, setSlices] = useState<SliceSchema[]>([]);
-    const [camposBoolean, setCamposBoolean] = useState([true, false, true, false, true, true, false, true, false, true, true]);
+    const [camposBoolean, setCamposBoolean] = useState([true, false, true, true, true, true, true, true, true, true, true]);
 
     const [availableColumns, setAvailableColumns] = useState([
         { name: 'appointment.id', title: 'Apontamento', visible: true },
@@ -83,9 +82,8 @@ export default function Slices({ userLoggedIn }: SlicesProps) {
         };
     });
 
-
     const handleExportToCSV = () => {
-        getReport(camposBoolean, userLoggedIn.id)
+        exportSlicesToCSV(camposBoolean, userLoggedIn.id)
             .then(() => {
                 console.log('CSV exportado com sucesso');
             })
@@ -93,7 +91,7 @@ export default function Slices({ userLoggedIn }: SlicesProps) {
                 console.error('Erro na exportação para CSV:', error);
             });
     };
-
+    
 
     const columns = visibleColumns.map((column) => {
         return {
