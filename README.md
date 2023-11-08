@@ -155,6 +155,7 @@ cliente, CR e colaborador.
 
 <img src="Docs/burndown/Sprint1.jpg"/>
 <img src="Docs/burndown/Sprint2.jpg"/>
+<img src="Docs/burndown/Sprint3.png"/>
 
 <br>
 </details>
