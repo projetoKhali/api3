@@ -6,9 +6,9 @@
     "start-unix": "concurrently \"npm run frontend-unix\" \"npm run backend-unix\"",
     "start-windows": "concurrently \"npm run frontend-windows\" \"npm run backend-windows\"",
     "frontend-unix": "cd web && ./ldev.sh",
-    "frontend-windows": "cd web && .\\wdev.bat",
+    "frontend-windows": "cd web && npm i && npm run dev",
     "backend-unix": "cd api && ./ldev.sh",
-    "backend-windows": "cd api && .\\wdev.bat"
+    "backend-windows": "cd api && mvn clean install -e -X && mvn spring-boot:run -e -X"
   },
   "devDependencies":{
     "concurrently":"^8.2.2"
