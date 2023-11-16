@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import './App.css';
 import ChangePasswordForm from './components/ChangePasswordForm';
 import AppointmentsAdm from "./pages/AdmAppointments";
+import DashboardAdm from "./pages/AdmDashboards";
 import Clients from './pages/Clients';
 import Home from "./pages/Home";
 import Layout from './pages/Layout';
@@ -35,6 +36,7 @@ function App() {
                     <Routes>
                         <Route path="/" element={<Layout userLoggedIn={userLoggedIn} />}>
                             <Route index element={<Home />} />
+                            <Route path="dashboards/admin" element={<DashboardAdm/>} />
                             <Route path="appointments/user" element={<Appointments userLoggedIn={userLoggedIn} />} />
                             <Route path="appointments/manager" element={<AppointmentsManager userLoggedIn={userLoggedIn} />} />
                             <Route path="appointments" element={<AppointmentsAdm />} />
