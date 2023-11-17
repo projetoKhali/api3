@@ -44,6 +44,9 @@ const PieChart: React.FC<PieChartProps> = ({ data }) => {
         const newChart = new Chart(chartRef.current, {
             type: 'doughnut',
             data: transformedData,
+            options: {
+                aspectRatio: 3, // Define a proporção largura/altura desejada
+            },
         });
 
         // Adiciona o novo gráfico ao ref

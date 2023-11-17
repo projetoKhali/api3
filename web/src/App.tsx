@@ -9,11 +9,13 @@ import Home from "./pages/Home";
 import Layout from './pages/Layout';
 import Login from './pages/Login';
 import AppointmentsManager from "./pages/ManagerAppointments";
+import DashboardManager from "./pages/ManagerDashboards";
 import Parametrization from './pages/Parametrization';
 import Projects from "./pages/Projects";
 import ResultCenters from './pages/ResultCenters';
 import Slices from './pages/Slices';
 import Appointments from "./pages/UserAppointments";
+import DashboardUser from "./pages/UserDashboards";
 import Users from "./pages/Users";
 
 import { UserSchema } from './schemas/User';
@@ -37,6 +39,8 @@ function App() {
                         <Route path="/" element={<Layout userLoggedIn={userLoggedIn} />}>
                             <Route index element={<Home />} />
                             <Route path="dashboards/admin" element={<DashboardAdm/>} />
+                            <Route path="dashboards/manager" element={<DashboardManager userLoggedIn={userLoggedIn} />} />
+                            <Route path="dashboards/user" element={<DashboardUser userLoggedIn={userLoggedIn} />} />
                             <Route path="appointments/user" element={<Appointments userLoggedIn={userLoggedIn} />} />
                             <Route path="appointments/manager" element={<AppointmentsManager userLoggedIn={userLoggedIn} />} />
                             <Route path="appointments" element={<AppointmentsAdm />} />

@@ -15,11 +15,19 @@ const PermissionSideMenuItemMap: Record<string, SideMenuItem[]> = {
             label: "Apontamentos",
             url: '/appointments/user',
         },
+        {
+            label: "Dashboard pessoal",
+            url: "/dashboards/user"
+        },
     ],
     "Validate": [
         {
             label: "Aprovações",
             url: "/appointments/manager"
+        },
+        {
+            label: "Dasboard squads",
+            url: "/dashboards/manager"
         },
     ],
     "Register": [
@@ -60,7 +68,7 @@ const PermissionSideMenuItemMap: Record<string, SideMenuItem[]> = {
         },
         {
             label: "Dashboard Geral",
-            url: "dashboards/admin",
+            url: "/dashboards/admin",
         },
     ],
     "Config" : [
