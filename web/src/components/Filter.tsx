@@ -1,8 +1,11 @@
 // Filter.js
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import LookUpOption from '../schemas/LookUpOption';
+import { getClients } from '../services/ClientService';
+import LookUpTextField from './LookUpTextField';
 
 interface FilterProps {
-    type: "search-nome" | "search-email" | "number" | "selection" | "date-range" | "active";
+    type: "search-nome" | "search-email" | "number" | "selection" | "date-range" | "active" | "availableClients" | "availableResultCenters" | "availableProjects" ;
     options?: any[];
     onFilterChange: (value: any) => void;
 }
@@ -14,10 +17,20 @@ export default function Filter({ type, options, onFilterChange }: FilterProps) {
         endDate: '',
     });
 
+    const [availableClients, setAvailableClients] = useState<LookUpOption[]>([]);
+    const [availableResultCenters] = useState<LookUpOption[]>([]);
+    const [availableProjects] = useState<LookUpOption[]>([]);
+
+
     const handleFilterChange = (value: any) => {
         setFilterValue(value);
         onFilterChange(value);
     };
+
+    useEffect(() => {
+
+        getClients().then(clientsResponse => setAvailableClients(clientsResponse.map(client => ({ id: client.id, name: client.name, }))));
+      }, [])
 
     return (
         <div>
@@ -66,6 +79,27 @@ export default function Filter({ type, options, onFilterChange }: FilterProps) {
                     <option value="active">Ativos</option>
                     <option value="inactive">Desativados</option>
                 </select>
+            )}
+            {type === "availableClients" && (
+                <LookUpTextField
+                placeholder="Cliente"
+                options={availableClients}
+                onSelect={(option: LookUpOption) => handleFilterChange(option.name)}
+                />
+            )}
+            {type === "availableResultCenters" && (
+                <LookUpTextField
+                placeholder="Centro de Resultado"
+                options={availableResultCenters}
+                onSelect={(option: LookUpOption) =>  handleFilterChange(option)}
+            />
+            )}
+            {type === "availableProjects" && (
+                <LookUpTextField
+                placeholder="Projeto"
+                options={availableProjects}
+                onSelect={(option: LookUpOption) =>  handleFilterChange(option)}
+            />
             )}
             {type === "date-range" ? (
             <div>
