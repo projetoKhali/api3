@@ -59,6 +59,7 @@ public class PayRateRuleService {
             if (newPayRateRule.getShift() != null) {
                 payRateRuleExists.setShift(newPayRateRule.getShift());
             }
+            
             if (newPayRateRule.getOverlap() != null) {
                 payRateRuleExists.setOverlap(newPayRateRule.getOverlap());
             }

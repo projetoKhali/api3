@@ -41,7 +41,7 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
     );
 
     @Modifying
-    @Query(value = "INSERT INTO notifications (apt_id, users_usr_id, type) VALUES (:aptId, :userId, 'Pending')", nativeQuery = true)
+    @Query(value = "INSERT INTO notifications (apt_id, usr_id, type) VALUES (:aptId, :userId, 'Pending')", nativeQuery = true)
     void insertNotification(@Param("aptId") Long appointmentId, @Param("userId") Long userId);
 
     @Modifying
