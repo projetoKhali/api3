@@ -2,59 +2,39 @@ import Flatpickr from "flatpickr";
 import { Portuguese } from "flatpickr/dist/l10n/pt.js";
 import "flatpickr/dist/themes/airbnb.css";
 import { useEffect, useRef, useState } from 'react';
-import AppointmentTypeDropdown from '../components/AppointmentTypeDropdown';
 import Filter from '../components/Filter';
 import PieChart from '../components/PieChart';
 import { AppointmentSchema } from '../schemas/Appointment';
-import DropdownOption from '../schemas/DropdownOption';
 import LookUpOption from '../schemas/LookUpOption';
+import { UserSchema } from "../schemas/User";
 import { getAppointmentsAdm } from '../services/AppointmentService';
-import { getClients } from '../services/ClientService';
-import { getProjects } from '../services/ProjectService';
-import { getResultCenters } from '../services/ResultCenterService';
 
-export default function Appointments() {
+interface AppointmentsProps {
+    userLoggedIn: UserSchema;
+}
+
+export default function Appointments({ userLoggedIn }: AppointmentsProps) {
     const [appointments, setAppointments] = useState<AppointmentSchema[]>([]);
     const [filtered, setFiltered] = useState<AppointmentSchema[]>([]);
     const [filterAppointmentStartDate, setPostAppointmentStartDate] = useState<string>('');
     const [filterAppointmentEndDate, setPostAppointmentEndDate] = useState<string>('');
     const [filterAppointmentType, setPostAppointmentType] = useState<string>('');
-
-    const [filterAppointmentClient, setPostAppointmentClient] = useState<LookUpOption | undefined>();
-    const [availableClients, setAvailableClients] = useState<LookUpOption[]>([]);
-
-    const [filterAppointmentResultCenter, setPostAppointmentResultCenter] = useState<LookUpOption | undefined>();
-    const [availableResultCenters, setAvailableResultCenters] = useState<LookUpOption[]>([]);
-
-    const [filterAppointmentProject, setPostAppointmentProject] = useState<LookUpOption | undefined>();
-    const [availableProjects, setAvailableProjects] = useState<LookUpOption[]>([]);
+    const [setAvailableClients] = useState<LookUpOption[]>([]);
+    const [setAvailableResultCenters] = useState<LookUpOption[]>([]);
+    const [setAvailableProjects] = useState<LookUpOption[]>([]);
 
     const startDateTimePicker = useRef<HTMLInputElement>(null);
     const endDateTimePicker = useRef<HTMLInputElement>(null);
 
-    interface FilterValues {
-        "search-nome": string;
-        "search-email": string;
-        "number": string;
-        "userType": string;
-        "active": string;
-        "date-range": string;
-        "client": {
-            name: string;
-        };
-    }
-
 
     const [filterValues, setFilterValues] = useState<{ [key: string]: any }>({
-        "search-nome": "",
-        "search-email": "",
-        "number": "",
-        "userType": "",
-        "active": "all",
-        "date-range": "",
-        "client": {
-            "name" : ""
-        },
+        "type": "",
+        "status": "",
+        "client": "",
+        "resultCenter": "",
+        "project": "",
+        "startDate": "",
+        "endDate": "",
     });
 
     const requestAppointments = () => {
@@ -69,7 +49,7 @@ export default function Appointments() {
         if (startDateTimePicker.current) {
             Flatpickr(startDateTimePicker.current, {
                 enableTime: true,
-                dateFormat: 'd/m/Y H:i',
+                dateFormat: 'd/m/Y',
                 defaultDate: 'today',
                 locale: Portuguese,
             });
@@ -77,93 +57,64 @@ export default function Appointments() {
         if (endDateTimePicker.current) {
             Flatpickr(endDateTimePicker.current, {
                 enableTime: true,
-                dateFormat: 'd/m/Y H:i',
+                dateFormat: 'd/m/Y',
                 defaultDate: 'today',
                 locale: Portuguese,
             });
         };
-
-        getClients().then(clientsResponse => setAvailableClients(clientsResponse.map(client => ({ id: client.id, name: client.name, }))));
-        getResultCenters().then(resultCentersResponse => setAvailableResultCenters(resultCentersResponse.map(resultCenter => ({ id: resultCenter.id, name: resultCenter.name, }))));
-        getProjects().then(projectsResponse => setAvailableProjects(projectsResponse.map(project => ({ id: project.id, name: project.name, }))));
         requestAppointments();
 
     }, []);
 
     const handleFilterChange = (filterType: string, filterValue: any) => {
-       let newFilterValues;
+        // Para datas, garantimos que o formato esteja correto antes de definir no estado
+        const formattedDate = filterValue instanceof Date ? filterValue.toLocaleDateString() : filterValue;
 
-    if (filterType.startsWith("client")) {
-        newFilterValues = {
-            ...filterValues,
-            client: {
-                ...filterValues.client,
-                [filterType.split(".")[1]]: filterValue,
-            },
-        };
-    } else {
-        newFilterValues = { ...filterValues, [filterType]: filterValue };
-    }
+        const newFilterValues = { ...filterValues, [filterType]: formattedDate };
         setFilterValues(newFilterValues);
         applyFilters(newFilterValues, appointments);
-        console.log(newFilterValues)
+        console.log(newFilterValues);
     };
 
     const applyFilters = (filters: { [key: string]: any }, data: AppointmentSchema[]) => {
         const newFiltered = data.filter((appointment) => {
             return Object.keys(filters).every((filterType) => {
                 const filterValue = filters[filterType];
-                if (!filterValue) return true;
+                if (filterValue === null || filterValue === undefined || filterValue === '') {
+                    return true;
+                }
                 switch (filterType) {
                     case "type":
                         return appointment.type === filterValue;
                     case "status":
                         return appointment.status === filterValue;
-                    case "client.name":
-                        return appointment.client.name === filterValue;
+                    case "client":
+                        return appointment.client === filterValue;
+                    case "resultCenter":
+                        return appointment.resultCenter === filterValue;
+                    case "project":
+                        return appointment.project === filterValue;
+                    case "startDate":
+                    case "endDate":
+                        const filterDate = new Date(filterValue);
+                        const appointmentDate = new Date(appointment[filterType]);
+                        // Ajuste para comparar apenas as datas
+                        filterDate.setHours(0, 0, 0, 0);
+                        appointmentDate.setHours(0, 0, 0, 0);
+                        return filterDate <= appointmentDate;
                     default:
                         return true;
                 }
             });
         });
 
+        // Atualiza o array filtrado
         setFiltered(newFiltered);
-    };
-    const handleStartDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setFilterValues({ ...filterValues, "date-range": { ...filterValues["date-range"], startDate: event.target.value } });
-        applyFilters(filterValues, appointments);
-    };
-
-    const handleEndDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setFilterValues({ ...filterValues, "date-range": { ...filterValues["date-range"], endDate: event.target.value } });
-        applyFilters(filterValues, appointments);
+        console.log(newFiltered);
     };
 
     return (
         <div>
-            <AppointmentTypeDropdown
-                onSelect={(option: DropdownOption) => {
-                    setPostAppointmentType(option.optionName);
-                }}
-            />
-            <div>
-                <input
-                    ref={startDateTimePicker}
-                    type="text"
-                    placeholder="Início"
-                    className="date_time_picker"
-                    onChange={handleStartDateChange}
-                />
-                <input
-                    ref={endDateTimePicker}
-                    type="text"
-                    placeholder="Fim"
-                    className="date_time_picker"
-                    onChange={handleEndDateChange}
-                />
-            </div>
-
-
             {/* <input type="text" placeholder="Início" onChange={handleStartDateChange} />
       <input type="text" placeholder="Fim" onChange={handleEndDateChange} /> */}
             <Filter
@@ -187,7 +138,24 @@ export default function Appointments() {
             />
             <Filter
                 type="availableClients"
-                onFilterChange={(value) => handleFilterChange("client.name", value)}
+                onFilterChange={(value) => handleFilterChange("client", value)}
+            />
+            <Filter
+                type="availableResultCenters"
+                onFilterChange={(value) => handleFilterChange("resultCenter", value)}
+                userLoggedIn={userLoggedIn}
+            />
+            <Filter
+                type="availableProjects"
+                onFilterChange={(value) => handleFilterChange("project", value)}
+            />
+            <Filter
+                type="date-start"
+                onFilterChange={(value) => handleFilterChange("startDate", value)}
+            />
+            <Filter
+                type="date-end"
+                onFilterChange={(value) => handleFilterChange("endDate", value)}
             />
             <PieChart data={filtered} />
         </div>

@@ -38,7 +38,7 @@ function App() {
                     <Routes>
                         <Route path="/" element={<Layout userLoggedIn={userLoggedIn} />}>
                             <Route index element={<Home />} />
-                            <Route path="dashboards/admin" element={<DashboardAdm/>} />
+                            <Route path="dashboards/admin" element={<DashboardAdm userLoggedIn={userLoggedIn}/>} />
                             <Route path="dashboards/manager" element={<DashboardManager userLoggedIn={userLoggedIn} />} />
                             <Route path="dashboards/user" element={<DashboardUser userLoggedIn={userLoggedIn} />} />
                             <Route path="appointments/user" element={<Appointments userLoggedIn={userLoggedIn} />} />
