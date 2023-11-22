@@ -1,4 +1,4 @@
-import PopupForm from "./PopupForm";
+import PopupForm from "./PopupPayRateRule";
 
 interface Button {
     text: string;

@@ -10,15 +10,15 @@ export default function ShiftDropdown ({onSelect}: ShiftDropdownProps) {
     const options = [
         {
             displayName: 'Noturno',
-            optionName: 'Nightime',
+            optionName: 'NightTime',
         },
         {
             displayName: 'Diurno',
-            optionName: 'Daytime',
+            optionName: 'DayTime',
         },
         {
             displayName: 'Todo o dia',
-            optionName: 'Allday',
+            optionName: 'AllDay',
         }
     ] as DropdownOption[];
 
