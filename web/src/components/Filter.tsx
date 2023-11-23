@@ -1,7 +1,6 @@
 // Filter.js
-import { Portuguese } from "flatpickr/dist/l10n/pt.js";
 import "flatpickr/dist/themes/airbnb.css";
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import LookUpOption from '../schemas/LookUpOption';
 import { UserSchema } from '../schemas/User';
 import { getClients } from '../services/ClientService';
@@ -9,7 +8,6 @@ import { getProjects } from '../services/ProjectService';
 import { getResultCentersOfUser } from '../services/ResultCenterService';
 import LookUpTextField from './LookUpTextField';
 
-import Flatpickr from "flatpickr";
 
 
 interface FilterProps {
@@ -21,12 +19,13 @@ interface FilterProps {
 
 export default function Filter({ userLoggedIn, type, options, onFilterChange }: FilterProps) {
     const [filterValue, setFilterValue] = useState('');
+    const [startDateFilter, setStartDateFilter] = useState('');
+    const [endDateFilter, setEndDateFilter] = useState('');
 
     const [availableClients, setAvailableClients] = useState<LookUpOption[]>([]);
     const [availableResultCenters, setAvailableResultCenters] = useState<LookUpOption[]>([]);
     const [availableProjects, setAvailableProjects] = useState<LookUpOption[]>([]);
-    const startDateTimePicker = useRef<HTMLInputElement | null>(null);
-    const endDateTimePicker = useRef<HTMLInputElement | null>(null);
+
 
     const handleFilterChange = (value: any) => {
         setFilterValue(value);
@@ -34,29 +33,6 @@ export default function Filter({ userLoggedIn, type, options, onFilterChange }: 
     };
 
     useEffect(() => {
-        if (startDateTimePicker.current) {
-            Flatpickr(startDateTimePicker.current, {
-                enableTime: false,
-                dateFormat: 'd/m/Y',
-                defaultDate: 'today',
-                locale: Portuguese,
-                onChange: function (selectedDates, dateStr) {
-                    handleFilterChange(dateStr);
-                }
-            });
-        }
-        if (endDateTimePicker.current) {
-            Flatpickr(endDateTimePicker.current, {
-                enableTime: false,
-                dateFormat: 'd/m/Y',
-                defaultDate: 'today',
-                locale: Portuguese,
-                onChange: function (selectedDates, dateStr) {
-                    handleFilterChange(dateStr);
-                }
-            });
-        }
-
         getClients().then(clientsResponse => setAvailableClients(clientsResponse.map(client => ({ id: client.id, name: client.name }))));
         getProjects().then(projectsResponse => setAvailableProjects(projectsResponse.map(project => ({ id: project.id, name: project.name }))));
 
@@ -136,19 +112,17 @@ export default function Filter({ userLoggedIn, type, options, onFilterChange }: 
             )}
             {type === "date-start" ? (
                 <input
-                    ref={startDateTimePicker}
-                    type="text"
+                    type="date"
                     placeholder="Início"
-                    className="date_time_picker"
+                    value={filterValue}
                     onChange={(e) => handleFilterChange(e.target.value)}
                 />
             ) : null}
             {type === "date-end" ? (
                 <input
-                    ref={endDateTimePicker}
-                    type="text"
+                    type="date"
                     placeholder="Fim"
-                    className="date_time_picker"
+                    value={filterValue}
                     onChange={(e) => handleFilterChange(e.target.value)}
                 />
             ) : null}

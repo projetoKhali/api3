@@ -59,14 +59,11 @@ export async function postAppointment(appointment: PostAppointmentSchema) {
 
 function formatDateTime(dateTime: string): string {
     const date = new Date(dateTime);
-    const formattedDate = date.getUTCDate().toString().padStart(2, '0') + '/' +
-        (date.getUTCMonth() + 1).toString().padStart(2, '0') + '/' +
-        date.getUTCFullYear();
-    const formattedTime = date.getUTCHours().toString().padStart(2, '0') + ':' +
-        date.getUTCMinutes().toString().padStart(2, '0') + ':' +
-        date.getUTCSeconds().toString().padStart(2, '0');
+    const formattedDate = `${date.getUTCFullYear()}-${(date.getUTCMonth() + 1).toString().padStart(2, '0')}-${date.getUTCDate().toString().padStart(2, '0')}`;
+    const formattedTime = `${date.getUTCHours().toString().padStart(2, '0')}:${date.getUTCMinutes().toString().padStart(2, '0')}:${date.getUTCSeconds().toString().padStart(2, '0')}`;
     return `${formattedDate} ${formattedTime}`;
 }
+
 
 
 export async function putAppointment(appointment: AppointmentSchema, newActiveStatus: number, feedback: string | null = null) {

@@ -1,11 +1,10 @@
-import Flatpickr from "flatpickr";
-import { Portuguese } from "flatpickr/dist/l10n/pt.js";
 import "flatpickr/dist/themes/airbnb.css";
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
+import BarChartDays from '../components/BarChartDaysOfMonth';
+import BarChartHours from '../components/BarChartHoursOfDay';
 import Filter from '../components/Filter';
 import PieChart from '../components/PieChart';
 import { AppointmentSchema } from '../schemas/Appointment';
-import LookUpOption from '../schemas/LookUpOption';
 import { UserSchema } from "../schemas/User";
 import { getAppointmentsAdm } from '../services/AppointmentService';
 
@@ -16,16 +15,6 @@ interface AppointmentsProps {
 export default function Appointments({ userLoggedIn }: AppointmentsProps) {
     const [appointments, setAppointments] = useState<AppointmentSchema[]>([]);
     const [filtered, setFiltered] = useState<AppointmentSchema[]>([]);
-    const [filterAppointmentStartDate, setPostAppointmentStartDate] = useState<string>('');
-    const [filterAppointmentEndDate, setPostAppointmentEndDate] = useState<string>('');
-    const [filterAppointmentType, setPostAppointmentType] = useState<string>('');
-    const [setAvailableClients] = useState<LookUpOption[]>([]);
-    const [setAvailableResultCenters] = useState<LookUpOption[]>([]);
-    const [setAvailableProjects] = useState<LookUpOption[]>([]);
-
-    const startDateTimePicker = useRef<HTMLInputElement>(null);
-    const endDateTimePicker = useRef<HTMLInputElement>(null);
-
 
     const [filterValues, setFilterValues] = useState<{ [key: string]: any }>({
         "type": "",
@@ -46,22 +35,6 @@ export default function Appointments({ userLoggedIn }: AppointmentsProps) {
     }
 
     useEffect(() => {
-        if (startDateTimePicker.current) {
-            Flatpickr(startDateTimePicker.current, {
-                enableTime: true,
-                dateFormat: 'd/m/Y',
-                defaultDate: 'today',
-                locale: Portuguese,
-            });
-        };
-        if (endDateTimePicker.current) {
-            Flatpickr(endDateTimePicker.current, {
-                enableTime: true,
-                dateFormat: 'd/m/Y',
-                defaultDate: 'today',
-                locale: Portuguese,
-            });
-        };
         requestAppointments();
 
     }, []);
@@ -95,15 +68,17 @@ export default function Appointments({ userLoggedIn }: AppointmentsProps) {
                     case "project":
                         return appointment.project === filterValue;
                     case "startDate":
+                        const filterStartDate = new Date(filterValue);
+                        const appointmentStartDate = new Date(appointment.startDate);
+                        /* Compare the dates without considering time components */
+                        return appointmentStartDate.setHours(0, 0, 0, 0) >= filterStartDate.setHours(0, 0, 0, 0);
                     case "endDate":
-                        const filterDate = new Date(filterValue);
-                        const appointmentDate = new Date(appointment[filterType]);
-                        // Ajuste para comparar apenas as datas
-                        filterDate.setHours(0, 0, 0, 0);
-                        appointmentDate.setHours(0, 0, 0, 0);
-                        return filterDate <= appointmentDate;
+                        const filterEndDate = new Date(filterValue);
+                        const appointmentEndDate = new Date(appointment.endDate);
+                        return appointmentEndDate.setHours(0, 0, 0, 0) <= filterEndDate.setHours(0, 0, 0, 0);
                     default:
                         return true;
+
                 }
             });
         });
@@ -115,8 +90,6 @@ export default function Appointments({ userLoggedIn }: AppointmentsProps) {
 
     return (
         <div>
-            {/* <input type="text" placeholder="Início" onChange={handleStartDateChange} />
-      <input type="text" placeholder="Fim" onChange={handleEndDateChange} /> */}
             <Filter
                 type="selection"
                 options={[
@@ -158,6 +131,8 @@ export default function Appointments({ userLoggedIn }: AppointmentsProps) {
                 onFilterChange={(value) => handleFilterChange("endDate", value)}
             />
             <PieChart data={filtered} />
+            <BarChartHours data={filtered} />
+            <BarChartDays data={filtered} />
         </div>
     );
 }

@@ -45,7 +45,7 @@ const PieChart: React.FC<PieChartProps> = ({ data }) => {
             type: 'doughnut',
             data: transformedData,
             options: {
-                aspectRatio: 3, // Define a proporção largura/altura desejada
+                aspectRatio: 4, // Define a proporção largura/altura desejada
             },
         });
 
@@ -61,7 +61,10 @@ const PieChart: React.FC<PieChartProps> = ({ data }) => {
     }, [data]);
 
     return (
-        <div>
+        <div style={{
+            width: "1000px",
+            height: "400px",
+        }}>
             <h2> Status dos seus apontamentos </h2>
             <canvas ref={chartRef} />
         </div>
