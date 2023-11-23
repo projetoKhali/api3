@@ -8,6 +8,7 @@ import Popup, { PopupSchema } from "../components/PopUpParametrization";
 import { EditableTableColumn } from "../components/EditableTableCell";
 import { PostParameterSchema } from "../schemas/Parametrization";
 import { getLatestParameter, postParameter } from "../services/ParametrizationService";
+import EditableCheckBox, { EditableTableColumnCheckBox } from "../components/EditableCheckBox";
 
 export default function Parametrization() {
     const [previousPayRateRules, setPreviousPayRateRules] = useState<PayRateRuleSchema[]>([]);
@@ -85,6 +86,11 @@ export default function Parametrization() {
             title: 'Cumulativo',
             getValue: (item: PayRateRuleSchema)=>`${item.overlap}`,
             setValue: (item: PayRateRuleSchema, value: string)=>item.overlap=stringToBoolean(value),
+        }),
+        EditableTableColumnCheckBox({
+            title: 'Dias da semana',
+            getValue: (item: PayRateRuleSchema)=> item.daysOfWeek[0],
+            setValue: (item: PayRateRuleSchema, value: boolean)=>item.daysOfWeek[0]=value,
         }),
     ]
 
