@@ -14,6 +14,7 @@ export default function Login ({ onLogin }: LoginProps) {
 
     const [popupData, setPopupData] = useState<PopupSchema | null>(null);
     const [showPopup, setShowPopup] = useState(false);
+    const loginKhaliLogo = '/khali_logo_light.png';
 
     function handleUsernameChange(event: React.ChangeEvent<HTMLInputElement>){ setLoginUsername(event.target.value); }
     function handlePasswordChange(event: React.ChangeEvent<HTMLInputElement>){ setLoginPassword(event.target.value); }
@@ -33,6 +34,7 @@ export default function Login ({ onLogin }: LoginProps) {
                 });
                 setShowPopup(true);
                 throw new Error("Usuário não encontrado")};
+            if (!user) throw new Error();
             onLogin(user);
         })
         .catch(error => {
@@ -45,11 +47,21 @@ export default function Login ({ onLogin }: LoginProps) {
     };
 
     return (
-        <div>
+        <div className="login-container">
+            <img src={loginKhaliLogo} alt="Khali" />
             <form onSubmit={handleSubmit}>
-                <input type="text" placeholder="Email" onChange={handleUsernameChange} autoFocus/>
-                <input type="password" placeholder="Password" onChange={handlePasswordChange}/>
-                <button type="submit">Login</button>
+                <input
+                    type="text"
+                    placeholder="Email"
+                    onChange={handleUsernameChange}
+                    autoFocus
+                />
+                <input
+                    type="text"
+                    placeholder="Password"
+                    onChange={handlePasswordChange}
+                />
+                <button className="" type="submit">Login</button>
             </form>
             {showPopup && popupData && <Popup {...popupData} />}
         </div>
