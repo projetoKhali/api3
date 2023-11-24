@@ -3,7 +3,7 @@
 .ant-menu-item.ant-menu-item-only-child {
     font-family: 'Inter', sans-serif;
     padding-left: 0;
-    background-color: #D9D9D9;
+    background-color: var(--color-khali-base);
     margin-bottom: 15px;
 
 }
