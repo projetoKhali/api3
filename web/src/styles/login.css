@@ -1,0 +1,25 @@
+form {
+  width: 50%;
+  margin: auto;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  padding: .5rem;
+  gap: .5em;
+}
+
+input {
+  height: 2rem;
+  width: 100%;
+  border-radius: 4px;
+  padding: 0 .25rem;
+  border: 0;
+}
+
+button {
+  padding: 0;
+  line-height: 100%;
+  width: 50%;
+}

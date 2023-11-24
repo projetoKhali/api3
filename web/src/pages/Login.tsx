@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { UserSchema } from "../schemas/User";
 import { requestLogin } from '../services/UserService';
 import Popup, { PopupSchema } from '../components/PopUp';
+import '../styles/login.css';
 
 interface LoginProps {
     onLogin: (user: UserSchema) => void;
