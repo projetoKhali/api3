@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import './App.css';
 import ChangePasswordForm from './components/ChangePasswordForm';
 import AppointmentsAdm from "./pages/AdmAppointments";
 import Clients from './pages/Clients';
@@ -18,6 +17,8 @@ import Users from "./pages/Users";
 import { UserSchema } from './schemas/User';
 import { getPayRateRules } from './services/PayRateRulesService';
 import { getSlices } from './services/SliceService';
+
+import './styles/App.css';
 
 
 function App() {
