@@ -23,7 +23,6 @@ export async function postClient(user: ClientSchema) {
         },
         body: JSON.stringify(user)
     }).then(response=> response.json())
-    .then((data)=> console.log(data))
     .catch(error => console.error(error));
     
 }

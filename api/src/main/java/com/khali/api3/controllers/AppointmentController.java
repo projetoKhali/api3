@@ -46,7 +46,7 @@ public class AppointmentController {
 
     @GetMapping
     public List<Appointment> getAllAppointments() {
-        return appointmentRepository.findByActive();
+        return appointmentRepository.findAll();
     }
 
     @GetMapping("/{id}")
@@ -80,6 +80,7 @@ public class AppointmentController {
         return appointmentService.findAppointmentByDateHour(appointmentsList, dataInit, dataFim);
     }
 
+    @Transactional
     @PostMapping
     public Appointment createAppointment(@RequestBody Appointment appointment) {
         Appointment savedAppointment = appointmentRepository.save(appointment);
@@ -87,12 +88,13 @@ public class AppointmentController {
         return savedAppointment;
     }
 
+    @Transactional
     @PutMapping("/{id}")
     public Appointment updateAppointment(@PathVariable Long id, @RequestBody Appointment appointmentDetails) {
         Appointment appointment = appointmentRepository.findById(id)
+
                 .orElseThrow(() -> new EntityNotFoundException("Appointment not found with id: " + id));
         appointmentRepository.save(appointmentDetails);
-        // referenciando apontamento antigo no novo
 
         appointment.setApt_updt(appointmentDetails.getId());
         return appointmentRepository.save(appointment);
@@ -139,9 +141,8 @@ public class AppointmentController {
         return notification;
     }
     
-
-    @PutMapping("/notification/update/{usr_id}")
     @Transactional
+    @PutMapping("/notification/update/{usr_id}")
     public void updateNotificationsStatusToTrue(@PathVariable Long usr_id) {
         appointmentRepository.updateStatusToTrueForUser(usr_id);
     }

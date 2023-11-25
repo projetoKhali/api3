@@ -53,6 +53,10 @@ const PermissionSideMenuItemMap: Record<string, SideMenuItem[]> = {
         }, {
             label: "Parametrização",
             url: "/parametrization"
+        },
+        {
+            label: 'Extração de relatório',
+            url: '/slices'
         }
     ],
     "Config" : [

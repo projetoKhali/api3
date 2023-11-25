@@ -9,4 +9,3 @@ create table if not exists public.report (
 );
 
 
-alter table public.report ADD constraint usr_id_report_fk FOREIGN KEY (usr_id) REFERENCES public.users(usr_id);

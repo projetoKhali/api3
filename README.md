@@ -136,10 +136,27 @@ cliente, CR e colaborador.
 | Visualização de usuários desativados. | Eu como administrador preciso ter acesso a um histórico de colaboradores que foram desativados. |
 | Funcionalidade de adição e parametrização de verbas do sistema. | Como administrador preciso ser capaz de configurar os parâmetros da verba dos apontamentos para ter melhor controle sobre as horas trabalhadas dos colaboradores |
 
+
+<h2>Sprint 3</h2>
+
+|  Entregas  | Story |
+|:---------|:----------------------|
+| Extração de relatório | Como administrador preciso ser capaz de gerar relatórios CSV contendo as horas trabalhadas dos meus colaboradores para poder integrar com outras ferramentas de análise, pela portabilidade, compartilhamento fácil e baixo custo de processamento. |
+| Notificações | Como gestor, quero receber notificações quando um apontamento de um membro da minha(s) squad(s) for lançado para agilizar o meu processo de validação. |
+| Notificações | Como colaborador, quero receber notificações quando meu gestor aprovar ou rejeitar meus apontamentos de horas extras e sobreaviso, para que eu fique atualizado sobre o status. |
+| Alteração de senha | Eu como colaborador preciso alterar minha senha sempre que necessário |
+| UX | -- Não há story relacionada -- |
+
 </details>
 
 <details>
 <summary> Burndown </summary>
+
+
+<img src="Docs/burndown/Sprint1.jpg"/>
+<img src="Docs/burndown/Sprint2.jpg"/>
+<img src="Docs/burndown/Sprint3.png"/>
+
 <br>
 </details>
 
@@ -150,7 +167,7 @@ Linguagem de programação II, Progamação em Banco de dados e Laboratório de 
 
 * [x] 04/09 a 24/09 - Sprint 1
 * [x] 25/09 a 15/10 - Sprint 2
-* [ ] 16/10 a 05/11 - Sprint 3
+* [x] 16/10 a 05/11 - Sprint 3
 * [ ] 06/11 a 26/11 - Sprint 4
 
 <br>
@@ -181,12 +198,11 @@ Este repositório contém tanto o [Back-End](./api/) quanto o [Front-End](./web/
 
 > [Wireframe completo no Figma](https://www.figma.com/file/0CRUGDxQoOc3QRMK16TyHa/Untitled?type=design&mode=design&t=ukkR699csvDlWLYY-1)
 
-> [ERD](https://github.com/projetoKhali/api3/blob/be27d7c6c37234c0423714cce698620c3f090968/docs/Banners/ERD.PNG)
+> [ERD](https://github.com/projetoKhali/api3/blob/be27d7c6c37234c0423714cce698620c3f090968/Docs/Banners/ERD.PNG)
 
-> [Diagrama de Entidade-Relacionamento](https://github.com/projetoKhali/api3/blob/be27d7c6c37234c0423714cce698620c3f090968/docs/Banners/Entidade-Relacionamento.png)
+> [Diagrama de Entidade-Relacionamento](https://github.com/projetoKhali/api3/blob/be27d7c6c37234c0423714cce698620c3f090968/Docs/Banners/Entidade-Relacionamento.png)
 
-> [Documentação banco de dados](https://github.com/projetoKhali/api3/blob/be27d7c6c37234c0423714cce698620c3f090968/docs/Banners/Documenta%C3%A7%C3%A3o%20BD.pdf)
+> [Documentação banco de dados](https://github.com/projetoKhali/api3/blob/be27d7c6c37234c0423714cce698620c3f090968/Docs/Banners/Documenta%C3%A7%C3%A3o%20BD.pdf)
 
-> [Burndown da Sprint 2](https://github.com/projetoKhali/api3/blob/be27d7c6c37234c0423714cce698620c3f090968/docs/burndown/sprint_2.pdf)
 
 <br>
