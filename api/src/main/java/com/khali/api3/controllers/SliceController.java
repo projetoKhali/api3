@@ -75,7 +75,7 @@ public class SliceController {
         return appointmentRepository
             .findByActive()                                                                         // find the active appointments
             .stream()                                                                               // start a Stream: convert List to Stream
-            .peek(appointment -> System.out.println("appointment: " + appointment.toString()))      // peek / print contents
+            // .peek(appointment -> System.out.println("appointment: " + appointment.toString()))      // peek / print contents
             .<List<ProtoSlice>>map(appointment -> splitDays(                                        // map List<Appointment> to List<List<ProtoSlice>>,
                 ProtoSlice.fromAppointment(appointment)                                             //      each Appointment becomes a List<ProtoSlice>
             ))                                                                                      //      one ProtoSlice per day per appointment.
@@ -86,7 +86,7 @@ public class SliceController {
                 filterPeriodStart,
                 filterPeriodEnd
             ))
-            .peek(slice -> System.out.println("slice after filter: " + slice.toString()))           // peek / print contents
+            // .peek(slice -> System.out.println("slice after filter: " + slice.toString()))           // peek / print contents
             .<List<ProtoSlice>>map(slice -> generateSlicesAppointment(                              // Start Algorithm recursion for each ProtoSlice.
                 slice,
                 payRateRulesCumulative,
@@ -94,7 +94,7 @@ public class SliceController {
                 payRateRulesDefault
             ))
             .flatMap(List::stream)                                                                  // We should have a List<ProtoSlice> for each ProtoSlice, we need to flatten the list
-            .peek(slice -> System.out.println("final slices: " + slice.toString()))                 // peek / print contents
+            // .peek(slice -> System.out.println("final slices: " + slice.toString()))                 // peek / print contents
             .<Slice>map(protoSlice -> Slice.fromProtoSlice(protoSlice))                             // map / convert each ProtoSlice to Slice
             .collect(Collectors.toList());                                                          // end Stream: convert Stream back to List
     }
@@ -113,12 +113,12 @@ public class SliceController {
         // they are added into the returning list at the end
         List<ProtoSlice> subSlicesCumulative = new ArrayList<ProtoSlice>();
         for (IntegratedPayRateRule payRateRule: payRateRulesCumulative) {
-            System.out.println("Checking payRateRulesCumulative: " + payRateRule);
+            // System.out.println("Checking payRateRulesCumulative: " + payRateRule);
             subSlicesCumulative.addAll(getSubSlicesCumulative(
                 appointmentSlice,
                 payRateRule
             ));
-            System.out.println("Resulting subSlices list: " + subSlicesCumulative);
+            // System.out.println("Resulting subSlices list: " + subSlicesCumulative);
         }
 
         // Create the list of subSlices, initially populated with the given slice
@@ -131,7 +131,7 @@ public class SliceController {
         // Slices generated from the `overlap` of one of those rules should NOT have it's rule changed afterwards (they are locked).
         // only Slices generated from the `remaining` of an `overlap` could have their payRateRule reassigned. 
         for (IntegratedPayRateRule payRateRule: payRateRulesMinHourCount) {
-            System.out.println("Checking payRateRulesMinHourCount: " + payRateRule);
+            // System.out.println("Checking payRateRulesMinHourCount: " + payRateRule);
             subSlices = subSlices.stream()
                 .<List<ProtoSlice>>map(subSlice -> getSubSlicesMinHourCount(
                     subSlice,
@@ -139,12 +139,12 @@ public class SliceController {
                 ))
                 .<ProtoSlice>flatMap(List::stream)
                 .collect(Collectors.toList());
-            System.out.println("Resulting subSlices list: " + subSlices);
+            // System.out.println("Resulting subSlices list: " + subSlices);
         }
         
         // after the priority rules are checked, we can check the default rules (those that only differentiate between day and time)
         for (IntegratedPayRateRule payRateRule: payRateRulesDefault) {
-            System.out.println("Checking payRateRulesDefault: " + payRateRule);
+            // System.out.println("Checking payRateRulesDefault: " + payRateRule);
             subSlices = subSlices.stream()
                 .<List<ProtoSlice>>map(subSlice -> getSubSlicesDefault(
                     subSlice,
@@ -152,12 +152,12 @@ public class SliceController {
                 ))
                 .<ProtoSlice>flatMap(List::stream)
                 .collect(Collectors.toList());
-            System.out.println("Resulting subSlices list: " + subSlices);
+            // System.out.println("Resulting subSlices list: " + subSlices);
         }
 
         subSlices.addAll(subSlicesCumulative);
 
-        System.out.println("Final subSlices list: " + subSlices);
+        // System.out.println("Final subSlices list: " + subSlices);
         return subSlices;
     }
 
@@ -347,8 +347,8 @@ public class SliceController {
             Pair<Timestamp> remaining = remainingOptional.get();
             Long remainingPreviousHours = overlapPreviousHours;
 
-            System.out.println("overlap: " + overlap);
-            System.out.println("remaining: " + remaining);
+            // System.out.println("overlap: " + overlap);
+            // System.out.println("remaining: " + remaining);
 
             if (remaining.x.before(overlap.x)) overlapPreviousHours += getTotalTime(remaining.x, remaining.y);
             else remainingPreviousHours += getTotalTime(overlap.x, overlap.y);
