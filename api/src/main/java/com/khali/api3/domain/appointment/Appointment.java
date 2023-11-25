@@ -78,4 +78,22 @@ public class Appointment {
 
     @Column(name = "insert_date", insertable = false, updatable = false)
     private Timestamp insertDate;
+
+    public Appointment copy () {
+        Appointment appointment = new Appointment();
+        appointment.id = this.id;
+        appointment.user = this.user;
+        appointment.type = this.type;
+        appointment.startDate = this.startDate;
+        appointment.endDate = this.endDate;
+        appointment.resultCenter = this.resultCenter;
+        appointment.client = this.client;
+        appointment.project = this.project;
+        appointment.justification = this.justification;
+        appointment.status = this.status;
+        appointment.feedback = this.feedback;
+        appointment.apt_updt = this.apt_updt;
+        appointment.insertDate = this.insertDate;
+        return appointment;
+    }
 }
