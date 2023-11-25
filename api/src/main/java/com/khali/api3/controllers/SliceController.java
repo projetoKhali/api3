@@ -40,6 +40,23 @@ public class SliceController {
         this.payRateRuleService = payRateRuleService;
     }
 
+    @GetMapping
+    public List<Slice> getSlices (
+        Optional<Timestamp> filterPeriodStart,
+        Optional<Timestamp> filterPeriodEnd
+    ) {
+        return Arrays.stream(SliceCalculator.calculateReports(
+            appointmentRepository.findByActive().toArray(Appointment[]::new),
+            mapPayRateRules(payRateRuleRepository.findAll()).toArray(IntegratedPayRateRule[]::new)
+        ))
+        .filter(slice -> filterSlicePeriod(
+            slice,
+            filterPeriodStart,
+            filterPeriodEnd
+        ))
+        .collect(Collectors.toList());
+    }
+
     // Maps storage-centric PayRateRule to algorithm-centric IntegratedPayRateRule
     // This conversion helps the algorithm by including actual time information based on Shift
     private List<IntegratedPayRateRule> mapPayRateRules (List<PayRateRule> payRateRules) {
