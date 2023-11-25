@@ -132,7 +132,7 @@ public class UserController {
         User user = userRepository.findById(id)
             .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + id));
 
-        user.setPassword(password);
+        user.setPassword(Cryptography.encode(password));
 
         return userRepository.save(user);
     }
