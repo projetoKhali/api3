@@ -7,6 +7,8 @@ import PieChart from '../components/PieChart';
 import { AppointmentSchema } from '../schemas/Appointment';
 import { UserSchema } from "../schemas/User";
 import { getAppointmentsAdm } from '../services/AppointmentService';
+import "../styles/dashboard.css";
+import "../styles/filters.css";
 
 interface AppointmentsProps {
     userLoggedIn: UserSchema;
@@ -89,50 +91,56 @@ export default function Appointments({ userLoggedIn }: AppointmentsProps) {
     };
 
     return (
-        <div>
-            <Filter
-                type="selection"
-                options={[
-                    { label: 'Todos', value: '' },
-                    { label: 'Hora Extra', value: 'Overtime' },
-                    { label: 'Sobreaviso', value: 'OnNotice' },
-                ]}
-                onFilterChange={(value) => handleFilterChange("type", value)}
-            />
-            <Filter
-                type="selection"
-                options={[
-                    { label: 'Todos', value: '' },
-                    { label: 'Pendente', value: 'Pending' },
-                    { label: 'Aprovados', value: 'Approved' },
-                    { label: 'Recusados', value: 'Rejected' },
-                ]}
-                onFilterChange={(value) => handleFilterChange("status", value)}
-            />
-            <Filter
-                type="availableClients"
-                onFilterChange={(value) => handleFilterChange("client", value)}
-            />
-            <Filter
-                type="availableResultCenters"
-                onFilterChange={(value) => handleFilterChange("resultCenter", value)}
-                userLoggedIn={userLoggedIn}
-            />
-            <Filter
-                type="availableProjects"
-                onFilterChange={(value) => handleFilterChange("project", value)}
-            />
-            <Filter
-                type="date-start"
-                onFilterChange={(value) => handleFilterChange("startDate", value)}
-            />
-            <Filter
-                type="date-end"
-                onFilterChange={(value) => handleFilterChange("endDate", value)}
-            />
-            <PieChart data={filtered} />
-            <BarChartHours data={filtered} />
-            <BarChartDays data={filtered} />
-        </div>
+        <div className="dashabord-admin-page">
+            <div className="filters">
+                <Filter
+                    type="selection"
+                    options={[
+                        { label: 'Todos', value: '' },
+                        { label: 'Hora Extra', value: 'Overtime' },
+                        { label: 'Sobreaviso', value: 'OnNotice' },
+                    ]}
+                    onFilterChange={(value) => handleFilterChange("type", value)}
+                />
+                <Filter
+                    type="selection"
+                    options={[
+                        { label: 'Todos', value: '' },
+                        { label: 'Pendente', value: 'Pending' },
+                        { label: 'Aprovados', value: 'Approved' },
+                        { label: 'Recusados', value: 'Rejected' },
+                    ]}
+                    onFilterChange={(value) => handleFilterChange("status", value)}
+                />
+                <Filter
+                    type="availableClients"
+                    onFilterChange={(value) => handleFilterChange("client", value)}
+                />
+                <Filter
+                    type="availableResultCenters"
+                    onFilterChange={(value) => handleFilterChange("resultCenter", value)}
+                    userLoggedIn={userLoggedIn}
+                />
+                <Filter
+                    type="availableProjects"
+                    onFilterChange={(value) => handleFilterChange("project", value)}
+                />
+                <Filter
+                    type="date-start"
+                    onFilterChange={(value) => handleFilterChange("startDate", value)}
+                />
+                <Filter
+                    type="date-end"
+                    onFilterChange={(value) => handleFilterChange("endDate", value)}
+                />
+            </div>
+            <div className="charts-line1">
+                <PieChart data={filtered} />
+                <BarChartHours data={filtered} />
+            </div>
+                <div className="charts-line2">
+                    <BarChartDays data={filtered} />
+            </div>
+            </div>
     );
 }

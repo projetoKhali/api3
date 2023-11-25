@@ -1,6 +1,7 @@
 import { Chart } from 'chart.js/auto';
 import { useEffect, useRef } from 'react';
 import { AppointmentSchema } from '../schemas/Appointment';
+import "../styles/dashboard.css";
 
 interface DayChartProps {
     data: AppointmentSchema[];
@@ -59,9 +60,8 @@ const DayChart: React.FC<DayChartProps> = ({ data }) => {
                 {
                     label: 'Dias Trabalhados',
                     data: Object.values(daysWorkedCounts),
-                    backgroundColor: 'rgba(75,192,192,0.4)',
-                    borderColor: 'rgba(75,192,192,1)',
-                    borderWidth: 1,
+                    backgroundColor: 'rgba(255, 0, 111, 1)',
+                    borderColor: 'rgba(255, 0, 111, 1)',
                 },
             ],
         };
@@ -79,6 +79,7 @@ const DayChart: React.FC<DayChartProps> = ({ data }) => {
                         ticks: {
                             stepSize: 1,
                         },
+                        
                     },
                     y: {
                         beginAtZero: true,
@@ -91,6 +92,19 @@ const DayChart: React.FC<DayChartProps> = ({ data }) => {
                     legend: {
                         display: true,
                         position: 'top',
+                    },
+                    title: {
+                        display: true,
+                        text: "Quantidade de Dias Trabalhados por Dia do Mês",
+                        font: {
+                            size: 16, // Ajuste o tamanho da fonte do título conforme necessário
+                        },
+                    },
+                },
+                datasets: {
+                    bar: {
+                        categoryPercentage: 0.8,
+                        barPercentage: 0.9,
                     },
                 },
             },
@@ -108,9 +122,8 @@ const DayChart: React.FC<DayChartProps> = ({ data }) => {
     }, [data]);
 
     return (
-        <div>
-            <h2>Quantidade de Dias Trabalhados por Dia do Mês</h2>
-            <canvas ref={chartRef} />
+        <div className="barChartDays" >
+            <canvas ref={chartRef}  style={{ width: '800px' }}/>
         </div>
     );
 };

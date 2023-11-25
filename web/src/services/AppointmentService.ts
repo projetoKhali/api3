@@ -46,6 +46,11 @@ export async function getAppointmentsManager(id: number): Promise<AppointmentSch
     return await mapResponse(response);
 }
 
+export async function getAllAppointmentsManager(id: number): Promise<AppointmentSchema[]> {
+    const response = await axios.get(`${API_URL}/manager/all/${id}`, {});
+    return await mapResponse(response);
+}
+
 export async function postAppointment(appointment: PostAppointmentSchema) {
     return await fetch(`${API_URL}`, {
         method: 'POST',

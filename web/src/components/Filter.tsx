@@ -6,8 +6,8 @@ import { UserSchema } from '../schemas/User';
 import { getClients } from '../services/ClientService';
 import { getProjects } from '../services/ProjectService';
 import { getResultCentersOfUser } from '../services/ResultCenterService';
+import "../styles/filters.css";
 import LookUpTextField from './LookUpTextField';
-
 
 
 interface FilterProps {
@@ -19,9 +19,6 @@ interface FilterProps {
 
 export default function Filter({ userLoggedIn, type, options, onFilterChange }: FilterProps) {
     const [filterValue, setFilterValue] = useState('');
-    const [startDateFilter, setStartDateFilter] = useState('');
-    const [endDateFilter, setEndDateFilter] = useState('');
-
     const [availableClients, setAvailableClients] = useState<LookUpOption[]>([]);
     const [availableResultCenters, setAvailableResultCenters] = useState<LookUpOption[]>([]);
     const [availableProjects, setAvailableProjects] = useState<LookUpOption[]>([]);
@@ -42,9 +39,10 @@ export default function Filter({ userLoggedIn, type, options, onFilterChange }: 
     }, [userLoggedIn]);
 
     return (
-        <div>
+        <div >
             {type === "search-nome" && (
                 <input
+                    className="search-nome"
                     type="text"
                     placeholder="Filtrar..."
                     value={filterValue}
@@ -53,6 +51,7 @@ export default function Filter({ userLoggedIn, type, options, onFilterChange }: 
             )}
             {type === "search-email" && (
                 <input
+                    className="search-email"
                     type="text"
                     placeholder="Filtrar..."
                     value={filterValue}
@@ -61,6 +60,7 @@ export default function Filter({ userLoggedIn, type, options, onFilterChange }: 
             )}
             {type === "number" && (
                 <input
+                className="number"
                     type="number"
                     placeholder="Filtrar..."
                     value={filterValue}
@@ -69,6 +69,7 @@ export default function Filter({ userLoggedIn, type, options, onFilterChange }: 
             )}
             {type === "selection" && options && options.length > 0 && (
                 <select
+                className="selection"
                     value={filterValue}
                     onChange={(e) => handleFilterChange(e.target.value)}
                 >
@@ -81,6 +82,7 @@ export default function Filter({ userLoggedIn, type, options, onFilterChange }: 
             )}
             {type === "active" && (
                 <select
+                className="active"
                     value={filterValue}
                     onChange={(e) => handleFilterChange(e.target.value)}
                 >

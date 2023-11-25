@@ -2,6 +2,7 @@
 import { Chart } from 'chart.js/auto';
 import { useEffect, useRef } from 'react';
 import { AppointmentSchema } from '../schemas/Appointment';
+import "../styles/dashboard.css";
 
 interface PieChartProps {
     data: AppointmentSchema[];
@@ -34,8 +35,8 @@ const PieChart: React.FC<PieChartProps> = ({ data }) => {
             datasets: [
                 {
                     data: Object.values(statusCounts),
-                    backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
-                    hoverBackgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
+                    backgroundColor: ['#ff006f', '#ffb300', '#fff538'],
+                    hoverBackgroundColor: ['#ff006f', '#ffb300', '#fff538'],
                 },
             ],
         };
@@ -45,7 +46,25 @@ const PieChart: React.FC<PieChartProps> = ({ data }) => {
             type: 'doughnut',
             data: transformedData,
             options: {
-                aspectRatio: 4, // Define a proporção largura/altura desejada
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top', // ou 'bottom' ou outra posição desejada
+                        labels: {
+                            font: {
+                                size: 10, // Ajuste o tamanho da fonte da legenda aqui
+                            },
+                        },
+                        title: {
+                            display: true,
+                            text: "Status dos seus apontamentos", // Utilizando o título passado como propriedade
+                            font: {
+                                size: 18, // Ajuste o tamanho da fonte do título conforme necessário
+                                weight: 'bold',
+                            },
+                        },
+                    },
+                },
             },
         });
 
@@ -61,11 +80,7 @@ const PieChart: React.FC<PieChartProps> = ({ data }) => {
     }, [data]);
 
     return (
-        <div style={{
-            width: "1000px",
-            height: "400px",
-        }}>
-            <h2> Status dos seus apontamentos </h2>
+        <div className="pieChart" >
             <canvas ref={chartRef} />
         </div>
     );

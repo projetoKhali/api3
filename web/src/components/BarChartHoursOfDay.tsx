@@ -1,6 +1,7 @@
 import { Chart } from 'chart.js/auto';
 import { useEffect, useRef } from 'react';
 import { AppointmentSchema } from '../schemas/Appointment';
+import "../styles/dashboard.css";
 
 interface BarChartProps {
     data: AppointmentSchema[];
@@ -61,10 +62,10 @@ const BarChart: React.FC<BarChartProps> = ({ data }) => {
                 {
                     label: 'Horas Trabalhadas',
                     data: Object.values(hoursWorkedCounts),
-                    backgroundColor: 'rgba(75,192,192,0.4)',
-                    borderColor: 'rgba(75,192,192,1)',
-                    borderWidth: 1,
+                    backgroundColor: 'rgba(255, 179, 0, 1)',
+                    borderColor: 'rgba(255, 179, 0, 1)',
                 },
+                
             ],
         };
 
@@ -77,16 +78,23 @@ const BarChart: React.FC<BarChartProps> = ({ data }) => {
                 labels: sortedLabels,
             },
             options: {
+                plugins: {
+                    title: {
+                        display: true,
+                        text: "Quantidade de Horas Trabalhadas por Hora do Dia",
+                        font: {
+                            size: 18,
+                        }
+                    },
+                },
                 scales: {
                     x: {
                         type: 'category',
                         position: 'bottom',
                         labels: sortedLabels,
-                        stackWeight: 1,
                     },
                     y: {
                         beginAtZero: true,
-                        stackWeight: 1,
                         ticks: {
                             stepSize: 1
                         }
@@ -113,9 +121,8 @@ const BarChart: React.FC<BarChartProps> = ({ data }) => {
     }, [data]);
 
     return (
-        <div
+        <div className="barChartHours"
         >
-            <h2>Quantidade de Horas Trabalhadas por Hora do Dia</h2>
             <canvas ref={chartRef} />
         </div>
     );
