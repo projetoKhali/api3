@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { PostUserSchema } from '../schemas/User';
 import { postUser } from '../services/UserService';
 import PopUpMensagem from "./PopUpMessage";
+import UserTypeDropdown from "./UserTypeDropdown";
+import DropdownOption from "../schemas/DropdownOption";
 
 export default function UserForm({ callback }: { callback: () => void }) {
   const [postUserName, setPostUserName] = useState<string>('');
@@ -63,7 +65,12 @@ export default function UserForm({ callback }: { callback: () => void }) {
       <input type="text" placeholder="Nome" onChange={handleNomeChange} />
       <input type="text" placeholder="Matrícula" onChange={handleMatriculaChange} />
       <input type="text" placeholder="E-mail" onChange={handleEmailChange} />
-      <input type="text" placeholder="Função" onChange={handleFuncaoChange} />
+      <UserTypeDropdown
+            onSelect={(option: DropdownOption) => {
+              setPostUserFuncao(option.optionName)
+            }}
+        />
+      
       <button type="submit">Cadastrar</button>
     </form>
   );
