@@ -1,0 +1,61 @@
+.dashboard-admin-page {
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+    margin-bottom: 20px;
+    max-height: 90vh;
+    overflow: hidden;
+}
+
+.filters {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.filter {
+    flex: 1;
+    max-width: 200px;
+}
+
+.charts-line1 {
+    margin: 10px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 20px;
+    height: 320px
+
+}
+
+.pieChart{
+    margin: 10px;
+    height: 100%;
+}
+
+.barChartHours {
+    margin: 10px;
+    flex: 1;
+    max-height: 100%;
+}
+
+.charts-line2 {
+    margin: 10px;
+    height: 220px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.barChartDays {
+    margin: 10px;
+    max-height: 100%;
+    width: 800px;
+}
+
+h2 {
+    font-size: 12px;
+}

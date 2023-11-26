@@ -1,0 +1,34 @@
+/* Estilos com base no tipo do filtro */
+.filter-container {
+    margin-bottom: 10px;
+}
+
+/* Estilos para filtros de busca por nome e e-mail */
+.search-input {
+    width: 200px;
+    padding: 5px;
+    border: 1px solid #ccc;
+}
+
+/* Estilos para filtros numéricos */
+.number-input {
+    width: 100px;
+    padding: 5px;
+    border: 1px solid #ccc;
+}
+
+/* Estilos para filtros de seleção (select) */
+.select-input {
+    width: 150px;
+    padding: 5px;
+    border: 1px solid #ccc;
+}
+
+/* Estilos para filtros de datas */
+.date-input {
+    width: 150px;
+    padding: 5px;
+    border: 1px solid #ccc;
+}
+
+/* Adicione mais estilos conforme necessário para outros tipos de filtro */
