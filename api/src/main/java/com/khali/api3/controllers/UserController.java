@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.khali.api3.domain.member.Member;
 import com.khali.api3.domain.permission.Permission;
+import com.khali.api3.domain.user.Cryptography;
 
 // import com.khali.api3.domain.user.Cryptography;
 
@@ -109,7 +110,7 @@ public class UserController {
 
     @PostMapping
     public User createUser(@RequestBody User user) {
-        // user.setPassword(Cryptography.crypt(user.getRegistration()));
+        user.setPassword(Cryptography.encode(user.getRegistration()));
         return userRepository.save(user);
     }
 
@@ -131,7 +132,7 @@ public class UserController {
         User user = userRepository.findById(id)
             .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + id));
 
-        user.setPassword(password);
+        user.setPassword(Cryptography.encode(password));
 
         return userRepository.save(user);
     }
@@ -167,6 +168,6 @@ public class UserController {
 
     @GetMapping("/login")
     public User getLogin(String email, String password) {
-        return userService.getValidatedUser(email, password);
+        return userService.getValidatedUser(email, Cryptography.encode(password));
     }
 }
