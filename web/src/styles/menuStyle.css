@@ -14,7 +14,7 @@ li {
     
 }
 .ant-menu-item-selected.ant-menu-item-only-child {
-    background-color: #617AFF;
+    background-color: var(--color-khali-accent);
     color: black;
     margin-bottom: 15px;
 }

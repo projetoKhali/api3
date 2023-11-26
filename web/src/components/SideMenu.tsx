@@ -77,7 +77,7 @@ export default function SideMenu ({items, userName}: SideMenuProps) {
 
     return (
         <div className="sidemenu">
-            <div style={{ width: 320 }}>
+            <div>
                 <Button style={{ marginBottom: 16, outline: 'none'}} type="primary" onClick={toggleCollapsed}>
                     {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
                 </Button>

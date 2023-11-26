@@ -14,6 +14,7 @@
   --color-khali-stroke-inactive: var(--color-dark-gray);
   --color-khali-button: var(--color-mustard);
   --color-khali-button-active: var(--color-yellow);
+  --color-khali-popup-dim-bg: rgba(0, 0, 0, 50%);
 
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
