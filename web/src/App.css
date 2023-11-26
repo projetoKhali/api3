@@ -24,3 +24,19 @@
 .lookuptextfield-suggestion:hover {
   cursor: pointer;
 }
+
+.daysOfWeekContainer {
+  white-space: nowrap; /* Garante que todos os elementos fiquem na mesma linha */
+}
+
+.dayCheckboxContainer {
+  font-size: 10px;
+
+}
+
+.checkbox {
+  zoom: 0.6; /* Ajuste o tamanho do Checkbox conforme necessário */
+}
+
+
+
