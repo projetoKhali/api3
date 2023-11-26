@@ -1,5 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@500;700&display=swap');
 
+.sidemenu-button {
+  width: calc(100% - .5rem);
+  margin: .25rem;
+}
+
 .ant-menu-item.ant-menu-item-only-child {
     font-family: 'Inter', sans-serif;
     padding-left: 0;
