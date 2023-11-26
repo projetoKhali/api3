@@ -1,7 +1,6 @@
 package com.khali.api3.controllers;
 
 import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Arrays;
 import java.util.List;
@@ -86,18 +85,14 @@ public class SliceController {
         return slice.getStart().before(end) && slice.getEnd().after(start);
     }
 
-    private Optional<Pair<Timestamp>> pairLocalTimeToTimestamp(Optional<Pair<LocalTime>> shiftTimeRangeOptional) {
-        if (shiftTimeRangeOptional.isEmpty()) return Optional.empty();
-        Pair<LocalTime> shiftTimeRange = shiftTimeRangeOptional.get();
-        Timestamp start = Timestamp.valueOf(shiftTimeRange.x.atDate(LocalDate.of(1970, 1, 1)));
-        Timestamp end = Timestamp.valueOf(shiftTimeRange.y.atDate(LocalDate.of(1970, 1, 1)));
-        Optional<Pair<Timestamp>> result = Optional.of(new Pair<Timestamp>(
-            start, start.after(end)
-                ? new Timestamp(end.getTime() + oneDay)
-                : end
-        ));
-        System.out.println("pairLocalTimetoTimestamp: " + result);
-        return result;
+    private Optional<Pair<Timestamp>> pairLocalTimeToTimestamp(Optional<Pair<LocalTime>> shiftTimeRange) {
+        return shiftTimeRange.isEmpty() 
+            ? Optional.empty()
+            : Optional.of(
+                new Pair<Timestamp>(
+                    Timestamp.valueOf(shiftTimeRange.get().x.atDate(java.time.LocalDate.now())),
+                    Timestamp.valueOf(shiftTimeRange.get().y.atDate(java.time.LocalDate.now()))
+                )
+            );
     }
-
 }
