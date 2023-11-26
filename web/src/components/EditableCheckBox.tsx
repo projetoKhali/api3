@@ -15,51 +15,31 @@ export interface EditableTableColumnProps_CheckBox<T> {
 
 
 export default function EditableCheckBox<T> ({item, getValue, setValue}: EditableCheckBoxCellProps<T>) {
-    const [editing, setEditing] = useState<boolean>(false);
+    // const [editing, setEditing] = useState<boolean>(false);
     const [checkBoxValue, setCheckBoxValue] = useState<boolean>(getValue(item));
 
-    const handleStartEditing = () => {
-        setCheckBoxValue(getValue(item));
-        setEditing(true);
-    }
+    // const handleStartEditing = () => {
+    //     setCheckBoxValue(getValue(item));
+    //     setEditing(true);
+    // }
 
     const handleEdit = () => {
         setCheckBoxValue(!checkBoxValue);
+        const updatedValue = checkBoxValue;
+        console.log('Novo valor do checkbox:', updatedValue);
+        setValue(item, updatedValue);
+        console.log('Função setValue chamada com sucesso.');
     }
 
-    const handleStopEditing = () => {
-        setValue(item, checkBoxValue);
-        setEditing(false);
-    }
+    // const handleStopEditing = () => {
+    //     setValue(item, checkBoxValue);
+    //     setEditing(false);
+    // }
 
     return (
         <>
-        {editing ? (
-            <form
-                className="editable-table-cell editable-table-cell-editing"
-                onSubmit={(e) => {
-                    e.preventDefault();
-                    handleStopEditing();
-                  }}
-            >
-                <input
-                    type="checkbox"
-                    onChange={handleEdit}
-                    checked={checkBoxValue}
-                    className="editable-table-cell-checkbox"
-                />
-                <button
-                    type="submit"
-                    className="editable-table-cell-button"
-                >
-                    Ok
-                </button>
-            </form>
-        ) : (
-            <p
-                className="editable-table-cell editable-table-cell-display"
-                onClick={handleStartEditing}
-            >
+        
+            <p>
                 <input
                     type="checkbox"
                     onChange={handleEdit}
@@ -67,7 +47,7 @@ export default function EditableCheckBox<T> ({item, getValue, setValue}: Editabl
                     className="editable-table-cell-checkbox"
                 />
             </p>
-        )}
+        
         </>
     );
 }
