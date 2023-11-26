@@ -1,6 +1,5 @@
 import React, { useRef } from 'react';
 
-
 import { useEffect, useState } from 'react';
 import { PostAppointmentSchema } from '../schemas/Appointment';
 import DropdownOption from '../schemas/DropdownOption';
@@ -19,6 +18,8 @@ import { Portuguese } from "flatpickr/dist/l10n/pt.js";
 import "flatpickr/dist/themes/airbnb.css";
 
 import Flatpickr from "flatpickr";
+
+import '../styles/appointment-form.css';
 
 interface AppointmentFormProps {
   userLoggedIn: UserSchema
@@ -124,27 +125,28 @@ export default function AppointmentForm({ userLoggedIn, successCallback, errorCa
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form
+        className="form appointment-form"
+        onSubmit={handleSubmit}
+    >
       <AppointmentTypeDropdown
         onSelect={(option: DropdownOption) => {
           setPostAppointmentType(option.optionName);
         }}
       />
-      <div>
-        
+
+      <div className="appointment-form-date-time-section">
         <input
+          className="form-input appointment-form-input date_time_picker"
           ref={startDateTimePicker}
           type="text"
           placeholder="Início"
-          className="date_time_picker"
-
         />
         <input
+          className="form-input appointment-form-input date_time_picker"
           ref={endDateTimePicker}
           type="text"
           placeholder="Fim"
-          className="date_time_picker"
-
         />
       </div>
 
@@ -175,8 +177,16 @@ export default function AppointmentForm({ userLoggedIn, successCallback, errorCa
         />
       )}
 
-      <input type="text" placeholder="Justificativa" onChange={handleJustificationChange} />
-      <button type="submit">Cadastrar</button>
+      <input
+          className="form-input appointment-form-input appointment-form-justification"
+          type="text"
+          placeholder="Justificativa"
+          onChange={handleJustificationChange}
+      />
+      <button
+        className='form-button appointment-form-button'
+        type="submit"
+      >Cadastrar</button>
     </form>
   );
 }

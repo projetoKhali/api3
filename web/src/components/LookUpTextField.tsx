@@ -27,6 +27,7 @@ export default function LookUpTextField ({placeholder, options, onSelect}: LookU
     return (
         <div className="lookuptextfield-container">
             <input
+                className="form-input"
                 type="text"
                 value={inputValue}
                 onChange={handleInputChange}
