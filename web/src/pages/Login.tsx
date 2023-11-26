@@ -49,19 +49,24 @@ export default function Login ({ onLogin }: LoginProps) {
     return (
         <div className="login-container">
             <img src={loginKhaliLogo} alt="Khali" />
-            <form onSubmit={handleSubmit}>
+            <form
+                className="login-form"
+                onSubmit={handleSubmit}
+            >
                 <input
+                    className="login-input"
                     type="text"
                     placeholder="Email"
                     onChange={handleUsernameChange}
                     autoFocus
                 />
                 <input
+                    className="login-input"
                     type="text"
                     placeholder="Password"
                     onChange={handlePasswordChange}
                 />
-                <button className="" type="submit">Login</button>
+                <button className="login-button" type="submit">Login</button>
             </form>
             {showPopup && popupData && <Popup {...popupData} />}
         </div>

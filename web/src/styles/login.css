@@ -3,7 +3,7 @@
   padding: 0;
 }
 
-form {
+.login-form {
   width: 50%;
   margin: auto;
 
@@ -15,7 +15,7 @@ form {
   gap: .5em;
 }
 
-input {
+.login-input {
   height: 2rem;
   width: 100%;
   border-radius: 4px;
@@ -23,7 +23,7 @@ input {
   border: 0;
 }
 
-button {
+.login-button {
   padding: 0;
   line-height: 100%;
   width: 50%;
