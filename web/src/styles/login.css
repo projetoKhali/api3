@@ -1,3 +1,8 @@
+.login-container {
+  margin:auto;
+  padding: 0;
+}
+
 form {
   width: 50%;
   margin: auto;
