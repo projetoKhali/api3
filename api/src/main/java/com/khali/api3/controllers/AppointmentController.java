@@ -65,6 +65,11 @@ public class AppointmentController {
         return appointmentRepository.findByManager(user.getId());
     }
 
+    @GetMapping("/manager/all/{id}")
+    public List<Appointment> getAllManagerAppointments(User user) {
+        return appointmentRepository.findAllByManager(user.getId());
+    }
+
     public List<Appointment> getAppointmentByDate(List<Appointment> appointmentsList, LocalDate dataInit,
             LocalDate dataFim) {
         return appointmentService.findAppointmentByDate(appointmentsList, dataInit, dataFim);

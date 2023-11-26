@@ -147,6 +147,15 @@ cliente, CR e colaborador.
 | Alteração de senha | Eu como colaborador preciso alterar minha senha sempre que necessário |
 | UX | -- Não há story relacionada -- |
 
+<h2>Sprint 4</h2>
+
+|  Entregas  | Story |
+|:---------|:----------------------|
+| Dashboard Adm | Como administrador preciso ter acesso a um Dashboard com informações da jornada de trabalho de todos os meus colaboradores para ter controle sobre os apontamentos lançados, quais são os clientes com mais horas, quais squads fazem mais horas e afins. |
+| Dashboard Gestor | Como gestor preciso ter acesso a um Dashboard com informações da minha jornada de trabalho e de todos os colaboradores da(s) minha(s) squad(s) para melhor visualização e tratamento dos dados. |
+| Dashboard Colaborador | Como um colaborador, desejo acessar um Dashboard que me forneça informações claras sobre as horas trabalhadas e metas alcançadas para que eu possa visualizar e analisar meus dados de trabalho de forma eficaz. |
+
+
 </details>
 
 <details>
@@ -165,10 +174,10 @@ Linguagem de programação II, Progamação em Banco de dados e Laboratório de 
 
 ### Prazos
 
-* [x] 04/09 a 24/09 - Sprint 1
-* [x] 25/09 a 15/10 - Sprint 2
-* [x] 16/10 a 05/11 - Sprint 3
-* [ ] 06/11 a 26/11 - Sprint 4
+* [X] 04/09 a 24/09 - Sprint 1
+* [X] 25/09 a 15/10 - Sprint 2
+* [X] 16/10 a 05/11 - Sprint 3
+* [X] 06/11 a 26/11 - Sprint 4
 
 <br>
 <br>

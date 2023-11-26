@@ -46,6 +46,11 @@ export async function getAppointmentsManager(id: number): Promise<AppointmentSch
     return await mapResponse(response);
 }
 
+export async function getAllAppointmentsManager(id: number): Promise<AppointmentSchema[]> {
+    const response = await axios.get(`${API_URL}/manager/all/${id}`, {});
+    return await mapResponse(response);
+}
+
 export async function postAppointment(appointment: PostAppointmentSchema) {
     return await fetch(`${API_URL}`, {
         method: 'POST',
@@ -59,14 +64,11 @@ export async function postAppointment(appointment: PostAppointmentSchema) {
 
 function formatDateTime(dateTime: string): string {
     const date = new Date(dateTime);
-    const formattedDate = date.getUTCDate().toString().padStart(2, '0') + '/' +
-        (date.getUTCMonth() + 1).toString().padStart(2, '0') + '/' +
-        date.getUTCFullYear();
-    const formattedTime = date.getUTCHours().toString().padStart(2, '0') + ':' +
-        date.getUTCMinutes().toString().padStart(2, '0') + ':' +
-        date.getUTCSeconds().toString().padStart(2, '0');
+    const formattedDate = `${date.getUTCFullYear()}-${(date.getUTCMonth() + 1).toString().padStart(2, '0')}-${date.getUTCDate().toString().padStart(2, '0')}`;
+    const formattedTime = `${date.getUTCHours().toString().padStart(2, '0')}:${date.getUTCMinutes().toString().padStart(2, '0')}:${date.getUTCSeconds().toString().padStart(2, '0')}`;
     return `${formattedDate} ${formattedTime}`;
 }
+
 
 
 export async function putAppointment(appointment: AppointmentSchema, newActiveStatus: number, feedback: string | null = null) {

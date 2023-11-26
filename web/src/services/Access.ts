@@ -5,21 +5,29 @@ const API_URL = 'http://127.0.0.1:8080/users';
 
 const PermissionSideMenuItemMap: Record<string, SideMenuItem[]> = {
     "": [
-        // {
-        //     label: "Dashboard",
-        //     url: "#",
-        // },
+        {
+            label: "Dashboard",
+            url: "#",
+        },
     ],
     "Appoint": [
         {
             label: "Apontamentos",
             url: '/appointments/user',
         },
+        {
+            label: "Dashboard pessoal",
+            url: "/dashboards/user"
+        },
     ],
     "Validate": [
         {
             label: "Aprovações",
             url: "/appointments/manager"
+        },
+        {
+            label: "Dasboard squads",
+            url: "/dashboards/manager"
         },
     ],
     "Register": [
@@ -57,7 +65,11 @@ const PermissionSideMenuItemMap: Record<string, SideMenuItem[]> = {
         {
             label: 'Extração de relatório',
             url: '/slices'
-        }
+        },
+        {
+            label: "Dashboard Geral",
+            url: "/dashboards/admin",
+        },
     ],
     "Config" : [
         {
