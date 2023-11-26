@@ -1,0 +1,5 @@
+.appointment-form-date-time-section {
+  display: flex;
+  flex-flow: row;
+  gap: .5em;
+}
