@@ -8,19 +8,28 @@
   flex-wrap: wrap;
   align-items: center;
 
-  background: red;
+  background: var(--color-khali-base);
   width: 100%;
 
   padding: .5rem;
   gap: .5em;
 }
 
+::placeholder {
+  color: var(--color-khali-stroke-inactive);
+}
+
 .form-input {
-  height: 1.25rem;
+  background: var(--color-khali-base-inactive);
+  color: var(--color-khali-stroke);
   width: 100%;
   border-radius: 4px;
   padding: 0 .25rem;
   border: 0;
+}
+
+.form-input:focus {
+  background: var(--color-khali-base);
 }
 
 .form-button {

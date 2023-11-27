@@ -1,8 +1,24 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@500;700&display=swap');
 
+.ant-btn {
+  background: var(--color-khali-button);
+}
+
+.ant-btn:hover {
+  background: var(--color-khali-button-active) !important;
+}
+
 .sidemenu-button {
   width: calc(100% - .5rem);
   margin: .25rem;
+}
+
+.ant-menu-item-selected {
+  background: color-mix(in srgb, var(--color-khali-accent) 20%, transparent) !important;
+}
+
+.ant-menu-item-selected > span > a {
+  color: var(--color-khali-accent) !important;
 }
 
 .ant-menu-item.ant-menu-item-only-child {
@@ -12,12 +28,14 @@
     margin-bottom: 15px;
 
 }
+
 li {
     padding-left: 0 !important;
     display: flex;
     flex-direction: column;
     
 }
+
 .ant-menu-item-selected.ant-menu-item-only-child {
     background-color: var(--color-khali-accent);
     color: black;

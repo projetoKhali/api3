@@ -17,6 +17,7 @@
   padding: 0.25rem;
   max-height: 50rem;
   border-radius: 0 0 8px 8px;
+  box-shadow: 2px 8px 8px rgb(0 0 0 / 0.4);
 }
 
 .dropdown-option {
