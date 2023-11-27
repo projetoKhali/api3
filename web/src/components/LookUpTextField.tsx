@@ -3,6 +3,8 @@ import React from "react";
 import { useState } from "react"
 import LookUpOption from "../schemas/LookUpOption";
 
+import '../styles/lookup-text-field.css';
+
 interface LookUpProps {
     placeholder: string,
     options: LookUpOption[],
@@ -27,7 +29,7 @@ export default function LookUpTextField ({placeholder, options, onSelect}: LookU
     return (
         <div className="lookuptextfield-container">
             <input
-                className="form-input"
+                className="form-input lookuptextfield-input"
                 type="text"
                 value={inputValue}
                 onChange={handleInputChange}
