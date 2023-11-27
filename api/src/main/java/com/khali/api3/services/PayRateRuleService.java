@@ -83,12 +83,14 @@ public class PayRateRuleService {
                     lastParameter.getNightShiftEnd(),
                     lastParameter.getNightShiftStart()
                 ));
+                break;
             case NightTime:
                 result = Optional.of(new Pair<LocalTime>(
                     lastParameter.getNightShiftStart(),
                     lastParameter.getNightShiftEnd()
                 ));
-            default: result = Optional.empty();
+                break;
+            default: result = Optional.empty(); break;
         }
         System.out.println("getShiftTimeRange -- Shift: " + shift + " | result: " + result);
         return result;

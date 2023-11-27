@@ -1,0 +1,88 @@
+:root {
+  --color-black: #0A0805;
+  --color-mustard: #FFB300;
+  --color-yellow: #FFF437;
+  --color-pink: #FF7EBC;
+  --color-dark-gray: #2F2E23;
+  --color-gray: #B5B5B5;
+  --color-white: #FEFEFE;
+  
+  --color-khali-base: var(--color-white);
+  --color-khali-base-inactive: var(--color-gray);
+  --color-khali-accent: var(--color-pink);
+  --color-khali-stroke: var(--color-black);
+  --color-khali-stroke-inactive: var(--color-dark-gray);
+  --color-khali-stroke-alt: var(--color-white);
+  --color-khali-button: var(--color-mustard);
+  --color-khali-button-active: var(--color-yellow);
+  --color-khali-popup-dim-bg: rgba(0, 0, 0, 50%);
+
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: var(--color-khali-stroke);
+  background-color: var(--color-khali-base);
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+}
+
+.ant-pagination-item {
+  border-color: var(--color-khali-accent) !important;
+  border-width: 2px !important;
+}
+
+.ant-pagination-item > a {
+  font-weight: 500;
+  color: var(--color-khali-accent) !important;
+  text-decoration: inherit;
+}
+
+a:hover {
+  color: #535bf2;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+input {
+  background: var(--color-khali-base-inactive);
+  color: var(--color-khali-stroke-inactive);
+  border: 1px solid var(--color-khali-stroke-inactive);
+}
+
+button {
+  background: var(--color-khali-button);
+  color: var(--color-khali-stroke);
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+button:hover {
+  background: var(--color-khali-button-active);
+  border-color: #646cff;
+}
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}

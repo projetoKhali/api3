@@ -1,6 +1,5 @@
 import React, { useRef } from 'react';
 
-
 import { useEffect, useState } from 'react';
 import { PostAppointmentSchema } from '../schemas/Appointment';
 import DropdownOption from '../schemas/DropdownOption';
@@ -19,6 +18,8 @@ import { Portuguese } from "flatpickr/dist/l10n/pt.js";
 import "flatpickr/dist/themes/airbnb.css";
 
 import Flatpickr from "flatpickr";
+
+import '../styles/appointment-form.css';
 
 interface AppointmentFormProps {
   userLoggedIn: UserSchema
@@ -124,59 +125,72 @@ export default function AppointmentForm({ userLoggedIn, successCallback, errorCa
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <AppointmentTypeDropdown
-        onSelect={(option: DropdownOption) => {
-          setPostAppointmentType(option.optionName);
-        }}
-      />
-      <div>
-        
-        <input
-          ref={startDateTimePicker}
-          type="text"
-          placeholder="Início"
-          className="date_time_picker"
+    <form
+        className="appointment-form"
+        onSubmit={handleSubmit}
+    >
+      <div className="appointment-form-line">
 
+        <AppointmentTypeDropdown
+          onSelect={(option: DropdownOption) => {
+            setPostAppointmentType(option.optionName);
+          }}
         />
-        <input
-          ref={endDateTimePicker}
-          type="text"
-          placeholder="Fim"
-          className="date_time_picker"
 
+        <div className="appointment-form-date-time-section">
+          <input
+            className="date-time-picker appointment-form-input"
+            ref={startDateTimePicker}
+            type="text"
+            placeholder="Início"
+          />
+          <input
+            className="date-time-picker appointment-form-input"
+            ref={endDateTimePicker}
+            type="text"
+            placeholder="Fim"
+          />
+        </div>
+
+        {/* <input type="text" placeholder="Início" onChange={handleStartDateChange} />
+        <input type="text" placeholder="Fim" onChange={handleEndDateChange} /> */}
+
+        {availableClients && (
+          <LookUpTextField
+            placeholder="Cliente"
+            options={availableClients}
+            onSelect={(option: LookUpOption) => setPostAppointmentClient(option)}
+          />
+        )}
+
+        {availableResultCenters && (
+          <LookUpTextField
+            placeholder="Centro de Resultado"
+            options={availableResultCenters}
+            onSelect={(option: LookUpOption) => setPostAppointmentResultCenter(option)}
+          />
+        )}
+
+        {availableProjects && (
+          <LookUpTextField
+            placeholder="Projeto"
+            options={availableProjects}
+            onSelect={(option: LookUpOption) => setPostAppointmentProject(option)}
+          />
+        )}
+        </div>
+      <div className="appointment-form-line">
+        <input
+            className="form-input appointment-form-input appointment-form-justification"
+            type="text"
+            placeholder="Justificativa"
+            onChange={handleJustificationChange}
         />
+        <button
+          className='form-button appointment-form-button'
+          type="submit"
+        >Cadastrar</button>
       </div>
-
-      {/* <input type="text" placeholder="Início" onChange={handleStartDateChange} />
-      <input type="text" placeholder="Fim" onChange={handleEndDateChange} /> */}
-
-      {availableClients && (
-        <LookUpTextField
-          placeholder="Cliente"
-          options={availableClients}
-          onSelect={(option: LookUpOption) => setPostAppointmentClient(option)}
-        />
-      )}
-
-      {availableResultCenters && (
-        <LookUpTextField
-          placeholder="Centro de Resultado"
-          options={availableResultCenters}
-          onSelect={(option: LookUpOption) => setPostAppointmentResultCenter(option)}
-        />
-      )}
-
-      {availableProjects && (
-        <LookUpTextField
-          placeholder="Projeto"
-          options={availableProjects}
-          onSelect={(option: LookUpOption) => setPostAppointmentProject(option)}
-        />
-      )}
-
-      <input type="text" placeholder="Justificativa" onChange={handleJustificationChange} />
-      <button type="submit">Cadastrar</button>
     </form>
   );
 }

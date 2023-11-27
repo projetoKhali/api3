@@ -1,0 +1,37 @@
+.form {
+  margin: auto;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  align-items: center;
+
+  background: var(--color-khali-base);
+  width: 100%;
+
+  padding: .5rem;
+  gap: .5em;
+}
+
+::placeholder {
+  color: var(--color-khali-stroke-inactive);
+}
+
+.form-input {
+  background: var(--color-khali-base-inactive);
+  color: var(--color-khali-stroke);
+  width: 100%;
+  border-radius: 4px;
+  padding: 0 .25rem;
+  border: 0;
+}
+
+.form-input:focus {
+  background: var(--color-khali-base);
+}
+
+.form-button {
+  padding: 8px 16px;
+  line-height: 100%;
+}

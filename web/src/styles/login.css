@@ -1,0 +1,38 @@
+.login-container {
+  margin:auto;
+  padding: 0;
+}
+
+.login-form {
+  width: 50%;
+  margin: auto;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  padding: .5rem;
+  gap: .5em;
+}
+
+.login-input {
+  height: 1.5rem;
+  width: 100%;
+  border-radius: 4px;
+  padding: 0 1rem;
+  border: 0;
+}
+
+.login-input:focus {
+  background: var(--color-khali-base);
+  border: 1px solid var(--color-khali-accent);
+  margin: -1px;
+  color: var(--color-khali-stroke)
+}
+
+.login-button {
+  padding: 0;
+  line-height: 100%;
+  width: 50%;
+  height: 2rem;
+}

@@ -16,12 +16,12 @@ public interface PayRateRuleRepository extends JpaRepository<PayRateRule, Long> 
     public List<PayRateRule> findByCode(Long code);
     public Optional<PayRateRule> findById(Long id);
 
-    @Query(value = "select * from pay_rate_rules where expire_date = null and overlap = true", nativeQuery = true)
+    @Query(value = "select * from pay_rate_rules where expire_date is null and overlap = true", nativeQuery = true)
     public List<PayRateRule> findCumulative();
 
-    @Query(value = "select * from pay_rate_rules where expire_date = null and min_hour_count > 0", nativeQuery = true)
+    @Query(value = "select * from pay_rate_rules where expire_date is null and min_hour_count > 0", nativeQuery = true)
     public List<PayRateRule> findMinHourCount();
 
-    @Query(value = "select * from pay_rate_rules where expire_date = null and overlap = false and min_hour_count = 0", nativeQuery = true)
+    @Query(value = "select * from pay_rate_rules where expire_date is null and overlap = false and min_hour_count = 0", nativeQuery = true)
     public List<PayRateRule> findDefault();
 }
