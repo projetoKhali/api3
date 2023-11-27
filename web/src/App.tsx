@@ -22,6 +22,7 @@ import { getPayRateRules } from './services/PayRateRulesService';
 import { getSlices } from './services/SliceService';
 
 import './styles/App.css';
+import './styles/form.css'
 
 
 function App() {
