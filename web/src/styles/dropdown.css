@@ -3,12 +3,17 @@
 .dropdown-field-option,
 .dropdown-field-option-text {
   background: var(--color-khali-base-inactive);
-  height: 1.25rem;
+  min-width: 8rem;
   padding: 0 8px;
   margin: 0;
   line-height: 125%;
   font-weight: normal;
   border-radius: 4px;
+  height: 1.5rem;
+}
+
+.dropdown-active {
+  background: var(--color-khali-base);
 }
 
 .dropdown-options-list {

@@ -16,15 +16,23 @@
 }
 
 .login-input {
-  height: 2rem;
+  height: 1.5rem;
   width: 100%;
   border-radius: 4px;
-  padding: 0 .25rem;
+  padding: 0 1rem;
   border: 0;
+}
+
+.login-input:focus {
+  background: var(--color-khali-base);
+  border: 1px solid var(--color-khali-accent);
+  margin: -1px;
+  color: var(--color-khali-stroke)
 }
 
 .login-button {
   padding: 0;
   line-height: 100%;
   width: 50%;
+  height: 2rem;
 }
