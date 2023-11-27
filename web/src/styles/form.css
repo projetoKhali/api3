@@ -1,0 +1,29 @@
+.form {
+  width: 50%;
+  margin: auto;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  align-items: center;
+
+  background: red;
+  width: 100%;
+
+  padding: .5rem;
+  gap: .5em;
+}
+
+.form-input {
+  height: 1.25rem;
+  width: 100%;
+  border-radius: 4px;
+  padding: 0 .25rem;
+  border: 0;
+}
+
+.form-button {
+  padding: 8px 16px;
+  line-height: 100%;
+}

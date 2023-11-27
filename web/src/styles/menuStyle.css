@@ -1,9 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@500;700&display=swap');
 
+.sidemenu-button {
+  width: calc(100% - .5rem);
+  margin: .25rem;
+}
+
 .ant-menu-item.ant-menu-item-only-child {
     font-family: 'Inter', sans-serif;
     padding-left: 0;
-    background-color: #D9D9D9;
+    background-color: var(--color-khali-base);
     margin-bottom: 15px;
 
 }
@@ -14,7 +19,7 @@ li {
     
 }
 .ant-menu-item-selected.ant-menu-item-only-child {
-    background-color: #617AFF;
+    background-color: var(--color-khali-accent);
     color: black;
     margin-bottom: 15px;
 }

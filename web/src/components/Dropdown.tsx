@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import DropdownOption from '../schemas/DropdownOption';
 
+import '../styles/dropdown.css';
+
 interface DropdownProps {
     placeholder?: string,
     options: DropdownOption[],
