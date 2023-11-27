@@ -10,19 +10,15 @@ interface SlicesProps {
 
 export default function Slices({ userLoggedIn }: SlicesProps) {
     const [slices, setSlices] = useState<SliceSchema[]>([]);
-    const [camposBoolean, setCamposBoolean] = useState([true, false, true, true, true, true, true, true, true, true, true]);
+    const [camposBoolean] = useState([true, true, true, true, true, true, true, true, true, true, true]);
 
-    const [availableColumns, setAvailableColumns] = useState([
+    const [availableColumns] = useState([
         { name: 'appointment.id', title: 'Apontamento', visible: true },
         { name: 'appointment.user.name', title: 'Id do Usuário', visible: true },
         { name: 'appointment.type', title: 'Tipo', visible: true },
         { name: 'appointment.startDate', title: 'Data de Início', visible: true },
         { name: 'appointment.endDate', title: 'Data de Término', visible: true },
-        {
-            name: 'appointment.resultCenter.name',
-            title: 'Id do Centro de Resultados',
-            visible: true,
-        },
+        { name: 'appointment.resultCenter.name', title: 'Id do Centro de Resultados', visible: true },
         { name: 'appointment.client.name', title: 'Id do Cliente', visible: true },
         { name: 'appointment.project.name', title: 'Id do Projeto', visible: true },
         { name: 'status', title: 'Status', visible: true },
@@ -30,7 +26,7 @@ export default function Slices({ userLoggedIn }: SlicesProps) {
         { name: 'start', title: 'Início', visible: true },
     ]);
 
-    const [visibleColumns, setVisibleColumns] = useState(availableColumns);
+    const [visibleColumns] = useState(availableColumns);
 
     const requestSlices = () => {
         getSlices().then((slicesResponse) => {
@@ -41,23 +37,6 @@ export default function Slices({ userLoggedIn }: SlicesProps) {
     useEffect(() => {
         requestSlices();
     }, []);
-
-    const handleColumnVisibilityChange = (columnName: string) => {
-        const updatedColumns = availableColumns.map((column) => {
-            if (column.name === columnName) {
-                // Inverte o estado da visibilidade da coluna
-                return {
-                    ...column,
-                    visible: !column.visible,
-                };
-            }
-            return column;
-        });
-        setVisibleColumns(updatedColumns);
-
-        const updatedCamposBoolean = updatedColumns.map((column) => column.visible);
-        setCamposBoolean(updatedCamposBoolean);
-    };
 
 
     // Mapeie os dados para incluir 'appointment.id' diretamente
@@ -91,7 +70,7 @@ export default function Slices({ userLoggedIn }: SlicesProps) {
                 console.error('Erro na exportação para CSV:', error);
             });
     };
-    
+
 
     const columns = visibleColumns.map((column) => {
         return {
@@ -109,19 +88,7 @@ export default function Slices({ userLoggedIn }: SlicesProps) {
                     Exportar relatório CSV
                 </Button>
             </div>
-            <div>
-                {availableColumns.map((column) => (
-                    <label key={column.name}>
-                        <input
-                            type="checkbox"
-                            checked={column.visible}
-                            onChange={() => handleColumnVisibilityChange(column.name)}
-                        />
-                        {column.title}
-                    </label>
-                ))}
-            </div>
-            <Table dataSource={mappedSlices} columns={columns} />
+            <div> <Table dataSource={mappedSlices} columns={columns} /> </div>
         </div>
     );
 }

@@ -2,23 +2,23 @@ import DropdownOption from "../schemas/DropdownOption";
 import Dropdown from './Dropdown';
 
 
-interface ShiftDropdownProps {
+interface UserTypeDropdownProps {
     onSelect: (option: DropdownOption) => void;
 }
 
-export default function ShiftDropdown ({onSelect}: ShiftDropdownProps) {
+export default function UserTypeDropdown ({onSelect}: UserTypeDropdownProps) {
     const options = [
         {
-            displayName: 'Noturno',
-            optionName: 'NightTime',
+            displayName: 'Colaborador',
+            optionName: 'Employee',
         },
         {
-            displayName: 'Diurno',
-            optionName: 'DayTime',
+            displayName: 'Gerente',
+            optionName: 'Manager',
         },
         {
-            displayName: 'Todo o dia',
-            optionName: 'AllDay',
+            displayName: 'Administrador',
+            optionName: 'Admin',
         }
     ] as DropdownOption[];
 
