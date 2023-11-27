@@ -10,7 +10,7 @@ interface SlicesProps {
 
 export default function Slices({ userLoggedIn }: SlicesProps) {
     const [slices, setSlices] = useState<SliceSchema[]>([]);
-    const [camposBoolean] = useState([true, true, true, true, true, true, true, true, true, true, true]);
+    const [camposBoolean] = useState([true, true, true, true, true, true, true, true, true, true, true, true]);
 
     const [availableColumns] = useState([
         { name: 'appointment.id', title: 'Apontamento', visible: true },
