@@ -2,7 +2,7 @@
   --color-black: #0A0805;
   --color-mustard: #FFB300;
   --color-yellow: #FFF437;
-  --color-pink: #FF006F;
+  --color-pink: #FF7EBC;
   --color-dark-gray: #2F2E23;
   --color-gray: #B5B5B5;
   --color-white: #FEFEFE;
@@ -12,6 +12,7 @@
   --color-khali-accent: var(--color-pink);
   --color-khali-stroke: var(--color-black);
   --color-khali-stroke-inactive: var(--color-dark-gray);
+  --color-khali-stroke-alt: var(--color-white);
   --color-khali-button: var(--color-mustard);
   --color-khali-button-active: var(--color-yellow);
   --color-khali-popup-dim-bg: rgba(0, 0, 0, 50%);
@@ -31,11 +32,17 @@
   -webkit-text-size-adjust: 100%;
 }
 
-a {
+.ant-pagination-item {
+  border-color: var(--color-khali-accent) !important;
+  border-width: 2px !important;
+}
+
+.ant-pagination-item > a {
   font-weight: 500;
-  color: #646cff;
+  color: var(--color-khali-accent) !important;
   text-decoration: inherit;
 }
+
 a:hover {
   color: #535bf2;
 }
@@ -78,17 +85,4 @@ button:hover {
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
 }

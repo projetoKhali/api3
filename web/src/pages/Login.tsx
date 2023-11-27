@@ -62,7 +62,7 @@ export default function Login ({ onLogin }: LoginProps) {
                 />
                 <input
                     className="login-input"
-                    type="text"
+                    type="password"
                     placeholder="Password"
                     onChange={handlePasswordChange}
                 />

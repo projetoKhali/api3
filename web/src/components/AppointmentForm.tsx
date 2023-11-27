@@ -126,67 +126,71 @@ export default function AppointmentForm({ userLoggedIn, successCallback, errorCa
 
   return (
     <form
-        className="form appointment-form"
+        className="appointment-form"
         onSubmit={handleSubmit}
     >
-      <AppointmentTypeDropdown
-        onSelect={(option: DropdownOption) => {
-          setPostAppointmentType(option.optionName);
-        }}
-      />
+      <div className="appointment-form-line">
 
-      <div className="appointment-form-date-time-section">
-        <input
-          className="form-input appointment-form-input date_time_picker"
-          ref={startDateTimePicker}
-          type="text"
-          placeholder="Início"
+        <AppointmentTypeDropdown
+          onSelect={(option: DropdownOption) => {
+            setPostAppointmentType(option.optionName);
+          }}
         />
+
+        <div className="appointment-form-date-time-section">
+          <input
+            className="date-time-picker appointment-form-input"
+            ref={startDateTimePicker}
+            type="text"
+            placeholder="Início"
+          />
+          <input
+            className="date-time-picker appointment-form-input"
+            ref={endDateTimePicker}
+            type="text"
+            placeholder="Fim"
+          />
+        </div>
+
+        {/* <input type="text" placeholder="Início" onChange={handleStartDateChange} />
+        <input type="text" placeholder="Fim" onChange={handleEndDateChange} /> */}
+
+        {availableClients && (
+          <LookUpTextField
+            placeholder="Cliente"
+            options={availableClients}
+            onSelect={(option: LookUpOption) => setPostAppointmentClient(option)}
+          />
+        )}
+
+        {availableResultCenters && (
+          <LookUpTextField
+            placeholder="Centro de Resultado"
+            options={availableResultCenters}
+            onSelect={(option: LookUpOption) => setPostAppointmentResultCenter(option)}
+          />
+        )}
+
+        {availableProjects && (
+          <LookUpTextField
+            placeholder="Projeto"
+            options={availableProjects}
+            onSelect={(option: LookUpOption) => setPostAppointmentProject(option)}
+          />
+        )}
+        </div>
+      <div className="appointment-form-line">
         <input
-          className="form-input appointment-form-input date_time_picker"
-          ref={endDateTimePicker}
-          type="text"
-          placeholder="Fim"
+            className="form-input appointment-form-input appointment-form-justification"
+            type="text"
+            placeholder="Justificativa"
+            onChange={handleJustificationChange}
         />
+        <button
+          className='form-button appointment-form-button'
+          type="submit"
+        >Cadastrar</button>
       </div>
-
-      {/* <input type="text" placeholder="Início" onChange={handleStartDateChange} />
-      <input type="text" placeholder="Fim" onChange={handleEndDateChange} /> */}
-
-      {availableClients && (
-        <LookUpTextField
-          placeholder="Cliente"
-          options={availableClients}
-          onSelect={(option: LookUpOption) => setPostAppointmentClient(option)}
-        />
-      )}
-
-      {availableResultCenters && (
-        <LookUpTextField
-          placeholder="Centro de Resultado"
-          options={availableResultCenters}
-          onSelect={(option: LookUpOption) => setPostAppointmentResultCenter(option)}
-        />
-      )}
-
-      {availableProjects && (
-        <LookUpTextField
-          placeholder="Projeto"
-          options={availableProjects}
-          onSelect={(option: LookUpOption) => setPostAppointmentProject(option)}
-        />
-      )}
-
-      <input
-          className="form-input appointment-form-input appointment-form-justification"
-          type="text"
-          placeholder="Justificativa"
-          onChange={handleJustificationChange}
-      />
-      <button
-        className='form-button appointment-form-button'
-        type="submit"
-      >Cadastrar</button>
     </form>
   );
 }
