@@ -65,6 +65,11 @@ public class AppointmentController {
         return appointmentRepository.findByManager(user.getId());
     }
 
+    @GetMapping("/manager/all/{id}")
+    public List<Appointment> getAllManagerAppointments(User user) {
+        return appointmentRepository.findAllByManager(user.getId());
+    }
+
     public List<Appointment> getAppointmentByDate(List<Appointment> appointmentsList, LocalDate dataInit,
             LocalDate dataFim) {
         return appointmentService.findAppointmentByDate(appointmentsList, dataInit, dataFim);
@@ -80,6 +85,7 @@ public class AppointmentController {
         return appointmentService.findAppointmentByDateHour(appointmentsList, dataInit, dataFim);
     }
 
+    @Transactional
     @PostMapping
     public Appointment createAppointment(@RequestBody Appointment appointment) {
         Appointment savedAppointment = appointmentRepository.save(appointment);
@@ -87,6 +93,7 @@ public class AppointmentController {
         return savedAppointment;
     }
 
+    @Transactional
     @PutMapping("/{id}")
     public Appointment updateAppointment(@PathVariable Long id, @RequestBody Appointment appointmentDetails) {
         Appointment appointment = appointmentRepository.findById(id)
@@ -139,9 +146,8 @@ public class AppointmentController {
         return notification;
     }
     
-
-    @PutMapping("/notification/update/{usr_id}")
     @Transactional
+    @PutMapping("/notification/update/{usr_id}")
     public void updateNotificationsStatusToTrue(@PathVariable Long usr_id) {
         appointmentRepository.updateStatusToTrueForUser(usr_id);
     }

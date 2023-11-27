@@ -17,12 +17,15 @@ export default function PopupForm({ successCallback, errorCallback }: PopupFormP
     const [postAppointmentType, setAppointmentType] = useState<string>('');
     const [postShift, setShift] = useState<string>('');
     // const [postWeekend, setWeekend] = useState<string>('');
+    const [postDaysOfWeek, setDaysOfWeek] = useState<boolean[]>([false, false, false, false, false, false, false]);
     const [postMinHourCount, setMinHourCount] = useState<number | string>('');
     const [postHourDuration, setHourDuration] = useState<number | string>('');
     const [postPayRate, setPayRate] = useState<number | string>('');
     const [postOverlap, setOverlap] = useState<boolean>(false);
     const [message, setMessage] = useState<string>('');
     const [isPopUpVisible, setIsPopUpVisible] = useState(false);
+
+    const daysOfWeekString: string[] = ['Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado'];
 
     function handleCodeChange(event: React.ChangeEvent<HTMLInputElement>) { setCode(event.target.value); }
     function handleAppointmentTypeChange(event: React.ChangeEvent<HTMLInputElement>) { setAppointmentType(event.target.value); }
@@ -33,6 +36,11 @@ export default function PopupForm({ successCallback, errorCallback }: PopupFormP
     function handlePayRateChange(event: React.ChangeEvent<HTMLInputElement>) { setPayRate(event.target.value); }
     function handleOverlapChange(event: React.ChangeEvent<HTMLInputElement>) { setOverlap(event.target.checked); }
 
+    const handleCheckboxChange = (index: number) => {
+        const novosDiasSelecionados = [...postDaysOfWeek];
+        novosDiasSelecionados[index] = !novosDiasSelecionados[index];
+        setDaysOfWeek(novosDiasSelecionados);
+    };
 
     function handleSubmit(event: React.ChangeEvent<HTMLFormElement>) {
         if (!postCode || !postAppointmentType || !postShift || !postMinHourCount
@@ -51,7 +59,7 @@ export default function PopupForm({ successCallback, errorCallback }: PopupFormP
             appointmentType: postAppointmentType,
             // shift refere-se a se é diurno ou noturno
             shift: postShift,
-            // weekend: postWeekend,
+            daysOfWeek: postDaysOfWeek,
             minHourCount: postMinHourCount,
             hourDuration: postHourDuration,
             payRate: postPayRate,
@@ -73,45 +81,58 @@ export default function PopupForm({ successCallback, errorCallback }: PopupFormP
                 setIsPopUpVisible(true);
             });
 
-    setTimeout(() => {
-        setIsPopUpVisible(false);
-    }, 5000);
-}
+        setTimeout(() => {
+            setIsPopUpVisible(false);
+        }, 5000);
+    }
 
-return (
-    <form onSubmit={handleSubmit}>
-        {isPopUpVisible && (
-            <PopUpMensagem text={message} />
-        )}
-        <input type="text" placeholder="Codigo" onChange={handleCodeChange} />
-        <AppointmentTypeDropdown
-            onSelect={(option: DropdownOption) => {
-                setAppointmentType(option.optionName)
-            }}
-        />
-        <ShiftDropdown
-            onSelect={(option: DropdownOption) => {
-                setShift(option.optionName)
-            }}
-        />
-        {/* <input type="text" placeholder="Fim de Semana" onChange={handleWeekendChange}/> */}
-        <input type="text" placeholder="Mínimo de horas" onChange={handleMinHourCountChange} />
-        <input type="text" placeholder="Duração da hora" onChange={handleHourDurationChange} />
-        <input type="text" placeholder="Porcentagem" onChange={handlePayRateChange} />
-        <p>
-            <Checkbox
+    return (
+        <form onSubmit={handleSubmit}>
+            {isPopUpVisible && (
+                <PopUpMensagem text={message} />
+            )}
+            <input type="text" placeholder="Codigo" onChange={handleCodeChange} />
+            <AppointmentTypeDropdown
+                onSelect={(option: DropdownOption) => {
+                    setAppointmentType(option.optionName)
+                }}
+            />
+            <ShiftDropdown
+                onSelect={(option: DropdownOption) => {
+                    setShift(option.optionName)
+                }}
+            />
+            {/* <input type="text" placeholder="Fim de Semana" onChange={handleWeekendChange}/> */}
+            <input type="text" placeholder="Mínimo de horas" onChange={handleMinHourCountChange} />
+            <input type="text" placeholder="Duração da hora" onChange={handleHourDurationChange} />
+            <input type="text" placeholder="Porcentagem" onChange={handlePayRateChange} />
+            <p>
+                <Checkbox
 
-                checked={postOverlap}
-                onChange={() => setOverlap(!postOverlap)} />
-            Aceitar Sobreposição
+                    checked={postOverlap}
+                    onChange={() => setOverlap(!postOverlap)} />
+                Aceitar Sobreposição
 
-        </p>
+            </p>
+            <p>
+                {postDaysOfWeek.map((isSelected, index) => (
+                    <div key={index}>
+                        <input
+                            type="checkbox"
+                            checked={isSelected}
+                            onChange={() => handleCheckboxChange(index)}
+                        />
+                        <label>{`${daysOfWeekString[index]}`}</label>
+                    </div>
+                ))}
+                {/* <p>Array de Dias Selecionados: {JSON.stringify(postDaysOfWeek)}</p> */}
+            </p>
 
 
-        <button type="submit">Salvar</button>
+            <button type="submit">Salvar</button>
 
-    </form>
-);
+        </form>
+    );
 
 }
 

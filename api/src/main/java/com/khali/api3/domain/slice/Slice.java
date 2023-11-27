@@ -23,13 +23,4 @@ public class Slice {
     private PayRateRule payRateRule;
     private Timestamp start;
     private Timestamp end;
-
-    public static Slice fromProtoSlice (ProtoSlice protoSlice) {
-        return new Slice(
-            protoSlice.getAppointment(),
-            protoSlice.getPayRateRule(),
-            protoSlice.getStart(),
-            protoSlice.getEnd()
-        );
-    }
 }

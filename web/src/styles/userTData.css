@@ -1,5 +1,5 @@
 th {
-    background-color: #74C2CD !important;
+    background-color: var(--color-khali-accent) !important;
     border-radius: 15px;
     padding: 0px !important;
 

@@ -18,19 +18,24 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
 
     public List<Appointment> findAll();
 
-
     @Query(value = "select * from appointments where apt_updt_id is null", nativeQuery = true)
     public List<Appointment> findByActive();
+
+    @Query(value = "select * from appointments where apt_updt_id is not null", nativeQuery = true)
+    public List<Appointment> findByInactive();
 
     public List<Appointment> findByResultCenter(ResultCenter resultCenter);
 
     public Optional<Appointment> findById(Long id);
 
-    @Query(value = "SELECT * FROM appointments a WHERE a.usr_id = :usr_id and a.active = true", nativeQuery = true)
+    @Query(value = "SELECT * FROM appointments a WHERE a.usr_id = :usr_id", nativeQuery = true)
     List<Appointment> findAppointmentByUser(@Param("usr_id") Long userId);
 
     @Query(value = "select * from appointments where rc_id in ( select rc_id from result_centers where gst_id = :usr_id) and status = 'Pending'", nativeQuery = true)
     List<Appointment> findByManager(@Param("usr_id") Long userId);
+
+    @Query(value = "select * from appointments where rc_id in ( select rc_id from result_centers where gst_id = :usr_id)", nativeQuery = true)
+    List<Appointment> findAllByManager(@Param("usr_id") Long userId);
 
     @Query(value = "update appointments set status = :#{#status.name()} where apt_id = :apt_id returning *", nativeQuery = true)
     Optional<Appointment> updateStatusAppointment(
@@ -39,7 +44,7 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
     );
 
     @Modifying
-    @Query(value = "INSERT INTO notifications (apt_id, users_usr_id, type) VALUES (:aptId, :userId, 'Pending')", nativeQuery = true)
+    @Query(value = "INSERT INTO notifications (apt_id, usr_id, type) VALUES (:aptId, :userId, 'Pending')", nativeQuery = true)
     void insertNotification(@Param("aptId") Long appointmentId, @Param("userId") Long userId);
 
     @Modifying

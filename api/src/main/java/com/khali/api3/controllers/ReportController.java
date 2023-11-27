@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.khali.api3.domain.appointment.Appointment;
+import com.khali.api3.domain.slice.Slice;
 import com.khali.api3.repositories.AppointmentRepository;
 import com.khali.api3.repositories.ReportRepository;
 import com.opencsv.CSVWriter;
@@ -44,18 +45,19 @@ public class ReportController {
 
     @GetMapping
     @Transactional
-    public void exportCsv(HttpServletResponse response, @RequestParam Boolean[] camposBoolean, int usr_id) throws IOException {
+    public void exportCsv(HttpServletResponse response, @RequestParam Boolean[] camposBoolean, Integer usr_id, Optional<Timestamp> periodStard, Optional<Timestamp> periodEnd) throws IOException {
         response.setContentType("text/csv");
         response.setHeader("Content-Disposition", "attachment; filename=\"relatorio.csv\"");
 
         // tras lista de todos os slices
-        // List<Slice> slices = sliceController.calculateSlices(null, null);
-        List<Appointment> allAppointments = appointmentRepository.findByActive();
-        System.out.println(allAppointments.size());
+        List<Slice> slices = sliceController.getSlices(periodStard, periodEnd);
+        // List<Appointment> allAppointments = appointmentRepository.findByActive();
+        // System.out.println(allAppointments.size());
 
-        // String[] headers = {"Matricula", "Colaborador", "Verba", "Porcentagem da Verba", "Hora Início", "Hora Fim", "Hora Total", "Tipo de Apontamento", "Centro Resultado", "Cliente", "Projeto", "Justificativa"};
         String[] headers = {"Matricula",
                             "Colaborador",
+                            "Verba",
+                            "Porcentagem da Verba",
                             "Hora Início",
                             "Hora Fim",
                             "Hora Total",
@@ -79,41 +81,22 @@ public class ReportController {
             ObjectMapper objectMapper = new ObjectMapper();
             List<String> jsonData = new ArrayList<>();
             
-            // for (Slice slice : slices) {
-            //     List<String> data = new ArrayList<>();
-            //     Timestamp total = new Timestamp(slice.getEnd().getTime() - slice.getStart().getTime());
-            //     if (camposBoolean[0]) data.add(slice.getAppointment().getUser().getRegistration());
-            //     if (camposBoolean[1]) data.add(slice.getAppointment().getUser().getName());
-            //     if (camposBoolean[2]) data.add(slice.getPayRateRule().getCode().toString());
-            //     if (camposBoolean[3]) data.add(slice.getPayRateRule().getPayRate().toString());
-            //     if (camposBoolean[4]) data.add(slice.getStart().toString());
-            //     if (camposBoolean[5]) data.add(slice.getEnd().toString());
-            //     if (camposBoolean[5]) data.add(total.toString());
-            //     if (camposBoolean[6]) data.add(slice.getAppointment().getType().toString());
-            //     if (camposBoolean[7]) data.add(slice.getAppointment().getResultCenter().getName());
-            //     if (camposBoolean[8]) data.add(slice.getAppointment().getClient().getName());
-            //     if (camposBoolean[9]) data.add(slice.getAppointment().getProject().getName());
-            //     if (camposBoolean[10]) data.add(slice.getAppointment().getJustification());
-                
-            //     csvWriter.writeNext(data.toArray(new String[0]));
-            //     jsonData.addAll(data);
-            // }
-            
-            List<String> data = new ArrayList<>();
-            for (Appointment apt : allAppointments) {
-                Timestamp total = new Timestamp(apt.getEndDate().getTime() - apt.getStartDate().getTime());
-                if (camposBoolean[1]) data.add(apt.getUser().getRegistration());
-                if (camposBoolean[2]) data.add(apt.getUser().getName());
-                if (camposBoolean[3]) data.add(apt.getStartDate().toString());
-                if (camposBoolean[4]) data.add(apt.getEndDate().toString());
-                if (camposBoolean[5]) data.add(total.toString());
-                if (camposBoolean[6]) data.add(apt.getType().toString());
-                if (camposBoolean[7]) data.add(apt.getResultCenter().getName());
-                if (camposBoolean[8]) data.add(apt.getClient().getName());
-                if (camposBoolean[9]) data.add(apt.getProject().getName());
-                if (camposBoolean[10]) data.add(apt.getJustification());
-
-                csvWriter.writeNext(data.toArray(new String[0]));
+            for (Slice apt : slices) {
+                List<String> data = new ArrayList<>();
+                Timestamp total = new Timestamp(apt.getEnd().getTime() - apt.getStart().getTime());
+                if (camposBoolean[0]) data.add(apt.getAppointment().getUser().getRegistration());
+                if (camposBoolean[1]) data.add(apt.getAppointment().getUser().getName());
+                if (camposBoolean[2]) data.add(apt.getPayRateRule().getCode().toString());
+                if (camposBoolean[3]) data.add(apt.getPayRateRule().getPayRate().toString());
+                if (camposBoolean[4]) data.add(apt.getStart().toString());
+                if (camposBoolean[5]) data.add(apt.getEnd().toString());
+                if (camposBoolean[6]) data.add(total.toString());
+                if (camposBoolean[7]) data.add(apt.getAppointment().getType().toString());
+                if (camposBoolean[8]) data.add(apt.getAppointment().getResultCenter().getName());
+                if (camposBoolean[9]) data.add(apt.getAppointment().getClient().getName());
+                if (camposBoolean[10]) data.add(apt.getAppointment().getProject().getName());
+                if (camposBoolean[11]) data.add(apt.getAppointment().getJustification());
+                csvWriter.writeNext(data.toArray(String[]::new));
                 jsonData.addAll(data);
             }
 

@@ -1,0 +1,46 @@
+.popup-wrapper {
+  position: absolute;
+  top: 0; bottom: 0; left: 0; right: 0;
+  height: 100cvh;
+  width: 100cvh;
+  margin: 0;
+  padding: 0;
+  background: var(--color-khali-popup-dim-bg);
+}
+
+.popup {
+  position: absolute;
+  top: 0; bottom: 0; left: 0; right: 0;
+  margin: auto;
+  width: 50%;
+  height: fit-content;
+  padding: 1rem;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: var(--color-khali-base);
+  border: 2px solid var(--color-khali-base-inactive);
+}
+
+.popup-content {
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.popup-text {
+  margin-left: auto;
+  margin-right: auto;
+  align-content: center;
+}
+
+.popup-buttons {
+  width: 100%;
+  display: flex;
+}
+
+.popup-button {
+  margin: auto;
+}
