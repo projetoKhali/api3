@@ -35,16 +35,18 @@ export default function Dropdown ({ placeholder, options, onSelect }: DropdownPr
                 {placeholder && placeholder.length ? (
                     <p className="dropdown-field-placeholder">
                         {placeholder}
+                        <i className='bx bx-caret-down'></i>
                     </p>
                 ) : (
                     <div className="dropdown-field-option">
                         {options && options.length ? (
                             <p className="dropdown-field-option-text">
                                 {selected?.displayName}
+                                <i className='bx bx-caret-down'></i>
                             </p>
                         ) : (
                             null
-                        )}
+                        )} 
                     </div>
                 )}
             </div>
