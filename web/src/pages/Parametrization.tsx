@@ -8,6 +8,10 @@ import Popup, { PopupSchema } from "../components/PopUpParametrization";
 import { EditableTableColumn } from "../components/EditableTableCell";
 import { PostParameterSchema } from "../schemas/Parametrization";
 import { getLatestParameter, postParameter } from "../services/ParametrizationService";
+import EditableCheckBox, { EditableTableColumnCheckBox } from "../components/EditableCheckBox";
+import ColumnCheckBox from "../components/DaysOfWeekCheckBox";
+import CheckBox from "../components/DaysOfWeekCheckBox";
+import Checkbox from "antd/es/checkbox/Checkbox";
 
 export default function Parametrization() {
     const [previousPayRateRules, setPreviousPayRateRules] = useState<PayRateRuleSchema[]>([]);
@@ -51,41 +55,66 @@ export default function Parametrization() {
             setValue: (item: PayRateRuleSchema, value: string)=>item.code=parseInt(value),
 
         }),
-        EditableTableColumn({
+        {
             title: 'Tipo',
-            getValue: (item: PayRateRuleSchema)=>item.appointmentType,
-            setValue: (item: PayRateRuleSchema, value: string)=>item.appointmentType=value,
-        }),
-        EditableTableColumn({
+            dataIndex: 'appointmentType',
+            key: 'appointmentType',
+            render: (appointmentType: string) => (appointmentType == "OnNotice" ? 'Sobreavivo' : 'Hora-Extra'),
+        },
+        {
             title: 'Período',
-            getValue: (item: PayRateRuleSchema)=>item.shift,
-            setValue: (item: PayRateRuleSchema, value: string)=>item.shift=value,
-        }),
-        // EditableTableColumn({
-        //     title: 'Fim de semana',
-        //     getValue: (item: PauRateRuleSchema)=>item.weekend,
-        //     setValue: (item: PayRateRuleSchema, value: string)=>item.weekend=value,
-        // }),
-        EditableTableColumn({
-            title: 'Mínimo de horas',
-            getValue: (item: PayRateRuleSchema)=>`${item.minHourCount}`,
-            setValue: (item: PayRateRuleSchema, value: string)=>item.minHourCount=parseFloat(value),
-        }),
-        EditableTableColumn({
-            title: 'Duração da hora',
-            getValue: (item: PayRateRuleSchema)=>`${item.hourDuration}`,
-            setValue: (item: PayRateRuleSchema, value: string)=>item.hourDuration=parseFloat(value),
-        }),
+            dataIndex: 'shift',
+            key: 'shift',
+            render: (shift: string) => {
+                if(shift=="DayTime") {return "Diurno"}
+                else if(shift=="NightTime") {return "Noturno"}
+                else {return "Dia Todo"}
+            }
+        },
+        {
+            title: 'Mínimo de Horas',
+            dataIndex: 'minHourCount',
+            key: 'minHourCount',
+        },
+        {
+            title: 'Duração da Hora',
+            dataIndex: 'hourDuration',
+            key: 'hourDuration',
+        },
+                     
+             
         EditableTableColumn({
             title: 'Porcentagem',
             getValue: (item: PayRateRuleSchema)=>`${item.payRate}`,
             setValue: (item: PayRateRuleSchema, value: string)=>item.payRate=parseFloat(value),
         }),
-        EditableTableColumn({
+        {
             title: 'Cumulativo',
-            getValue: (item: PayRateRuleSchema)=>`${item.overlap}`,
-            setValue: (item: PayRateRuleSchema, value: string)=>item.overlap=stringToBoolean(value),
-        }),
+            dataIndex: 'overlap',
+            key: 'overlap',
+            render: (overlap: boolean) => (overlap == true ? 'Sim' : 'Não'),
+        },
+        {
+            title: 'Dias da Semana',
+            key: 'daysOfWeek',
+            render: (text: string, item: PayRateRuleSchema) => (
+              <div className="daysOfWeekContainer">
+                <div ></div>
+                {[ 'D', 'S', 'T', 'Q', 'Q', 'S', 'S'].map((day, index) => (
+                  <div key={index} className="dayCheckboxContainer" style={{ display: 'inline-block', marginRight: '2px' }}>
+                    <div className="dayOfWeek">{day}</div>
+                    <Checkbox 
+                        className="checkbox"
+                        checked={item.daysOfWeek[index]}>
+                        
+                    </Checkbox>
+                  </div>
+                ))}
+              </div>
+            ),
+        },
+
+       
     ]
 
     function handleSubmit() {
@@ -127,7 +156,7 @@ export default function Parametrization() {
             }}>
                 Salvar
             </button>
-            <button type="button" onClick={() => {
+            {/* <button type="button" onClick={() => {
                 setPopupData({
                     text: 'Cadastro de Verbas',
                     buttons: [{ text: 'x', onClick: handleClose }],
@@ -136,7 +165,7 @@ export default function Parametrization() {
                 setShowPopup(true);
             }}>
                 Cadastrar Verba
-            </button>
+            </button> */}
             {payRateRules ? (
                 <Table dataSource={payRateRules} columns={columns} />
             ) : (
